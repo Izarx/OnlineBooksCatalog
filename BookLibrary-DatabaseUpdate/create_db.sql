@@ -1,0 +1,3 @@
+CREATE DATABASE booklibrary;
+CREATE USER booklibrary WITH ENCRYPTED PASSWORD 'Qwerty12';
+GRANT ALL PRIVILEGES ON DATABASE booklibrary TO booklibrary;
