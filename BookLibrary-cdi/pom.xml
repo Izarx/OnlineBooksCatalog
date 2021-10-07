@@ -9,8 +9,7 @@
 	<name>booklibrary</name>
 
 	<properties>
-		<java.version>16</java.version>
-		<spring.version>5.2.17.RELEASE</spring.version>
+		<java.version>11</java.version>
 		<spring.version>5.2.17.RELEASE</spring.version>
 	</properties>
 
@@ -37,7 +36,6 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-orm</artifactId>
 			<version>${spring.version}</version>
-			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
 
@@ -69,14 +67,6 @@
 			<scope>provided</scope>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/javax.servlet.jsp/javax.servlet.jsp-api -->
-		<dependency>
-			<groupId>javax.servlet.jsp</groupId>
-			<artifactId>javax.servlet.jsp-api</artifactId>
-			<version>2.3.3</version>
-			<scope>provided</scope>
-		</dependency>
-
 		<dependency>
 			<groupId>org.apache.tomcat</groupId>
 			<artifactId>tomcat-dbcp</artifactId>
@@ -94,7 +84,6 @@
 	</dependencies>
 
 	<build>
-		<finalName>BookLibrary-cdi</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.flywaydb</groupId>
