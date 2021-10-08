@@ -24,16 +24,6 @@ public class HibernateConfiguration {
         return sessionFactory;
     }
 
-//    @Bean
-//    public DataSource postgresqlDataSource() {
-//        BasicDataSource dataSource = new BasicDataSource();
-//        dataSource.setDriverClassName("org.postgresql.Driver");
-//        dataSource.setUrl("jdbc:postgresql://localhost:5432/booklibrary");
-//        dataSource.setUsername("booklibrary");
-//        dataSource.setPassword("Qwerty12");
-//        return dataSource;
-//    }
-
     @Bean
     public DataSource postgresqlDataSource() {
         HikariDataSource dataSource = new HikariDataSource();

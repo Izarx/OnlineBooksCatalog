@@ -1,12 +1,13 @@
-package com.softserveinc.booklibrary.service;
+package com.softserveinc.booklibrary.service.impl;
 
 import com.softserveinc.booklibrary.dao.AuthorRepository;
 import com.softserveinc.booklibrary.entity.Author;
+import com.softserveinc.booklibrary.service.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AuthorServiceImpl implements AuthorService{
+public class AuthorServiceImpl implements AuthorService {
 
     private final AuthorRepository authorRepository;
 
@@ -22,7 +23,7 @@ public class AuthorServiceImpl implements AuthorService{
 
     @Override
     public Author getById(Integer id) {
-        return null;
+        return authorRepository.getById(id);
     }
 
     @Override
