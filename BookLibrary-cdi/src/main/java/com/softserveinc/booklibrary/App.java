@@ -1,6 +1,7 @@
 package com.softserveinc.booklibrary;
 
 import com.softserveinc.booklibrary.configuration.HibernateConfiguration;
+import com.softserveinc.booklibrary.dao.AuthorRepository;
 import com.softserveinc.booklibrary.entity.Author;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -19,11 +20,11 @@ public class App {
 
         SessionFactory sessionFactory =
                 new AnnotationConfigApplicationContext(HibernateConfiguration.class)
-                        .getBean("SessionFactory", SessionFactory.class);
+                        .getBean("sessionFactory", SessionFactory.class);
 
         Transaction tx = null;
 
-        try (Session session = sessionFactory.openSession()){
+        try (Session session = sessionFactory.openSession()) {
             tx = session.beginTransaction();
             logger.info("Transaction starts");
             Author author = new Author();
