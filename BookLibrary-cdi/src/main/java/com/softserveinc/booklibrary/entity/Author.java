@@ -23,7 +23,7 @@ import java.util.Set;
 public class Author {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "author_id", nullable = false)
     private Integer authorId;
 
@@ -33,7 +33,7 @@ public class Author {
     @Column(name = "last_name")
     private String lastName;
 
-    @CreationTimestamp //implement by hibernate annotation - forbidden change
+    @CreationTimestamp
     @Column(name = "create_date")
     private LocalDateTime createDate;
 
