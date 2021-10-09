@@ -2,10 +2,12 @@ package com.softserveinc.booklibrary.dao;
 
 import com.softserveinc.booklibrary.entity.Book;
 
+import java.util.Optional;
+
 public interface BookRepository {
 
-    public Book save(Book author);
-    public Book getById(Integer id);
+    public Optional<Book> save(Book author);
+    public Optional<Book> getById(Integer id);
     public void delete(Integer id);
 
 }

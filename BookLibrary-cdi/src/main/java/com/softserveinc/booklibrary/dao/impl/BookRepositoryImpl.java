@@ -1,7 +1,8 @@
 package com.softserveinc.booklibrary.dao.impl;
 
-import com.softserveinc.booklibrary.dao.AuthorRepository;
+import com.softserveinc.booklibrary.dao.BookRepository;
 import com.softserveinc.booklibrary.entity.Author;
+import com.softserveinc.booklibrary.entity.Book;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
@@ -13,41 +14,42 @@ import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Repository
-public class AuthorRepositoryImpl implements AuthorRepository {
+public class BookRepositoryImpl implements BookRepository {
 
-    private static Logger logger = LoggerFactory.getLogger(AuthorRepositoryImpl.class);
+    private static Logger logger = LoggerFactory.getLogger(BookRepositoryImpl.class);
     private final SessionFactory sessionFactory;
 
     @Autowired
-    public AuthorRepositoryImpl(SessionFactory sessionFactory) {
+    public BookRepositoryImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
     @Transactional
     @Override
-    public Optional<Author> save(Author author) {
+    public Optional<Book> save(Book book) {
         try(Session session = sessionFactory.openSession()) {
-            session.save(author);
+            session.save(book);
         }
-        return Optional.of(author);
+        return Optional.ofNullable(book);
     }
 
     @Transactional
     @Override
-    public Optional<Author> getById(Integer id) {
+    public Optional<Book> getById(Integer id) {
         logger.info("Author Repository get id method");
-        Author author = null;
+        Book book = null;
         try(Session session = sessionFactory.openSession()){
-            author = session.get(Author.class, id);
+            book = session.get(Book.class, id);
         }
-        return Optional.of(author);
+        return Optional.ofNullable(book);
     }
 
     @Transactional
     @Override
-    public void delete(Author author) {
+    public void delete(Integer id) {
+        Optional<Book> book = getById(id);
         try(Session session = sessionFactory.openSession()) {
-            session.delete(author);
+            book.ifPresent(session::delete);
         }
     }
 }

@@ -8,5 +8,5 @@ public interface AuthorRepository {
 
     public Optional<Author> save(Author author);
     public Optional<Author> getById(Integer id);
-    public void delete(Integer id);
+    public void delete(Author author);
 }

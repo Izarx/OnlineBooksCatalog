@@ -22,22 +22,24 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public Author create(Author author) {
-        return null;
+        return authorRepository.save(author).orElseThrow();
     }
 
     @Override
     public Author getById(Integer id) {
         logger.info("******************Service method getById****************");
-        return authorRepository.getById(id).orElse(new Author());
+        return authorRepository.getById(id).orElseThrow();
     }
 
     @Override
-    public Author update(Integer id) {
-        return null;
+    public Author update(Author author) {
+        authorRepository.getById(author.getAuthorId())
+                .ifPresent(authorRepository::save);
+        return author;
     }
 
     @Override
     public void delete(Integer id) {
-
+        authorRepository.delete(getById(id));
     }
 }
