@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
+import java.util.Optional;
 
 @Repository
 public class AuthorRepositoryImpl implements AuthorRepository {
@@ -24,27 +25,30 @@ public class AuthorRepositoryImpl implements AuthorRepository {
 
     @Transactional
     @Override
-    public Author save(Author author) {
+    public Optional<Author> save(Author author) {
         try(Session session = sessionFactory.openSession()) {
             session.save(author);
         }
-        return author;
+        return Optional.of(author);
     }
 
     @Transactional
     @Override
-    public Author getById(Integer id) {
+    public Optional<Author> getById(Integer id) {
         logger.info("Author Repository get id method");
         Author author = null;
         try(Session session = sessionFactory.openSession()){
             author = session.get(Author.class, id);
         }
-        return author;
+        return Optional.ofNullable(author);
     }
 
     @Transactional
     @Override
     public void delete(Integer id) {
-
+        Optional<Author> author = getById(id);
+        try(Session session = sessionFactory.openSession()) {
+            author.ifPresent(session::delete);
+        }
     }
 }

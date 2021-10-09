@@ -28,7 +28,7 @@ public class AuthorServiceImpl implements AuthorService {
     @Override
     public Author getById(Integer id) {
         logger.info("******************Service method getById****************");
-        return authorRepository.getById(id);
+        return authorRepository.getById(id).orElse(new Author());
     }
 
     @Override
