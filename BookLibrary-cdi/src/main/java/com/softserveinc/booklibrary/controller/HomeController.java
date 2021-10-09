@@ -1,6 +1,5 @@
 package com.softserveinc.booklibrary.controller;
 
-import com.softserveinc.booklibrary.entity.Author;
 import com.softserveinc.booklibrary.service.AuthorService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

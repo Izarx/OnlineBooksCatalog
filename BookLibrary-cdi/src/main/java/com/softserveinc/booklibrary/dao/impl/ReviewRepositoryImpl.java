@@ -1,7 +1,6 @@
 package com.softserveinc.booklibrary.dao.impl;
 
 import com.softserveinc.booklibrary.dao.ReviewRepository;
-import com.softserveinc.booklibrary.entity.Author;
 import com.softserveinc.booklibrary.entity.Review;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

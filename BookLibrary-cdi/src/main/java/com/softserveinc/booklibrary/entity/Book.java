@@ -23,7 +23,7 @@ public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "book_id", nullable = false)
-    private Long bookId;
+    private Integer bookId;
 
     @Column(name = "name", nullable = false)
     private String name;
