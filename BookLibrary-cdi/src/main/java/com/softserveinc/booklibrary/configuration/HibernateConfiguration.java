@@ -15,7 +15,7 @@ import java.util.Properties;
 @EnableTransactionManagement
 public class HibernateConfiguration {
 
-    @Bean(name = "SessionFactory")
+    @Bean(name = "sessionFactory")
     public LocalSessionFactoryBean sessionFactory() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(postgresqlDataSource());
@@ -23,16 +23,6 @@ public class HibernateConfiguration {
         sessionFactory.setHibernateProperties(hibernateProperties());
         return sessionFactory;
     }
-
-//    @Bean
-//    public DataSource postgresqlDataSource() {
-//        BasicDataSource dataSource = new BasicDataSource();
-//        dataSource.setDriverClassName("org.postgresql.Driver");
-//        dataSource.setUrl("jdbc:postgresql://localhost:5432/booklibrary");
-//        dataSource.setUsername("booklibrary");
-//        dataSource.setPassword("Qwerty12");
-//        return dataSource;
-//    }
 
     @Bean
     public DataSource postgresqlDataSource() {
