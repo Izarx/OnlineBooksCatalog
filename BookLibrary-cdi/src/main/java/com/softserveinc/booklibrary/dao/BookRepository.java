@@ -8,6 +8,6 @@ public interface BookRepository {
 
     public Optional<Book> save(Book author);
     public Optional<Book> getById(Integer id);
-    public void delete(Integer id);
+    public void delete(Book book);
 
 }

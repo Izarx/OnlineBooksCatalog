@@ -1,7 +1,8 @@
 package com.softserveinc.booklibrary.dao.impl;
 
-import com.softserveinc.booklibrary.dao.BookRepository;
-import com.softserveinc.booklibrary.entity.Book;
+import com.softserveinc.booklibrary.dao.ReviewRepository;
+import com.softserveinc.booklibrary.entity.Author;
+import com.softserveinc.booklibrary.entity.Review;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
@@ -13,41 +14,41 @@ import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Repository
-public class BookRepositoryImpl implements BookRepository {
+public class ReviewRepositoryImpl implements ReviewRepository {
 
-    private static Logger logger = LoggerFactory.getLogger(BookRepositoryImpl.class);
+    private static Logger logger = LoggerFactory.getLogger(ReviewRepositoryImpl.class);
     private final SessionFactory sessionFactory;
 
     @Autowired
-    public BookRepositoryImpl(SessionFactory sessionFactory) {
+    public ReviewRepositoryImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
     @Transactional
     @Override
-    public Optional<Book> save(Book book) {
+    public Optional<Review> save(Review review) {
         try(Session session = sessionFactory.openSession()) {
-            session.save(book);
+            session.save(review);
         }
-        return Optional.of(book);
+        return Optional.of(review);
     }
 
     @Transactional
     @Override
-    public Optional<Book> getById(Integer id) {
-        logger.info("Book Repository get id method");
-        Book book = null;
+    public Optional<Review> getById(Integer id) {
+        logger.info("Review Repository get id method");
+        Review review = null;
         try(Session session = sessionFactory.openSession()){
-            book = session.get(Book.class, id);
+            review = session.get(Review.class, id);
         }
-        return Optional.of(book);
+        return Optional.of(review);
     }
 
     @Transactional
     @Override
-    public void delete(Book book) {
+    public void delete(Review review) {
         try(Session session = sessionFactory.openSession()) {
-            session.delete(book);
+            session.delete(review);
         }
     }
 }
