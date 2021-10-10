@@ -6,8 +6,8 @@ import java.util.Optional;
 
 public interface EntityRepository <T>{
 
-    public Optional<T> save(T entity);
+    public Optional<T> save(T t);
     public Optional<T> getById(Integer id);
-    public void delete(T entity);
+    public void delete(T t);
 
 }
