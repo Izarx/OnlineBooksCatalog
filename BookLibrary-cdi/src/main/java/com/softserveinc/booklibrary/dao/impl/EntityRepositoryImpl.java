@@ -2,28 +2,23 @@ package com.softserveinc.booklibrary.dao.impl;
 
 import com.softserveinc.booklibrary.dao.EntityRepository;
 import lombok.Getter;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.Optional;
 
 public class EntityRepositoryImpl<T> implements EntityRepository<T> {
 
+    @PersistenceContext
     @Getter
-    private final SessionFactory sessionFactory;
-
-    public EntityRepositoryImpl(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
+    private EntityManager entityManager;
 
     @Override
     @Transactional
     public Optional<T> save(T t) {
-        try(Session session = sessionFactory.openSession()) {
-            session.save(t);
-        }
-        return Optional.of(t);
+        entityManager.persist(t);
+        return Optional.ofNullable(t);
     }
 
     @Override
@@ -34,8 +29,6 @@ public class EntityRepositoryImpl<T> implements EntityRepository<T> {
     @Override
     @Transactional
     public void delete(T t) {
-        try(Session session = sessionFactory.openSession()) {
-            session.delete(t);
-        }
+        entityManager.remove(t);
     }
 }
