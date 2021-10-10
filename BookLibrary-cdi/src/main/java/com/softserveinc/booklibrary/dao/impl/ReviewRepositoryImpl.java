@@ -32,7 +32,6 @@ public class ReviewRepositoryImpl implements ReviewRepository {
         return Optional.of(review);
     }
 
-    @Transactional
     @Override
     public Optional<Review> getById(Integer id) {
         logger.info("Review Repository get id method");

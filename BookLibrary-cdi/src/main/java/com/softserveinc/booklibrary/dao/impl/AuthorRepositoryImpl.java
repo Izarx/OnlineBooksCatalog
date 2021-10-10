@@ -32,7 +32,6 @@ public class AuthorRepositoryImpl implements AuthorRepository {
         return Optional.of(author);
     }
 
-    @Transactional
     @Override
     public Optional<Author> getById(Integer id) {
         logger.info("Author Repository get id method");
