@@ -32,7 +32,6 @@ public class BookRepositoryImpl implements BookRepository {
         return Optional.of(book);
     }
 
-    @Transactional
     @Override
     public Optional<Book> getById(Integer id) {
         logger.info("Book Repository get id method");
