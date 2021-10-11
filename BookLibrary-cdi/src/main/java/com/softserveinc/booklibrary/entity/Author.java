@@ -36,7 +36,7 @@ public class Author {
 	@Column(name = "last_name")
 	private String lastName;
 
-	@CreationTimestamp
+	@CreationTimestamp  // forbidden for update and insert
 	//TODO wrong declaration
 	@Column(name = "create_date")
 	private LocalDateTime createDate;

@@ -13,4 +13,5 @@ public class AuthorRepositoryAbstract extends AbstractEntityRepository<Author> i
 		Author author = entityManager.find(Author.class, id);
 		return author;
 	}
+
 }

@@ -13,4 +13,5 @@ public class BookRepositoryAbstract extends AbstractEntityRepository<Book> imple
 		Book book = entityManager.find(Book.class, id);
 		return book;
 	}
+
 }

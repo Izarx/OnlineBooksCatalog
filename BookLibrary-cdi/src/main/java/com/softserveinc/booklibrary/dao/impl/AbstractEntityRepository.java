@@ -11,6 +11,8 @@ public abstract class AbstractEntityRepository<T> implements EntityRepository<T>
 	@PersistenceContext
 	protected EntityManager entityManager;
 
+	protected Class<T> type;
+
 	@Override
 	//TODO javax.transaction?
 	@Transactional
@@ -20,13 +22,17 @@ public abstract class AbstractEntityRepository<T> implements EntityRepository<T>
 	}
 
 	@Override
+	@Transactional
 	public T update(T entity) {
+		entityManager.merge(entity);
 		//TODO ?
 		return entity;
 	}
 
 	@Override
-	public abstract T getById(Integer id);
+	public T getById(Integer id) {
+		return entityManager.find(type, id);
+	}
 
 	@Override
 	@Transactional
