@@ -34,7 +34,7 @@ public class Book {
 	private Integer yearPublished;
 
 	@Column(name = "isbn", nullable = false, unique = true)
-	private Integer isbn;
+	private Long isbn;
 
 	//TODO length?
 	@Column(name = "publisher")
