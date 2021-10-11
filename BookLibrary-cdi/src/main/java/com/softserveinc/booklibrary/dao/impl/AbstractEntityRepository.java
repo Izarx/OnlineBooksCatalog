@@ -4,10 +4,15 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import com.softserveinc.booklibrary.dao.EntityRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 public abstract class AbstractEntityRepository<T> implements EntityRepository<T> {
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(AbstractEntityRepository.class);
 
 	@PersistenceContext
 	protected EntityManager entityManager;
@@ -17,6 +22,8 @@ public abstract class AbstractEntityRepository<T> implements EntityRepository<T>
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
 	public T create(T entity) {
+		LOGGER.info("Repository method starts new transaction: {}",
+				TransactionAspectSupport.currentTransactionStatus().isNewTransaction());
 		if (entity != null) {
 			entityManager.persist(entity);
 		}
