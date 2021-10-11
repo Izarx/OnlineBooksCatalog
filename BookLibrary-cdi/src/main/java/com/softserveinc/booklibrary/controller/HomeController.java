@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class HomeController {
 
-	private final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(HomeController.class);
 
 	private final AuthorService authorService;
 
@@ -17,9 +17,9 @@ public class HomeController {
 		this.authorService = authorService;
 	}
 
-	@GetMapping(value="/test")
+	@GetMapping(value = "/test")
 	public String test() {
-		logger.info("User {} with ID 10",
+		LOGGER.info("User {} with ID 10",
 				authorService.getById(10).getFirstName());
 		return "home";
 	}
