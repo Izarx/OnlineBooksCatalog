@@ -2,13 +2,6 @@ package com.softserveinc.booklibrary.service;
 
 import com.softserveinc.booklibrary.entity.Author;
 
-public interface AuthorService {
+public interface AuthorService extends EntityService<Author> {
 
-	Author create(Author author);
-
-	Author getById(Integer id);
-
-	Author update(Author author);
-
-	void delete(Integer id);
 }

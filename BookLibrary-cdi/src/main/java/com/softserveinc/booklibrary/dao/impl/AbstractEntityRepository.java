@@ -13,8 +13,13 @@ public abstract class AbstractEntityRepository<T> implements EntityRepository<T>
 
 	@Override
 	@Transactional
-	public T save(T entity) {
+	public T create(T entity) {
 		entityManager.persist(entity);
+		return entity;
+	}
+
+	@Override
+	public T update(T entity) {
 		return entity;
 	}
 
@@ -23,7 +28,12 @@ public abstract class AbstractEntityRepository<T> implements EntityRepository<T>
 
 	@Override
 	@Transactional
-	public void delete(T entity) {
-		entityManager.remove(entity);
+	public boolean delete(Integer id) {
+		T entity = getById(id);
+		if (entity != null) {
+			entityManager.remove(entity);
+			return true;
+		}
+		return false;
 	}
 }

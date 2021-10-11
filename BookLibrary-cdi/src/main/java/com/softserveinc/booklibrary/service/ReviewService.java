@@ -2,13 +2,6 @@ package com.softserveinc.booklibrary.service;
 
 import com.softserveinc.booklibrary.entity.Review;
 
-public interface ReviewService {
+public interface ReviewService extends EntityService<Review> {
 
-	Review create(Review review);
-
-	Review getById(Integer id);
-
-	Review update(Review review);
-
-	void delete(Integer id);
 }
