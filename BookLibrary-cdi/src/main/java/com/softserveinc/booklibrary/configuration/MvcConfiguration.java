@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @Configuration
-@ComponentScan(basePackages="com.softserveinc.booklibrary")
+@ComponentScan(basePackages = "com.softserveinc.booklibrary")
 @EnableWebMvc
-public class MvcConfiguration {}
+public class MvcConfiguration {
+}

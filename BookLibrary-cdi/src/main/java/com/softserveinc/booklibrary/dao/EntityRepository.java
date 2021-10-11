@@ -1,13 +1,13 @@
 package com.softserveinc.booklibrary.dao;
 
-import com.softserveinc.booklibrary.entity.Author;
-
 import java.util.Optional;
 
-public interface EntityRepository <T>{
+public interface EntityRepository<T> {
 
-    public Optional<T> save(T t);
-    public Optional<T> getById(Integer id);
-    public void delete(T t);
+	Optional<T> save(T t);
+
+	Optional<T> getById(Integer id);
+
+	void delete(T t);
 
 }

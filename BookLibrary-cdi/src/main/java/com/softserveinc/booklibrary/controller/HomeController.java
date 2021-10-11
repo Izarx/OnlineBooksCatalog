@@ -17,7 +17,7 @@ public class HomeController {
 		this.authorService = authorService;
 	}
 
-	@GetMapping(value="/test")
+	@GetMapping(value = "/test")
 	public String test() {
 		logger.info("User {} with ID 10",
 				authorService.getById(10).getFirstName());

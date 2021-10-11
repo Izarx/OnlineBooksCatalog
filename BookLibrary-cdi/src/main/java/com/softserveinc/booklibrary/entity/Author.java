@@ -1,8 +1,7 @@
 package com.softserveinc.booklibrary.entity;
 
-import lombok.Getter;
-import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
+import java.time.LocalDateTime;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,8 +12,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import java.time.LocalDateTime;
-import java.util.Set;
+
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
 @Getter
 @Setter
@@ -22,26 +23,26 @@ import java.util.Set;
 @Table(name = "authors")
 public class Author {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "author_id", nullable = false)
-    private Integer authorId;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "author_id", nullable = false)
+	private Integer authorId;
 
-    @Column(name = "first_name", nullable = false)
-    private String firstName;
+	@Column(name = "first_name", nullable = false)
+	private String firstName;
 
-    @Column(name = "last_name")
-    private String lastName;
+	@Column(name = "last_name")
+	private String lastName;
 
-    @CreationTimestamp
-    @Column(name = "create_date")
-    private LocalDateTime createDate;
+	@CreationTimestamp
+	@Column(name = "create_date")
+	private LocalDateTime createDate;
 
-    @ManyToMany
-    @JoinTable(
-            name = "authors_books",
-            joinColumns = {@JoinColumn(name = "author_id")},
-            inverseJoinColumns = {@JoinColumn(name = "book_id")}
-    )
-    private Set<Book> books;
+	@ManyToMany
+	@JoinTable(
+			name = "authors_books",
+			joinColumns = {@JoinColumn(name = "author_id")},
+			inverseJoinColumns = {@JoinColumn(name = "book_id")}
+	)
+	private Set<Book> books;
 }
