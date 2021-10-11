@@ -6,11 +6,11 @@ import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatche
 
 public class MainWebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
-	private final Logger logger = LoggerFactory.getLogger(MainWebAppInitializer.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(MainWebAppInitializer.class);
 
 	@Override
 	protected Class<?>[] getRootConfigClasses() {
-		logger.info("Method getRootConfigClasses ............");
+		LOGGER.info("Method getRootConfigClasses ............");
 		return new Class[]{
 				HibernateConfiguration.class
 		};
@@ -18,7 +18,7 @@ public class MainWebAppInitializer extends AbstractAnnotationConfigDispatcherSer
 
 	@Override
 	protected Class<?>[] getServletConfigClasses() {
-		logger.info("Method getServletConfigClasses ............");
+		LOGGER.info("Method getServletConfigClasses ............");
 		return new Class[]{
 				MvcConfiguration.class
 		};
@@ -26,7 +26,7 @@ public class MainWebAppInitializer extends AbstractAnnotationConfigDispatcherSer
 
 	@Override
 	protected String[] getServletMappings() {
-		logger.info("Method getServletMappings ............");
+		LOGGER.info("Method getServletMappings ............");
 		return new String[]{
 				"/"
 		};
