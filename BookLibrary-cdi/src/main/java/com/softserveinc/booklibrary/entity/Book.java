@@ -26,6 +26,7 @@ public class Book {
 	@Column(name = "book_id", nullable = false)
 	private Integer bookId;
 
+	//TODO length?
 	@Column(name = "name", nullable = false)
 	private String name;
 
@@ -35,16 +36,19 @@ public class Book {
 	@Column(name = "isbn", nullable = false, unique = true)
 	private Integer isbn;
 
+	//TODO length?
 	@Column(name = "publisher")
 	private String publisher;
 
 	@CreationTimestamp
+	//TODO wrong declaration
 	@Column(name = "create_date")
 	private LocalDateTime createDate;
 
 	@ManyToMany(mappedBy = "books")
 	private Set<Author> authors;
 
+	//TODO is this relation unidirectional or bidirectional?
 	@OneToMany(mappedBy = "book")
 	private Set<Review> reviews;
 }

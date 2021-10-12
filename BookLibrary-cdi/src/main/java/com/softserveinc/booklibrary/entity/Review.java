@@ -28,9 +28,11 @@ public class Review {
 	@Column(name = "review_id", nullable = false)
 	private Integer reviewId;
 
+	//TODO length?
 	@Column(name = "commenter_name", nullable = false)
 	private String commenterName;
 
+	//TODO length?
 	@Column(name = "comment")
 	private String comment;
 
@@ -38,9 +40,11 @@ public class Review {
 	private Integer rating;
 
 	@CreationTimestamp
+	//TODO wrong declaration
 	@Column(name = "create_date")
 	private LocalDateTime createDate;
 
+	//TODO ?
 	@ManyToOne(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
 	@JoinColumn(name = "book_id", nullable = false)
 	private Book book;

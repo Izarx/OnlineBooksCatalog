@@ -10,6 +10,7 @@ public class MainWebAppInitializer extends AbstractAnnotationConfigDispatcherSer
 
 	@Override
 	protected Class<?>[] getRootConfigClasses() {
+		//TODO why info?
 		LOGGER.info("Method getRootConfigClasses ............");
 		return new Class[]{
 				HibernateConfiguration.class

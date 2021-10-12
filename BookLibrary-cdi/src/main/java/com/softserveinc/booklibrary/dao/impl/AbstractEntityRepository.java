@@ -12,6 +12,7 @@ public abstract class AbstractEntityRepository<T> implements EntityRepository<T>
 	protected EntityManager entityManager;
 
 	@Override
+	//TODO javax.transaction?
 	@Transactional
 	public T create(T entity) {
 		entityManager.persist(entity);
@@ -20,6 +21,7 @@ public abstract class AbstractEntityRepository<T> implements EntityRepository<T>
 
 	@Override
 	public T update(T entity) {
+		//TODO ?
 		return entity;
 	}
 
@@ -29,6 +31,7 @@ public abstract class AbstractEntityRepository<T> implements EntityRepository<T>
 	@Override
 	@Transactional
 	public boolean delete(Integer id) {
+		//TODO quite tricky
 		T entity = getById(id);
 		if (entity != null) {
 			entityManager.remove(entity);

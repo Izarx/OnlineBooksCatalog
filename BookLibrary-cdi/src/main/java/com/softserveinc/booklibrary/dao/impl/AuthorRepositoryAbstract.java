@@ -9,6 +9,7 @@ public class AuthorRepositoryAbstract extends AbstractEntityRepository<Author> i
 
 	@Override
 	public Author getById(Integer id) {
+		//TODO no need for temporal variable
 		Author author = entityManager.find(Author.class, id);
 		return author;
 	}

@@ -9,6 +9,7 @@ public class BookRepositoryAbstract extends AbstractEntityRepository<Book> imple
 
 	@Override
 	public Book getById(Integer id) {
+		//TODO no need for temporal variable
 		Book book = entityManager.find(Book.class, id);
 		return book;
 	}
