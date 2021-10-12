@@ -2,6 +2,7 @@ package com.softserveinc.booklibrary.configuration;
 
 import java.util.Properties;
 
+import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
 import com.zaxxer.hikari.HikariDataSource;
@@ -18,21 +19,18 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 public class HibernateConfiguration {
 
-	//TODO If left unspecified, the name of the bean is the name of the annotated method. If specified, the method name is ignored.
-	@Bean(name = "entityManagerFactory")
-	public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+	@Bean
+	public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
 		LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
-		entityManagerFactoryBean.setDataSource(postgresqlDataSource());
-		//TODO Set whether to use Spring-based scanning for entity classes in the classpath...
-		entityManagerFactoryBean.setPackagesToScan("com.softserveinc.booklibrary");
+		entityManagerFactoryBean.setDataSource(dataSource);
+		entityManagerFactoryBean.setPackagesToScan("com.softserveinc.booklibrary.entity");
 		entityManagerFactoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
 		entityManagerFactoryBean.setJpaProperties(hibernateProperties());
 		return entityManagerFactoryBean;
 	}
 
 	@Bean
-	//TODO why do you need postgresql prefix here?
-	public DataSource postgresqlDataSource() {
+	public DataSource dataSource() {
 		HikariDataSource dataSource = new HikariDataSource();
 		//TODO these properties should be extracted to a property file
 		dataSource.setDriverClassName("org.postgresql.Driver");
@@ -44,10 +42,9 @@ public class HibernateConfiguration {
 	}
 
 	@Bean
-	public PlatformTransactionManager transactionManager() {
+	public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
 		JpaTransactionManager transactionManager = new JpaTransactionManager();
-		//TODO you can autowire existing beans
-		transactionManager.setEntityManagerFactory(entityManagerFactory().getObject());
+		transactionManager.setEntityManagerFactory(entityManagerFactory);
 		return transactionManager;
 	}
 
