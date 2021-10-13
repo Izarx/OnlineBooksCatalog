@@ -20,19 +20,19 @@ public abstract class AbstractEntityService<T> implements EntityService<T> {
 		LOGGER.info("Service method starts new transaction: {}",
 				TransactionAspectSupport.currentTransactionStatus().isNewTransaction());
 		T persistedEntity = repository.create(entity);
-		if (persistedEntity != null) {
-			return persistedEntity;
+		if (persistedEntity == null) {
+			throw new EntityNotFoundException();    // later must create custom exception
 		}
-		throw new EntityNotFoundException();    // later must create custom exception
+		return persistedEntity;
 	}
 
 	@Override
 	public T getById(Integer id) {
 		T entity = repository.getById(id);
-		if (entity != null) {
-			return entity;
+		if (entity == null) {
+			throw new EntityNotFoundException();    // later must create custom exception
 		}
-		throw new EntityNotFoundException();    // later must create custom exception
+		return entity;
 	}
 
 	@Override

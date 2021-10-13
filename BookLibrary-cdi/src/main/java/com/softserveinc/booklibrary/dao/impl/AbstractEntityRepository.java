@@ -22,7 +22,7 @@ public abstract class AbstractEntityRepository<T> implements EntityRepository<T>
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
 	public T create(T entity) {
-		LOGGER.info("Repository method starts new transaction: {}",
+		LOGGER.debug("Repository method starts new transaction: {}",
 				TransactionAspectSupport.currentTransactionStatus().isNewTransaction());
 		if (entity != null) {
 			entityManager.persist(entity);
