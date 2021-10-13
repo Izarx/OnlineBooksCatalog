@@ -10,8 +10,7 @@ public class MainWebAppInitializer extends AbstractAnnotationConfigDispatcherSer
 
 	@Override
 	protected Class<?>[] getRootConfigClasses() {
-		//TODO why info?
-		LOGGER.info("Method getRootConfigClasses ............");
+		LOGGER.trace("Method getRootConfigClasses ............");
 		return new Class[]{
 				HibernateConfiguration.class
 		};
@@ -19,7 +18,7 @@ public class MainWebAppInitializer extends AbstractAnnotationConfigDispatcherSer
 
 	@Override
 	protected Class<?>[] getServletConfigClasses() {
-		LOGGER.info("Method getServletConfigClasses ............");
+		LOGGER.trace("Method getServletConfigClasses ............");
 		return new Class[]{
 				MvcConfiguration.class
 		};
@@ -27,7 +26,7 @@ public class MainWebAppInitializer extends AbstractAnnotationConfigDispatcherSer
 
 	@Override
 	protected String[] getServletMappings() {
-		LOGGER.info("Method getServletMappings ............");
+		LOGGER.trace("Method getServletMappings ............");
 		return new String[]{
 				"/"
 		};

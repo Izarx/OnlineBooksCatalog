@@ -2,11 +2,15 @@ package com.softserveinc.booklibrary.configuration;
 
 import java.util.Properties;
 
+import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
 import com.zaxxer.hikari.HikariDataSource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -15,39 +19,38 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
+@PropertySource("classpath:persistence-postgresql.properties")
 @EnableTransactionManagement
 public class HibernateConfiguration {
 
-	//TODO If left unspecified, the name of the bean is the name of the annotated method. If specified, the method name is ignored.
-	@Bean(name = "entityManagerFactory")
-	public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+	@Autowired
+	private Environment env;
+
+	@Bean
+	public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
 		LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
-		entityManagerFactoryBean.setDataSource(postgresqlDataSource());
-		//TODO Set whether to use Spring-based scanning for entity classes in the classpath...
-		entityManagerFactoryBean.setPackagesToScan("com.softserveinc.booklibrary");
+		entityManagerFactoryBean.setDataSource(dataSource);
+		entityManagerFactoryBean.setPackagesToScan(env.getProperty("hibernate.package"));
 		entityManagerFactoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
 		entityManagerFactoryBean.setJpaProperties(hibernateProperties());
 		return entityManagerFactoryBean;
 	}
 
 	@Bean
-	//TODO why do you need postgresql prefix here?
-	public DataSource postgresqlDataSource() {
+	public DataSource dataSource() {
 		HikariDataSource dataSource = new HikariDataSource();
-		//TODO these properties should be extracted to a property file
-		dataSource.setDriverClassName("org.postgresql.Driver");
-		dataSource.setJdbcUrl("jdbc:postgresql://localhost:5432/booklibrary");
-		dataSource.setUsername("booklibrary");
-		dataSource.setPassword("Qwerty12");
+		dataSource.setDriverClassName(env.getProperty("hibernate.driver"));
+		dataSource.setJdbcUrl(env.getProperty("hibernate.jdbcurl"));
+		dataSource.setUsername(env.getProperty("hibernate.username"));
+		dataSource.setPassword(env.getProperty("hibernate.password"));
 		dataSource.setMaximumPoolSize(5);
 		return dataSource;
 	}
 
 	@Bean
-	public PlatformTransactionManager transactionManager() {
+	public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
 		JpaTransactionManager transactionManager = new JpaTransactionManager();
-		//TODO you can autowire existing beans
-		transactionManager.setEntityManagerFactory(entityManagerFactory().getObject());
+		transactionManager.setEntityManagerFactory(entityManagerFactory);
 		return transactionManager;
 	}
 
@@ -58,9 +61,8 @@ public class HibernateConfiguration {
 
 	private Properties hibernateProperties() {
 		Properties hibernateProperties = new Properties();
-		//TODO extract to a property file
-		hibernateProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQL10Dialect");
-		hibernateProperties.setProperty("hibernate.show_sql", "true");
+		hibernateProperties.setProperty("hibernate.dialect", env.getProperty("hibernate.dialect"));
+		hibernateProperties.setProperty("hibernate.show_sql", env.getProperty("hibernate.show_sql"));
 		return hibernateProperties;
 	}
 }

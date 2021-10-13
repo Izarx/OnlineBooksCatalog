@@ -2,7 +2,6 @@ package com.softserveinc.booklibrary.entity;
 
 import java.time.LocalDateTime;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -28,24 +27,21 @@ public class Review {
 	@Column(name = "review_id", nullable = false)
 	private Integer reviewId;
 
-	//TODO length?
-	@Column(name = "commenter_name", nullable = false)
+	@Column(name = "commenter_name", nullable = false, length = 256)
 	private String commenterName;
 
-	//TODO length?
+	// no need in length, because in base there is no limit for this column
 	@Column(name = "comment")
 	private String comment;
 
 	@Column(name = "rating", nullable = false)
 	private Integer rating;
 
-	@CreationTimestamp
-	//TODO wrong declaration
+	@CreationTimestamp  // date created by creating instance forbidden for update and insert
 	@Column(name = "create_date")
 	private LocalDateTime createDate;
 
-	//TODO ?
-	@ManyToOne(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "book_id", nullable = false)
 	private Book book;
 }
