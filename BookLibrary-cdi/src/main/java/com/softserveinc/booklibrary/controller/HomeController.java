@@ -26,6 +26,7 @@ public class HomeController {
 	@GetMapping(value = "/create")
 	public String create() {
 		Author author = new Author();
+		author.setAuthorId(50);
 		author.setFirstName("Ihor");
 		author.setLastName("Zakharko");
 		Book book = new Book();

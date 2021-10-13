@@ -7,9 +7,4 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class BookRepositoryImpl extends AbstractEntityRepository<Book> implements BookRepository {
 
-	@Override
-	public Book getById(Integer id) {
-		return entityManager.find(Book.class, id);
-	}
-
 }
