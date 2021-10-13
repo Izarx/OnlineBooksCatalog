@@ -28,11 +28,10 @@ public class Review {
 	@Column(name = "review_id", nullable = false)
 	private Integer reviewId;
 
-	//TODO length?
-	@Column(name = "commenter_name", nullable = false)
+	@Column(name = "commenter_name", nullable = false, length = 256)
 	private String commenterName;
 
-	//TODO length?
+	// no need in length, because in base there is no limit for this column
 	@Column(name = "comment")
 	private String comment;
 
