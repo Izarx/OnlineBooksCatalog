@@ -28,16 +28,13 @@ public class Author {
 	@Column(name = "author_id", nullable = false)
 	private Integer authorId;
 
-	//TODO length?
-	@Column(name = "first_name", nullable = false)
+	@Column(name = "first_name", nullable = false, length = 512)
 	private String firstName;
 
-	//TODO length?
-	@Column(name = "last_name")
+	@Column(name = "last_name", length = 512)
 	private String lastName;
 
-	@CreationTimestamp  // forbidden for update and insert
-	//TODO wrong declaration
+	@CreationTimestamp  // date created by creating instance forbidden for update and insert
 	@Column(name = "create_date")
 	private LocalDateTime createDate;
 

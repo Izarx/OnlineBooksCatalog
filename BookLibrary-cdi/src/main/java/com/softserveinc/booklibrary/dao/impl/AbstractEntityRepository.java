@@ -17,8 +17,6 @@ public abstract class AbstractEntityRepository<T> implements EntityRepository<T>
 	@PersistenceContext
 	protected EntityManager entityManager;
 
-	protected Class<T> type;
-
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
 	public T create(T entity) {
@@ -40,9 +38,7 @@ public abstract class AbstractEntityRepository<T> implements EntityRepository<T>
 	}
 
 	@Override
-	public T getById(Integer id) {
-		return entityManager.find(type, id);
-	}
+	public abstract T getById(Integer id);
 
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)

@@ -44,6 +44,6 @@ public abstract class AbstractEntityService<T> implements EntityService<T> {
 	@Override
 	@Transactional
 	public void delete(Integer id) {
-		repository.delete(getById(id));
+		repository.delete(id);
 	}
 }

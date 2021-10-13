@@ -9,7 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -26,8 +25,7 @@ public class Book {
 	@Column(name = "book_id", nullable = false)
 	private Integer bookId;
 
-	//TODO length?
-	@Column(name = "name", nullable = false)
+	@Column(name = "name", nullable = false, length = 512)
 	private String name;
 
 	@Column(name = "year_published", nullable = false)
@@ -36,19 +34,14 @@ public class Book {
 	@Column(name = "isbn", nullable = false, unique = true)
 	private Long isbn;
 
-	//TODO length?
-	@Column(name = "publisher")
+	@Column(name = "publisher", length = 256)
 	private String publisher;
 
-	@CreationTimestamp  // forbidden for update and insert
-	//TODO wrong declaration
+	@CreationTimestamp  // date created by creating instance forbidden for update and insert
 	@Column(name = "create_date")
 	private LocalDateTime createDate;
 
 	@ManyToMany(mappedBy = "books")
 	private Set<Author> authors;
 
-	//TODO is this relation unidirectional or bidirectional?
-	@OneToMany(mappedBy = "book")
-	private Set<Review> reviews;
 }

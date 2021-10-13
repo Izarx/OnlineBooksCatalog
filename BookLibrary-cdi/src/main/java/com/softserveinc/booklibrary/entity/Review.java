@@ -39,13 +39,11 @@ public class Review {
 	@Column(name = "rating", nullable = false)
 	private Integer rating;
 
-	@CreationTimestamp  // forbidden for update and insert
-	//TODO wrong declaration
+	@CreationTimestamp  // date created by creating instance forbidden for update and insert
 	@Column(name = "create_date")
 	private LocalDateTime createDate;
 
-	//TODO ?
-	@ManyToOne(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "book_id", nullable = false)
 	private Book book;
 }
