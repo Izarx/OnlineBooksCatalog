@@ -2,6 +2,7 @@ package com.softserveinc.booklibrary.dao.impl;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
+import java.util.Arrays;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Id;
@@ -22,7 +23,7 @@ public abstract class AbstractEntityRepository<T> implements EntityRepository<T>
 
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
-	public T create(T entity) {
+	public T create(T entity) throws IllegalAccessException {
 		if (entity != null && isIdFieldEmpty(entity)) {
 			entityManager.persist(entity);
 			return entity;
@@ -32,11 +33,12 @@ public abstract class AbstractEntityRepository<T> implements EntityRepository<T>
 
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
-	public T update(T entity) {
+	public T update(T entity) throws IllegalAccessException {
 		if (entity != null && !isIdFieldEmpty(entity)) {
 			entityManager.merge(entity);
+			return entity;
 		}
-		return entity;
+		return null;
 	}
 
 	@Override
@@ -50,7 +52,10 @@ public abstract class AbstractEntityRepository<T> implements EntityRepository<T>
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
 	public boolean delete(Integer id) {
-		T entity = entityManager.find(getGenericClass(), id);
+		T entity = null;
+		if (id != null) {
+			entity = entityManager.find(getGenericClass(), id);
+		}
 		if (entity != null) {
 			entityManager.remove(entity);
 			return true;
@@ -63,21 +68,13 @@ public abstract class AbstractEntityRepository<T> implements EntityRepository<T>
 				.getGenericSuperclass()).getActualTypeArguments()[0];
 	}
 
-	private static <T> boolean isIdFieldEmpty(T entity) {
-		if (entity != null) {
-			for (Field field : entity.getClass().getDeclaredFields()) {
-				if (field.isAnnotationPresent(Id.class)) {
-					field.setAccessible(true);
-					try {
-						if (field.get(entity) != null) {
-							return false;
-						}
-					} catch (IllegalAccessException e) {
-						LOGGER.warn("Can't get access to field {} in class {}!",
-								field.getName(), entity.getClass().getName());
-					}
-				}
-			}
+	private boolean isIdFieldEmpty(T entity) throws IllegalAccessException {
+		Field field = Arrays.stream(entity.getClass().getDeclaredFields())
+				.filter(f -> f.isAnnotationPresent(Id.class))
+				.findFirst().orElse(null);
+		if (field != null) {
+			field.setAccessible(true);
+			return field.get(entity) == null;
 		}
 		return true;
 	}
