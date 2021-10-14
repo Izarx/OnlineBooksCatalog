@@ -1,5 +1,7 @@
 package com.softserveinc.booklibrary.service.impl;
 
+import javax.persistence.EntityNotFoundException;
+
 import com.softserveinc.booklibrary.dao.EntityRepository;
 import com.softserveinc.booklibrary.service.EntityService;
 import org.slf4j.Logger;
@@ -19,7 +21,11 @@ public abstract class AbstractEntityService<T> implements EntityService<T> {
 
 	@Override
 	public T getById(Integer id) {
-		return repository.getById(id);
+		T entity = repository.getById(id);
+		if (entity == null) {
+			throw new EntityNotFoundException();    // later must create custom exception
+		}
+		return entity;
 	}
 
 	@Override
