@@ -63,12 +63,12 @@ public abstract class AbstractEntityRepository<T> implements EntityRepository<T>
 		return false;
 	}
 
-	private Class<T> getGenericClass() {
+	public Class<T> getGenericClass() {
 		return (Class<T>) ((ParameterizedType) getClass()
 				.getGenericSuperclass()).getActualTypeArguments()[0];
 	}
 
-	private boolean isIdFieldEmpty(T entity) throws IllegalAccessException {
+	public boolean isIdFieldEmpty(T entity) throws IllegalAccessException {
 		Field field = Arrays.stream(entity.getClass().getDeclaredFields())
 				.filter(f -> f.isAnnotationPresent(Id.class))
 				.findFirst().orElse(null);
