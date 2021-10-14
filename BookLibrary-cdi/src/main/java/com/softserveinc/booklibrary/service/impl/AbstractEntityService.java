@@ -7,7 +7,6 @@ import com.softserveinc.booklibrary.service.EntityService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 public abstract class AbstractEntityService<T> implements EntityService<T> {
 
@@ -16,14 +15,8 @@ public abstract class AbstractEntityService<T> implements EntityService<T> {
 
 	@Override
 	@Transactional
-	public T create(T entity) {
-		LOGGER.info("Service method starts new transaction: {}",
-				TransactionAspectSupport.currentTransactionStatus().isNewTransaction());
-		T persistedEntity = repository.create(entity);
-		if (persistedEntity == null) {
-			throw new EntityNotFoundException();    // later must create custom exception
-		}
-		return persistedEntity;
+	public T create(T entity) throws IllegalAccessException {
+		return repository.create(entity);
 	}
 
 	@Override
@@ -37,7 +30,7 @@ public abstract class AbstractEntityService<T> implements EntityService<T> {
 
 	@Override
 	@Transactional
-	public T update(T entity) {
+	public T update(T entity) throws IllegalAccessException {
 		return repository.update(entity);
 	}
 
