@@ -7,4 +7,21 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class AuthorRepositoryImpl extends AbstractEntityRepository<Author> implements AuthorRepository {
 
+	@Override
+	public Author create(Author author) {
+		if (author != null && author.getAuthorId() == null) {
+			entityManager.persist(author);
+			return author;
+		}
+		return null;
+	}
+
+	@Override
+	public Author update(Author author) {
+		if (author != null && author.getAuthorId() != null) {
+			entityManager.merge(author);
+			return author;
+		}
+		return null;
+	}
 }

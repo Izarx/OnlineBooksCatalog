@@ -29,20 +29,11 @@ public class HomeController {
 		author.setAuthorId(50);
 		author.setFirstName("Ihor");
 		author.setLastName("Zakharko");
-		Book book = new Book();
-		book.setName("Book name test");
-		book.setYearPublished(2021);
-		book.setIsbn(90123456781234L);
-		book.setPublisher("Test publisher");
 
-		authorService.create(author);
-		bookService.create(book);
+		Author actualAuthor =  authorService.create(null);
 
-		LOGGER.info("Author {} with ID {}",
-				author.getFirstName(), author.getAuthorId());
+		LOGGER.info("Author {} with ID", actualAuthor);
 		LOGGER.info("*****************************************************");
-		LOGGER.info("Book with ID {} is {} published at {} year",
-				book.getBookId(), book.getName(), book.getYearPublished());
 		return "CREATE";
 	}
 

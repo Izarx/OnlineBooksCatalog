@@ -13,7 +13,7 @@ public abstract class AbstractEntityService<T> implements EntityService<T> {
 
 	@Override
 	@Transactional
-	public T create(T entity) throws IllegalAccessException {
+	public T create(T entity) {
 		return repository.create(entity);
 	}
 
@@ -24,7 +24,7 @@ public abstract class AbstractEntityService<T> implements EntityService<T> {
 
 	@Override
 	@Transactional
-	public T update(T entity) throws IllegalAccessException {
+	public T update(T entity) {
 		return repository.update(entity);
 	}
 

@@ -1,11 +1,8 @@
 package com.softserveinc.booklibrary.dao.impl;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
-import java.util.Arrays;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Id;
 import javax.persistence.PersistenceContext;
 
 import com.softserveinc.booklibrary.dao.EntityRepository;
@@ -23,23 +20,11 @@ public abstract class AbstractEntityRepository<T> implements EntityRepository<T>
 
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
-	public T create(T entity) throws IllegalAccessException {
-		if (entity != null && isIdFieldEmpty(entity)) {
-			entityManager.persist(entity);
-			return entity;
-		}
-		return null;
-	}
+	public abstract T create(T entity);
 
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
-	public T update(T entity) throws IllegalAccessException {
-		if (entity != null && !isIdFieldEmpty(entity)) {
-			entityManager.merge(entity);
-			return entity;
-		}
-		return null;
-	}
+	public abstract T update(T entity);
 
 	@Override
 	public T getById(Integer id) {
@@ -66,16 +51,5 @@ public abstract class AbstractEntityRepository<T> implements EntityRepository<T>
 	public Class<T> getGenericClass() {
 		return (Class<T>) ((ParameterizedType) getClass()
 				.getGenericSuperclass()).getActualTypeArguments()[0];
-	}
-
-	public boolean isIdFieldEmpty(T entity) throws IllegalAccessException {
-		Field field = Arrays.stream(entity.getClass().getDeclaredFields())
-				.filter(f -> f.isAnnotationPresent(Id.class))
-				.findFirst().orElse(null);
-		if (field != null) {
-			field.setAccessible(true);
-			return field.get(entity) == null;
-		}
-		return true;
 	}
 }
