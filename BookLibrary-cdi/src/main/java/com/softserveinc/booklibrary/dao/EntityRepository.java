@@ -1,13 +1,13 @@
 package com.softserveinc.booklibrary.dao;
 
-public interface EntityRepository<T> {
+public interface EntityRepository<T, K> {
 
 	T create(T entity);
 
 	T update(T entity);
 
-	T getById(Integer id);
+	T getById(K id);
 
-	boolean delete(Integer id);
+	boolean delete(K id);
 
 }
