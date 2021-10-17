@@ -1,8 +1,7 @@
 package com.softserveinc.booklibrary.service.impl;
 
-import javax.persistence.EntityNotFoundException;
-
 import com.softserveinc.booklibrary.dao.EntityRepository;
+import com.softserveinc.booklibrary.exception.NotValidIdValueException;
 import com.softserveinc.booklibrary.service.EntityService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,28 +14,26 @@ public abstract class AbstractEntityService<T> implements EntityService<T> {
 
 	@Override
 	@Transactional
-	public T create(T entity) throws IllegalAccessException {
-		return repository.create(entity);
-	}
+	public abstract T create(T entity);
+
+	@Override
+	@Transactional
+	public abstract T update(T entity);
 
 	@Override
 	public T getById(Integer id) {
-		T entity = repository.getById(id);
-		if (entity == null) {
-			throw new EntityNotFoundException();    // later must create custom exception
+		if (id == null || id <= 0) {
+			throw new NotValidIdValueException(id);
 		}
-		return entity;
+		return repository.getById(id);
 	}
 
 	@Override
 	@Transactional
-	public T update(T entity) throws IllegalAccessException {
-		return repository.update(entity);
-	}
-
-	@Override
-	@Transactional
-	public void delete(Integer id) {
-		repository.delete(id);
+	public boolean delete(Integer id) {
+		if (id == null || id <= 0) {
+			throw new NotValidIdValueException(id);
+		}
+		return repository.delete(id);
 	}
 }

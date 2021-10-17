@@ -7,6 +7,6 @@ public interface EntityService<T> {
 
 	T update(T entity) throws IllegalAccessException;
 
-	void delete(Integer id);
+	boolean delete(Integer id);
 
 }
