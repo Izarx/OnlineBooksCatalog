@@ -29,7 +29,7 @@ public class HomeController {
 		author.setFirstName("Ihor");
 		author.setLastName("Zakharko");
 
-		Author actualAuthor =  authorService.create(author);
+		Author actualAuthor = authorService.create(author);
 
 		LOGGER.info("Author {} with ID {}", actualAuthor, actualAuthor.getAuthorId());
 		LOGGER.info("*****************************************************");
