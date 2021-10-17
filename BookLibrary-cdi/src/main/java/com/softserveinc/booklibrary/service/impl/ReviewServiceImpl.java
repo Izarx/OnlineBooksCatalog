@@ -13,4 +13,14 @@ public class ReviewServiceImpl extends AbstractEntityService<Review> implements 
 	public ReviewServiceImpl(ReviewRepository reviewRepository) {
 		repository = reviewRepository;
 	}
+
+	@Override
+	public Review create(Review entity) {
+		return null;
+	}
+
+	@Override
+	public Review update(Review entity) {
+		return null;
+	}
 }

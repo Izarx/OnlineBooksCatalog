@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import com.softserveinc.booklibrary.dao.EntityRepository;
+import com.softserveinc.booklibrary.exception.NotValidIdValueException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Propagation;
@@ -28,24 +29,24 @@ public abstract class AbstractEntityRepository<T> implements EntityRepository<T>
 
 	@Override
 	public T getById(Integer id) {
-		if (id != null) {
-			return entityManager.find(getGenericClass(), id);
+		if (id == null || id <= 0) {
+			throw new NotValidIdValueException(id);
 		}
-		return null;
+		return entityManager.find(getGenericClass(), id);
 	}
 
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
 	public boolean delete(Integer id) {
-		T entity = null;
-		if (id != null) {
-			entity = entityManager.find(getGenericClass(), id);
+		if (id == null || id <= 0) {
+			throw new NotValidIdValueException(id);
 		}
-		if (entity != null) {
-			entityManager.remove(entity);
-			return true;
+		T entity = entityManager.find(getGenericClass(), id);
+		if (entity == null) {
+			return false;
 		}
-		return false;
+		entityManager.remove(entity);
+		return true;
 	}
 
 	public Class<T> getGenericClass() {

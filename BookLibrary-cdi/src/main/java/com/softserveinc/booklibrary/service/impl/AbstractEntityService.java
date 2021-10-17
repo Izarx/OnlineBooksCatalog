@@ -14,13 +14,11 @@ public abstract class AbstractEntityService<T> implements EntityService<T> {
 
 	@Override
 	@Transactional
-	public T create(T entity) {
-		T actualEntity = null;
-		if (entity != null) {
-			actualEntity = repository.create(entity);
-		}
-		return actualEntity;
-	}
+	public abstract T create(T entity);
+
+	@Override
+	@Transactional
+	public abstract T update(T entity);
 
 	@Override
 	public T getById(Integer id) {
@@ -32,13 +30,10 @@ public abstract class AbstractEntityService<T> implements EntityService<T> {
 
 	@Override
 	@Transactional
-	public T update(T entity) {
-		return repository.update(entity);
-	}
-
-	@Override
-	@Transactional
-	public void delete(Integer id) {
-		repository.delete(id);
+	public boolean delete(Integer id) {
+		if (id == null || id <= 0) {
+			throw new NotValidIdValueException(id);
+		}
+		return repository.delete(id);
 	}
 }

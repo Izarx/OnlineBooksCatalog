@@ -13,4 +13,14 @@ public class BookServiceImpl extends AbstractEntityService<Book> implements Book
 	public BookServiceImpl(BookRepository bookRepository) {
 		repository = bookRepository;
 	}
+
+	@Override
+	public Book create(Book entity) {
+		return null;
+	}
+
+	@Override
+	public Book update(Book entity) {
+		return null;
+	}
 }
