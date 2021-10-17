@@ -26,13 +26,17 @@ public class HomeController {
 	@GetMapping(value = "/create")
 	public String create() {
 		Author author = new Author();
-		author.setAuthorId(50);
 		author.setFirstName("Ihor");
 		author.setLastName("Zakharko");
 
 		Author actualAuthor =  authorService.create(author);
 
-		LOGGER.info("Author {} with ID", actualAuthor);
+		LOGGER.info("Author {} with ID {}", actualAuthor, actualAuthor.getAuthorId());
+		LOGGER.info("*****************************************************");
+
+		actualAuthor.setFirstName("NotIhor");
+		Author updatedAuthor = authorService.update(actualAuthor);
+		LOGGER.info("Updatetd Author {} with ID {}", updatedAuthor, updatedAuthor.getAuthorId());
 		LOGGER.info("*****************************************************");
 		return "CREATE";
 	}
