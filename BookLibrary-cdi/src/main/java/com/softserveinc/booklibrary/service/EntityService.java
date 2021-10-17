@@ -1,12 +1,13 @@
 package com.softserveinc.booklibrary.service;
 
-public interface EntityService<T> {
-	T create(T entity);
+public interface EntityService<T, K> {
 
-	T getById(Integer id);
+	T create(T entity);
 
 	T update(T entity);
 
-	boolean delete(Integer id);
+	T getById(K id);
+
+	boolean delete(K id);
 
 }
