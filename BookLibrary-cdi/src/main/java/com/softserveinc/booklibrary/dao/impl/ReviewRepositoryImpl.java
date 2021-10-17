@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class ReviewRepositoryImpl extends AbstractEntityRepository<Review, Integer> implements ReviewRepository {
 	@Override
-	protected Integer getId(Review review) {
+	public Integer getEntityId(Review review) {
 		return review.getReviewId();
 	}
 }

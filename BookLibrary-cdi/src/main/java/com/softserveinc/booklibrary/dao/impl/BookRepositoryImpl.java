@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class BookRepositoryImpl extends AbstractEntityRepository<Book, Integer> implements BookRepository {
 	@Override
-	protected Integer getId(Book book) {
+	public Integer getEntityId(Book book) {
 		return book.getBookId();
 	}
 }

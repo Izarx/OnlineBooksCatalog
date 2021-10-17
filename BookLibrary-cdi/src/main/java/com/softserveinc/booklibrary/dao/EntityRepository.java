@@ -10,4 +10,6 @@ public interface EntityRepository<T, K> {
 
 	boolean delete(K id);
 
+	K getEntityId(T entity);
+
 }

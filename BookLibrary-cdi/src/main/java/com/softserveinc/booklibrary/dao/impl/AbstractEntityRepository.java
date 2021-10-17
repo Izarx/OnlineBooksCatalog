@@ -1,7 +1,6 @@
 package com.softserveinc.booklibrary.dao.impl;
 
 import java.lang.reflect.ParameterizedType;
-import java.util.Arrays;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
@@ -29,7 +28,7 @@ public abstract class AbstractEntityRepository<T, K> implements EntityRepository
 		if (entity == null) {
 			throw new NullEntityException();
 		}
-		K id = getId(entity);
+		K id = getEntityId(entity);
 		if (id != null) {
 			throw new NotValidIdValueException(id);
 		}
@@ -43,7 +42,7 @@ public abstract class AbstractEntityRepository<T, K> implements EntityRepository
 		if (entity == null) {
 			throw new NullEntityException();
 		}
-		K id = getId(entity);
+		K id = getEntityId(entity);
 		if (id == null) {
 			throw new NotValidIdValueException(id);
 		}
@@ -80,5 +79,6 @@ public abstract class AbstractEntityRepository<T, K> implements EntityRepository
 				.getGenericSuperclass()).getActualTypeArguments()[0];
 	}
 
-	protected abstract K getId(T entity);
+	@Override
+	public abstract K getEntityId(T entity);
 }
