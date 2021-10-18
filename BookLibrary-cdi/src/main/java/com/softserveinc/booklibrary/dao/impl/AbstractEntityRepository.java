@@ -57,7 +57,7 @@ public abstract class AbstractEntityRepository<T extends EntityLibrary<K>, K> im
 	@Override
 	public T getById(K id) {
 		if (id == null) {
-			throw new NotValidIdException(id);
+			throw new NotValidIdException(null);
 		}
 		return entityManager.find(type, id);
 	}
