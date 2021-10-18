@@ -6,7 +6,6 @@ import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
 import com.zaxxer.hikari.HikariDataSource;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -23,21 +22,18 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 public class HibernateConfiguration {
 
-	@Autowired
-	private Environment env;
-
 	@Bean
-	public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
+	public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource, Environment env) {
 		LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
 		entityManagerFactoryBean.setDataSource(dataSource);
 		entityManagerFactoryBean.setPackagesToScan(env.getProperty("hibernate.package"));
 		entityManagerFactoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
-		entityManagerFactoryBean.setJpaProperties(hibernateProperties());
+		entityManagerFactoryBean.setJpaProperties(hibernateProperties(env));
 		return entityManagerFactoryBean;
 	}
 
 	@Bean
-	public DataSource dataSource() {
+	public DataSource dataSource(Environment env) {
 		HikariDataSource dataSource = new HikariDataSource();
 		dataSource.setDriverClassName(env.getProperty("hibernate.driver"));
 		dataSource.setJdbcUrl(env.getProperty("hibernate.jdbcurl"));
@@ -59,7 +55,7 @@ public class HibernateConfiguration {
 		return new PersistenceExceptionTranslationPostProcessor();
 	}
 
-	private Properties hibernateProperties() {
+	private Properties hibernateProperties(Environment env) {
 		Properties hibernateProperties = new Properties();
 		hibernateProperties.setProperty("hibernate.dialect", env.getProperty("hibernate.dialect"));
 		hibernateProperties.setProperty("hibernate.show_sql", env.getProperty("hibernate.show_sql"));

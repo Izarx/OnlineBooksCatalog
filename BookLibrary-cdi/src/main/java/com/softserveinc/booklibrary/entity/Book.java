@@ -19,7 +19,7 @@ import org.hibernate.annotations.CreationTimestamp;
 @Setter
 @Entity
 @Table(name = "books")
-public class Book {
+public class Book implements EntityLibrary<Integer> {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "book_id", nullable = false)
@@ -44,4 +44,8 @@ public class Book {
 	@ManyToMany(mappedBy = "books")
 	private Set<Author> authors;
 
+	@Override
+	public Integer getEntityId() {
+		return bookId;
+	}
 }

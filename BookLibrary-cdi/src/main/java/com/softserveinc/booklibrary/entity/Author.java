@@ -21,7 +21,7 @@ import org.hibernate.annotations.CreationTimestamp;
 @Setter
 @Entity
 @Table(name = "authors")
-public class Author {
+public class Author implements EntityLibrary<Integer> {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,4 +45,9 @@ public class Author {
 			inverseJoinColumns = {@JoinColumn(name = "book_id")}
 	)
 	private Set<Book> books;
+
+	@Override
+	public Integer getEntityId() {
+		return authorId;
+	}
 }

@@ -20,7 +20,7 @@ import org.hibernate.annotations.CreationTimestamp;
 @Getter
 @Entity
 @Table(name = "reviews")
-public class Review {
+public class Review implements EntityLibrary<Integer> {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,4 +44,9 @@ public class Review {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "book_id", nullable = false)
 	private Book book;
+
+	@Override
+	public Integer getEntityId() {
+		return reviewId;
+	}
 }
