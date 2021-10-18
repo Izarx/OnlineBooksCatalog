@@ -14,9 +14,6 @@ public class AuthorRepositoryImpl extends AbstractEntityRepository<Author, Integ
 		if (firstName == null || firstName.length() > Author.FIRST_NAME_LENGTH) {
 			return false;
 		}
-		if (lastName == null || lastName.length() > Author.LAST_NAME_LENGTH) {
-			return false;
-		}
-		return true;
+		return lastName != null && lastName.length() <= Author.LAST_NAME_LENGTH;
 	}
 }

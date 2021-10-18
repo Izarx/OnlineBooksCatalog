@@ -20,9 +20,6 @@ public class BookRepositoryImpl extends AbstractEntityRepository<Book, Integer> 
 		if (yearPublished == null || yearPublished < 0 || yearPublished > LocalDate.now().getYear()) {
 			return false;
 		}
-		if (publisher == null || publisher.length() > Book.PUBLISHER_LENGTH) {
-			return false;
-		}
-		return true;
+		return publisher != null && publisher.length() <= Book.PUBLISHER_LENGTH;
 	}
 }

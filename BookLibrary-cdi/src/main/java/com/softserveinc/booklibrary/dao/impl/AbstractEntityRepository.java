@@ -18,14 +18,13 @@ public abstract class AbstractEntityRepository<T extends EntityLibrary<K>, K> im
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(AbstractEntityRepository.class);
 	private final Class<T> type;
+	@PersistenceContext
+	protected EntityManager entityManager;
 
 	public AbstractEntityRepository() {
 		type = (Class<T>) ((ParameterizedType) getClass()
 				.getGenericSuperclass()).getActualTypeArguments()[0];
 	}
-
-	@PersistenceContext
-	protected EntityManager entityManager;
 
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)

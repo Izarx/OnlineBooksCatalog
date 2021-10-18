@@ -26,10 +26,7 @@ public class ReviewRepositoryImpl extends AbstractEntityRepository<Review, Integ
 		if (rating == null || rating < 1 || rating > 5) {
 			return false;
 		}
-		if (book == null || book.getBookId() == null ||
-				bookRepository.getById(book.getBookId()) == null || !bookRepository.isEntityValid(book)) {
-			return false;
-		}
-		return true;
+		return book != null && book.getBookId() != null &&
+				bookRepository.getById(book.getBookId()) != null && bookRepository.isEntityValid(book);
 	}
 }
