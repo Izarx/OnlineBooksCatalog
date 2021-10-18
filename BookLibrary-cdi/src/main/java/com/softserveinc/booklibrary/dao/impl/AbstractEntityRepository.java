@@ -7,30 +7,35 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.PersistenceContext;
 
 import com.softserveinc.booklibrary.dao.EntityRepository;
-import com.softserveinc.booklibrary.entity.Author;
-import com.softserveinc.booklibrary.exception.NotValidIdValueException;
-import com.softserveinc.booklibrary.exception.NullEntityException;
+import com.softserveinc.booklibrary.entity.EntityLibrary;
+import com.softserveinc.booklibrary.exception.NotValidEntityException;
+import com.softserveinc.booklibrary.exception.NotValidIdException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-public abstract class AbstractEntityRepository<T, K> implements EntityRepository<T, K> {
+public abstract class AbstractEntityRepository<T extends EntityLibrary<K>, K> implements EntityRepository<T, K> {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(AbstractEntityRepository.class);
-
+	private final Class<T> type;
 	@PersistenceContext
 	protected EntityManager entityManager;
+
+	public AbstractEntityRepository() {
+		type = (Class<T>) ((ParameterizedType) getClass()
+				.getGenericSuperclass()).getActualTypeArguments()[0];
+	}
 
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
 	public T create(T entity) {
-		if (entity == null) {
-			throw new NullEntityException();
+		if (!isEntityValid(entity)) {
+			throw new NotValidEntityException();
 		}
-		K id = getEntityId(entity);
+		K id = entity.getEntityId();
 		if (id != null) {
-			throw new NotValidIdValueException(id);
+			throw new NotValidIdException(id);
 		}
 		entityManager.persist(entity);
 		return entity;
@@ -39,15 +44,12 @@ public abstract class AbstractEntityRepository<T, K> implements EntityRepository
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
 	public T update(T entity) {
-		if (entity == null) {
-			throw new NullEntityException();
+		if (!isEntityValid(entity)) {
+			throw new NotValidEntityException();
 		}
-		K id = getEntityId(entity);
-		if (id == null) {
-			throw new NotValidIdValueException(id);
-		}
-		if (entityManager.find(Author.class, id) == null) {
-			throw new EntityNotFoundException(entity.getClass() + " with ID = " + id + " not found!");
+		K id = entity.getEntityId();
+		if (id == null || entityManager.find(type, id) == null) {
+			throw new NotValidIdException(id);
 		}
 		return entityManager.merge(entity);
 	}
@@ -55,30 +57,25 @@ public abstract class AbstractEntityRepository<T, K> implements EntityRepository
 	@Override
 	public T getById(K id) {
 		if (id == null) {
-			throw new NotValidIdValueException(id);
+			throw new NotValidIdException(null);
 		}
-		return entityManager.find(getGenericClass(), id);
+		return entityManager.find(type, id);
 	}
 
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
 	public boolean delete(K id) {
 		if (id == null) {
-			throw new NotValidIdValueException(id);
-		}
-		T entity = entityManager.find(getGenericClass(), id);
-		if (entity == null) {
 			return false;
 		}
-		entityManager.remove(entity);
-		return true;
-	}
-
-	private Class<T> getGenericClass() {
-		return (Class<T>) ((ParameterizedType) getClass()
-				.getGenericSuperclass()).getActualTypeArguments()[0];
+		T entity = entityManager.find(type, id);
+		if (entity != null) {
+			entityManager.remove(entity);
+			return true;
+		}
+		return false;
 	}
 
 	@Override
-	public abstract K getEntityId(T entity);
+	public abstract boolean isEntityValid(T entity);
 }

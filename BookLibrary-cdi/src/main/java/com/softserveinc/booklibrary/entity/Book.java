@@ -19,13 +19,17 @@ import org.hibernate.annotations.CreationTimestamp;
 @Setter
 @Entity
 @Table(name = "books")
-public class Book {
+public class Book implements EntityLibrary<Integer> {
+
+	public static final int NAME_LENGTH = 512;
+	public static final int PUBLISHER_LENGTH = 256;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "book_id", nullable = false)
 	private Integer bookId;
 
-	@Column(name = "name", nullable = false, length = 512)
+	@Column(name = "name", nullable = false, length = NAME_LENGTH)
 	private String name;
 
 	@Column(name = "year_published", nullable = false)
@@ -34,7 +38,7 @@ public class Book {
 	@Column(name = "isbn", nullable = false, unique = true)
 	private Long isbn;
 
-	@Column(name = "publisher", length = 256)
+	@Column(name = "publisher", length = PUBLISHER_LENGTH)
 	private String publisher;
 
 	@CreationTimestamp  // date created by creating instance forbidden for update and insert
@@ -44,4 +48,8 @@ public class Book {
 	@ManyToMany(mappedBy = "books")
 	private Set<Author> authors;
 
+	@Override
+	public Integer getEntityId() {
+		return bookId;
+	}
 }
