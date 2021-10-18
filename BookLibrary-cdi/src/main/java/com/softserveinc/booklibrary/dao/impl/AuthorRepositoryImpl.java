@@ -8,7 +8,15 @@ import org.springframework.stereotype.Repository;
 public class AuthorRepositoryImpl extends AbstractEntityRepository<Author, Integer> implements AuthorRepository {
 
 	@Override
-	public Integer getEntityId(Author author) {
-		return author.getAuthorId();
+	public boolean isEntityValid(Author author) {
+		String firstName = author.getFirstName();
+		String lastName = author.getLastName();
+		if (firstName == null || firstName.length() > Author.FIRST_NAME_LENGTH) {
+			return false;
+		}
+		if (lastName == null || lastName.length() > Author.LAST_NAME_LENGTH) {
+			return false;
+		}
+		return true;
 	}
 }

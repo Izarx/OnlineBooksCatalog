@@ -23,15 +23,18 @@ import org.hibernate.annotations.CreationTimestamp;
 @Table(name = "authors")
 public class Author implements EntityLibrary<Integer> {
 
+	public static final int FIRST_NAME_LENGTH = 512;
+	public static final int LAST_NAME_LENGTH = 512;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "author_id", nullable = false)
 	private Integer authorId;
 
-	@Column(name = "first_name", nullable = false, length = 512)
+	@Column(name = "first_name", nullable = false, length = FIRST_NAME_LENGTH)
 	private String firstName;
 
-	@Column(name = "last_name", length = 512)
+	@Column(name = "last_name", length = LAST_NAME_LENGTH)
 	private String lastName;
 
 	@CreationTimestamp  // date created by creating instance forbidden for update and insert
