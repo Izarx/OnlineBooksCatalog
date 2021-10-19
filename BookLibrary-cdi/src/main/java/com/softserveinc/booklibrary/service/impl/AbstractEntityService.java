@@ -1,7 +1,9 @@
 package com.softserveinc.booklibrary.service.impl;
 
+import java.io.Serializable;
+
 import com.softserveinc.booklibrary.dao.EntityRepository;
-import com.softserveinc.booklibrary.entity.EntityLibrary;
+import com.softserveinc.booklibrary.entity.MyAppEntity;
 import com.softserveinc.booklibrary.exception.NotValidEntityException;
 import com.softserveinc.booklibrary.exception.NotValidIdException;
 import com.softserveinc.booklibrary.service.EntityService;
@@ -9,10 +11,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
 
-public abstract class AbstractEntityService<T extends EntityLibrary<K>, K> implements EntityService<T, K> {
+public abstract class AbstractEntityService<T extends MyAppEntity<? extends Serializable>> implements EntityService<T> {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(AbstractEntityService.class);
-	protected EntityRepository<T, K> repository;
+	protected EntityRepository<T> repository;
 
 	@Override
 	@Transactional
@@ -20,7 +22,7 @@ public abstract class AbstractEntityService<T extends EntityLibrary<K>, K> imple
 		if (!repository.isEntityValid(entity)) {
 			throw new NotValidEntityException();
 		}
-		K id = entity.getEntityId();
+		Serializable id = entity.getEntityId();
 		if (id != null) {
 			throw new NotValidIdException(id);
 		}
@@ -33,7 +35,7 @@ public abstract class AbstractEntityService<T extends EntityLibrary<K>, K> imple
 		if (!repository.isEntityValid(entity)) {
 			throw new NotValidEntityException();
 		}
-		K id = entity.getEntityId();
+		Serializable id = entity.getEntityId();
 		if (id == null || repository.getById(id) == null) {
 			throw new NotValidIdException(id);
 		}
@@ -41,7 +43,7 @@ public abstract class AbstractEntityService<T extends EntityLibrary<K>, K> imple
 	}
 
 	@Override
-	public T getById(K id) {
+	public T getById(Serializable id) {
 		if (id == null) {
 			throw new NotValidIdException(null);
 		}
@@ -50,7 +52,7 @@ public abstract class AbstractEntityService<T extends EntityLibrary<K>, K> imple
 
 	@Override
 	@Transactional
-	public boolean delete(K id) {
+	public boolean delete(Serializable id) {
 		if (id == null) {
 			return false;
 		}
