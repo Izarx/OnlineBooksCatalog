@@ -10,19 +10,20 @@ import {FormsModule} from "@angular/forms";
 import {AppRoutingModule} from "./app-routing.module";
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    AuthorsComponent,
-    BooksComponent,
-    ReviewsComponent,
-    HomeComponent,
-  ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    AppRoutingModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        AuthorsComponent,
+        BooksComponent,
+        ReviewsComponent,
+        HomeComponent,
+    ],
+    imports: [
+        BrowserModule,
+        FormsModule,
+        AppRoutingModule
+    ],
+    providers: [],
+    bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

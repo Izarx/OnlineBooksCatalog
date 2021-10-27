@@ -22,6 +22,13 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 public class HibernateConfiguration {
 
+	private static Properties hibernateProperties(Environment env) {
+		Properties hibernateProperties = new Properties();
+		hibernateProperties.setProperty("hibernate.dialect", env.getProperty("hibernate.dialect"));
+		hibernateProperties.setProperty("hibernate.show_sql", env.getProperty("hibernate.show_sql"));
+		return hibernateProperties;
+	}
+
 	@Bean
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource, Environment env) {
 		LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
@@ -53,12 +60,5 @@ public class HibernateConfiguration {
 	@Bean
 	public PersistenceExceptionTranslationPostProcessor exceptionTranslation() {
 		return new PersistenceExceptionTranslationPostProcessor();
-	}
-
-	private static Properties hibernateProperties(Environment env) {
-		Properties hibernateProperties = new Properties();
-		hibernateProperties.setProperty("hibernate.dialect", env.getProperty("hibernate.dialect"));
-		hibernateProperties.setProperty("hibernate.show_sql", env.getProperty("hibernate.show_sql"));
-		return hibernateProperties;
 	}
 }
