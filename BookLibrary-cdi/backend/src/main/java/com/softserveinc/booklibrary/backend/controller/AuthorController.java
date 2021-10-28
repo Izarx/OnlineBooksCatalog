@@ -1,5 +1,8 @@
 package com.softserveinc.booklibrary.backend.controller;
 
+import java.util.List;
+
+import com.softserveinc.booklibrary.backend.dto.AuthorConvertor;
 import com.softserveinc.booklibrary.backend.dto.AuthorDto;
 import com.softserveinc.booklibrary.backend.entity.Author;
 import com.softserveinc.booklibrary.backend.service.AuthorService;
@@ -15,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/authors")
+@RequestMapping("/api/authors")
 public class AuthorController {
 
 	private final AuthorService authorService;
@@ -36,7 +39,7 @@ public class AuthorController {
 		if (authorDto == null) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
-		return ResponseEntity.ok(new AuthorDto(authorService.create(authorDto.convertToAuthor())));
+		return ResponseEntity.ok(new AuthorDto(authorService.create(authorDto.convertDtoToEntity())));
 	}
 
 	@PatchMapping("/update")
@@ -44,7 +47,7 @@ public class AuthorController {
 		if (authorDto == null) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
-		return ResponseEntity.ok(new AuthorDto(authorService.create(authorDto.convertToAuthor())));
+		return ResponseEntity.ok(new AuthorDto(authorService.create(authorDto.convertDtoToEntity())));
 	}
 
 	@DeleteMapping("/delete/{id}")
@@ -52,6 +55,12 @@ public class AuthorController {
 		return authorService.delete(id) ?
 				ResponseEntity.ok().build() :
 				ResponseEntity.notFound().build();
+	}
+
+	@GetMapping
+	public ResponseEntity<List<AuthorDto>> getAllAuthors() {
+		return ResponseEntity.status(HttpStatus.OK)
+				.body(AuthorConvertor.convertAuthorListToDtoList(authorService.getAll()));
 	}
 
 }

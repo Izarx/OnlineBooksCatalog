@@ -16,4 +16,5 @@ public class AuthorRepositoryImpl extends AbstractEntityRepository<Author> imple
 		}
 		return lastName != null && lastName.length() <= Author.LAST_NAME_LENGTH;
 	}
+
 }

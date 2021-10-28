@@ -1,6 +1,7 @@
 package com.softserveinc.booklibrary.backend.service.impl;
 
 import java.io.Serializable;
+import java.util.List;
 
 import com.softserveinc.booklibrary.backend.entity.MyAppEntity;
 import com.softserveinc.booklibrary.backend.exception.NotValidEntityException;
@@ -57,5 +58,10 @@ public abstract class AbstractEntityService<T extends MyAppEntity<? extends Seri
 			return false;
 		}
 		return repository.delete(id);
+	}
+
+	@Override
+	public List<T> getAll() {
+		return repository.getAll();
 	}
 }
