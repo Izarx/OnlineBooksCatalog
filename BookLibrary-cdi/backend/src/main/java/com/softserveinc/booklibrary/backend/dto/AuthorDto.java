@@ -4,7 +4,7 @@ import com.softserveinc.booklibrary.backend.entity.Author;
 import lombok.Getter;
 
 @Getter
-public final class AuthorDto implements EntityDto<Author> {
+public final class AuthorDto implements MyAppDto<Author> {
 
 	private final Integer authorId;
 	private final String firstName;

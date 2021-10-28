@@ -2,7 +2,6 @@ package com.softserveinc.booklibrary.backend.controller;
 
 import java.util.List;
 
-import com.softserveinc.booklibrary.backend.dto.AuthorConvertor;
 import com.softserveinc.booklibrary.backend.dto.AuthorDto;
 import com.softserveinc.booklibrary.backend.entity.Author;
 import com.softserveinc.booklibrary.backend.service.AuthorService;
@@ -59,8 +58,7 @@ public class AuthorController {
 
 	@GetMapping
 	public ResponseEntity<List<AuthorDto>> getAllAuthors() {
-		return ResponseEntity.status(HttpStatus.OK)
-				.body(AuthorConvertor.convertAuthorListToDtoList(authorService.getAll()));
+		return null;
 	}
 
 }
