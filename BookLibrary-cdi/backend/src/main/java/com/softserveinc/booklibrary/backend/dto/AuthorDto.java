@@ -4,7 +4,7 @@ import com.softserveinc.booklibrary.backend.entity.Author;
 import lombok.Getter;
 
 @Getter
-public final class AuthorDto {
+public final class AuthorDto implements MyAppDto<Author> {
 
 	private final Integer authorId;
 	private final String firstName;
@@ -16,7 +16,8 @@ public final class AuthorDto {
 		lastName = author.getLastName();
 	}
 
-	public Author convertToAuthor() {
+	@Override
+	public Author convertDtoToEntity() {
 		Author author = new Author();
 		author.setAuthorId(authorId);
 		author.setFirstName(firstName);

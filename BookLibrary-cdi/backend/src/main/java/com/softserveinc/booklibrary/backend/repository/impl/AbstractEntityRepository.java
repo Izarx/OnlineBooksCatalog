@@ -2,9 +2,11 @@ package com.softserveinc.booklibrary.backend.repository.impl;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaQuery;
 
 import com.softserveinc.booklibrary.backend.entity.MyAppEntity;
 import com.softserveinc.booklibrary.backend.exception.NotValidEntityException;
@@ -78,4 +80,11 @@ public abstract class AbstractEntityRepository<T extends MyAppEntity<? extends S
 
 	@Override
 	public abstract boolean isEntityValid(T entity);
+
+	@Override
+	public List<T> getAll() {
+		CriteriaQuery<T> criteriaQuery = entityManager.getCriteriaBuilder().createQuery(type);
+		CriteriaQuery<T> getAll = criteriaQuery.select(criteriaQuery.from(type));
+		return entityManager.createQuery(getAll).getResultList();
+	}
 }
