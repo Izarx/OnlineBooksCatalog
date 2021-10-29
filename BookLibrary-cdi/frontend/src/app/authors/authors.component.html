@@ -1,7 +1,6 @@
-<div class="row">
+<div class="row m-t-30">
 	<div class="col-md-12">
 		<!-- DATA TABLE -->
-		<h3 class="title-5 m-b-35">data table</h3>
 		<div class="table-data__tool">
 			<div class="table-data__tool-left">
 				<button class="au-btn-filter">
@@ -14,11 +13,11 @@
 				</button>
 			</div>
 		</div>
-		<div class="table-responsive table-responsive-data2">
-			<table class="table table-data2">
+		<div class="table-responsive m-b-40">
+			<table class="table table-borderless table-data3">
 				<thead>
 				<tr>
-					<th>
+					<th style="vertical-align: top">
 						<label class="au-checkbox">
 							<input type="checkbox">
 							<span class="au-checkmark"></span>
@@ -28,15 +27,15 @@
 					<th></th>
 				</tr>
 				</thead>
-				<tbody>
-				<tr class="tr-shadow" *ngFor="let author of authors">
+				<tbody *ngFor="let author of authors">
+				<tr>
 					<td>
 						<label class="au-checkbox">
 							<input type="checkbox">
 							<span class="au-checkmark"></span>
 						</label>
 					</td>
-					<td>{{author.firstName}}</td>
+					<td>{{author.firstName + ' ' + author.lastName}}</td>
 					<td>
 						<div class="table-data-feature">
 							<button class="item" data-placement="top" data-toggle="tooltip" title="Edit">
