@@ -41,7 +41,11 @@
 							<button class="item" data-placement="top" data-toggle="tooltip" title="Edit">
 								<i class="zmdi zmdi-edit"></i>
 							</button>
-							<button class="item" data-placement="top" data-toggle="tooltip" title="Delete">
+							<button class="item"
+							        data-placement="top"
+							        data-toggle="tooltip"
+							        title="Delete"
+									(click)="deleteAuthor(author.authorId)">
 								<i class="zmdi zmdi-delete"></i>
 							</button>
 						</div>
