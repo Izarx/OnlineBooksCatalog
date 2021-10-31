@@ -1,43 +1,38 @@
-<!-- MENU SIDEBAR-->
-<aside class="menu-sidebar d-none d-lg-block">
-	<div class="logo">
-		<a [routerLink]="['/']">
-			Book Library
-		</a>
-	</div>
-	<div class="menu-sidebar__content js-scrollbar1">
-		<nav class="navbar-sidebar">
-			<ul class="list-unstyled navbar__list">
+<div id="wrapper">
+	<!-- MENU SIDEBAR-->
+	<nav class="navbar navbar-default top-navbar" role="navigation">
+		<div class="navbar-header">
+			<a class="navbar-brand" [routerLink]="['/']"><strong><i class="icon fa fa-book"></i> Book Library</strong></a>
+		</div>
+
+		<ul class="nav navbar-top-links navbar-right"></ul>
+	</nav>
+	<!--/. NAV TOP  -->
+	<nav class="navbar-default navbar-side" role="navigation">
+		<div class="sidebar-collapse">
+			<ul class="nav" id="main-menu">
+
 				<li [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active">
-					<a [routerLink]="['/']">
-						<i class="fas fa-map-marker-alt"></i>Home</a>
+					<a [routerLink]="['/']"><i class="fa fa-home"></i> Home</a>
 				</li>
 				<li routerLinkActive="active">
-					<a [routerLink]="['/authors']">
-						<i class="fas fa-table"></i>Authors</a>
+					<a [routerLink]="['/authors']"><i class="fa fa-male"></i> Authors</a>
 				</li>
 				<li routerLinkActive="active">
-					<a [routerLink]="['/books']">
-						<i class="fas fa-table"></i>Books</a>
+					<a [routerLink]="['/books']"><i class="fa fa-book"></i> Books</a>
 				</li>
+
 				<li routerLinkActive="active">
-					<a [routerLink]="['/reviews']">
-						<i class="fas fa-chart-bar"></i>Reviews</a>
+					<a [routerLink]="['/reviews']"><i class="fa fa-comment"></i> Responsive Tables</a>
 				</li>
 			</ul>
-		</nav>
-	</div>
-</aside>
-<!-- END MENU SIDEBAR-->
 
-<!-- PAGE CONTAINER-->
-<div class="page-container">
-	<!-- MAIN CONTENT-->
-	<div class="main-content">
-		<div class="section__content section__content--p30">
-			<router-outlet></router-outlet>
 		</div>
-	</div>
-	<!-- END MAIN CONTENT-->
+
+	</nav>
+	<!-- /. NAV SIDE  -->
+
+	<!-- PAGE CONTAINER-->
+	<router-outlet></router-outlet>
+	<!-- END PAGE CONTAINER-->
 </div>
-<!-- END PAGE CONTAINER-->
