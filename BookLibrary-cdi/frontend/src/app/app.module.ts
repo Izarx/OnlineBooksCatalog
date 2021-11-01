@@ -9,6 +9,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {AppRoutingModule} from "./app-routing.module";
 import {HttpClientModule} from "@angular/common/http";
 import { CreateAuthorComponent } from './authors/create-author/create-author.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
     declarations: [
@@ -24,7 +25,8 @@ import { CreateAuthorComponent } from './authors/create-author/create-author.com
         FormsModule,
         AppRoutingModule,
         HttpClientModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        NgbModule
     ],
     providers: [],
     bootstrap: [AppComponent]

@@ -1859,8 +1859,21 @@ pre code {
 }
 
 .row {
-	margin-right: -15px;
-	margin-left: -15px
+	--bs-gutter-x: 1.5rem;
+	--bs-gutter-y: 0;
+	display: flex;
+	flex-wrap: wrap;
+	margin-top: calc(-1 * var(--bs-gutter-y));
+	margin-right: calc(-0.5 * var(--bs-gutter-x));
+	margin-left: calc(-0.5 * var(--bs-gutter-x));
+}
+.row > * {
+	flex-shrink: 0;
+	width: 100%;
+	max-width: 100%;
+	padding-right: calc(var(--bs-gutter-x) * 0.5);
+	padding-left: calc(var(--bs-gutter-x) * 0.5);
+	margin-top: var(--bs-gutter-y);
 }
 
 .col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-xs-1, .col-xs-10, .col-xs-11, .col-xs-12, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9 {
@@ -7044,4 +7057,85 @@ button.close {
 	.hidden-print {
 		display: none !important
 	}
+}
+
+.d-flex {
+	display: flex !important;
+}
+
+.justify-content-between {
+	justify-content: space-between !important;
+}
+
+.p-2 {
+	padding: 0.5rem !important;
+}
+
+.g-5,
+.gy-5 {
+	--bs-gutter-y: 3rem;
+}
+
+.col-6 {
+	flex: 0 0 auto;
+	width: 50%;
+}
+
+.px-4 {
+	padding-right: 1.5rem !important;
+	padding-left: 1.5rem !important;
+}
+
+.g-5,
+.gx-5 {
+	--bs-gutter-x: 3rem;
+}
+
+.col {
+	flex: 1 0 0%;
+}
+
+.container,
+.container-fluid,
+.container-xxl,
+.container-xl,
+.container-lg,
+.container-md,
+.container-sm {
+	width: 100%;
+	padding-right: var(--bs-gutter-x, 0.75rem);
+	padding-left: var(--bs-gutter-x, 0.75rem);
+	margin-right: auto;
+	margin-left: auto;
+}
+
+@media (min-width: 576px) {
+	.container-sm, .container {
+		max-width: 540px;
+	}
+}
+@media (min-width: 768px) {
+	.container-md, .container-sm, .container {
+		max-width: 720px;
+	}
+}
+@media (min-width: 992px) {
+	.container-lg, .container-md, .container-sm, .container {
+		max-width: 960px;
+	}
+}
+@media (min-width: 1200px) {
+	.container-xl, .container-lg, .container-md, .container-sm, .container {
+		max-width: 1140px;
+	}
+}
+@media (min-width: 1400px) {
+	.container-xxl, .container-xl, .container-lg, .container-md, .container-sm, .container {
+		max-width: 1320px;
+	}
+}
+
+.select {
+	width: auto;
+	height: 30px
 }

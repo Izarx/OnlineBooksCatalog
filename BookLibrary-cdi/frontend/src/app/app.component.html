@@ -2,40 +2,38 @@
 	<!-- MENU SIDEBAR-->
 	<nav class="navbar navbar-default top-navbar" role="navigation">
 		<div class="navbar-header">
-			<a class="navbar-brand" [routerLink]="['/']"><strong><i class="fa fa-book"></i> Book Library</strong></a>
+			<a class="navbar-brand" [routerLink]="['/']">
+				<strong><i class="fa fa-book"></i>Library</strong>
+			</a>
 		</div>
-
-		<ul class="nav navbar-top-links navbar-right"></ul>
 	</nav>
 	<!--/. NAV TOP  -->
 	<nav class="navbar-default navbar-side" role="navigation">
 		<div class="sidebar-collapse">
 			<ul class="nav" id="main-menu">
 				<li [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active">
-					<a [routerLink]="['/']"><i class="fa fa-home"></i> Home</a>
+					<a [routerLink]="['/']"><i class="fa fa-home"></i>Home</a>
 				</li>
 				<li routerLinkActive="active">
-					<a [routerLink]="['/authors']"><i class="fa fa-male"></i> Authors</a>
+					<a [routerLink]="['/authors']"><i class="fa fa-male"></i>Authors</a>
 				</li>
 				<li routerLinkActive="active">
-					<a [routerLink]="['/books']"><i class="fa fa-book"></i> Books</a>
+					<a [routerLink]="['/books']"><i class="fa fa-book"></i>Books</a>
 				</li>
 
 				<li routerLinkActive="active">
-					<a [routerLink]="['/reviews']"><i class="fa fa-comment"></i> Responsive Tables</a>
+					<a [routerLink]="['/reviews']"><i class="fa fa-comment"></i>Reviews</a>
 				</li>
 			</ul>
-
 		</div>
-
 	</nav>
 	<!-- /. NAV SIDE  -->
 
 	<!-- PAGE CONTAINER-->
 	<div id="page-wrapper">
-		<div id="page-inner">
-			<router-outlet></router-outlet>
+		<div class="header page-header">
 		</div>
+		<router-outlet></router-outlet>
 	</div>
 	<!-- END PAGE CONTAINER-->
 </div>
