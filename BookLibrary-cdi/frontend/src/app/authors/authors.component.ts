@@ -10,10 +10,11 @@ import {AuthorService} from "../services/author.service";
 
 export class AuthorsComponent implements OnInit {
 
-    authors?: Author[]
+    authors: Author[] | undefined;
+    author: Author | undefined
 
-    constructor(private authorService : AuthorService) {
-    }
+    constructor(
+        private authorService : AuthorService) {}
 
     ngOnInit(): void {
         this.fetchAuthors()
@@ -29,12 +30,19 @@ export class AuthorsComponent implements OnInit {
             });
     }
 
+    createAuthor(author: Author) : void {
+        this.authorService.createAuthor(author).subscribe(
+            author => {
+                this.author = author;
+        })
+    }
+
     deleteAuthor(authorId : number) : void {
-        this.authorService.deleteAuthor(authorId)
-            .subscribe(() => {
+        this.authorService.deleteAuthor(authorId).subscribe(
+            () => {
                 this.fetchAuthors()
             },
-                error => {
+            error => {
                 console.log(error)
                 })
     }

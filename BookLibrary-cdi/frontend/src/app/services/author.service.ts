@@ -16,6 +16,10 @@ export class AuthorService {
     return this.httpClient.get<Author[]>(baseUrl)
   }
 
+  public createAuthor(author: Author) : Observable<Author> {
+    return this.httpClient.post<Author>(baseUrl + `/create`, author);
+  }
+
   public deleteAuthor(authorId : number) : Observable<void> {
     return this.httpClient.delete<void>(baseUrl + `/delete/${authorId}`);
   }

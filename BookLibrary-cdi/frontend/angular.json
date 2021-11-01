@@ -31,15 +31,10 @@
               "src/assets"
             ],
             "styles": [
-              "src/assets/css/bootstrap.css",
-              "src/assets/css/checkbox3.min.css",
-              "src/assets/css/font-awesome.css",
-              "src/assets/css/custom-styles.css",
-              "src/assets/css/dataTables.bootstrap.css",
-              "src/assets/css/morris-0.4.3.min.css",
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+            ]
           },
           "configurations": {
             "production": {
