@@ -28,4 +28,14 @@ export class AuthorsComponent implements OnInit {
                 console.log(error);
             });
     }
+
+    deleteAuthor(authorId : number) : void {
+        this.authorService.deleteAuthor(authorId)
+            .subscribe(() => {
+                this.fetchAuthors()
+            },
+                error => {
+                console.log(error)
+                })
+    }
 }

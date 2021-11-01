@@ -15,4 +15,8 @@ export class AuthorService {
   public getAuthors() : Observable<Author[]> {
     return this.httpClient.get<Author[]>(baseUrl)
   }
+
+  public deleteAuthor(authorId : number) : Observable<void> {
+    return this.httpClient.delete<void>(baseUrl + `/delete/${authorId}`);
+  }
 }
