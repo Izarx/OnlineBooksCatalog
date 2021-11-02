@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Author} from "../authors/model/author";
+import {Author} from "./model/author";
 import {Observable} from "rxjs";
 
-const baseUrl = 'http://localhost:4200/api/authors';
+const baseUrl = 'http://localhost:8080/api/authors';
 
 @Injectable({
   providedIn: 'root'

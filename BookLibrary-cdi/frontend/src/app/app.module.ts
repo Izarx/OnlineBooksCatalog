@@ -5,9 +5,10 @@ import {AuthorsComponent} from './authors/authors.component';
 import {BooksComponent} from './books/books.component';
 import {ReviewsComponent} from './reviews/reviews.component';
 import {HomeComponent} from './home/home.component';
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {AppRoutingModule} from "./app-routing.module";
 import {HttpClientModule} from "@angular/common/http";
+import { CreateAuthorComponent } from './authors/create-author/create-author.component';
 
 @NgModule({
     declarations: [
@@ -15,13 +16,15 @@ import {HttpClientModule} from "@angular/common/http";
         AuthorsComponent,
         BooksComponent,
         ReviewsComponent,
-        HomeComponent
+        HomeComponent,
+        CreateAuthorComponent
     ],
     imports: [
         BrowserModule,
         FormsModule,
         AppRoutingModule,
-        HttpClientModule
+        HttpClientModule,
+        ReactiveFormsModule
     ],
     providers: [],
     bootstrap: [AppComponent]

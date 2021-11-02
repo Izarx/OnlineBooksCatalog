@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Author} from "./model/author";
-import {AuthorService} from "../services/author.service";
+import {AuthorService} from "./author.service";
 
 @Component({
     selector: 'app-authors',
@@ -11,7 +11,7 @@ import {AuthorService} from "../services/author.service";
 export class AuthorsComponent implements OnInit {
 
     authors: Author[] | undefined;
-    author: Author | undefined
+    authorId: number | null | undefined = 0
 
     constructor(
         private authorService : AuthorService) {}
@@ -30,20 +30,16 @@ export class AuthorsComponent implements OnInit {
             });
     }
 
-    createAuthor(author: Author) : void {
-        this.authorService.createAuthor(author).subscribe(
-            author => {
-                this.author = author;
-        })
-    }
-
-    deleteAuthor(authorId : number) : void {
-        this.authorService.deleteAuthor(authorId).subscribe(
-            () => {
-                this.fetchAuthors()
-            },
-            error => {
-                console.log(error)
+    deleteAuthor(author : Author) : void {
+        this.authorId = author.authorId;
+        if (this.authorId !== 0 && this.authorId !== undefined && this.authorId !== null) {
+            this.authorService.deleteAuthor(this.authorId).subscribe(
+                () => {
+                    this.fetchAuthors()
+                },
+                error => {
+                    console.log(error)
                 })
+        }
     }
 }

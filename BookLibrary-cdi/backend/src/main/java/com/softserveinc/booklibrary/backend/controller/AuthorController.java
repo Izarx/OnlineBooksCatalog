@@ -6,6 +6,8 @@ import com.softserveinc.booklibrary.backend.dto.AuthorDto;
 import com.softserveinc.booklibrary.backend.dto.DtoEntityConverter;
 import com.softserveinc.booklibrary.backend.entity.Author;
 import com.softserveinc.booklibrary.backend.service.AuthorService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -21,6 +23,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/authors")
 public class AuthorController {
 
+	private static final Logger LOGGER = LoggerFactory.getLogger(AuthorController.class);
+
 	private final AuthorService authorService;
 
 	public AuthorController(AuthorService authorService) {
@@ -35,11 +39,12 @@ public class AuthorController {
 	}
 
 	@PostMapping("/create")
-	public ResponseEntity<AuthorDto> createAuthor(@RequestBody AuthorDto authorDto) {
-		if (authorDto == null) {
+	public ResponseEntity<AuthorDto> createAuthor(@RequestBody AuthorDto author) {
+		LOGGER.info("RequestBody is : {}", author);
+		if (author == null) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
-		return ResponseEntity.ok(new AuthorDto(authorService.create(authorDto.convertDtoToEntity())));
+		return ResponseEntity.ok(new AuthorDto(authorService.create(author.convertDtoToEntity())));
 	}
 
 	@PatchMapping("/update")

@@ -6,9 +6,12 @@ import lombok.Getter;
 @Getter
 public final class AuthorDto implements MyAppDto<Author> {
 
-	private final Integer authorId;
-	private final String firstName;
-	private final String lastName;
+	private Integer authorId;
+	private String firstName;
+	private String lastName;
+
+	public AuthorDto() {
+	}
 
 	public AuthorDto(Author author) {
 		authorId = author.getAuthorId();

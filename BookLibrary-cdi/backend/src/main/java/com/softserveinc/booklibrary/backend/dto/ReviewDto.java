@@ -6,10 +6,12 @@ import lombok.Getter;
 @Getter
 public final class ReviewDto implements MyAppDto<Review> {
 
-	private final Integer reviewId;
-	private final String commenterName;
-	private final String comment;
-	private final Integer rating;
+	private Integer reviewId;
+	private String commenterName;
+	private String comment;
+	private Integer rating;
+
+	public ReviewDto() {}
 
 	public ReviewDto(Review review) {
 		reviewId = review.getReviewId();
