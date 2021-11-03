@@ -1,0 +1,79 @@
+<div class="modal fade"
+     id="createAuthor"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="createAuthorLabel"
+     aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<form [formGroup]="form" (ngSubmit)="submit()">
+				<div class="modal-header">
+					<h4 class="modal-title"
+					    id="createAuthorLabel">Create New Author</h4>
+				</div>
+				<div class="modal-body">
+					<div class="sub-title">First Name</div>
+					<div>
+						<input type="text"
+						       class="form-control"
+						       placeholder="First Name"
+						       formControlName="firstName"
+						>
+					</div>
+					<div class="invalid-feedback" *ngIf="form.get('firstName').invalid && form.get('firstName').touched">
+						<small *ngIf="form.get('firstName').errors.required">
+							Field can't be empty!
+						</small>
+						<small *ngIf="form.get('firstName').errors.pattern">
+							Please, enter valid value!
+						</small>
+					</div>
+					<div class="sub-title">Last Name</div>
+					<div>
+						<input type="text"
+						       class="form-control"
+						       placeholder="Last Name"
+						       formControlName="lastName">
+					</div>
+					<div class="invalid-feedback" *ngIf="form.get('lastName').invalid && form.get('lastName').touched">
+						<small *ngIf="form.get('lastName').errors.pattern">
+							Please, enter valid value!
+						</small>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					<button type="button"
+					        class="btn btn-primary"
+					        [disabled]="form.invalid"
+					        data-dismiss="modal"
+					        data-toggle="modal"
+					        data-target="#createAuthorConfirmation"
+					>Save</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade"
+     id="createAuthorConfirmation"
+     tabindex="-1"
+     role="dialog"
+     aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-body">
+				<h4>Are you sure you want to create new author?</h4>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+				<button type="submit"
+				        class="btn btn-primary"
+				        data-dismiss="modal"
+				        (click)="submit()"
+				>Save</button>
+			</div>
+		</div>
+	</div>
+</div>

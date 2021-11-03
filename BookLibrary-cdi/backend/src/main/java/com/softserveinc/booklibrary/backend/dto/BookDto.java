@@ -6,12 +6,14 @@ import lombok.Getter;
 @Getter
 public final class BookDto implements MyAppDto<Book> {
 
-	private final Integer bookId;
-	private final String name;
-	private final Integer yearPublished;
-	private final Long isbn;
-	private final String publisher;
+	private Integer bookId;
+	private String name;
+	private Integer yearPublished;
+	private Long isbn;
+	private String publisher;
 
+	public BookDto() {
+	}
 
 	public BookDto(Book book) {
 		bookId = book.getBookId();

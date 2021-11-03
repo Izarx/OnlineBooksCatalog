@@ -10,6 +10,8 @@ import com.softserveinc.booklibrary.backend.repository.EntityRepository;
 import com.softserveinc.booklibrary.backend.service.EntityService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 public abstract class AbstractEntityService<T extends MyAppEntity<? extends Serializable>> implements EntityService<T> {
@@ -61,6 +63,7 @@ public abstract class AbstractEntityService<T extends MyAppEntity<? extends Seri
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.SUPPORTS)
 	public List<T> getAll() {
 		return repository.getAll();
 	}

@@ -39,7 +39,8 @@
               "src/assets/css/morris-0.4.3.min.css",
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+            ]
           },
           "configurations": {
             "production": {
