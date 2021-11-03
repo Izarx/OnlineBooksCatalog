@@ -82,6 +82,7 @@ public abstract class AbstractEntityRepository<T extends MyAppEntity<? extends S
 	public abstract boolean isEntityValid(T entity);
 
 	@Override
+	@Transactional(propagation = Propagation.SUPPORTS)
 	public List<T> getAll() {
 		CriteriaQuery<T> criteriaQuery = entityManager.getCriteriaBuilder().createQuery(type);
 		CriteriaQuery<T> getAll = criteriaQuery.select(criteriaQuery.from(type));
