@@ -10,11 +10,11 @@ import {AuthorService} from "./author.service";
 
 export class AuthorsComponent implements OnInit, AfterViewInit {
 
+    authors: Author[];
+    id: number;
     page: number = 1;
     pageSize: number = 5;
-    authors: Author[];
     collectionSize: number;
-    @Output() loaded: EventEmitter<boolean> = new EventEmitter();
 
     constructor(
         private authorService : AuthorService
@@ -42,8 +42,8 @@ export class AuthorsComponent implements OnInit, AfterViewInit {
     deleteAuthor(authorId : number) : void {
         this.authorService.deleteAuthor(authorId).subscribe(
             () => {
+                console.log('Author ID is: ', authorId)
                 this.fetchAuthors()
-                this.loaded.emit(true)
             },
             error => {
                 console.log(error)
@@ -57,4 +57,11 @@ export class AuthorsComponent implements OnInit, AfterViewInit {
             .slice((this.page - 1) * this.pageSize, (this.page - 1) * this.pageSize + this.pageSize);
     }
 
+    setId(id: number) {
+        this.id = id
+    }
+
+    getId() : number {
+        return this.id;
+    }
 }

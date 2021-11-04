@@ -50,4 +50,10 @@ export class CreateAuthorComponent implements OnInit {
       this.createAuthor(this.author)
     }
   }
+
+  cancel() {
+      if (this.form.valid) {
+          this.form.reset()
+      }
+  }
 }
