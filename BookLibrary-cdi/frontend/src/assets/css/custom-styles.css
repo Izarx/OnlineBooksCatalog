@@ -251,7 +251,7 @@ p {
 }
 
 .panel-heading {
-	/* padding: 15px 15px 0px; */
+	padding: 15px 15px 0px;
 	border-bottom: 1px solid transparent;
 	border-top-left-radius: 3px;
 	border-top-right-radius: 3px;
