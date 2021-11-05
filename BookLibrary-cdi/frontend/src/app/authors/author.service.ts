@@ -1,9 +1,8 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Author} from "../model/author";
 import {Observable} from "rxjs";
 import {Pageable} from "../model/pagable";
-import {Page} from "../model/page";
 
 const baseUrl = 'http://localhost:8080/api/authors';
 

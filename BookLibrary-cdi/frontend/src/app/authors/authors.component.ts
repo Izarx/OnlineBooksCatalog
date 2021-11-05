@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {Author} from "../model/author";
 import {AuthorService} from "./author.service";
 
+const title: string = 'Authors'
+
 @Component({
     selector: 'app-authors',
     templateUrl: './authors.component.html',
