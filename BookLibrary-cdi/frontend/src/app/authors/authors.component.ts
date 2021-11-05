@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Author} from "./model/author";
 import {AuthorService} from "./author.service";
 
@@ -8,7 +8,7 @@ import {AuthorService} from "./author.service";
     styleUrls: ['./authors.component.scss']
 })
 
-export class AuthorsComponent implements OnInit, AfterViewInit {
+export class AuthorsComponent implements OnInit {
 
     authors: Author[];
     id: number;
@@ -22,10 +22,6 @@ export class AuthorsComponent implements OnInit, AfterViewInit {
 
     ngOnInit(): void {
         this.fetchAuthors()
-    }
-
-    ngAfterViewInit(): void {
-
     }
 
     fetchAuthors(): void {
@@ -42,7 +38,6 @@ export class AuthorsComponent implements OnInit, AfterViewInit {
     deleteAuthor(authorId : number) : void {
         this.authorService.deleteAuthor(authorId).subscribe(
             () => {
-                console.log('Author ID is: ', authorId)
                 this.fetchAuthors()
             },
             error => {

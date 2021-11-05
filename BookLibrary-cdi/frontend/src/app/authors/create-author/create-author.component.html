@@ -3,7 +3,8 @@
      tabindex="-1"
      role="dialog"
      aria-labelledby="createAuthorLabel"
-     aria-hidden="true">
+     aria-hidden="true"
+>
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<form [formGroup]="form" (ngSubmit)="submit()">
@@ -47,11 +48,9 @@
 					        data-dismiss="modal"
 					        (click)="cancel()"
 					>Cancel</button>
-					<button type="button"
+					<button type="submit"
 					        class="btn btn-primary"
 					        [disabled]="form.invalid"
-					        data-dismiss="modal"
-					        (click)="submit()"
 					>Save</button>
 				</div>
 			</form>
