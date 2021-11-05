@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ElementRef, OnInit} from '@angular/core';
 import {Author} from "../../model/author";
 import {AuthorService} from "../author.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
@@ -41,14 +41,14 @@ export class CreateAuthorComponent implements OnInit {
   }
 
   submit() {
-      console.log('Form submitted', this.form)
     if (this.form.valid) {
       const formData = {...this.form.value}
       this.author.authorId = null;
       this.author.firstName = formData.firstName;
       this.author.lastName = formData.lastName;
-      this.form.reset();
       this.createAuthor(this.author);
+      this.form.reset();
+      document.getElementById('createAuthorModalCloseButton').click()
     }
   }
 

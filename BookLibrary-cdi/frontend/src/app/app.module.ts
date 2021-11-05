@@ -11,6 +11,7 @@ import {HttpClientModule} from "@angular/common/http";
 import { CreateAuthorComponent } from './authors/create-author/create-author.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PaginationComponent } from './pagination/pagination.component';
+import { AuthorsPaginationTableComponent } from './authors/authors-pagination-table/authors-pagination-table.component';
 
 @NgModule({
     declarations: [
@@ -20,7 +21,8 @@ import { PaginationComponent } from './pagination/pagination.component';
         ReviewsComponent,
         HomeComponent,
         CreateAuthorComponent,
-        PaginationComponent
+        PaginationComponent,
+        AuthorsPaginationTableComponent
     ],
     imports: [
         BrowserModule,
