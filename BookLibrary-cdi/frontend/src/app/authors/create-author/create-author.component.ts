@@ -12,7 +12,7 @@ import {AuthorsComponent} from "../authors.component";
 export class CreateAuthorComponent implements OnInit {
 
   form: FormGroup = new FormGroup({})
-  author: Author = new Author(0, '', '')
+  author: Author = new Author(0, '', '');
 
   constructor(private authorService : AuthorService,
               private authors: AuthorsComponent) { }
@@ -41,13 +41,20 @@ export class CreateAuthorComponent implements OnInit {
   }
 
   submit() {
+      console.log('Form submitted', this.form)
     if (this.form.valid) {
       const formData = {...this.form.value}
       this.author.authorId = null;
       this.author.firstName = formData.firstName;
       this.author.lastName = formData.lastName;
       this.form.reset();
-      this.createAuthor(this.author)
+      this.createAuthor(this.author);
     }
+  }
+
+  cancel() {
+      if (this.form.valid) {
+          this.form.reset()
+      }
   }
 }
