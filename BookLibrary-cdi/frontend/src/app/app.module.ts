@@ -10,6 +10,7 @@ import {AppRoutingModule} from "./app-routing.module";
 import {HttpClientModule} from "@angular/common/http";
 import { CreateAuthorComponent } from './authors/create-author/create-author.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { PaginationComponent } from './pagination/pagination.component';
 
 @NgModule({
     declarations: [
@@ -18,7 +19,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
         BooksComponent,
         ReviewsComponent,
         HomeComponent,
-        CreateAuthorComponent
+        CreateAuthorComponent,
+        PaginationComponent
     ],
     imports: [
         BrowserModule,

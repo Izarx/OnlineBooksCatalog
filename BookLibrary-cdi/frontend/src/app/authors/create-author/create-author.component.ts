@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Author} from "../model/author";
+import {Author} from "../../model/author";
 import {AuthorService} from "../author.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuthorsComponent} from "../authors.component";
