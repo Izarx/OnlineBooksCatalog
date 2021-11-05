@@ -6,10 +6,10 @@ export class Page<T> {
     pageable: Pageable;
     last: boolean;
     totalPages: number;
-    totalElements: number;
+    totalElements: number = 8;
     first: boolean;
     sort: Sort;
-    numberOfElements: number;
+    numberOfElements: number = 5;
     size: number;
     number: number;
 
