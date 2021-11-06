@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {Author} from "./model/author";
+import {Author} from "../model/author";
 import {AuthorService} from "./author.service";
+
+const title: string = 'Authors'
 
 @Component({
     selector: 'app-authors',
@@ -27,6 +29,7 @@ export class AuthorsComponent implements OnInit {
     fetchAuthors(): void {
         this.authorService.getAuthors().subscribe(
             authors => {
+                console.log('Authors: ', authors)
                 this.authors = authors
                 this.refreshAuthors()
             },

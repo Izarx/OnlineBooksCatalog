@@ -1,0 +1,25 @@
+<div *ngIf="page">
+	<div>
+		<span>Authors per page:</span>
+		<select>
+			<option [routerLink]="" (click)="updatePageSize(5)">5</option>
+			<option [routerLink]="" (click)="updatePageSize(10)">10</option>
+			<option [routerLink]="" (click)="updatePageSize(25)">25</option>
+		</select>
+	</div>
+	<div class="pull-right">
+		<span>
+        Shows {{page.numberOfElements}} of {{page.totalElements}}
+    </span>
+		<button [routerLink]=""
+		        class="btn btn-sm" [ngClass]="{'disabled': page.first }"
+		        (click)="previousPage()">
+			<i class="fa fa-angle-double-left"></i>
+		</button>
+		<button [routerLink]=""
+		        class="btn btn-sm" [ngClass]="{'disabled': page.last }"
+		        (click)="nextPage()">
+			<i class="fa fa-angle-double-right"></i>
+		</button>
+	</div>
+</div>

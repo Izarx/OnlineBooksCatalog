@@ -69,7 +69,7 @@
 									<th scope="col" class="text-center"></th>
 								</tr>
 								</thead>
-								<tbody *ngFor="let author of authors">
+								<tbody *ngFor="let author of page.content">
 								<tr>
 									<th scope="row" class="text-center">
 										<div class="custom-control checkbox-check">
@@ -93,26 +93,13 @@
 								</tr>
 								</tbody>
 							</table>
-						</div>
-						<div class="col-md-6">
-							<label class="pull-left" style="padding-right: 5px">Authors per page</label>
-							<select class="pull-left"
-							        [(ngModel)]="pageSize"
-							        (ngModelChange)="refreshAuthors()">
-								<option [ngValue]="5">5</option>
-								<option [ngValue]="10">10</option>
-								<option [ngValue]="25">25</option>
-							</select>
-						</div>
-						<div class="col-md-6">
-							<div class="pull-right">
-								<ngb-pagination class="small"
-								                [collectionSize]="collectionSize"
-								                [(page)]="page"
-								                [pageSize]="pageSize"
-								                (pageChange)="refreshAuthors()">
-								</ngb-pagination>
-							</div>
+							<hr class="my-no w-100">
+							<app-pagination
+									[page]="page"
+									(nextPageEvent)="getNextPage()"
+									(previousPageEvent)="getPreviousPage()"
+									(pageSizeEvent)="getPageInNewSize($event)">
+							</app-pagination>
 						</div>
 					</div>
 				</div>
@@ -144,5 +131,3 @@
 		</div>
 	</div>
 </div>
-
-<app-create-author></app-create-author>

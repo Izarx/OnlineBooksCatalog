@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.softserveinc.booklibrary.backend.dto.paging.MyPage;
 import com.softserveinc.booklibrary.backend.entity.Author;
 import com.softserveinc.booklibrary.backend.entity.Book;
 import com.softserveinc.booklibrary.backend.entity.MyAppEntity;
@@ -29,5 +30,22 @@ public final class DtoEntityConverter {
 
 	public static List<ReviewDto> convertListReviewToDto (List<Review> reviews) {
 		return reviews.stream().map(ReviewDto::new).collect(Collectors.toList());
+	}
+
+	public static <V, T> MyPage<V> convertPageEntityDto (MyPage<T> page) {
+		MyPage<V> entityDtoPage = new MyPage<>();
+		entityDtoPage.setPageable(page.getPageable());
+		entityDtoPage.setLast(page.getLast());
+		entityDtoPage.setTotalPages(page.getTotalPages());
+		entityDtoPage.setTotalElements(page.getTotalElements());
+		entityDtoPage.setFirst(page.getFirst());
+		entityDtoPage.setNumberOfElements(page.getNumberOfElements());
+		return entityDtoPage;
+	}
+
+	public static MyPage<AuthorDto> convertPageAuthorToDto (MyPage<Author> page) {
+		MyPage<AuthorDto> authorDtoPage = convertPageEntityDto(page);
+		authorDtoPage.setContent(convertListAuthorToDto(page.getContent()));
+		return authorDtoPage;
 	}
 }
