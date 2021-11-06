@@ -25,7 +25,14 @@ export class AuthorsPaginationTableComponent implements OnInit {
 
   private getData(): void {
     this.authorService.getPage(this.page.pageable)
-        .subscribe(authors => this.page.content = authors);
+        .subscribe(page => {
+          console.log('This page = ', page)
+          this.page = page
+          console.log('This.page = ', this.page.content)
+        },
+            error => {
+              console.log(error)
+            });
   }
 
   deleteAuthor(authorId : number) : void {

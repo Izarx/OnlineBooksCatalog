@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {Author} from "../model/author";
 import {Observable} from "rxjs";
 import {Pageable} from "../model/pagable";
+import {Page} from "../model/page";
 
 const baseUrl = 'http://localhost:8080/api/authors';
 
@@ -25,10 +26,10 @@ export class AuthorService {
     return this.httpClient.delete<void>(baseUrl + `/delete/${authorId}`);
   }
 
-  getPage(pageable: Pageable): Observable<Author[]> {
+  public getPage(pageable: Pageable): Observable<Page<Author>> {
     let url = baseUrl
-        + '?page=' + pageable.pageNumber
-        + '&size=' + pageable.pageSize;
-    return this.httpClient.get<Author[]>(url);
+        + '/page/' + pageable.pageNumber
+        + '/size/' + pageable.pageSize;
+    return this.httpClient.get<Page<Author>>(url);
   }
 }
