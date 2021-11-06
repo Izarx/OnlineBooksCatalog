@@ -45,7 +45,7 @@ public final class DtoEntityConverter {
 
 	public static MyPage<AuthorDto> convertPageAuthorToDto (MyPage<Author> page) {
 		MyPage<AuthorDto> authorDtoPage = convertPageEntityDto(page);
-		authorDtoPage.setListEntities(convertListAuthorToDto(page.getListEntities()));
+		authorDtoPage.setContent(convertListAuthorToDto(page.getContent()));
 		return authorDtoPage;
 	}
 }

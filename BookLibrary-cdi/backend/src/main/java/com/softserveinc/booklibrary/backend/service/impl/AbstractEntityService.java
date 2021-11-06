@@ -77,15 +77,14 @@ public abstract class AbstractEntityService<T extends MyAppEntity<? extends Seri
 		List<T> allEntities = getAll();
 		int totalElements = allEntities.size();
 		int totalPages = totalElements/numEntitiesOnPage + 1;
-		LOGGER.info("*************{}*****************", totalPages);
 		page.setTotalElements(totalElements);
 		page.setTotalPages(totalPages);
-		if (pageId + 1 > totalPages) {
+		if (pageId + 1 > totalPages || pageId < 0) {
 			pageId = 0;
 		}
 		setFirstLastNumElements(pageId, numEntitiesOnPage, page);
 		page.setPageable(new MyPageable(numEntitiesOnPage, pageId));
-		page.setListEntities(getAll().stream()
+		page.setContent(getAll().stream()
 				.skip(pageId *numEntitiesOnPage)
 				.limit((pageId + 1) *numEntitiesOnPage).collect(Collectors.toList()));
 		return page;

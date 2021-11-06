@@ -1,11 +1,14 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Author} from "../model/author";
 import {Observable} from "rxjs";
 import {Pageable} from "../model/pagable";
 import {Page} from "../model/page";
 
 const baseUrl = 'http://localhost:8080/api/authors';
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +33,6 @@ export class AuthorService {
     let url = baseUrl
         + '/page/' + pageable.pageNumber
         + '/size/' + pageable.pageSize;
-    return this.httpClient.get<Page<Author>>(url);
+    return this.httpClient.get<Page<Author>>(url, httpOptions);
   }
 }

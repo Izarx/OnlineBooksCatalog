@@ -29,6 +29,7 @@ export class AuthorsComponent implements OnInit {
     fetchAuthors(): void {
         this.authorService.getAuthors().subscribe(
             authors => {
+                console.log('Authors: ', authors)
                 this.authors = authors
                 this.refreshAuthors()
             },

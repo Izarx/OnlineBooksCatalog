@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 public class MyPage<T> {
 
-	private List<T> listEntities;
+	private List<T> content;
 	private MyPageable pageable;
 	private Boolean last;
 	private Integer totalPages;
