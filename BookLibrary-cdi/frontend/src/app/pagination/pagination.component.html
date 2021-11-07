@@ -16,7 +16,7 @@
 
 	<div class="pull-right">
 		<span>
-        Shows {{page.numberOfElements}} of {{page.totalElements}}
+        Shows from {{page.numberOfFirstPageElement}} to {{page.numberOfElements}} of {{page.totalElements}}
     </span>
 		<div class="btn-group top-right">
 			<button [routerLink]=""
@@ -24,6 +24,12 @@
 			        (click)="previousPage()">
 				<i class="fa fa-angle-double-left"></i>
 			</button>
+			<div class="btn-group top-right" *ngFor="let numberPage of numberPagesInit()">
+				<button [routerLink]=""
+				        class="btn btn-sm"
+				        (click)="updatePageNumber(numberPage-1)"
+				><i>{{numberPage}}</i></button>
+			</div>
 			<button [routerLink]=""
 			        class="btn btn-sm" [ngClass]="{'disabled': page.last }"
 			        (click)="nextPage()">

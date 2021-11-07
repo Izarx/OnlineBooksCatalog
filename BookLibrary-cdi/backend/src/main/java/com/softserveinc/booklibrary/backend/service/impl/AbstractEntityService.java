@@ -94,21 +94,25 @@ public abstract class AbstractEntityService<T extends MyAppEntity<? extends Seri
 		if (page.getTotalPages() == 1) {
 			page.setFirst(true);
 			page.setLast(true);
+			page.setNumberOfFirstPageElement(1);
 			page.setNumberOfElements(page.getTotalElements());
 		}
 		else if (pageId == 0) {
 			page.setFirst(true);
 			page.setLast(false);
+			page.setNumberOfFirstPageElement(1);
 			page.setNumberOfElements(numEntitiesOnPage);
 		}
 		else if (pageId + 1 == page.getTotalPages()) {
 			page.setLast(true);
 			page.setFirst(false);
+			page.setNumberOfFirstPageElement(pageId*numEntitiesOnPage + 1);
 			page.setNumberOfElements(page.getTotalElements());
 		}
 		else {
 			page.setFirst(false);
 			page.setLast(false);
+			page.setNumberOfFirstPageElement(pageId*numEntitiesOnPage + 1);
 			page.setNumberOfElements(pageId*numEntitiesOnPage + (pageId + 1) *numEntitiesOnPage);
 		}
 	}

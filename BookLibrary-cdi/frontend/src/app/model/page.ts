@@ -7,6 +7,7 @@ export class Page<T> {
     totalPages: number;
     totalElements: number;
     first: boolean;
+    numberOfFirstPageElement: number;
     numberOfElements: number;
 
     public constructor() {

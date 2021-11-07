@@ -9,11 +9,12 @@
 								<div class="panel panel-default">
 									<div class="panel-heading">
 										<div class="panel-title">
-											<a class="fa fa-filter"></a>
 											<a data-toggle="collapse"
 											   data-parent="#accordion"
 											   href="#collapseOne"
-											   class="collapsed">Filters</a>
+											   class="collapsed">
+												<i class="fa fa-filter"></i>
+												Filters</a>
 										</div>
 									</div>
 									<div id="collapseOne" class="panel-collapse collapse" style="height: 0px;">
@@ -99,7 +100,9 @@
 									[page]="page"
 									(nextPageEvent)="getNextPage()"
 									(previousPageEvent)="getPreviousPage()"
-									(pageSizeEvent)="getPageInNewSize($event)">
+									(pageSizeEvent)="getPageInNewSize($event)"
+									(pageNumberEvent)="getPageNewNumber($event)"
+							>
 							</app-pagination>
 						</div>
 					</div>

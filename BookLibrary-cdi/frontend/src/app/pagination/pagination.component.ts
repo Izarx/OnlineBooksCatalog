@@ -12,10 +12,15 @@ export class PaginationComponent implements OnInit {
   @Output() nextPageEvent = new EventEmitter();
   @Output() previousPageEvent = new EventEmitter();
   @Output() pageSizeEvent: EventEmitter<number> = new EventEmitter<number>();
+  @Output() pageNumberEvent: EventEmitter<number> = new EventEmitter<number>();
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
+  }
+
+  numberPagesInit() : number[] {
+    return Array(this.page.totalPages).fill(0).map((x,i)=>i+1);
   }
 
   nextPage(): void {
@@ -24,6 +29,10 @@ export class PaginationComponent implements OnInit {
 
   previousPage(): void {
     this.previousPageEvent.emit(null);
+  }
+
+  updatePageNumber(pageNumber: number): void {
+    this.pageNumberEvent.emit(pageNumber);
   }
 
   updatePageSize(pageSize: number): void {

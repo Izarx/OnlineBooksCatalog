@@ -39,6 +39,7 @@ public final class DtoEntityConverter {
 		entityDtoPage.setTotalPages(page.getTotalPages());
 		entityDtoPage.setTotalElements(page.getTotalElements());
 		entityDtoPage.setFirst(page.getFirst());
+		entityDtoPage.setNumberOfFirstPageElement(page.getNumberOfFirstPageElement());
 		entityDtoPage.setNumberOfElements(page.getNumberOfElements());
 		return entityDtoPage;
 	}

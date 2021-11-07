@@ -29,4 +29,9 @@ export class PaginationService {
 
     return page.pageable;
   }
+
+  public getPageNewNumber(page: Page<any>, pageNumber: number): Pageable {
+    page.pageable.pageNumber = pageNumber;
+    return page.pageable;
+  }
 }
