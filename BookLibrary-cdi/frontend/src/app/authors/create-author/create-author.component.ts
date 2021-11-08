@@ -1,8 +1,8 @@
-import {Component, ElementRef, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Author} from "../../model/author";
 import {AuthorService} from "../author.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {AuthorsComponent} from "../authors.component";
+import {AuthorsPaginationTableComponent} from "../authors-pagination-table/authors-pagination-table.component";
 
 @Component({
   selector: 'app-create-author',
@@ -15,7 +15,7 @@ export class CreateAuthorComponent implements OnInit {
   author: Author = new Author(0, '', '');
 
   constructor(private authorService : AuthorService,
-              private authors: AuthorsComponent) { }
+              private authors: AuthorsPaginationTableComponent) { }
 
   ngOnInit(): void {
     this.form = new FormGroup({
@@ -33,7 +33,7 @@ export class CreateAuthorComponent implements OnInit {
     this.authorService.createAuthor(author).subscribe(
         author => {
           this.author = author;
-          this.authors.fetchAuthors()
+          this.authors.ngOnInit()
         },
         error => {
           console.log(error)
