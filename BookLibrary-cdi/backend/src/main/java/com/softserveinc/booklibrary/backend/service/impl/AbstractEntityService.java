@@ -76,7 +76,8 @@ public abstract class AbstractEntityService<T extends MyAppEntity<? extends Seri
 		MyPage<T> page = new MyPage<>();
 		List<T> allEntities = getAll();
 		int totalElements = allEntities.size();
-		int totalPages = totalElements/numEntitiesOnPage + 1;
+		int totalPages = (int) Math.ceil((double) totalElements/numEntitiesOnPage);
+		LOGGER.info("**************TOTAL PAGES***********{}", totalPages);
 		page.setTotalElements(totalElements);
 		page.setTotalPages(totalPages);
 		if (pageId + 1 > totalPages || pageId < 0) {
@@ -85,8 +86,8 @@ public abstract class AbstractEntityService<T extends MyAppEntity<? extends Seri
 		setFirstLastNumElements(pageId, numEntitiesOnPage, page);
 		page.setPageable(new MyPageable(numEntitiesOnPage, pageId));
 		page.setContent(getAll().stream()
-				.skip(pageId *numEntitiesOnPage)
-				.limit((pageId + 1) *numEntitiesOnPage).collect(Collectors.toList()));
+				.skip(page.getNumberOfFirstPageElement() - 1)
+				.limit(numEntitiesOnPage).collect(Collectors.toList()));
 		return page;
 	}
 
@@ -113,7 +114,7 @@ public abstract class AbstractEntityService<T extends MyAppEntity<? extends Seri
 			page.setFirst(false);
 			page.setLast(false);
 			page.setNumberOfFirstPageElement(pageId*numEntitiesOnPage + 1);
-			page.setNumberOfElements(pageId*numEntitiesOnPage + (pageId + 1) *numEntitiesOnPage);
+			page.setNumberOfElements((pageId + 1) *numEntitiesOnPage);
 		}
 	}
 
