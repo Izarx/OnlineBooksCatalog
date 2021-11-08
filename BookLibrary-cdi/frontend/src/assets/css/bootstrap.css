@@ -5795,7 +5795,7 @@ a.list-group-item-danger.active, a.list-group-item-danger.active:focus, a.list-g
 }
 
 .panel-body {
-	padding: 15px
+	padding: 0px 15px 15px 15px
 }
 
 .panel-heading {

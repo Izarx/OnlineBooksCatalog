@@ -54,6 +54,16 @@
 						</div>
 					</div>
 				</div>
+				<div class="col-xs-12">
+					<app-pagination
+							[page]="page"
+							(nextPageEvent)="getNextPage()"
+							(previousPageEvent)="getPreviousPage()"
+							(pageSizeEvent)="getPageInNewSize($event)"
+							(pageNumberEvent)="getPageNewNumber($event)"
+					>
+					</app-pagination>
+				</div>
 				<div class="panel-body">
 					<div class="row">
 						<div class="table-responsive">
@@ -96,14 +106,6 @@
 								</tbody>
 							</table>
 							<hr class="my-no w-100">
-							<app-pagination
-									[page]="page"
-									(nextPageEvent)="getNextPage()"
-									(previousPageEvent)="getPreviousPage()"
-									(pageSizeEvent)="getPageInNewSize($event)"
-									(pageNumberEvent)="getPageNewNumber($event)"
-							>
-							</app-pagination>
 						</div>
 					</div>
 				</div>
