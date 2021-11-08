@@ -1,25 +1,40 @@
 <div *ngIf="page">
-	<div>
-		<span>Authors per page:</span>
-		<select>
-			<option [routerLink]="" (click)="updatePageSize(5)">5</option>
-			<option [routerLink]="" (click)="updatePageSize(10)">10</option>
-			<option [routerLink]="" (click)="updatePageSize(25)">25</option>
-		</select>
+	<div class="pull-left">
+		<span class="text-muted">Items per page:</span>
 	</div>
+	<div class="dropdown">
+		<button class="dropbtn">
+			{{page.pageable.pageSize}}
+			<i class="fa fa-caret-down"></i>
+		</button>
+		<div class="dropdown-content">
+			<a class="list-group-item" [routerLink]="" (click)="updatePageSize(5)">5</a>
+			<a class="list-group-item" [routerLink]="" (click)="updatePageSize(10)">10</a>
+			<a class="list-group-item" [routerLink]="" (click)="updatePageSize(25)">25</a>
+		</div>
+	</div>
+
 	<div class="pull-right">
 		<span>
-        Shows {{page.numberOfElements}} of {{page.totalElements}}
+        Shows from {{page.numberOfFirstPageElement}} to {{page.numberOfElements}} of {{page.totalElements}}
     </span>
-		<button [routerLink]=""
-		        class="btn btn-sm" [ngClass]="{'disabled': page.first }"
-		        (click)="previousPage()">
-			<i class="fa fa-angle-double-left"></i>
-		</button>
-		<button [routerLink]=""
-		        class="btn btn-sm" [ngClass]="{'disabled': page.last }"
-		        (click)="nextPage()">
-			<i class="fa fa-angle-double-right"></i>
-		</button>
+		<div class="btn-group top-right">
+			<button [routerLink]=""
+			        class="btn btn-sm" [ngClass]="{'disabled': page.first }"
+			        (click)="previousPage()">
+				<i class="fa fa-angle-double-left"></i>
+			</button>
+			<div class="btn-group top-right" *ngFor="let numberPage of numberPagesInit()">
+				<button [routerLink]=""
+				        class="btn btn-sm"
+				        (click)="updatePageNumber(numberPage-1)"
+				><i>{{numberPage}}</i></button>
+			</div>
+			<button [routerLink]=""
+			        class="btn btn-sm" [ngClass]="{'disabled': page.last }"
+			        (click)="nextPage()">
+				<i class="fa fa-angle-double-right"></i>
+			</button>
+		</div>
 	</div>
 </div>

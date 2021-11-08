@@ -17,10 +17,6 @@ export class AuthorService {
 
   constructor(private httpClient: HttpClient) { }
 
-  public getAuthors() : Observable<Author[]> {
-    return this.httpClient.get<Author[]>(baseUrl)
-  }
-
   public createAuthor(author: Author) : Observable<Author> {
     return this.httpClient.post<Author>(baseUrl + `/create`, author);
   }

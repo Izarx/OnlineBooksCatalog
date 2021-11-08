@@ -15,6 +15,7 @@ public class MyPage<T> {
 	private Integer totalPages;
 	private Integer totalElements;
 	private Boolean first;
+	private Integer numberOfFirstPageElement;
 	private Integer numberOfElements;
 
 }

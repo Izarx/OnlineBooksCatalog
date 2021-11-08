@@ -693,6 +693,7 @@
 }
 .fa-filter:before {
   content: "\f0b0";
+  margin-right: 5px;
 }
 .fa-briefcase:before {
   content: "\f0b1";

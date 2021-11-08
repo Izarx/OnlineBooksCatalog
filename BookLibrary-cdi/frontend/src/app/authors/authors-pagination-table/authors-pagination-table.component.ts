@@ -59,6 +59,11 @@ export class AuthorsPaginationTableComponent implements OnInit {
     this.getData();
   }
 
+  public getPageNewNumber(pageNumber: number): void {
+      this.page.pageable = this.paginationService.getPageNewNumber(this.page, pageNumber);
+      this.getData();
+  }
+
   setId(id: number) {
     this.id = id
   }
