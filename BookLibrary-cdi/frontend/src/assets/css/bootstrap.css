@@ -5940,6 +5940,7 @@ a.list-group-item-danger.active, a.list-group-item-danger.active:focus, a.list-g
 }
 
 .panel-group .panel {
+	padding: 6px 12px;
 	margin-bottom: 0;
 	border-radius: 4px
 }

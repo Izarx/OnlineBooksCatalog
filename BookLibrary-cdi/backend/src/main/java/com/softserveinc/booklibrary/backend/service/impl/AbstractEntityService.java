@@ -76,8 +76,7 @@ public abstract class AbstractEntityService<T extends MyAppEntity<? extends Seri
 		MyPage<T> page = new MyPage<>();
 		List<T> allEntities = getAll();
 		int totalElements = allEntities.size();
-		int totalPages = (int) Math.ceil((double) totalElements/numEntitiesOnPage);
-		LOGGER.info("**************TOTAL PAGES***********{}", totalPages);
+		int totalPages = totalElements != 0 ? (int) Math.ceil((double) totalElements/numEntitiesOnPage) : 1;
 		page.setTotalElements(totalElements);
 		page.setTotalPages(totalPages);
 		if (pageId + 1 > totalPages || pageId < 0) {

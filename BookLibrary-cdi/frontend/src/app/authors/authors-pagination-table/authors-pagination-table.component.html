@@ -4,16 +4,16 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<div class="row p-2">
-						<div class="col-md-2">
-							<button class="btn btn-danger btn-default pull-left"
-							        data-toggle="modal"
-							        data-target="#deleteAuthors"> Delete Authors
-							</button>
-						</div>
 						<div class="col-md-2" style="float: right">
 							<button class="btn btn-success btn-default pull-left"
 							        data-toggle="modal"
 							        data-target="#createAuthor"> + Add Author
+							</button>
+						</div>
+						<div class="col-md-2">
+							<button class="btn btn-danger btn-default pull-left"
+							        data-toggle="modal"
+							        data-target="#deleteAuthors"> Delete Authors
 							</button>
 						</div>
 						<div class="col-md-4"></div>
@@ -90,13 +90,17 @@
 									<td style="padding-left: 30px">{{ author.firstName + ' ' + author.lastName}}</td>
 									<td></td>
 									<td class="text-center">
-										<button class="btn btn-primary btn-sm">
+										<button class="btn btn-primary btn-sm"
+										        data-toggle="modal"
+										        data-target="#updateAuthor"
+										        (click)="setAuthor(author)"
+										>
 											<i class="fa fa-edit "></i>
 										</button>
 										<button class="btn btn-danger btn-sm"
 										        data-toggle="modal"
 										        data-target="#deleteAuthorConfirmation"
-										        (click)="setId(author.authorId)"
+										        (click)="setAuthor(author)"
 										><i class="fa fa-trash-o"></i>
 										</button>
 									</td>
@@ -129,7 +133,7 @@
 				<button type="submit"
 				        class="btn btn-danger"
 				        data-dismiss="modal"
-				        (click)="deleteAuthor(getId())"
+				        (click)="deleteAuthor(getAuthor().authorId)"
 				>Delete</button>
 			</div>
 		</div>
@@ -137,3 +141,7 @@
 </div>
 
 <app-create-author></app-create-author>
+
+<app-update-author
+		[author]="author"
+></app-update-author>

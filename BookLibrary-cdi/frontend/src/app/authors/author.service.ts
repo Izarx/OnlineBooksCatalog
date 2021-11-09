@@ -31,4 +31,8 @@ export class AuthorService {
         + '/size/' + pageable.pageSize;
     return this.httpClient.get<Page<Author>>(url, httpOptions);
   }
+
+  public update(author: Author) : Observable<any> {
+        return this.httpClient.patch(baseUrl + `/update`, author);
+  }
 }

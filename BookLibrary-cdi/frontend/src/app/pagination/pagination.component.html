@@ -1,6 +1,6 @@
 <div *ngIf="page">
 	<div class="pull-left">
-		<span class="text-muted">Items per page:</span>
+		<span class="text-muted">Records per page:</span>
 	</div>
 	<div class="dropdown">
 		<button class="dropbtn">
@@ -16,24 +16,31 @@
 
 	<div class="pull-right">
 		<span>
-        Items {{page.numberOfFirstPageElement}} to {{page.numberOfElements}} of {{page.totalElements}}
+        Showing {{page.numberOfFirstPageElement}} to {{page.numberOfElements}} of {{page.totalElements}} entries
     </span>
 		<div class="btn-group top-right">
 			<button [routerLink]=""
 			        class="btn btn-sm" [ngClass]="{'disabled': page.first }"
 			        (click)="previousPage()">
-				<i class="fa fa-angle-double-left"></i>
+				<i class="fa fa-angle-left"></i>
+			</button>
+			<button class="btn btn-sm"
+			        [ngClass]="{'disabled': true }"
+			        *ngIf="page.totalPages > 5 && numberPagesInit()[0] > 2"
+			>
+				<i class="fa fa-ellipsis-h"></i>
 			</button>
 			<div class="btn-group top-right" *ngFor="let numberPage of numberPagesInit()">
 				<button [routerLink]=""
 				        class="btn btn-sm"
 				        (click)="updatePageNumber(numberPage-1)"
+				        [ngClass]="{'active': page.pageable.pageNumber === numberPage-1}"
 				><i>{{numberPage}}</i></button>
 			</div>
 			<button [routerLink]=""
 			        class="btn btn-sm" [ngClass]="{'disabled': page.last }"
 			        (click)="nextPage()">
-				<i class="fa fa-angle-double-right"></i>
+				<i class="fa fa-angle-right"></i>
 			</button>
 		</div>
 	</div>

@@ -12,7 +12,7 @@ import {PaginationService} from "../../pagination/pagination.service";
 export class AuthorsPaginationTableComponent implements OnInit {
 
   page: Page<Author> = new Page()
-  id: number
+  author: Author
 
   constructor(
       private authorService: AuthorService,
@@ -26,9 +26,7 @@ export class AuthorsPaginationTableComponent implements OnInit {
   private getData(): void {
     this.authorService.getPage(this.page.pageable)
         .subscribe(page => {
-          console.log('This page = ', page)
           this.page = page
-          console.log('This.page = ', this.page.content)
         },
             error => {
               console.log(error)
@@ -64,11 +62,11 @@ export class AuthorsPaginationTableComponent implements OnInit {
       this.getData();
   }
 
-  setId(id: number) {
-    this.id = id
+  setAuthor(author: Author) {
+    this.author = author
   }
 
-  getId() : number {
-    return this.id;
+  getAuthor() : Author {
+    return this.author;
   }
 }

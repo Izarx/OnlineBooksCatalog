@@ -11,6 +11,7 @@ import { CreateAuthorComponent } from './authors/create-author/create-author.com
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PaginationComponent } from './pagination/pagination.component';
 import { AuthorsPaginationTableComponent } from './authors/authors-pagination-table/authors-pagination-table.component';
+import { UpdateAuthorComponent } from './authors/update-author/update-author.component';
 
 @NgModule({
     declarations: [
@@ -20,7 +21,8 @@ import { AuthorsPaginationTableComponent } from './authors/authors-pagination-ta
         HomeComponent,
         CreateAuthorComponent,
         PaginationComponent,
-        AuthorsPaginationTableComponent
+        AuthorsPaginationTableComponent,
+        UpdateAuthorComponent
     ],
     imports: [
         BrowserModule,

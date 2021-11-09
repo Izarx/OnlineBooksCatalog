@@ -14,13 +14,16 @@ export class PaginationComponent implements OnInit {
   @Output() pageSizeEvent: EventEmitter<number> = new EventEmitter<number>();
   @Output() pageNumberEvent: EventEmitter<number> = new EventEmitter<number>();
 
+  firstNumber: number = 0
+
   constructor() {}
 
   ngOnInit(): void {
   }
 
   numberPagesInit() : number[] {
-    return Array(this.page.totalPages).fill(0).map((x,i)=>i+1);
+    return Array.from({length: this.page.totalPages}, (_, i) => i + 1)
+
   }
 
   nextPage(): void {
