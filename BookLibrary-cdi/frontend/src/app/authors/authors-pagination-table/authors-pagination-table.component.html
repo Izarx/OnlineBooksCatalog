@@ -4,20 +4,18 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<div class="row p-2">
-						<div class="col-md-2" style="float: right">
-							<button class="btn btn-success btn-default pull-left"
+						<div class="col-4">
+							<button class="btn btn-success btn-header pull-left"
 							        data-toggle="modal"
 							        data-target="#createAuthor"> + Add Author
 							</button>
-						</div>
-						<div class="col-md-2">
-							<button class="btn btn-danger btn-default pull-left"
+							<button class="btn btn-warning"
 							        data-toggle="modal"
 							        data-target="#deleteAuthors"> Delete Authors
 							</button>
 						</div>
-						<div class="col-md-4"></div>
-						<div class="col-md-4">
+						<div class="col-md-6"></div>
+						<div class="col-2">
 							<div class="panel-group" id="accordion">
 								<div class="panel panel-default">
 									<div class="panel-title">
@@ -28,31 +26,33 @@
 											<i class="fa fa-filter"></i>
 											Filters</a>
 									</div>
-									<div id="collapseOne" class="panel-collapse collapse" style="height: 0px;">
-										<div class="panel-body">
-											<form>
-												<div class="form-group">
-													<label for="inputFilter1">Filter1</label>
-													<input type="text" class="form-control" id="inputFilter1"
-													       placeholder="Filter1">
-												</div>
-												<div class="form-group">
-													<label for="inputFilter2">Filter2</label>
-													<input type="text" class="form-control" id="inputFilter2"
-													       placeholder="Filter2">
-												</div>
-												<div class="form-group">
-													<button type="submit" class="btn btn-default">Allow</button>
-												</div>
-											</form>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-12">
+							<div id="collapseOne" class="panel-collapse collapse" style="height: 0px;">
+								<div class="panel-body">
+									<form class="form-inline">
+										<div class="form-group">
+											<label for="inputFilter1">Filter1</label>
+											<input type="text" class="form-control" id="inputFilter1"
+											       placeholder="Filter1">
 										</div>
-									</div>
+										<div class="form-group">
+											<label for="inputFilter2">Filter2</label>
+											<input type="text" class="form-control" id="inputFilter2"
+											       placeholder="Filter2">
+										</div>
+										<div class="form-group">
+											<button type="submit" class="btn btn-default">Allow</button>
+										</div>
+									</form>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col-xs-12">
+				<div class="col-sm-12">
 					<app-pagination
 							[page]="page"
 							(nextPageEvent)="getNextPage()"
@@ -97,7 +97,7 @@
 										>
 											<i class="fa fa-edit "></i>
 										</button>
-										<button class="btn btn-danger btn-sm"
+										<button class="btn btn-warning btn-sm"
 										        data-toggle="modal"
 										        data-target="#deleteAuthorConfirmation"
 										        (click)="setAuthor(author)"

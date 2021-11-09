@@ -17,11 +17,12 @@
 					<div>
 						<input type="text"
 						       class="form-control"
-						       placeholder=""
+						       [value]="author.firstName"
 						       formControlName="firstName"
 						>
 					</div>
-					<div class="invalid-feedback" *ngIf="form.get('firstName').invalid && form.get('firstName').touched">
+					<div class="invalid-feedback"
+					     *ngIf="form.get('firstName').invalid && form.get('firstName').touched">
 						<small *ngIf="form.get('firstName').errors.required">
 							Field can't be empty!
 						</small>
@@ -33,10 +34,11 @@
 					<div>
 						<input type="text"
 						       class="form-control"
-						       placeholder=""
+						       [value]="author.lastName"
 						       formControlName="lastName">
 					</div>
-					<div class="invalid-feedback" *ngIf="form.get('lastName').invalid && form.get('lastName').touched">
+					<div class="invalid-feedback"
+					     *ngIf="form.get('lastName').invalid && form.get('lastName').touched">
 						<small *ngIf="form.get('lastName').errors.pattern">
 							Please, enter valid value!
 						</small>
