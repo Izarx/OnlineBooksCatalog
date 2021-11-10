@@ -1,18 +1,18 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Author} from "../../model/author";
 import {AuthorService} from "../author.service";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuthorsPaginationTableComponent} from "../authors-pagination-table/authors-pagination-table.component";
 
 @Component({
-  selector: 'app-create-author',
-  templateUrl: './create-author.component.html',
-  styleUrls: ['./create-author.component.scss']
+  selector: 'app-update-author',
+  templateUrl: './update-author.component.html',
+  styleUrls: ['./update-author.component.scss']
 })
-export class CreateAuthorComponent implements OnInit {
+export class UpdateAuthorComponent implements OnInit {
 
   form: FormGroup = new FormGroup({})
-  author: Author = new Author(null, '', '');
+  @Input() author: Author
 
   constructor(
       private authorService : AuthorService,
@@ -22,24 +22,25 @@ export class CreateAuthorComponent implements OnInit {
   ngOnInit(): void {
     this.form = new FormGroup({
       firstName: new FormControl('', [
-          Validators.pattern("[a-zA-Zа-яА-Я][a-zA-Zа-яА-Я ]+"),
-          Validators.required
+        Validators.pattern("[a-zA-Zа-яА-Я][a-zA-Zа-яА-Я ]+"),
+        Validators.required
       ]),
       lastName: new FormControl('', [
-          Validators.pattern("[a-zA-Zа-яА-Я][a-zA-Zа-яА-Я ]+")
+        Validators.pattern("[a-zA-Zа-яА-Я][a-zA-Zа-яА-Я ]+")
       ])
     })
   }
 
-    createAuthor() : void {
-    this.authorService.createAuthor(this.author).subscribe(
+  updateAuthor(): void {
+    this.authorService.update(this.author).subscribe(
         author => {
           this.author = author;
           this.authors.ngOnInit()
         },
         error => {
           console.log(error)
-        })
+        }
+    )
   }
 
   submit() {
@@ -47,15 +48,15 @@ export class CreateAuthorComponent implements OnInit {
       const formData = {...this.form.value}
       this.author.firstName = formData.firstName;
       this.author.lastName = formData.lastName;
-      this.createAuthor();
+      this.updateAuthor();
       this.form.reset();
-      document.getElementById('createAuthorModalCloseButton').click()
+      document.getElementById('updateAuthorModalCloseButton').click()
     }
   }
 
   cancel() {
-      if (this.form.valid) {
-          this.form.reset()
-      }
+    if (this.form.valid) {
+      this.form.reset()
+    }
   }
 }

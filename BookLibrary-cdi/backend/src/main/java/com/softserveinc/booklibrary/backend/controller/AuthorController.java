@@ -40,12 +40,11 @@ public class AuthorController {
 	}
 
 	@PostMapping("/create")
-	public ResponseEntity<AuthorDto> createAuthor(@RequestBody AuthorDto author) {
-		LOGGER.info("RequestBody is : {}", author);
-		if (author == null) {
+	public ResponseEntity<AuthorDto> createAuthor(@RequestBody AuthorDto authorDto) {
+		if (authorDto == null) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
-		return ResponseEntity.ok(new AuthorDto(authorService.create(author.convertDtoToEntity())));
+		return ResponseEntity.ok(new AuthorDto(authorService.create(authorDto.convertDtoToEntity())));
 	}
 
 	@PatchMapping("/update")
@@ -53,7 +52,7 @@ public class AuthorController {
 		if (authorDto == null) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
-		return ResponseEntity.ok(new AuthorDto(authorService.create(authorDto.convertDtoToEntity())));
+		return ResponseEntity.ok(new AuthorDto(authorService.update(authorDto.convertDtoToEntity())));
 	}
 
 	@DeleteMapping("/delete/{id}")
