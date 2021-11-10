@@ -46,6 +46,9 @@ public class Book implements MyAppEntity<Integer> {
 	@Column(name = "create_date")
 	private LocalDateTime createDate;
 
+	@Column(name = "book_rating")
+	private Double bookRating;
+
 	@ManyToMany(mappedBy = "books")
 	private Set<Author> authors;
 
