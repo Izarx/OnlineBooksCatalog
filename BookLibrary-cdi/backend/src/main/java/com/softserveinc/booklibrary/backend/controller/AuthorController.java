@@ -5,6 +5,7 @@ import java.util.List;
 import com.softserveinc.booklibrary.backend.dto.AuthorDto;
 import com.softserveinc.booklibrary.backend.dto.DtoEntityConverter;
 import com.softserveinc.booklibrary.backend.dto.paging.MyPage;
+import com.softserveinc.booklibrary.backend.dto.paging.MyPageable;
 import com.softserveinc.booklibrary.backend.entity.Author;
 import com.softserveinc.booklibrary.backend.service.AuthorService;
 import org.slf4j.Logger;
@@ -69,13 +70,14 @@ public class AuthorController {
 				.body(DtoEntityConverter.convertListAuthorToDto(authorService.getAll()));
 	}
 
-	@GetMapping("/page/{page}/size/{size}")
+	@PostMapping
 	public ResponseEntity<MyPage<AuthorDto>> getAllPageableAndSortable(
-			@PathVariable int page,
-			@PathVariable int size) {
+			@RequestBody MyPageable pageable) {
 		return ResponseEntity.status(HttpStatus.OK)
 				.body(DtoEntityConverter
-						.convertPageAuthorToDto(authorService.getAllPageableAndSortable(page, size)));
+						.convertPageAuthorToDto(
+								authorService.getAllPageableAndSortable(
+										pageable.getPageNumber(), pageable.getPageSize())));
 	}
 
 }

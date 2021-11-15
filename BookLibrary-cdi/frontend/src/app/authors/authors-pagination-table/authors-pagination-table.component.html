@@ -4,17 +4,15 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<div class="row p-2">
-						<div class="col-4">
-							<button class="btn btn-success btn-header pull-left"
+						<div class="col-6">
+							<button class="btn btn-success btn-header"
 							        data-toggle="modal"
 							        data-target="#createAuthor"> + Add Author
 							</button>
-							<button class="btn btn-danger"
+							<button class="btn btn-danger btn-header"
 							        data-toggle="modal"
 							        data-target="#deleteAuthors"> Delete Authors
 							</button>
-						</div>
-						<div class="col-2">
 							<button class="btn btn-primary collapsed"
 							        id="accordion"
 							        data-toggle="collapse"
@@ -25,24 +23,24 @@
 								Filters
 							</button>
 						</div>
-						<div class="col-md-12 col-md-12-without-lr-padding">
-							<div id="collapseOne" class="panel-collapse collapse" style="height: 0px;">
-								<div class="panel-body panel-body-without-lr-padding">
-									<form class="form-inline">
-										<div class="form-group">
-											<label for="inputFilter1">First Name</label>
-											<input type="text" class="form-control" id="inputFilter1">
-										</div>
-										<div class="form-group">
-											<label for="inputFilter2">Last Name</label>
-											<input type="text" class="form-control" id="inputFilter2">
-										</div>
-										<div class="form-group">
-											<button type="submit" class="btn btn-header btn-primary">Allow</button>
-											<button type="submit" class="btn btn-default">Clear</button>
-										</div>
-									</form>
-								</div>
+					</div>
+					<div class="col-md-12 col-md-12-without-lr-padding">
+						<div id="collapseOne" class="panel-collapse collapse" style="height: 0px;">
+							<div class="panel-body panel-body-without-lr-padding">
+								<form class="form-inline">
+									<div class="form-group">
+										<label for="inputFilter1">First Name</label>
+										<input type="text" class="form-control" id="inputFilter1">
+									</div>
+									<div class="form-group">
+										<label for="inputFilter2">Last Name</label>
+										<input type="text" class="form-control" id="inputFilter2">
+									</div>
+									<div class="form-group">
+										<button type="submit" class="btn btn-header btn-primary">Allow</button>
+										<button type="submit" class="btn btn-default">Reset</button>
+									</div>
+								</form>
 							</div>
 						</div>
 					</div>
@@ -119,7 +117,7 @@
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-body">
-				<h4>Are you sure that you want to delete this author?</h4>
+				<h4>Are you sure that you want to delete {{author.firstName + ' ' + author.lastName}} ?</h4>
 			</div>
 			<div class="modal-footer">
 				<button type="button"

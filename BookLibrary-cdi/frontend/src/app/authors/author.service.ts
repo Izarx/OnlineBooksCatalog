@@ -26,10 +26,7 @@ export class AuthorService {
   }
 
   public getPage(pageable: Pageable): Observable<Page<Author>> {
-    let url = baseUrl
-        + '/page/' + pageable.pageNumber
-        + '/size/' + pageable.pageSize;
-    return this.httpClient.get<Page<Author>>(url, httpOptions);
+    return this.httpClient.post<Page<Author>>(baseUrl, pageable);
   }
 
   public update(author: Author) : Observable<any> {
