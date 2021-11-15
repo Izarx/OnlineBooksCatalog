@@ -15,10 +15,10 @@
 	</div>
 
 	<div class="pull-right">
-		<span class="text-muted">
+		<span class="text-muted text-center">
         Showing {{page.numberOfFirstPageElement}} to {{page.numberOfElements}} of {{page.totalElements}} entries
     </span>
-		<div class="btn-group top-right">
+		<div class="btn-group">
 			<button [routerLink]=""
 			        class="btn btn-sm" [ngClass]="{'disabled': page.first }"
 			        (click)="updatePageNumber(0)"

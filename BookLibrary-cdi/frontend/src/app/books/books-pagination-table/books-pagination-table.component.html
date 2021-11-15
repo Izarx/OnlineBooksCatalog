@@ -7,17 +7,17 @@
 						<div class="col-6">
 							<button class="btn btn-success btn-header"
 							        data-toggle="modal"
-							        data-target="#createAuthor"> + Add Author
+							        data-target="#createBook"> + Add Book
 							</button>
 							<button class="btn btn-danger btn-header"
 							        data-toggle="modal"
-							        data-target="#deleteAuthors"> Delete Authors
+							        data-target="#deleteBooks"> Delete Books
 							</button>
 							<button class="btn btn-primary collapsed"
-							        id="accordion"
+							        id="accordionBook"
 							        data-toggle="collapse"
-							        data-parent="#accordion"
-							        href="#collapseOne"
+							        data-parent="#accordionBook"
+							        href="#collapseBookFilter"
 							>
 								<i class="fa fa-filter"></i>
 								Filters
@@ -25,7 +25,7 @@
 						</div>
 					</div>
 					<div class="col-md-12 col-md-12-without-lr-padding">
-						<div id="collapseOne" class="panel-collapse collapse" style="height: 0px;">
+						<div id="collapseBookFilter" class="panel-collapse collapse" style="height: 0px;">
 							<div class="panel-body panel-body-without-lr-padding">
 								<form class="form-inline">
 									<div class="form-group">
@@ -63,16 +63,19 @@
 								<tr>
 									<th scope="col" class="text-center" width="5%">
 										<div class="custom-control checkbox-check">
-											<input type="checkbox" class="custom-control-input" id="customCheckAuthor">
-											<label class="custom-control-label" for="customCheckAuthor"></label>
+											<input type="checkbox" class="custom-control-input" id="customCheckBook">
+											<label class="custom-control-label" for="customCheckBook"></label>
 										</div>
 									</th>
-									<th scope="col" class="text-center" >Author</th>
+									<th scope="col" class="text-center" >Book Name</th>
+									<th scope="col" class="text-center" >Year Published</th>
+									<th scope="col" class="text-center" >ISBN</th>
+									<th scope="col" class="text-center" >Publisher</th>
 									<th scope="col" class="text-center" width="7%">Rating</th>
 									<th scope="col" class="text-center" width="100px"></th>
 								</tr>
 								</thead>
-								<tbody *ngFor="let author of page.content">
+								<tbody *ngFor="let book of page.content">
 								<tr>
 									<th scope="row" class="text-center">
 										<div class="custom-control checkbox-check">
@@ -80,20 +83,23 @@
 											<label class="custom-control-label" for="customCheck2"></label>
 										</div>
 									</th>
-									<td style="padding-left: 30px">{{ author.firstName + ' ' + author.lastName}}</td>
-									<td class="text-center">{{author.authorRating.toFixed(2)}}</td>
+									<td style="padding-left: 3%">{{book.name}}</td>
+									<td class="text-center">{{book.yearPublished}}</td>
+									<td class="text-center">{{book.isbn}}</td>
+									<td class="text-center">{{book.publisher}}</td>
+									<td class="text-center">{{book.bookRating.toFixed(2)}}</td>
 									<td class="text-center">
 										<button class="btn btn-primary btn-sm"
 										        data-toggle="modal"
-										        data-target="#updateAuthor"
-										        (click)="setAuthor(author)"
+										        data-target="#updateBook"
+										        (click)="setBook(book)"
 										>
 											<i class="fa fa-edit "></i>
 										</button>
 										<button class="btn btn-danger btn-sm"
 										        data-toggle="modal"
-										        data-target="#deleteAuthorConfirmation"
-										        (click)="setAuthor(author)"
+										        data-target="#deleteBookConfirmation"
+										        (click)="setBook(book)"
 										><i class="fa fa-trash-o"></i>
 										</button>
 									</td>
@@ -110,14 +116,14 @@
 </div>
 
 <div class="modal fade"
-     id="deleteAuthorConfirmation"
+     id="deleteBookConfirmation"
      tabindex="-1"
      role="dialog"
      aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-body">
-				<h4>Are you sure that you want to delete {{author.firstName + ' ' + author.lastName}} ?</h4>
+				<h4>Are you sure that you want to delete {{book.name}} ?</h4>
 			</div>
 			<div class="modal-footer">
 				<button type="button"
@@ -126,15 +132,10 @@
 				<button type="submit"
 				        class="btn btn-danger"
 				        data-dismiss="modal"
-				        (click)="deleteAuthor(getAuthor().authorId)"
+				        (click)="deleteBook(getBook().bookId)"
 				>Delete</button>
 			</div>
 		</div>
 	</div>
 </div>
 
-<app-create-author></app-create-author>
-
-<app-update-author
-		[author]="author"
-></app-update-author>
