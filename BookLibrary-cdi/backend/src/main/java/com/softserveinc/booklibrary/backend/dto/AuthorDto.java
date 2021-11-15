@@ -9,6 +9,7 @@ public final class AuthorDto implements MyAppDto<Author> {
 	private Integer authorId;
 	private String firstName;
 	private String lastName;
+	private Double authorRating;
 
 	public AuthorDto() {
 	}
@@ -17,6 +18,7 @@ public final class AuthorDto implements MyAppDto<Author> {
 		authorId = author.getAuthorId();
 		firstName = author.getFirstName();
 		lastName = author.getLastName();
+		authorRating = author.getAuthorRating();
 	}
 
 	@Override
@@ -25,6 +27,7 @@ public final class AuthorDto implements MyAppDto<Author> {
 		author.setAuthorId(authorId);
 		author.setFirstName(firstName);
 		author.setLastName(lastName);
+		author.setAuthorRating(authorRating);
 		return author;
 	}
 }

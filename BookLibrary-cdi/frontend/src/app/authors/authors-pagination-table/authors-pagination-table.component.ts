@@ -12,7 +12,7 @@ import {PaginationService} from "../../pagination/pagination.service";
 export class AuthorsPaginationTableComponent implements OnInit {
 
   page: Page<Author> = new Page()
-  author: Author = new Author(null, '', '')
+  author: Author = new Author(null, '', '', 0.0)
 
   constructor(
       private authorService: AuthorService,

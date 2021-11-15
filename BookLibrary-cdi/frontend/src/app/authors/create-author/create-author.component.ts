@@ -12,7 +12,7 @@ import {AuthorsPaginationTableComponent} from "../authors-pagination-table/autho
 export class CreateAuthorComponent implements OnInit {
 
   form: FormGroup = new FormGroup({})
-  author: Author = new Author(null, '', '');
+  author: Author = new Author(null, '', '', 0.0);
 
   constructor(
       private authorService : AuthorService,

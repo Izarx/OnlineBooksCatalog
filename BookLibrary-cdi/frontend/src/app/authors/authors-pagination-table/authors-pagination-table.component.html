@@ -14,37 +14,32 @@
 							        data-target="#deleteAuthors"> Delete Authors
 							</button>
 						</div>
-						<div class="col-md-6"></div>
 						<div class="col-2">
-							<div class="panel-group" id="accordion">
-								<div class="panel panel-default">
-									<div class="panel-title">
-										<a data-toggle="collapse"
-										   data-parent="#accordion"
-										   href="#collapseOne"
-										   class="collapsed">
-											<i class="fa fa-filter"></i>
-											Filters</a>
-									</div>
-								</div>
-							</div>
+							<button class="btn btn-primary collapsed"
+							        id="accordion"
+							        data-toggle="collapse"
+							        data-parent="#accordion"
+							        href="#collapseOne"
+							>
+								<i class="fa fa-filter"></i>
+								Filters
+							</button>
 						</div>
-						<div class="col-md-12">
+						<div class="col-md-12 col-md-12-without-lr-padding">
 							<div id="collapseOne" class="panel-collapse collapse" style="height: 0px;">
-								<div class="panel-body">
+								<div class="panel-body panel-body-without-lr-padding">
 									<form class="form-inline">
 										<div class="form-group">
-											<label for="inputFilter1">Filter1</label>
-											<input type="text" class="form-control" id="inputFilter1"
-											       placeholder="Filter1">
+											<label for="inputFilter1">First Name</label>
+											<input type="text" class="form-control" id="inputFilter1">
 										</div>
 										<div class="form-group">
-											<label for="inputFilter2">Filter2</label>
-											<input type="text" class="form-control" id="inputFilter2"
-											       placeholder="Filter2">
+											<label for="inputFilter2">Last Name</label>
+											<input type="text" class="form-control" id="inputFilter2">
 										</div>
 										<div class="form-group">
-											<button type="submit" class="btn btn-default">Allow</button>
+											<button type="submit" class="btn btn-header btn-primary">Allow</button>
+											<button type="submit" class="btn btn-default">Clear</button>
 										</div>
 									</form>
 								</div>
@@ -88,7 +83,7 @@
 										</div>
 									</th>
 									<td style="padding-left: 30px">{{ author.firstName + ' ' + author.lastName}}</td>
-									<td></td>
+									<td class="text-center">{{author.authorRating.toFixed(2)}}</td>
 									<td class="text-center">
 										<button class="btn btn-primary btn-sm"
 										        data-toggle="modal"
