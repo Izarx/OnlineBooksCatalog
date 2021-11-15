@@ -41,6 +41,16 @@ public class AuthorController {
 				: ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 	}
 
+	@PostMapping
+	public ResponseEntity<MyPage<AuthorDto>> getAllPageableAndSortable(
+			@RequestBody MyPageable pageable) {
+		return ResponseEntity.status(HttpStatus.OK)
+				.body(DtoEntityConverter
+						.convertPageAuthorToDto(
+								authorService.getAllPageableAndSortable(
+										pageable.getPageNumber(), pageable.getPageSize())));
+	}
+
 	@PostMapping("/create")
 	public ResponseEntity<AuthorDto> createAuthor(@RequestBody AuthorDto authorDto) {
 		if (authorDto == null) {
@@ -68,16 +78,6 @@ public class AuthorController {
 	public ResponseEntity<List<AuthorDto>> getAllAuthors() {
 		return ResponseEntity.status(HttpStatus.OK)
 				.body(DtoEntityConverter.convertListAuthorToDto(authorService.getAll()));
-	}
-
-	@PostMapping
-	public ResponseEntity<MyPage<AuthorDto>> getAllPageableAndSortable(
-			@RequestBody MyPageable pageable) {
-		return ResponseEntity.status(HttpStatus.OK)
-				.body(DtoEntityConverter
-						.convertPageAuthorToDto(
-								authorService.getAllPageableAndSortable(
-										pageable.getPageNumber(), pageable.getPageSize())));
 	}
 
 }

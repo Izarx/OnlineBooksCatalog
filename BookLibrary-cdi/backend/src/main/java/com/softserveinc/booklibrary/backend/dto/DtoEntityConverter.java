@@ -49,4 +49,10 @@ public final class DtoEntityConverter {
 		authorDtoPage.setContent(convertListAuthorToDto(page.getContent()));
 		return authorDtoPage;
 	}
+
+	public static MyPage<BookDto> convertPageBookToDto (MyPage<Book> page) {
+		MyPage<BookDto> bookDtoPage = convertPageEntityDto(page);
+		bookDtoPage.setContent(convertListBookToDto(page.getContent()));
+		return bookDtoPage;
+	}
 }

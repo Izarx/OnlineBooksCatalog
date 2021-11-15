@@ -11,6 +11,7 @@ public final class BookDto implements MyAppDto<Book> {
 	private Integer yearPublished;
 	private Long isbn;
 	private String publisher;
+	private Double bookRating;
 
 	public BookDto() {
 	}
@@ -21,6 +22,7 @@ public final class BookDto implements MyAppDto<Book> {
 		yearPublished = book.getYearPublished();
 		isbn = book.getIsbn();
 		publisher = book.getPublisher();
+		bookRating = book.getBookRating();
 	}
 
 	@Override
