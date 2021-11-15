@@ -42,6 +42,9 @@ public class Author implements MyAppEntity<Integer> {
 	@Column(name = "create_date")
 	private LocalDateTime createDate;
 
+	@Column(name = "author_rating")
+	private Double authorRating;
+
 	@ManyToMany
 	@JoinTable(
 			name = "authors_books",

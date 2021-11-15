@@ -4,50 +4,43 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<div class="row p-2">
-						<div class="col-4">
-							<button class="btn btn-success btn-header pull-left"
+						<div class="col-6">
+							<button class="btn btn-success btn-header"
 							        data-toggle="modal"
 							        data-target="#createAuthor"> + Add Author
 							</button>
-							<button class="btn btn-warning"
+							<button class="btn btn-danger btn-header"
 							        data-toggle="modal"
 							        data-target="#deleteAuthors"> Delete Authors
 							</button>
+							<button class="btn btn-primary collapsed"
+							        id="accordion"
+							        data-toggle="collapse"
+							        data-parent="#accordion"
+							        href="#collapseOne"
+							>
+								<i class="fa fa-filter"></i>
+								Filters
+							</button>
 						</div>
-						<div class="col-md-6"></div>
-						<div class="col-2">
-							<div class="panel-group" id="accordion">
-								<div class="panel panel-default">
-									<div class="panel-title">
-										<a data-toggle="collapse"
-										   data-parent="#accordion"
-										   href="#collapseOne"
-										   class="collapsed">
-											<i class="fa fa-filter"></i>
-											Filters</a>
+					</div>
+					<div class="col-md-12 col-md-12-without-lr-padding">
+						<div id="collapseOne" class="panel-collapse collapse" style="height: 0px;">
+							<div class="panel-body panel-body-without-lr-padding">
+								<form class="form-inline">
+									<div class="form-group">
+										<label for="inputFilter1">First Name</label>
+										<input type="text" class="form-control" id="inputFilter1">
 									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-12">
-							<div id="collapseOne" class="panel-collapse collapse" style="height: 0px;">
-								<div class="panel-body">
-									<form class="form-inline">
-										<div class="form-group">
-											<label for="inputFilter1">Filter1</label>
-											<input type="text" class="form-control" id="inputFilter1"
-											       placeholder="Filter1">
-										</div>
-										<div class="form-group">
-											<label for="inputFilter2">Filter2</label>
-											<input type="text" class="form-control" id="inputFilter2"
-											       placeholder="Filter2">
-										</div>
-										<div class="form-group">
-											<button type="submit" class="btn btn-default">Allow</button>
-										</div>
-									</form>
-								</div>
+									<div class="form-group">
+										<label for="inputFilter2">Last Name</label>
+										<input type="text" class="form-control" id="inputFilter2">
+									</div>
+									<div class="form-group">
+										<button type="submit" class="btn btn-header btn-primary">Allow</button>
+										<button type="submit" class="btn btn-default">Reset</button>
+									</div>
+								</form>
 							</div>
 						</div>
 					</div>
@@ -76,7 +69,7 @@
 									</th>
 									<th scope="col" class="text-center" >Author</th>
 									<th scope="col" class="text-center" width="7%">Rating</th>
-									<th scope="col" class="text-center" width="10%"></th>
+									<th scope="col" class="text-center" width="100px"></th>
 								</tr>
 								</thead>
 								<tbody *ngFor="let author of page.content">
@@ -88,7 +81,7 @@
 										</div>
 									</th>
 									<td style="padding-left: 30px">{{ author.firstName + ' ' + author.lastName}}</td>
-									<td></td>
+									<td class="text-center">{{author.authorRating.toFixed(2)}}</td>
 									<td class="text-center">
 										<button class="btn btn-primary btn-sm"
 										        data-toggle="modal"
@@ -97,7 +90,7 @@
 										>
 											<i class="fa fa-edit "></i>
 										</button>
-										<button class="btn btn-warning btn-sm"
+										<button class="btn btn-danger btn-sm"
 										        data-toggle="modal"
 										        data-target="#deleteAuthorConfirmation"
 										        (click)="setAuthor(author)"
@@ -124,7 +117,7 @@
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-body">
-				<h4>Are you sure that you want to delete this author?</h4>
+				<h4>Are you sure that you want to delete {{author.firstName + ' ' + author.lastName}} ?</h4>
 			</div>
 			<div class="modal-footer">
 				<button type="button"
