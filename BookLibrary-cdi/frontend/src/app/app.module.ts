@@ -12,6 +12,8 @@ import {PaginationComponent} from './pagination/pagination.component';
 import {AuthorsPaginationTableComponent} from './authors/authors-pagination-table/authors-pagination-table.component';
 import {UpdateAuthorComponent} from './authors/update-author/update-author.component';
 import {BooksPaginationTableComponent} from './books/books-pagination-table/books-pagination-table.component';
+import { CreateBookComponent } from './books/create-book/create-book.component';
+import { UpdateBookComponent } from './books/update-book/update-book.component';
 
 @NgModule({
     declarations: [
@@ -22,7 +24,9 @@ import {BooksPaginationTableComponent} from './books/books-pagination-table/book
         PaginationComponent,
         AuthorsPaginationTableComponent,
         UpdateAuthorComponent,
-        BooksPaginationTableComponent
+        BooksPaginationTableComponent,
+        CreateBookComponent,
+        UpdateBookComponent
     ],
     imports: [
         BrowserModule,

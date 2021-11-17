@@ -27,6 +27,6 @@ export class BookService {
   }
 
   public updateBook(book: Book) : Observable<any> {
-    return this.httpClient.patch(baseUrl + `/update`, book);
+    return this.httpClient.put(baseUrl + `/update`, book);
   }
 }

@@ -8,7 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaQuery;
 
-import com.softserveinc.booklibrary.backend.entity.MyAppEntity;
+import com.softserveinc.booklibrary.backend.entity.AbstractEntity;
 import com.softserveinc.booklibrary.backend.exception.NotValidEntityException;
 import com.softserveinc.booklibrary.backend.exception.NotValidIdException;
 import com.softserveinc.booklibrary.backend.repository.EntityRepository;
@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-public abstract class AbstractEntityRepository<T extends MyAppEntity<? extends Serializable>> implements EntityRepository<T> {
+public abstract class AbstractEntityRepository<T extends AbstractEntity<? extends Serializable>> implements EntityRepository<T> {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(AbstractEntityRepository.class);
 	private final Class<T> type;

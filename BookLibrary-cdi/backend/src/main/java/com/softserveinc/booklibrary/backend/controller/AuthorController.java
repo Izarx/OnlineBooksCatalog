@@ -42,7 +42,7 @@ public class AuthorController {
 	}
 
 	@PostMapping
-	public ResponseEntity<MyPage<AuthorDto>> getAllPageableAndSortable(
+	public ResponseEntity<MyPage<AuthorDto>> listAuthors(
 			@RequestBody MyPageable pageable) {
 		return ResponseEntity.status(HttpStatus.OK)
 				.body(DtoEntityConverter

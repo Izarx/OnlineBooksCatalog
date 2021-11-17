@@ -27,6 +27,6 @@ export class AuthorService {
   }
 
   public updateAuthor(author: Author) : Observable<any> {
-        return this.httpClient.patch(baseUrl + `/update`, author);
+        return this.httpClient.put(baseUrl + `/update`, author);
   }
 }

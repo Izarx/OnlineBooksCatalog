@@ -20,7 +20,7 @@ import org.hibernate.annotations.CreationTimestamp;
 @Getter
 @Entity
 @Table(name = "reviews")
-public class Review implements MyAppEntity<Integer> {
+public class Review implements AbstractEntity<Integer> {
 
 	public static final int COMMENTER_NAME_LENGTH = 256;
 	private static final long serialVersionUID = -7060539758822800075L;
@@ -40,8 +40,7 @@ public class Review implements MyAppEntity<Integer> {
 	@Column(name = "rating", nullable = false)
 	private Integer rating;
 
-	@CreationTimestamp  // date created by creating instance forbidden for update and insert
-	@Column(name = "create_date")
+	@Column(name = "create_date", updatable = false, insertable = false)
 	private LocalDateTime createDate;
 
 	@ManyToOne(fetch = FetchType.LAZY)

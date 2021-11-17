@@ -19,7 +19,7 @@ import org.hibernate.annotations.CreationTimestamp;
 @Setter
 @Entity
 @Table(name = "books")
-public class Book implements MyAppEntity<Integer> {
+public class Book implements AbstractEntity<Integer> {
 
 	public static final int NAME_LENGTH = 512;
 	public static final int PUBLISHER_LENGTH = 256;
@@ -42,8 +42,7 @@ public class Book implements MyAppEntity<Integer> {
 	@Column(name = "publisher", length = PUBLISHER_LENGTH)
 	private String publisher;
 
-	@CreationTimestamp  // date created by creating instance forbidden for update and insert
-	@Column(name = "create_date")
+	@Column(name = "create_date", updatable = false, insertable = false)
 	private LocalDateTime createDate;
 
 	@Column(name = "book_rating")

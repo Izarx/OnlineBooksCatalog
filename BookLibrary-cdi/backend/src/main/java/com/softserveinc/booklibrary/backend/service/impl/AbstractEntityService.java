@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 
 import com.softserveinc.booklibrary.backend.dto.paging.MyPage;
 import com.softserveinc.booklibrary.backend.dto.paging.MyPageable;
-import com.softserveinc.booklibrary.backend.entity.MyAppEntity;
+import com.softserveinc.booklibrary.backend.entity.AbstractEntity;
 import com.softserveinc.booklibrary.backend.exception.NotValidEntityException;
 import com.softserveinc.booklibrary.backend.exception.NotValidIdException;
 import com.softserveinc.booklibrary.backend.repository.EntityRepository;
@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-public abstract class AbstractEntityService<T extends MyAppEntity<? extends Serializable>> implements EntityService<T> {
+public abstract class AbstractEntityService<T extends AbstractEntity<? extends Serializable>> implements EntityService<T> {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(AbstractEntityService.class);
 	protected EntityRepository<T> repository;
