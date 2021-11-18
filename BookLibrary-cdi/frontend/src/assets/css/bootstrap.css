@@ -1887,13 +1887,6 @@ pre code {
 	padding-left: 15px
 }
 
-.col-md-12-without-lr-padding {
-	position: relative;
-	margin: 0;
-	min-height: 1px;
-	padding: 10px 0px 10px
-}
-
 .col-2 {
 	position: relative;
 	margin: 0;
@@ -3380,7 +3373,7 @@ select[multiple].form-group-lg .form-control, textarea.form-group-lg .form-contr
 	.form-inline .form-group {
 		display: inline-block;
 		margin-right: 10px;
-		margin-bottom: 0px;
+		margin-bottom: 0;
 		vertical-align: middle
 	}
 
@@ -5879,21 +5872,6 @@ a.list-group-item-danger.active, a.list-group-item-danger.active:focus, a.list-g
 
 .panel-body {
 	padding: 0px 15px 15px 15px
-}
-
-.panel-body-without-lr-padding {
-	padding: 0px 0px 5px;
-	user-select: none;
-	line-height: 1.42857143;
-	color: #555;
-	background-color: #fff;
-	background-image: none;
-	border: 1px solid #ccc;
-	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
-	box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
-	-webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
-	-o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
-	transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s
 }
 
 .panel-heading {

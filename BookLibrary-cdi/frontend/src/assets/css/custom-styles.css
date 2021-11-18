@@ -36,34 +36,6 @@ body {
 	text-align: center;
 }
 
-.column-width-7{
-	width: 7%;
-}
-
-.column-width-book{
-	width: 30%;
-}
-
-.column-width-authors{
-	width: 25%;
-}
-
-.column-width-actions {
-	width: 90px;
-}
-
-.column-width-checkbox {
-	width: 40px;
-}
-
-.column-width-rating {
-	width: 60px;
-}
-
-.column-entity-padding {
-	padding-left: 3%;
-}
-
 .no-boder {
 	border: 1px solid #f3f3f3;
 }
