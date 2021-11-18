@@ -16,12 +16,14 @@ import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "authors")
-public class Author implements MyAppEntity<Integer> {
+public class Author implements AbstractEntity<Integer> {
 
 	public static final int FIRST_NAME_LENGTH = 512;
 	public static final int LAST_NAME_LENGTH = 512;
@@ -38,8 +40,7 @@ public class Author implements MyAppEntity<Integer> {
 	@Column(name = "last_name", length = LAST_NAME_LENGTH)
 	private String lastName;
 
-	@CreationTimestamp  // date created by creating instance forbidden for update and insert
-	@Column(name = "create_date")
+	@Column(name = "create_date", updatable = false, insertable = false)
 	private LocalDateTime createDate;
 
 	@Column(name = "author_rating")

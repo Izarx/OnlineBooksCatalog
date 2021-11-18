@@ -32,7 +32,7 @@ export class UpdateAuthorComponent implements OnInit {
   }
 
   updateAuthor(): void {
-    this.authorService.update(this.author).subscribe(
+    this.authorService.updateAuthor(this.author).subscribe(
         author => {
           this.author = author;
           this.authors.ngOnInit()

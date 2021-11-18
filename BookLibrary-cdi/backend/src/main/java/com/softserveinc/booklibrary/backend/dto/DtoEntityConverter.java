@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 import com.softserveinc.booklibrary.backend.dto.paging.MyPage;
 import com.softserveinc.booklibrary.backend.entity.Author;
 import com.softserveinc.booklibrary.backend.entity.Book;
-import com.softserveinc.booklibrary.backend.entity.MyAppEntity;
+import com.softserveinc.booklibrary.backend.entity.AbstractEntity;
 import com.softserveinc.booklibrary.backend.entity.Review;
 
 public final class DtoEntityConverter {
@@ -15,8 +15,8 @@ public final class DtoEntityConverter {
 	private DtoEntityConverter() {
 	}
 
-	public static <T extends MyAppDto<? extends MyAppEntity<? extends Serializable>>>
-				List<MyAppEntity<? extends Serializable>> convertListDtoToEntity (List<T> dtos) {
+	public static <T extends MyAppDto<? extends AbstractEntity<? extends Serializable>>>
+				List<AbstractEntity<? extends Serializable>> convertListDtoToEntity (List<T> dtos) {
 		return dtos.stream().map(MyAppDto::convertDtoToEntity).collect(Collectors.toList());
 	}
 
@@ -48,5 +48,11 @@ public final class DtoEntityConverter {
 		MyPage<AuthorDto> authorDtoPage = convertPageEntityDto(page);
 		authorDtoPage.setContent(convertListAuthorToDto(page.getContent()));
 		return authorDtoPage;
+	}
+
+	public static MyPage<BookDto> convertPageBookToDto (MyPage<Book> page) {
+		MyPage<BookDto> bookDtoPage = convertPageEntityDto(page);
+		bookDtoPage.setContent(convertListBookToDto(page.getContent()));
+		return bookDtoPage;
 	}
 }

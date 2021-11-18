@@ -10,7 +10,6 @@ import com.softserveinc.booklibrary.backend.entity.Author;
 import com.softserveinc.booklibrary.backend.service.AuthorService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -41,6 +40,16 @@ public class AuthorController {
 				: ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 	}
 
+	@PostMapping
+	public ResponseEntity<MyPage<AuthorDto>> listAuthors(
+			@RequestBody MyPageable pageable) {
+		return ResponseEntity.status(HttpStatus.OK)
+				.body(DtoEntityConverter
+						.convertPageAuthorToDto(
+								authorService.listEntities(
+										pageable.getPageNumber(), pageable.getPageSize())));
+	}
+
 	@PostMapping("/create")
 	public ResponseEntity<AuthorDto> createAuthor(@RequestBody AuthorDto authorDto) {
 		if (authorDto == null) {
@@ -68,16 +77,6 @@ public class AuthorController {
 	public ResponseEntity<List<AuthorDto>> getAllAuthors() {
 		return ResponseEntity.status(HttpStatus.OK)
 				.body(DtoEntityConverter.convertListAuthorToDto(authorService.getAll()));
-	}
-
-	@PostMapping
-	public ResponseEntity<MyPage<AuthorDto>> getAllPageableAndSortable(
-			@RequestBody MyPageable pageable) {
-		return ResponseEntity.status(HttpStatus.OK)
-				.body(DtoEntityConverter
-						.convertPageAuthorToDto(
-								authorService.getAllPageableAndSortable(
-										pageable.getPageNumber(), pageable.getPageSize())));
 	}
 
 }

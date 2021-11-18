@@ -8,14 +8,14 @@
 	<packaging>pom</packaging>
 	<name>booklibrary</name>
 
+	<properties>
+		<java.version>11</java.version>
+	</properties>
+
 	<modules>
 		<module>backend</module>
 		<module>frontend</module>
 	</modules>
-
-	<properties>
-		<java.version>11</java.version>
-	</properties>
 
 	<build>
 		<plugins>
@@ -26,9 +26,9 @@
 				<configuration>
 					<source>${java.version}</source>
 					<target>${java.version}</target>
-					<compilerArgs>--enable-preview</compilerArgs>
 				</configuration>
 			</plugin>
 		</plugins>
 	</build>
+
 </project>
