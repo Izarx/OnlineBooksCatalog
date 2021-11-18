@@ -1,8 +1,8 @@
 package com.softserveinc.booklibrary.backend.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
-import com.softserveinc.booklibrary.backend.dto.AuthorDto;
 import com.softserveinc.booklibrary.backend.dto.BookDto;
 import com.softserveinc.booklibrary.backend.dto.DtoEntityConverter;
 import com.softserveinc.booklibrary.backend.dto.paging.MyPage;
@@ -44,10 +44,9 @@ public class BookController {
 	@PostMapping
 	public ResponseEntity<MyPage<BookDto>> listBooks(@RequestBody MyPageable pageable) {
 		return ResponseEntity.status(HttpStatus.OK)
-				.body(DtoEntityConverter
-						.convertPageBookToDto(
-								bookService.listEntities(
-										pageable.getPageNumber(), pageable.getPageSize())));
+				.body(convertPageBookToDto(
+						bookService.listEntities(
+								pageable.getPageNumber(), pageable.getPageSize())));
 	}
 
 	@PostMapping("/create")
@@ -71,6 +70,16 @@ public class BookController {
 		return bookService.delete(id) ?
 				ResponseEntity.ok().build() :
 				ResponseEntity.notFound().build();
+	}
+
+	private static List<BookDto> convertListBookToDto(List<Book> books) {
+		return books.stream().map(BookDto::new).collect(Collectors.toList());
+	}
+
+	private static MyPage<BookDto> convertPageBookToDto(MyPage<Book> page) {
+		MyPage<BookDto> bookDtoPage = DtoEntityConverter.convertPageEntityDto(page);
+		bookDtoPage.setContent(convertListBookToDto(page.getContent()));
+		return bookDtoPage;
 	}
 
 }
