@@ -18,6 +18,6 @@ public interface EntityService<T extends AbstractEntity<? extends Serializable>>
 
 	List<T> getAll();
 
-	MyPage<T> getAllPageableAndSortable(int pageId, int numEntitiesOnPage);
+	MyPage<T> listEntities(int pageId, int numEntitiesOnPage);
 
 }

@@ -28,15 +28,21 @@
 						<div id="collapseOne" class="panel-collapse collapse" style="height: 0px;">
 							<div class="panel-body panel-body-without-lr-padding">
 								<form class="form-inline">
-									<div class="form-group">
-										<label for="inputFilter1">First Name</label>
-										<input type="text" class="form-control" id="inputFilter1">
+									<div class="row p-2">
+										<div class="form-group col-md-3">
+											<div>
+												<label for="inputFilter1">First Name</label>
+											</div>
+											<input type="text" class="form-control" id="inputFilter1">
+										</div>
+										<div class="form-group col-md-3">
+											<div>
+												<label for="inputFilter2">Last Name</label>
+											</div>
+											<input type="text" class="form-control" id="inputFilter2">
+										</div>
 									</div>
-									<div class="form-group">
-										<label for="inputFilter2">Last Name</label>
-										<input type="text" class="form-control" id="inputFilter2">
-									</div>
-									<div class="form-group">
+									<div class="form-group pull-right">
 										<button type="submit" class="btn btn-header btn-primary">Search</button>
 										<button type="submit" class="btn btn-default">Reset</button>
 									</div>
@@ -61,15 +67,15 @@
 							<table class="table table-striped table-bordered">
 								<thead>
 								<tr>
-									<th scope="col" class="text-center" width="5%">
+									<th scope="col" class="text-center column-width-checkbox" >
 										<div class="custom-control checkbox-check">
 											<input type="checkbox" class="custom-control-input" id="customCheckAuthor">
 											<label class="custom-control-label" for="customCheckAuthor"></label>
 										</div>
 									</th>
 									<th scope="col" class="text-center" >Author</th>
-									<th scope="col" class="text-center" width="7%">Rating</th>
-									<th scope="col" class="text-center" width="100px"></th>
+									<th scope="col" class="text-center column-width-rating" >Rating</th>
+									<th scope="col" class="text-center column-width-actions" ></th>
 								</tr>
 								</thead>
 								<tbody *ngFor="let author of page.content">
@@ -80,7 +86,7 @@
 											<label class="custom-control-label" for="customCheck2"></label>
 										</div>
 									</th>
-									<td style="padding-left: 30px">{{ author.firstName + ' ' + author.lastName}}</td>
+									<td class="column-entity-padding">{{ author.firstName + ' ' + author.lastName}}</td>
 									<td class="text-center">{{author.authorRating.toFixed(2)}}</td>
 									<td class="text-center">
 										<button class="btn btn-primary btn-sm"

@@ -3380,7 +3380,7 @@ select[multiple].form-group-lg .form-control, textarea.form-group-lg .form-contr
 	.form-inline .form-group {
 		display: inline-block;
 		margin-right: 10px;
-		margin-bottom: 0;
+		margin-bottom: 0px;
 		vertical-align: middle
 	}
 
@@ -5882,7 +5882,7 @@ a.list-group-item-danger.active, a.list-group-item-danger.active:focus, a.list-g
 }
 
 .panel-body-without-lr-padding {
-	padding: 10px 0px 10px;
+	padding: 0px 0px 5px;
 	user-select: none;
 	line-height: 1.42857143;
 	color: #555;

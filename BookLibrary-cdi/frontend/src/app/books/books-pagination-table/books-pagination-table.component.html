@@ -28,16 +28,40 @@
 						<div id="collapseBookFilter" class="panel-collapse collapse" style="height: 0px;">
 							<div class="panel-body panel-body-without-lr-padding">
 								<form class="form-inline">
-									<div class="form-group">
-										<label for="inputFilter1">First Name</label>
-										<input type="text" class="form-control" id="inputFilter1">
+									<div class="row p-2">
+										<div class="form-group col-md-3">
+											<div>
+												<label for="inputFilterName">Name</label>
+											</div>
+											<input type="text" class="form-control" id="inputFilterName">
+										</div>
+										<div class="form-group col-md-3">
+											<div>
+												<label for="inputFilterAuthor">Author</label>
+											</div>
+											<input type="text" class="form-control" id="inputFilterAuthor">
+										</div>
+										<div class="form-group col-md-3">
+											<div>
+												<label for="inputFilterRating">Rating</label>
+											</div>
+											<input type="text" class="form-control" id="inputFilterRating">
+										</div>
+										<div class="form-group col-md-2">
+											<div>
+												<label for="inputFilterYear">Year</label>
+											</div>
+											<input type="text" class="form-control" id="inputFilterYear">
+										</div>
+										<div class="form-group col-md-3">
+											<div>
+												<label for="inputFilterIsbn">ISBN</label>
+											</div>
+											<input type="text" class="form-control" id="inputFilterIsbn">
+										</div>
 									</div>
-									<div class="form-group">
-										<label for="inputFilter2">Last Name</label>
-										<input type="text" class="form-control" id="inputFilter2">
-									</div>
-									<div class="form-group">
-										<button type="submit" class="btn btn-header btn-primary">Allow</button>
+									<div class="form-group pull-right">
+										<button type="submit" class="btn btn-header btn-primary">Search</button>
 										<button type="submit" class="btn btn-default">Reset</button>
 									</div>
 								</form>
@@ -61,18 +85,19 @@
 							<table class="table table-striped table-bordered">
 								<thead>
 								<tr>
-									<th scope="col" class="text-center" width="5%">
+									<th scope="col" class="text-center column-width-checkbox" >
 										<div class="custom-control checkbox-check">
 											<input type="checkbox" class="custom-control-input" id="customCheckBook">
 											<label class="custom-control-label" for="customCheckBook"></label>
 										</div>
 									</th>
-									<th scope="col" class="text-center" width="35%">Book Name</th>
+									<th scope="col" class="text-center column-width-book" >Book Name</th>
+									<th scope="col" class="text-center column-width-authors" >Authors</th>
+									<th scope="col" class="text-center column-width-rating" >Rating</th>
 									<th scope="col" class="text-center" >Year</th>
 									<th scope="col" class="text-center" >ISBN</th>
 									<th scope="col" class="text-center" >Publisher</th>
-									<th scope="col" class="text-center" width="7%">Rating</th>
-									<th scope="col" class="text-center" width="100px"></th>
+									<th scope="col" class="text-center column-width-actions" ></th>
 								</tr>
 								</thead>
 								<tbody *ngFor="let book of page.content">
@@ -83,11 +108,16 @@
 											<label class="custom-control-label" for="customCheck2"></label>
 										</div>
 									</th>
-									<td style="padding-left: 3%">{{book.name}}</td>
+									<td class="column-entity-padding">{{book.name}}</td>
+									<td>
+										<div>Author1</div>
+										<div>Author2</div>
+										<div>Author3</div>
+									</td>
+									<td class="text-center">{{book.bookRating.toFixed(2)}}</td>
 									<td class="text-center">{{book.yearPublished}}</td>
 									<td class="text-center">{{book.isbn}}</td>
 									<td class="text-center">{{book.publisher}}</td>
-									<td class="text-center">{{book.bookRating.toFixed(2)}}</td>
 									<td class="text-center">
 										<button class="btn btn-primary btn-sm"
 										        data-toggle="modal"

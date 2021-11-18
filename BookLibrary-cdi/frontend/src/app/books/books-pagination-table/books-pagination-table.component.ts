@@ -3,6 +3,7 @@ import {Page} from "../../model/page";
 import {PaginationService} from "../../pagination/pagination.service";
 import {Book} from "../../model/book";
 import {BookService} from "../book.service";
+import {Author} from "../../model/author";
 
 @Component({
   selector: 'app-books-pagination-table',
@@ -14,6 +15,7 @@ export class BooksPaginationTableComponent implements OnInit {
 
   page: Page<Book> = new Page()
   book: Book = new Book(null, '', 0, 0, '', 0.0)
+  authors: Author[]
 
   constructor(
       private bookService: BookService,

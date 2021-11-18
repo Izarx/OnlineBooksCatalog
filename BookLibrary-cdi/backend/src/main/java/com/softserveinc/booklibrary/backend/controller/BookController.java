@@ -1,5 +1,8 @@
 package com.softserveinc.booklibrary.backend.controller;
 
+import java.util.List;
+
+import com.softserveinc.booklibrary.backend.dto.AuthorDto;
 import com.softserveinc.booklibrary.backend.dto.BookDto;
 import com.softserveinc.booklibrary.backend.dto.DtoEntityConverter;
 import com.softserveinc.booklibrary.backend.dto.paging.MyPage;
@@ -39,11 +42,11 @@ public class BookController {
 	}
 
 	@PostMapping
-	public ResponseEntity<MyPage<BookDto>> getAllPageableAndSortable(@RequestBody MyPageable pageable) {
+	public ResponseEntity<MyPage<BookDto>> listBooks(@RequestBody MyPageable pageable) {
 		return ResponseEntity.status(HttpStatus.OK)
 				.body(DtoEntityConverter
 						.convertPageBookToDto(
-								bookService.getAllPageableAndSortable(
+								bookService.listEntities(
 										pageable.getPageNumber(), pageable.getPageSize())));
 	}
 
@@ -69,4 +72,5 @@ public class BookController {
 				ResponseEntity.ok().build() :
 				ResponseEntity.notFound().build();
 	}
+
 }

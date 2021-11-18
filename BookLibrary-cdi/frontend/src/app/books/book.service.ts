@@ -4,6 +4,7 @@ import {Observable} from "rxjs";
 import {Pageable} from "../model/pagable";
 import {Page} from "../model/page";
 import {Book} from "../model/book";
+import {Author} from "../model/author";
 
 const baseUrl = 'http://localhost:8080/api/books';
 
