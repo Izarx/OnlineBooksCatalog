@@ -8,4 +8,14 @@ export class SortableColumn {
         this.title = title;
         this.direction = direction;
     }
+
+    public toggleDirection() {
+        if(this.direction == 'desc') {
+            this.direction = null;
+        } else if(this.direction == 'asc') {
+            this.direction = 'desc';
+        } else {
+            this.direction = 'asc';
+        }
+    }
 }

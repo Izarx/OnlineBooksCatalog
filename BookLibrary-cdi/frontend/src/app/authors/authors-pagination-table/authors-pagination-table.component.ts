@@ -3,6 +3,8 @@ import {Author} from "../../model/author";
 import {Page} from "../../model/page";
 import {AuthorService} from "../author.service";
 import {PaginationService} from "../../pagination/pagination.service";
+import {SortableColumn} from "../../model/sortable-column";
+import {SortingService} from "../../sorting/sorting.service";
 
 @Component({
   selector: 'app-authors-pagination-table',
@@ -11,12 +13,17 @@ import {PaginationService} from "../../pagination/pagination.service";
 })
 export class AuthorsPaginationTableComponent implements OnInit {
 
+  sortableColumns: Array<SortableColumn> = [
+      new SortableColumn('name', 'Author', null),
+      new SortableColumn('authorRating', 'Rating', null),
+  ];
   page: Page<Author> = new Page()
   author: Author = new Author(null, '', '', 0.0)
 
   constructor(
       private authorService: AuthorService,
-      private paginationService: PaginationService
+      private paginationService: PaginationService,
+      private sortingService: SortingService
   ) { }
 
   ngOnInit(): void {
@@ -24,6 +31,7 @@ export class AuthorsPaginationTableComponent implements OnInit {
   }
 
   private getData(): void {
+      this.page.pageConstructor.sorting = this.sortingService.getSortableColumns(this.sortableColumns);
     this.authorService.getPage(this.page.pageConstructor)
         .subscribe(page => {
           this.page = page
@@ -42,6 +50,12 @@ export class AuthorsPaginationTableComponent implements OnInit {
           console.log(error)
         })
   }
+
+  public sort(sortableColumn: SortableColumn): void {
+      this.sortingService.changeSortableStateColumn(sortableColumn, this.sortableColumns);
+      this.getData();
+  }
+
   public getNextPage(): void {
     this.page.pageConstructor.pageable = this.paginationService.getNextPage(this.page);
     this.getData();
