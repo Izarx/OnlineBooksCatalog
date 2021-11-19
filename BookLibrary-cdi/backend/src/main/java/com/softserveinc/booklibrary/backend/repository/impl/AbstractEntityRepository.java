@@ -95,8 +95,10 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS)
-	public MyPage<T> listEntities(int pageId, int numEntitiesOnPage) {
+	public MyPage<T> listEntities(MyPageable pageable) {
 		MyPage<T> page = new MyPage<>();
+		int numEntitiesOnPage = pageable.getPageSize();
+		int pageId = pageable.getPageNumber();
 
 		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
 		CriteriaQuery<Long> countCriteriaQuery = builder.createQuery(Long.class);
@@ -111,7 +113,7 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 		}
 
 		setFirstLastNumElements(pageId, numEntitiesOnPage, page);
-		page.setPageable(new MyPageable(numEntitiesOnPage, pageId));
+		page.setPageable(new MyPageable());
 
 		CriteriaQuery<T> criteriaQuery = builder.createQuery(type);
 		CriteriaQuery<T> selectEntities = criteriaQuery.select(criteriaQuery.from(type));

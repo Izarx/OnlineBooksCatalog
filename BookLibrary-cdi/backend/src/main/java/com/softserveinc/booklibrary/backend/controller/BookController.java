@@ -45,8 +45,7 @@ public class BookController {
 	public ResponseEntity<MyPage<BookDto>> listBooks(@RequestBody MyPageable pageable) {
 		return ResponseEntity.status(HttpStatus.OK)
 				.body(convertPageBookToDto(
-						bookService.listEntities(
-								pageable.getPageNumber(), pageable.getPageSize())));
+						bookService.listEntities(pageable)));
 	}
 
 	@PostMapping("/create")

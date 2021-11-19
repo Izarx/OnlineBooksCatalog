@@ -46,8 +46,7 @@ public class AuthorController {
 			@RequestBody MyPageable pageable) {
 		return ResponseEntity.status(HttpStatus.OK)
 				.body(convertPageAuthorToDto(
-						authorService.listEntities(
-								pageable.getPageNumber(), pageable.getPageSize())));
+						authorService.listEntities(pageable)));
 	}
 
 	@PostMapping("/create")

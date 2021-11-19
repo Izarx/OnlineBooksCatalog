@@ -24,7 +24,7 @@ export class AuthorsPaginationTableComponent implements OnInit {
   }
 
   private getData(): void {
-    this.authorService.getPage(this.page.pageable)
+    this.authorService.getPage(this.page.pageConstructor)
         .subscribe(page => {
           this.page = page
         },
@@ -43,22 +43,22 @@ export class AuthorsPaginationTableComponent implements OnInit {
         })
   }
   public getNextPage(): void {
-    this.page.pageable = this.paginationService.getNextPage(this.page);
+    this.page.pageConstructor.pageable = this.paginationService.getNextPage(this.page);
     this.getData();
   }
 
   public getPreviousPage(): void {
-    this.page.pageable = this.paginationService.getPreviousPage(this.page);
+    this.page.pageConstructor.pageable = this.paginationService.getPreviousPage(this.page);
     this.getData();
   }
 
   public getPageInNewSize(pageSize: number): void {
-    this.page.pageable = this.paginationService.getPageInNewSize(this.page, pageSize);
+    this.page.pageConstructor.pageable = this.paginationService.getPageInNewSize(this.page, pageSize);
     this.getData();
   }
 
   public getPageNewNumber(pageNumber: number): void {
-      this.page.pageable = this.paginationService.getPageNewNumber(this.page, pageNumber);
+      this.page.pageConstructor.pageable = this.paginationService.getPageNewNumber(this.page, pageNumber);
       this.getData();
   }
 

@@ -72,8 +72,8 @@ public abstract class AbstractEntityService<T extends AbstractEntity<? extends S
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS)
-	public MyPage<T> listEntities(int pageId, int numEntitiesOnPage) {
-		return repository.listEntities(pageId, numEntitiesOnPage);
+	public MyPage<T> listEntities(MyPageable pageable) {
+		return repository.listEntities(pageable);
 	}
 
 }

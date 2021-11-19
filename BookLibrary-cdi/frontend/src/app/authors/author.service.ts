@@ -4,6 +4,7 @@ import {Author} from "../model/author";
 import {Observable} from "rxjs";
 import {Pageable} from "../model/pagable";
 import {Page} from "../model/page";
+import {PageConstructor} from "../model/page-constructor";
 
 const baseUrl = 'http://localhost:8080/api/authors';
 
@@ -22,8 +23,8 @@ export class AuthorService {
     return this.httpClient.delete<void>(baseUrl + `/delete/${authorId}`);
   }
 
-  public getPage(pageable: Pageable): Observable<Page<Author>> {
-    return this.httpClient.post<Page<Author>>(baseUrl, pageable);
+  public getPage(pageConstructor: PageConstructor): Observable<Page<Author>> {
+    return this.httpClient.post<Page<Author>>(baseUrl, pageConstructor);
   }
 
   public updateAuthor(author: Author) : Observable<any> {
