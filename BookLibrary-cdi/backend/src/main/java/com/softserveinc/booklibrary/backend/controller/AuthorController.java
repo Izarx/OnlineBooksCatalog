@@ -1,11 +1,13 @@
 package com.softserveinc.booklibrary.backend.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.softserveinc.booklibrary.backend.dto.AuthorDto;
 import com.softserveinc.booklibrary.backend.dto.DtoEntityConverter;
 import com.softserveinc.booklibrary.backend.dto.paging.MyPage;
 import com.softserveinc.booklibrary.backend.dto.paging.MyPageable;
+import com.softserveinc.booklibrary.backend.dto.paging.PageConstructor;
 import com.softserveinc.booklibrary.backend.entity.Author;
 import com.softserveinc.booklibrary.backend.service.AuthorService;
 import org.slf4j.Logger;
@@ -14,9 +16,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -42,12 +44,10 @@ public class AuthorController {
 
 	@PostMapping
 	public ResponseEntity<MyPage<AuthorDto>> listAuthors(
-			@RequestBody MyPageable pageable) {
+			@RequestBody PageConstructor pageConstructor) {
 		return ResponseEntity.status(HttpStatus.OK)
-				.body(DtoEntityConverter
-						.convertPageAuthorToDto(
-								authorService.listEntities(
-										pageable.getPageNumber(), pageable.getPageSize())));
+				.body(convertPageAuthorToDto(
+						authorService.listEntities(pageConstructor)));
 	}
 
 	@PostMapping("/create")
@@ -58,7 +58,7 @@ public class AuthorController {
 		return ResponseEntity.ok(new AuthorDto(authorService.create(authorDto.convertDtoToEntity())));
 	}
 
-	@PatchMapping("/update")
+	@PutMapping("/update")
 	public ResponseEntity<AuthorDto> updateAuthor(@RequestBody AuthorDto authorDto) {
 		if (authorDto == null) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
@@ -76,7 +76,17 @@ public class AuthorController {
 	@GetMapping
 	public ResponseEntity<List<AuthorDto>> getAllAuthors() {
 		return ResponseEntity.status(HttpStatus.OK)
-				.body(DtoEntityConverter.convertListAuthorToDto(authorService.getAll()));
+				.body(convertListAuthorToDto(authorService.getAll()));
+	}
+
+	private static List<AuthorDto> convertListAuthorToDto(List<Author> authors) {
+		return authors.stream().map(AuthorDto::new).collect(Collectors.toList());
+	}
+
+	private static MyPage<AuthorDto> convertPageAuthorToDto(MyPage<Author> page) {
+		MyPage<AuthorDto> authorDtoPage = DtoEntityConverter.convertPageEntityDto(page);
+		authorDtoPage.setContent(convertListAuthorToDto(page.getContent()));
+		return authorDtoPage;
 	}
 
 }

@@ -11,27 +11,27 @@ export class PaginationService {
 
   public getNextPage(page: Page<any>): Pageable {
     if(!page.last) {
-      page.pageable.pageNumber = page.pageable.pageNumber+1;
+      page.pageConstructor.pageable.pageNumber = page.pageConstructor.pageable.pageNumber+1;
     }
-    return page.pageable;
+    return page.pageConstructor.pageable;
   }
 
   public getPreviousPage(page: Page<any>): Pageable {
     if(!page.first) {
-      page.pageable.pageNumber = page.pageable.pageNumber-1;
+      page.pageConstructor.pageable.pageNumber = page.pageConstructor.pageable.pageNumber-1;
     }
-    return page.pageable;
+    return page.pageConstructor.pageable;
   }
 
   public getPageInNewSize(page: Page<any>, pageSize: number): Pageable {
-    page.pageable.pageSize = pageSize;
-    page.pageable.pageNumber = Pageable.FIRST_PAGE_NUMBER;
+    page.pageConstructor.pageable.pageSize = pageSize;
+    page.pageConstructor.pageable.pageNumber = Pageable.FIRST_PAGE_NUMBER;
 
-    return page.pageable;
+    return page.pageConstructor.pageable;
   }
 
   public getPageNewNumber(page: Page<any>, pageNumber: number): Pageable {
-    page.pageable.pageNumber = pageNumber;
-    return page.pageable;
+    page.pageConstructor.pageable.pageNumber = pageNumber;
+    return page.pageConstructor.pageable;
   }
 }

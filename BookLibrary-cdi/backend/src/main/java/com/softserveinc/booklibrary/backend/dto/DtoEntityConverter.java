@@ -5,10 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.softserveinc.booklibrary.backend.dto.paging.MyPage;
-import com.softserveinc.booklibrary.backend.entity.Author;
-import com.softserveinc.booklibrary.backend.entity.Book;
 import com.softserveinc.booklibrary.backend.entity.AbstractEntity;
-import com.softserveinc.booklibrary.backend.entity.Review;
 
 public final class DtoEntityConverter {
 
@@ -16,25 +13,13 @@ public final class DtoEntityConverter {
 	}
 
 	public static <T extends MyAppDto<? extends AbstractEntity<? extends Serializable>>>
-				List<AbstractEntity<? extends Serializable>> convertListDtoToEntity (List<T> dtos) {
+	List<AbstractEntity<? extends Serializable>> convertListDtoToEntity(List<T> dtos) {
 		return dtos.stream().map(MyAppDto::convertDtoToEntity).collect(Collectors.toList());
 	}
 
-	public static List<AuthorDto> convertListAuthorToDto (List<Author> authors) {
-		return authors.stream().map(AuthorDto::new).collect(Collectors.toList());
-	}
-
-	public static List<BookDto> convertListBookToDto (List<Book> books) {
-		return books.stream().map(BookDto::new).collect(Collectors.toList());
-	}
-
-	public static List<ReviewDto> convertListReviewToDto (List<Review> reviews) {
-		return reviews.stream().map(ReviewDto::new).collect(Collectors.toList());
-	}
-
-	public static <V, T> MyPage<V> convertPageEntityDto (MyPage<T> page) {
-		MyPage<V> entityDtoPage = new MyPage<>();
-		entityDtoPage.setPageable(page.getPageable());
+	public static <T, V> MyPage<T> convertPageEntityDto(MyPage<V> page) {
+		MyPage<T> entityDtoPage = new MyPage<>();
+		entityDtoPage.setPageConstructor(page.getPageConstructor());
 		entityDtoPage.setLast(page.getLast());
 		entityDtoPage.setTotalPages(page.getTotalPages());
 		entityDtoPage.setTotalElements(page.getTotalElements());
@@ -42,17 +27,5 @@ public final class DtoEntityConverter {
 		entityDtoPage.setNumberOfFirstPageElement(page.getNumberOfFirstPageElement());
 		entityDtoPage.setNumberOfElements(page.getNumberOfElements());
 		return entityDtoPage;
-	}
-
-	public static MyPage<AuthorDto> convertPageAuthorToDto (MyPage<Author> page) {
-		MyPage<AuthorDto> authorDtoPage = convertPageEntityDto(page);
-		authorDtoPage.setContent(convertListAuthorToDto(page.getContent()));
-		return authorDtoPage;
-	}
-
-	public static MyPage<BookDto> convertPageBookToDto (MyPage<Book> page) {
-		MyPage<BookDto> bookDtoPage = convertPageEntityDto(page);
-		bookDtoPage.setContent(convertListBookToDto(page.getContent()));
-		return bookDtoPage;
 	}
 }

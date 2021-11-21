@@ -4,6 +4,8 @@ import {PaginationService} from "../../pagination/pagination.service";
 import {Book} from "../../model/book";
 import {BookService} from "../book.service";
 import {Author} from "../../model/author";
+import {SortableColumn} from "../../model/sortable-column";
+import {SortingService} from "../../sorting/sorting.service";
 
 @Component({
   selector: 'app-books-pagination-table',
@@ -12,6 +14,13 @@ import {Author} from "../../model/author";
 })
 export class BooksPaginationTableComponent implements OnInit {
 
+  sortableColumns: Array<SortableColumn> = [
+    new SortableColumn('name', 'Book Name', null),
+    new SortableColumn('bookRating', 'Rating', 'desc'),
+    new SortableColumn('yearPublished', 'Year', null),
+    new SortableColumn('isbn', 'ISBN', null),
+    new SortableColumn('publisher', 'Publisher', null),
+  ];
 
   page: Page<Book> = new Page()
   book: Book = new Book(null, '', 0, 0, '', 0.0)
@@ -19,7 +28,8 @@ export class BooksPaginationTableComponent implements OnInit {
 
   constructor(
       private bookService: BookService,
-      private paginationService: PaginationService
+      private paginationService: PaginationService,
+      private sortingService: SortingService,
   ) { }
 
   ngOnInit(): void {
@@ -27,13 +37,19 @@ export class BooksPaginationTableComponent implements OnInit {
   }
 
   private getData(): void {
-    this.bookService.getPage(this.page.pageable)
+    this.page.pageConstructor.sorting = this.sortingService.getSortableColumns(this.sortableColumns);
+    this.bookService.getPage(this.page.pageConstructor)
         .subscribe(page => {
               this.page = page
             },
             error => {
               console.log(error)
             });
+  }
+
+  public sort(sortableColumn: SortableColumn): void {
+    this.sortingService.changeSortableStateColumn(sortableColumn, this.sortableColumns);
+    this.getData();
   }
 
   deleteBook(bookId : number) : void {
@@ -46,22 +62,22 @@ export class BooksPaginationTableComponent implements OnInit {
         })
   }
   public getNextPage(): void {
-    this.page.pageable = this.paginationService.getNextPage(this.page);
+    this.page.pageConstructor.pageable = this.paginationService.getNextPage(this.page);
     this.getData();
   }
 
   public getPreviousPage(): void {
-    this.page.pageable = this.paginationService.getPreviousPage(this.page);
+    this.page.pageConstructor.pageable = this.paginationService.getPreviousPage(this.page);
     this.getData();
   }
 
   public getPageInNewSize(pageSize: number): void {
-    this.page.pageable = this.paginationService.getPageInNewSize(this.page, pageSize);
+    this.page.pageConstructor.pageable = this.paginationService.getPageInNewSize(this.page, pageSize);
     this.getData();
   }
 
   public getPageNewNumber(pageNumber: number): void {
-    this.page.pageable = this.paginationService.getPageNewNumber(this.page, pageNumber);
+    this.page.pageConstructor.pageable = this.paginationService.getPageNewNumber(this.page, pageNumber);
     this.getData();
   }
 

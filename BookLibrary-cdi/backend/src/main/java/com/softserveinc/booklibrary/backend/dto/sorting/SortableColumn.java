@@ -1,4 +1,4 @@
-package com.softserveinc.booklibrary.backend.dto.paging;
+package com.softserveinc.booklibrary.backend.dto.sorting;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,9 +9,10 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class MyPageable {
+public class SortableColumn {
 
-	private int pageSize;
-	private int pageNumber;
+	private String name;
+	private String title;
+	private String direction;
 
 }

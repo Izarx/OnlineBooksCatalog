@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import com.softserveinc.booklibrary.backend.dto.paging.MyPage;
 import com.softserveinc.booklibrary.backend.dto.paging.MyPageable;
+import com.softserveinc.booklibrary.backend.dto.paging.PageConstructor;
 import com.softserveinc.booklibrary.backend.entity.AbstractEntity;
 import com.softserveinc.booklibrary.backend.exception.NotValidEntityException;
 import com.softserveinc.booklibrary.backend.exception.NotValidIdException;
@@ -72,8 +73,8 @@ public abstract class AbstractEntityService<T extends AbstractEntity<? extends S
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS)
-	public MyPage<T> listEntities(int pageId, int numEntitiesOnPage) {
-		return repository.listEntities(pageId, numEntitiesOnPage);
+	public MyPage<T> listEntities(PageConstructor pageConstructor) {
+		return repository.listEntities(pageConstructor);
 	}
 
 }

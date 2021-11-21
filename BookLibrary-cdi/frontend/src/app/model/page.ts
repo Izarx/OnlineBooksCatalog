@@ -1,8 +1,8 @@
-import {Pageable} from "./pagable";
+import {PageConstructor} from "./page-constructor";
 
 export class Page<T> {
     content: Array<T>;
-    pageable: Pageable;
+    pageConstructor: PageConstructor;
     last: boolean;
     totalPages: number;
     totalElements: number;
@@ -11,6 +11,6 @@ export class Page<T> {
     numberOfElements: number;
 
     public constructor() {
-        this.pageable = new Pageable();
+        this.pageConstructor = new PageConstructor();
     }
 }

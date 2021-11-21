@@ -37,6 +37,10 @@
 										<input type="text" class="form-control" id="inputFilter2">
 									</div>
 									<div class="form-group">
+										<label for="inputFilter3">Rating</label>
+										<input type="text" class="form-control" id="inputFilter3">
+									</div>
+									<div class="form-group">
 										<button type="submit" class="btn btn-header btn-primary">Search</button>
 										<button type="submit" class="btn btn-default">Reset</button>
 									</div>
@@ -60,17 +64,18 @@
 						<div class="table-responsive">
 							<table class="table table-striped table-bordered">
 								<thead>
-								<tr>
-									<th scope="col" class="text-center column-width-checkbox" >
-										<div class="custom-control checkbox-check">
-											<input type="checkbox" class="custom-control-input" id="customCheckAuthor">
-											<label class="custom-control-label" for="customCheckAuthor"></label>
-										</div>
-									</th>
-									<th scope="col" class="text-center" >Author</th>
-									<th scope="col" class="text-center column-width-rating" >Rating</th>
-									<th scope="col" class="text-center column-width-actions" ></th>
-								</tr>
+									<tr>
+										<th scope="col" class="text-center column-width-checkbox" >
+											<div class="custom-control checkbox-check">
+												<input type="checkbox" class="custom-control-input" id="customCheckAuthor">
+												<label class="custom-control-label" for="customCheckAuthor"></label>
+											</div>
+										</th>
+										<th scope="col" class="text-center" >First Name</th>
+										<th scope="col" class="text-center" >Last Name</th>
+										<th scope="col" class="text-center column-width-rating" >Rating</th>
+										<th scope="col" class="text-center column-width-actions" ></th>
+									</tr>
 								</thead>
 								<tbody *ngFor="let author of page.content">
 								<tr>
@@ -80,7 +85,8 @@
 											<label class="custom-control-label" for="customCheck2"></label>
 										</div>
 									</th>
-									<td class="column-entity-padding">{{ author.firstName + ' ' + author.lastName}}</td>
+									<td class="column-entity-padding">{{ author.firstName}}</td>
+									<td class="column-entity-padding">{{ author.lastName}}</td>
 									<td class="text-center">{{author.authorRating.toFixed(2)}}</td>
 									<td class="text-center">
 										<button class="btn btn-primary btn-sm"
