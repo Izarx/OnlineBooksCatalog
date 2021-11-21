@@ -19,7 +19,7 @@ public final class DtoEntityConverter {
 
 	public static <T, V> MyPage<T> convertPageEntityDto(MyPage<V> page) {
 		MyPage<T> entityDtoPage = new MyPage<>();
-		entityDtoPage.setPageable(page.getPageable());
+		entityDtoPage.setPageConstructor(page.getPageConstructor());
 		entityDtoPage.setLast(page.getLast());
 		entityDtoPage.setTotalPages(page.getTotalPages());
 		entityDtoPage.setTotalElements(page.getTotalElements());

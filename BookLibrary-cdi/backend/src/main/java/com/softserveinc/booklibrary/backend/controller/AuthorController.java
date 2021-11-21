@@ -7,6 +7,7 @@ import com.softserveinc.booklibrary.backend.dto.AuthorDto;
 import com.softserveinc.booklibrary.backend.dto.DtoEntityConverter;
 import com.softserveinc.booklibrary.backend.dto.paging.MyPage;
 import com.softserveinc.booklibrary.backend.dto.paging.MyPageable;
+import com.softserveinc.booklibrary.backend.dto.paging.PageConstructor;
 import com.softserveinc.booklibrary.backend.entity.Author;
 import com.softserveinc.booklibrary.backend.service.AuthorService;
 import org.slf4j.Logger;
@@ -43,10 +44,10 @@ public class AuthorController {
 
 	@PostMapping
 	public ResponseEntity<MyPage<AuthorDto>> listAuthors(
-			@RequestBody MyPageable pageable) {
+			@RequestBody PageConstructor pageConstructor) {
 		return ResponseEntity.status(HttpStatus.OK)
 				.body(convertPageAuthorToDto(
-						authorService.listEntities(pageable)));
+						authorService.listEntities(pageConstructor)));
 	}
 
 	@PostMapping("/create")

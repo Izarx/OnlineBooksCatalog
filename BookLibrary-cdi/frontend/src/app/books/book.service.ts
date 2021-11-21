@@ -5,6 +5,7 @@ import {Pageable} from "../model/pagable";
 import {Page} from "../model/page";
 import {Book} from "../model/book";
 import {Author} from "../model/author";
+import {PageConstructor} from "../model/page-constructor";
 
 const baseUrl = 'http://localhost:8080/api/books';
 
@@ -23,8 +24,8 @@ export class BookService {
     return this.httpClient.delete<void>(baseUrl + `/delete/${bookId}`);
   }
 
-  public getPage(pageable: Pageable): Observable<Page<Book>> {
-    return this.httpClient.post<Page<Book>>(baseUrl, pageable);
+  public getPage(pageConstructor: PageConstructor): Observable<Page<Book>> {
+    return this.httpClient.post<Page<Book>>(baseUrl, pageConstructor);
   }
 
   public updateBook(book: Book) : Observable<any> {

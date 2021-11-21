@@ -14,8 +14,9 @@ import {SortingService} from "../../sorting/sorting.service";
 export class AuthorsPaginationTableComponent implements OnInit {
 
   sortableColumns: Array<SortableColumn> = [
-      new SortableColumn('name', 'Author', null),
-      new SortableColumn('authorRating', 'Rating', null),
+      new SortableColumn('firstName', 'Author', null),
+      new SortableColumn('lastName', 'Author', null),
+      new SortableColumn('authorRating', 'Rating', 'desc'),
   ];
   page: Page<Author> = new Page()
   author: Author = new Author(null, '', '', 0.0)
@@ -31,7 +32,7 @@ export class AuthorsPaginationTableComponent implements OnInit {
   }
 
   private getData(): void {
-      this.page.pageConstructor.sorting = this.sortingService.getSortableColumns(this.sortableColumns);
+      this.page.pageConstructor.sorting = this.sortableColumns;
     this.authorService.getPage(this.page.pageConstructor)
         .subscribe(page => {
           this.page = page

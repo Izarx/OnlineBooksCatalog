@@ -7,6 +7,7 @@ import com.softserveinc.booklibrary.backend.dto.BookDto;
 import com.softserveinc.booklibrary.backend.dto.DtoEntityConverter;
 import com.softserveinc.booklibrary.backend.dto.paging.MyPage;
 import com.softserveinc.booklibrary.backend.dto.paging.MyPageable;
+import com.softserveinc.booklibrary.backend.dto.paging.PageConstructor;
 import com.softserveinc.booklibrary.backend.entity.Book;
 import com.softserveinc.booklibrary.backend.service.BookService;
 import org.slf4j.Logger;
@@ -42,10 +43,10 @@ public class BookController {
 	}
 
 	@PostMapping
-	public ResponseEntity<MyPage<BookDto>> listBooks(@RequestBody MyPageable pageable) {
+	public ResponseEntity<MyPage<BookDto>> listBooks(@RequestBody PageConstructor pageConstructor) {
 		return ResponseEntity.status(HttpStatus.OK)
 				.body(convertPageBookToDto(
-						bookService.listEntities(pageable)));
+						bookService.listEntities(pageConstructor)));
 	}
 
 	@PostMapping("/create")

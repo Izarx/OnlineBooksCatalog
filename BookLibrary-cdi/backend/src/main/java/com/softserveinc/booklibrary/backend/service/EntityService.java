@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.softserveinc.booklibrary.backend.dto.paging.MyPage;
 import com.softserveinc.booklibrary.backend.dto.paging.MyPageable;
+import com.softserveinc.booklibrary.backend.dto.paging.PageConstructor;
 import com.softserveinc.booklibrary.backend.entity.AbstractEntity;
 
 public interface EntityService<T extends AbstractEntity<? extends Serializable>> {
@@ -19,6 +20,6 @@ public interface EntityService<T extends AbstractEntity<? extends Serializable>>
 
 	List<T> getAll();
 
-	MyPage<T> listEntities(MyPageable pageable);
+	MyPage<T> listEntities(PageConstructor pageConstructor);
 
 }
