@@ -4,6 +4,8 @@ import {PaginationService} from "../../pagination/pagination.service";
 import {Book} from "../../model/book";
 import {BookService} from "../book.service";
 import {Author} from "../../model/author";
+import {SortableColumn} from "../../model/sortable-column";
+import {SortingService} from "../../sorting/sorting.service";
 
 @Component({
   selector: 'app-books-pagination-table',
@@ -12,6 +14,13 @@ import {Author} from "../../model/author";
 })
 export class BooksPaginationTableComponent implements OnInit {
 
+  sortableColumns: Array<SortableColumn> = [
+    new SortableColumn('name', 'Book Name', null),
+    new SortableColumn('bookRating', 'Rating', 'desc'),
+    new SortableColumn('yearPublished', 'Year', null),
+    new SortableColumn('isbn', 'ISBN', null),
+    new SortableColumn('publisher', 'Publisher', null),
+  ];
 
   page: Page<Book> = new Page()
   book: Book = new Book(null, '', 0, 0, '', 0.0)
@@ -19,7 +28,8 @@ export class BooksPaginationTableComponent implements OnInit {
 
   constructor(
       private bookService: BookService,
-      private paginationService: PaginationService
+      private paginationService: PaginationService,
+      private sortingService: SortingService,
   ) { }
 
   ngOnInit(): void {
@@ -27,6 +37,7 @@ export class BooksPaginationTableComponent implements OnInit {
   }
 
   private getData(): void {
+    this.page.pageConstructor.sorting = this.sortingService.getSortableColumns(this.sortableColumns);
     this.bookService.getPage(this.page.pageConstructor)
         .subscribe(page => {
               this.page = page
@@ -34,6 +45,11 @@ export class BooksPaginationTableComponent implements OnInit {
             error => {
               console.log(error)
             });
+  }
+
+  public sort(sortableColumn: SortableColumn): void {
+    this.sortingService.changeSortableStateColumn(sortableColumn, this.sortableColumns);
+    this.getData();
   }
 
   deleteBook(bookId : number) : void {

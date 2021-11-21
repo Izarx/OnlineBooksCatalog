@@ -32,8 +32,8 @@ export class AuthorsPaginationTableComponent implements OnInit {
   }
 
   private getData(): void {
-      this.page.pageConstructor.sorting = this.sortableColumns;
-    this.authorService.getPage(this.page.pageConstructor)
+      this.page.pageConstructor.sorting = this.sortingService.getSortableColumns(this.sortableColumns);
+      this.authorService.getPage(this.page.pageConstructor)
         .subscribe(page => {
           this.page = page
         },
