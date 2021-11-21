@@ -1,5 +1,6 @@
 package com.softserveinc.booklibrary.backend.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,6 +16,7 @@ public final class BookDto implements MyAppDto<Book> {
 	private Long isbn;
 	private String publisher;
 	private Double bookRating;
+	private List<AuthorDto> authors;
 
 	public BookDto() {
 	}
@@ -26,6 +28,7 @@ public final class BookDto implements MyAppDto<Book> {
 		isbn = book.getIsbn();
 		publisher = book.getPublisher();
 		bookRating = book.getBookRating();
+		authors = AuthorDto.convertListAuthorToDto(new ArrayList<>(book.getAuthors()));
 	}
 
 	@Override

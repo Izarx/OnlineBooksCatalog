@@ -111,9 +111,7 @@
 									</th>
 									<td class="column-entity-padding">{{book.name}}</td>
 									<td>
-										<div>Author1</div>
-										<div>Author2</div>
-										<div>Author3</div>
+										<div *ngFor="let author of book.authors">{{author.firstName + ' ' + author.lastName}}</div>
 									</td>
 									<td class="text-center">{{book.bookRating.toFixed(2)}}</td>
 									<td class="text-center">{{book.yearPublished}}</td>

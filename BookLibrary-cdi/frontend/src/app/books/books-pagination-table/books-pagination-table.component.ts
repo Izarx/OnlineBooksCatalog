@@ -23,7 +23,7 @@ export class BooksPaginationTableComponent implements OnInit {
   ];
 
   page: Page<Book> = new Page()
-  book: Book = new Book(null, '', 0, 0, '', 0.0)
+  book: Book = new Book(null, '', 0, 0, '', 0.0, null)
   authors: Author[]
 
   constructor(
@@ -38,6 +38,7 @@ export class BooksPaginationTableComponent implements OnInit {
 
   private getData(): void {
     this.page.pageConstructor.sorting = this.sortingService.getSortableColumns(this.sortableColumns);
+    // this.page.pageConstructor.sorting = this.sortableColumns;
     this.bookService.getPage(this.page.pageConstructor)
         .subscribe(page => {
               this.page = page
