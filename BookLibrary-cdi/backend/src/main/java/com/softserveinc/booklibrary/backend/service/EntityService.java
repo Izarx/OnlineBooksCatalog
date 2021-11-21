@@ -3,8 +3,8 @@ package com.softserveinc.booklibrary.backend.service;
 import java.io.Serializable;
 import java.util.List;
 
+import com.softserveinc.booklibrary.backend.dto.MyAppDto;
 import com.softserveinc.booklibrary.backend.dto.paging.MyPage;
-import com.softserveinc.booklibrary.backend.dto.paging.MyPageable;
 import com.softserveinc.booklibrary.backend.dto.paging.PageConstructor;
 import com.softserveinc.booklibrary.backend.entity.AbstractEntity;
 
@@ -21,5 +21,7 @@ public interface EntityService<T extends AbstractEntity<? extends Serializable>>
 	List<T> getAll();
 
 	MyPage<T> listEntities(PageConstructor pageConstructor);
+
+	MyPage<? extends MyAppDto<T>> convertPageEntityDto(MyPage<T> page);
 
 }

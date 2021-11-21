@@ -1,12 +1,9 @@
 package com.softserveinc.booklibrary.backend.controller;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import com.softserveinc.booklibrary.backend.dto.AuthorDto;
-import com.softserveinc.booklibrary.backend.dto.DtoEntityConverter;
 import com.softserveinc.booklibrary.backend.dto.paging.MyPage;
-import com.softserveinc.booklibrary.backend.dto.paging.MyPageable;
 import com.softserveinc.booklibrary.backend.dto.paging.PageConstructor;
 import com.softserveinc.booklibrary.backend.entity.Author;
 import com.softserveinc.booklibrary.backend.service.AuthorService;
@@ -46,7 +43,7 @@ public class AuthorController {
 	public ResponseEntity<MyPage<AuthorDto>> listAuthors(
 			@RequestBody PageConstructor pageConstructor) {
 		return ResponseEntity.status(HttpStatus.OK)
-				.body(convertPageAuthorToDto(
+				.body((MyPage<AuthorDto>) authorService.convertPageEntityDto(
 						authorService.listEntities(pageConstructor)));
 	}
 
@@ -76,17 +73,7 @@ public class AuthorController {
 	@GetMapping
 	public ResponseEntity<List<AuthorDto>> getAllAuthors() {
 		return ResponseEntity.status(HttpStatus.OK)
-				.body(convertListAuthorToDto(authorService.getAll()));
-	}
-
-	private static List<AuthorDto> convertListAuthorToDto(List<Author> authors) {
-		return authors.stream().map(AuthorDto::new).collect(Collectors.toList());
-	}
-
-	private static MyPage<AuthorDto> convertPageAuthorToDto(MyPage<Author> page) {
-		MyPage<AuthorDto> authorDtoPage = DtoEntityConverter.convertPageEntityDto(page);
-		authorDtoPage.setContent(convertListAuthorToDto(page.getContent()));
-		return authorDtoPage;
+				.body(AuthorDto.convertListAuthorToDto(authorService.getAll()));
 	}
 
 }

@@ -1,5 +1,8 @@
 package com.softserveinc.booklibrary.backend.dto;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import com.softserveinc.booklibrary.backend.entity.Book;
 import lombok.Getter;
 
@@ -34,5 +37,9 @@ public final class BookDto implements MyAppDto<Book> {
 		book.setIsbn(isbn);
 		book.setPublisher(publisher);
 		return book;
+	}
+
+	public static List<BookDto> convertListBookToDto(List<Book> books) {
+		return books.stream().map(BookDto::new).collect(Collectors.toList());
 	}
 }

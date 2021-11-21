@@ -1,5 +1,8 @@
 package com.softserveinc.booklibrary.backend.dto;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import com.softserveinc.booklibrary.backend.entity.Author;
 import lombok.Getter;
 
@@ -29,5 +32,9 @@ public final class AuthorDto implements MyAppDto<Author> {
 		author.setLastName(lastName);
 		author.setAuthorRating(authorRating);
 		return author;
+	}
+
+	public static List<AuthorDto> convertListAuthorToDto(List<Author> authors) {
+		return authors.stream().map(AuthorDto::new).collect(Collectors.toList());
 	}
 }
