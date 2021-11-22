@@ -108,15 +108,7 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 		countCriteriaQuery.select(builder.count(countCriteriaQuery.from(type)));
 		Long totalElements = entityManager.createQuery(countCriteriaQuery).getSingleResult();
 
-		int totalPages = totalElements != 0 ? (int) Math.ceil((double) totalElements / numEntitiesOnPage) : 1;
 		page.setTotalElements(totalElements.intValue());
-		page.setTotalPages(totalPages);
-		if (pageId + 1 > totalPages || pageId < 0) {
-			pageId = 0;
-		}
-
-		setFirstLastNumElements(pageId, numEntitiesOnPage, page);
-		page.setPageConstructor(pageConstructor);
 
 		CriteriaQuery<T> criteriaQuery = builder.createQuery(type);
 		Root<T> rootEntity = criteriaQuery.from(type);
@@ -125,12 +117,20 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 		criteriaQuery.orderBy(setOrdersByColumns(pageConstructor.getSorting(), builder, rootEntity));
 		List<T> getAll = entityManager
 				.createQuery(selectEntities)
-				.setFirstResult(page.getNumberOfFirstPageElement() - 1)
+				.setFirstResult(pageId * numEntitiesOnPage)
 				.setMaxResults(numEntitiesOnPage)
 				.getResultList();
 		page.setContent(getAll);
 		return page;
 	}
+
+	/**
+	 * Create List of Orders from sortable columns to order db entities by it
+	 * @param sortableColumns columns, which we receive from UI, they consist from name field and direction for sorting
+	 * @param builder
+	 * @param rootEntity
+	 * @return
+	 */
 
 	protected List<Order> setOrdersByColumns (List<SortableColumn> sortableColumns,
 	                                          CriteriaBuilder builder,
@@ -148,29 +148,5 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 		}
 		orderList.add(builder.desc(rootEntity.get("createDate")));
 		return orderList;
-	}
-
-	private void setFirstLastNumElements(int pageId, int numEntitiesOnPage, MyPage<T> page) {
-		if (page.getTotalPages() == 1) {
-			page.setFirst(true);
-			page.setLast(true);
-			page.setNumberOfFirstPageElement(1);
-			page.setNumberOfElements(page.getTotalElements());
-		} else if (pageId == 0) {
-			page.setFirst(true);
-			page.setLast(false);
-			page.setNumberOfFirstPageElement(1);
-			page.setNumberOfElements(numEntitiesOnPage);
-		} else if (pageId + 1 == page.getTotalPages()) {
-			page.setLast(true);
-			page.setFirst(false);
-			page.setNumberOfFirstPageElement(pageId * numEntitiesOnPage + 1);
-			page.setNumberOfElements(page.getTotalElements());
-		} else {
-			page.setFirst(false);
-			page.setLast(false);
-			page.setNumberOfFirstPageElement(pageId * numEntitiesOnPage + 1);
-			page.setNumberOfElements((pageId + 1) * numEntitiesOnPage);
-		}
 	}
 }

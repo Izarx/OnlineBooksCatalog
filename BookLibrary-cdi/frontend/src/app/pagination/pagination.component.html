@@ -1,8 +1,8 @@
-<div *ngIf="page">
+<div *ngIf="pageConstructor">
 	<div class="dropdown">
 		<div>
 			<span class="form-control-sm input-sm">
-			{{page.pageConstructor.pageable.pageSize}}
+			{{pageConstructor.pageable.pageSize}}
 				<i class="fa fa-caret-down"></i>
 			</span>
 			<span class="text-muted">records per page</span>
@@ -16,28 +16,28 @@
 
 	<div class="pull-right">
 		<span class="text-muted text-center">
-        Showing {{page.numberOfFirstPageElement}} to {{page.numberOfElements}} of {{page.totalElements}} entries
+        Showing {{pageConstructor.pageable.numberOfFirstPageElement}} to {{pageConstructor.pageable.numberOfElements}} of {{pageConstructor.pageable.totalElements}} entries
     </span>
 		<div class="btn-group">
 			<button [routerLink]=""
-			        class="btn btn-sm" [ngClass]="{'disabled': page.first }"
+			        class="btn btn-sm" [ngClass]="{'disabled': pageConstructor.pageable.first }"
 			        (click)="updatePageNumber(0)"
 			>
 				<i class="fa fa-angle-double-left"></i>
 			</button>
 			<button [routerLink]=""
-			        class="btn btn-sm" [ngClass]="{'disabled': page.first }"
+			        class="btn btn-sm" [ngClass]="{'disabled': pageConstructor.pageable.first }"
 			        (click)="previousPage()">
 				<i class="fa fa-angle-left"></i>
 			</button>
 			<button [routerLink]=""
-			        class="btn btn-sm" [ngClass]="{'disabled': page.last }"
+			        class="btn btn-sm" [ngClass]="{'disabled': pageConstructor.pageable.last }"
 			        (click)="nextPage()">
 				<i class="fa fa-angle-right"></i>
 			</button>
 			<button [routerLink]=""
-			        class="btn btn-sm" [ngClass]="{'disabled': page.last }"
-			        (click)="updatePageNumber(page.totalPages-1)">
+			        class="btn btn-sm" [ngClass]="{'disabled': pageConstructor.pageable.last }"
+			        (click)="updatePageNumber(pageConstructor.pageable.totalPages-1)">
 				<i class="fa fa-angle-double-right"></i>
 			</button>
 		</div>

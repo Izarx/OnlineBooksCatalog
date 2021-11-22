@@ -88,13 +88,7 @@ public class AuthorController {
 
 	public MyPage<AuthorDto> convertPageAuthorDto(MyPage<Author> page) {
 		MyPage<AuthorDto> entityDtoPage = new MyPage<>();
-		entityDtoPage.setPageConstructor(page.getPageConstructor());
-		entityDtoPage.setLast(page.getLast());
-		entityDtoPage.setTotalPages(page.getTotalPages());
 		entityDtoPage.setTotalElements(page.getTotalElements());
-		entityDtoPage.setFirst(page.getFirst());
-		entityDtoPage.setNumberOfFirstPageElement(page.getNumberOfFirstPageElement());
-		entityDtoPage.setNumberOfElements(page.getNumberOfElements());
 		entityDtoPage.setContent(appMapper.listAuthorsToListAuthorsDto(page.getContent()));
 		return entityDtoPage;
 	}

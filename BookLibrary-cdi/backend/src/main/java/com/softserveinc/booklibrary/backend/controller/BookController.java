@@ -77,13 +77,7 @@ public class BookController {
 
 	public MyPage<BookDto> convertPageBookDto(MyPage<Book> page) {
 		MyPage<BookDto> entityDtoPage = new MyPage<>();
-		entityDtoPage.setPageConstructor(page.getPageConstructor());
-		entityDtoPage.setLast(page.getLast());
-		entityDtoPage.setTotalPages(page.getTotalPages());
 		entityDtoPage.setTotalElements(page.getTotalElements());
-		entityDtoPage.setFirst(page.getFirst());
-		entityDtoPage.setNumberOfFirstPageElement(page.getNumberOfFirstPageElement());
-		entityDtoPage.setNumberOfElements(page.getNumberOfElements());
 		entityDtoPage.setContent(appMapper.listBooksToListBooksDto(page.getContent()));
 		return entityDtoPage;
 	}
