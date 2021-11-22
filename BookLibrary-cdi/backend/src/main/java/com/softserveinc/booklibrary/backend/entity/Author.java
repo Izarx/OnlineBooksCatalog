@@ -1,5 +1,6 @@
 package com.softserveinc.booklibrary.backend.entity;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -15,9 +16,6 @@ import javax.persistence.Table;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 @Getter
 @Setter
@@ -44,7 +42,7 @@ public class Author implements AbstractEntity<Integer> {
 	private LocalDateTime createDate;
 
 	@Column(name = "author_rating")
-	private Double authorRating;
+	private BigDecimal authorRating;
 
 	@ManyToMany
 	@JoinTable(

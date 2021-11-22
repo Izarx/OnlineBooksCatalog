@@ -2,10 +2,8 @@ package com.softserveinc.booklibrary.backend.service.impl;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import com.softserveinc.booklibrary.backend.dto.paging.MyPage;
-import com.softserveinc.booklibrary.backend.dto.paging.MyPageable;
 import com.softserveinc.booklibrary.backend.dto.paging.PageConstructor;
 import com.softserveinc.booklibrary.backend.entity.AbstractEntity;
 import com.softserveinc.booklibrary.backend.exception.NotValidEntityException;
@@ -76,5 +74,4 @@ public abstract class AbstractEntityService<T extends AbstractEntity<? extends S
 	public MyPage<T> listEntities(PageConstructor pageConstructor) {
 		return repository.listEntities(pageConstructor);
 	}
-
 }

@@ -2,13 +2,13 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {SortableColumn} from "../../model/sortable-column";
 
 @Component({
-  selector: 'app-sortable-header',
-  templateUrl: './sortable-header.component.html',
-  styleUrls: ['./sortable-header.component.scss']
+  selector: 'app-sortable-column-header',
+  templateUrl: './sortable-column-header.component.html',
+  styleUrls: ['./sortable-column-header.component.scss']
 })
-export class SortableHeaderComponent implements OnInit {
+export class SortableColumnHeaderComponent implements OnInit {
 
-  @Input() sortableColumns: Array<SortableColumn>;
+  @Input() sortableColumn: SortableColumn;
   @Output() sortEvent: EventEmitter<SortableColumn> = new EventEmitter<SortableColumn>();
 
   constructor() { }

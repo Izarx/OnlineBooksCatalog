@@ -1,12 +1,8 @@
 package com.softserveinc.booklibrary.backend.controller;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import com.softserveinc.booklibrary.backend.dto.BookDto;
-import com.softserveinc.booklibrary.backend.dto.DtoEntityConverter;
+import com.softserveinc.booklibrary.backend.dto.CommonAppMapper;
 import com.softserveinc.booklibrary.backend.dto.paging.MyPage;
-import com.softserveinc.booklibrary.backend.dto.paging.MyPageable;
 import com.softserveinc.booklibrary.backend.dto.paging.PageConstructor;
 import com.softserveinc.booklibrary.backend.entity.Book;
 import com.softserveinc.booklibrary.backend.service.BookService;
@@ -29,23 +25,26 @@ public class BookController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(BookController.class);
 
+	private final CommonAppMapper appMapper;
+
 	private final BookService bookService;
 
-	public BookController(BookService bookService) {
+	public BookController(CommonAppMapper appMapper, BookService bookService) {
+		this.appMapper = appMapper;
 		this.bookService = bookService;
 	}
 
 	@GetMapping("/{id}")
 	public ResponseEntity<BookDto> getBook(@PathVariable Integer id) {
 		Book book = bookService.getById(id);
-		return book != null ? ResponseEntity.ok(new BookDto(book))
+		return book != null ? ResponseEntity.ok(appMapper.bookToBookDto(book))
 				: ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 	}
 
 	@PostMapping
 	public ResponseEntity<MyPage<BookDto>> listBooks(@RequestBody PageConstructor pageConstructor) {
 		return ResponseEntity.status(HttpStatus.OK)
-				.body(convertPageBookToDto(
+				.body(convertPageBookDto(
 						bookService.listEntities(pageConstructor)));
 	}
 
@@ -54,7 +53,9 @@ public class BookController {
 		if (bookDto == null) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
-		return ResponseEntity.ok(new BookDto(bookService.create(bookDto.convertDtoToEntity())));
+		return ResponseEntity.ok(appMapper
+				.bookToBookDto(bookService
+						.create(appMapper.bookDtoToBook(bookDto))));
 	}
 
 	@PatchMapping("/update")
@@ -62,7 +63,9 @@ public class BookController {
 		if (bookDto == null) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
-		return ResponseEntity.ok(new BookDto(bookService.update(bookDto.convertDtoToEntity())));
+		return ResponseEntity.ok(appMapper
+				.bookToBookDto(bookService
+						.update(appMapper.bookDtoToBook(bookDto))));
 	}
 
 	@DeleteMapping("/delete/{id}")
@@ -72,14 +75,11 @@ public class BookController {
 				ResponseEntity.notFound().build();
 	}
 
-	private static List<BookDto> convertListBookToDto(List<Book> books) {
-		return books.stream().map(BookDto::new).collect(Collectors.toList());
-	}
-
-	private static MyPage<BookDto> convertPageBookToDto(MyPage<Book> page) {
-		MyPage<BookDto> bookDtoPage = DtoEntityConverter.convertPageEntityDto(page);
-		bookDtoPage.setContent(convertListBookToDto(page.getContent()));
-		return bookDtoPage;
+	public MyPage<BookDto> convertPageBookDto(MyPage<Book> page) {
+		MyPage<BookDto> entityDtoPage = new MyPage<>();
+		entityDtoPage.setTotalElements(page.getTotalElements());
+		entityDtoPage.setContent(appMapper.listBooksToListBooksDto(page.getContent()));
+		return entityDtoPage;
 	}
 
 }

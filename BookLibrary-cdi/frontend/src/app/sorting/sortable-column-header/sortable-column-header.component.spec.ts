@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SortableHeaderComponent } from './sortable-header.component';
+import { SortableColumnHeaderComponent } from './sortable-column-header.component';
 
 describe('SortableHeaderComponent', () => {
-  let component: SortableHeaderComponent;
-  let fixture: ComponentFixture<SortableHeaderComponent>;
+  let component: SortableColumnHeaderComponent;
+  let fixture: ComponentFixture<SortableColumnHeaderComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SortableHeaderComponent ]
+      declarations: [ SortableColumnHeaderComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SortableHeaderComponent);
+    fixture = TestBed.createComponent(SortableColumnHeaderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

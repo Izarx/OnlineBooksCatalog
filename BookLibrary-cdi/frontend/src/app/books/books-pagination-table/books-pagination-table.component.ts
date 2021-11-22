@@ -6,6 +6,7 @@ import {BookService} from "../book.service";
 import {Author} from "../../model/author";
 import {SortableColumn} from "../../model/sortable-column";
 import {SortingService} from "../../sorting/sorting.service";
+import {PageConstructor} from "../../model/page-constructor";
 
 @Component({
   selector: 'app-books-pagination-table',
@@ -23,7 +24,8 @@ export class BooksPaginationTableComponent implements OnInit {
   ];
 
   page: Page<Book> = new Page()
-  book: Book = new Book(null, '', 0, 0, '', 0.0)
+  book: Book = new Book(null, '', 0, 0, '', 0.0, null)
+  pageConstructor: PageConstructor = new PageConstructor();
   authors: Author[]
 
   constructor(
@@ -37,9 +39,10 @@ export class BooksPaginationTableComponent implements OnInit {
   }
 
   private getData(): void {
-    this.page.pageConstructor.sorting = this.sortingService.getSortableColumns(this.sortableColumns);
-    this.bookService.getPage(this.page.pageConstructor)
+    this.pageConstructor.sorting = this.sortingService.getSortableColumns(this.sortableColumns);
+    this.bookService.getPage(this.pageConstructor)
         .subscribe(page => {
+              this.paginationService.initPageable(this.pageConstructor.pageable, page.totalElements);
               this.page = page
             },
             error => {
@@ -62,22 +65,22 @@ export class BooksPaginationTableComponent implements OnInit {
         })
   }
   public getNextPage(): void {
-    this.page.pageConstructor.pageable = this.paginationService.getNextPage(this.page);
+    this.pageConstructor.pageable = this.paginationService.getNextPage(this.pageConstructor.pageable);
     this.getData();
   }
 
   public getPreviousPage(): void {
-    this.page.pageConstructor.pageable = this.paginationService.getPreviousPage(this.page);
+    this.pageConstructor.pageable = this.paginationService.getPreviousPage(this.pageConstructor.pageable);
     this.getData();
   }
 
   public getPageInNewSize(pageSize: number): void {
-    this.page.pageConstructor.pageable = this.paginationService.getPageInNewSize(this.page, pageSize);
+    this.pageConstructor.pageable = this.paginationService.getPageInNewSize(this.pageConstructor.pageable, pageSize);
     this.getData();
   }
 
   public getPageNewNumber(pageNumber: number): void {
-    this.page.pageConstructor.pageable = this.paginationService.getPageNewNumber(this.page, pageNumber);
+    this.pageConstructor.pageable = this.paginationService.getPageNewNumber(this.pageConstructor.pageable, pageNumber);
     this.getData();
   }
 
