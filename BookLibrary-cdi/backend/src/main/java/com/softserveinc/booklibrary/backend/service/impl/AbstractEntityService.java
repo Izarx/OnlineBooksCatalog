@@ -3,7 +3,6 @@ package com.softserveinc.booklibrary.backend.service.impl;
 import java.io.Serializable;
 import java.util.List;
 
-import com.softserveinc.booklibrary.backend.dto.MyAppDto;
 import com.softserveinc.booklibrary.backend.dto.paging.MyPage;
 import com.softserveinc.booklibrary.backend.dto.paging.PageConstructor;
 import com.softserveinc.booklibrary.backend.entity.AbstractEntity;
@@ -74,18 +73,5 @@ public abstract class AbstractEntityService<T extends AbstractEntity<? extends S
 	@Transactional(propagation = Propagation.SUPPORTS)
 	public MyPage<T> listEntities(PageConstructor pageConstructor) {
 		return repository.listEntities(pageConstructor);
-	}
-
-	@Override
-	public MyPage<? extends MyAppDto<T>> convertPageEntityDto(MyPage<T> page) {
-		MyPage<MyAppDto<T>> entityDtoPage = new MyPage<>();
-		entityDtoPage.setPageConstructor(page.getPageConstructor());
-		entityDtoPage.setLast(page.getLast());
-		entityDtoPage.setTotalPages(page.getTotalPages());
-		entityDtoPage.setTotalElements(page.getTotalElements());
-		entityDtoPage.setFirst(page.getFirst());
-		entityDtoPage.setNumberOfFirstPageElement(page.getNumberOfFirstPageElement());
-		entityDtoPage.setNumberOfElements(page.getNumberOfElements());
-		return entityDtoPage;
 	}
 }

@@ -14,8 +14,8 @@ import {SortingService} from "../../sorting/sorting.service";
 export class AuthorsPaginationTableComponent implements OnInit {
 
   sortableColumns: Array<SortableColumn> = [
-      new SortableColumn('firstName', 'Author', null),
-      new SortableColumn('lastName', 'Author', null),
+      new SortableColumn('firstName', 'First Name', null),
+      new SortableColumn('lastName', 'Last Name', null),
       new SortableColumn('authorRating', 'Rating', 'desc'),
   ];
   page: Page<Author> = new Page()

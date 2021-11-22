@@ -1,5 +1,6 @@
 package com.softserveinc.booklibrary.backend.entity;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -41,7 +42,7 @@ public class Author implements AbstractEntity<Integer> {
 	private LocalDateTime createDate;
 
 	@Column(name = "author_rating")
-	private Double authorRating;
+	private BigDecimal authorRating;
 
 	@ManyToMany
 	@JoinTable(

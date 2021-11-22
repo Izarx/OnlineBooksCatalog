@@ -1,7 +1,5 @@
 package com.softserveinc.booklibrary.backend.service.impl;
 
-import com.softserveinc.booklibrary.backend.dto.AuthorDto;
-import com.softserveinc.booklibrary.backend.dto.paging.MyPage;
 import com.softserveinc.booklibrary.backend.entity.Author;
 import com.softserveinc.booklibrary.backend.repository.AuthorRepository;
 import com.softserveinc.booklibrary.backend.service.AuthorService;
@@ -16,10 +14,4 @@ public class AuthorServiceImpl extends AbstractEntityService<Author> implements 
 		repository = authorRepository;
 	}
 
-	@Override
-	public MyPage<AuthorDto> convertPageEntityDto(MyPage<Author> page) {
-		MyPage<AuthorDto> authorDtoMyPage = (MyPage<AuthorDto>) super.convertPageEntityDto(page);
-		authorDtoMyPage.setContent(AuthorDto.convertListAuthorToDto(page.getContent()));
-		return authorDtoMyPage;
-	}
 }

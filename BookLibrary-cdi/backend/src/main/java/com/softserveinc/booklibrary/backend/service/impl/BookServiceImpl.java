@@ -1,13 +1,14 @@
 package com.softserveinc.booklibrary.backend.service.impl;
 
-import com.softserveinc.booklibrary.backend.dto.BookDto;
 import com.softserveinc.booklibrary.backend.dto.paging.MyPage;
+import com.softserveinc.booklibrary.backend.dto.paging.PageConstructor;
 import com.softserveinc.booklibrary.backend.entity.Book;
 import com.softserveinc.booklibrary.backend.repository.BookRepository;
 import com.softserveinc.booklibrary.backend.service.BookService;
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class BookServiceImpl extends AbstractEntityService<Book> implements BookService {
@@ -18,10 +19,11 @@ public class BookServiceImpl extends AbstractEntityService<Book> implements Book
 	}
 
 	@Override
-	public MyPage<BookDto> convertPageEntityDto(MyPage<Book> page) {
-		MyPage<BookDto> bookDtoMyPage = (MyPage<BookDto>) super.convertPageEntityDto(page);
-		bookDtoMyPage.setContent(BookDto.convertListBookToDto(page.getContent()));
-		return bookDtoMyPage;
+	@Transactional(propagation = Propagation.SUPPORTS)
+	public MyPage<Book> listEntities(PageConstructor pageConstructor) {
+		MyPage<Book> page = super.listEntities(pageConstructor);
+		page.getContent().forEach(b -> b.getAuthors().size());
+		return page;
 	}
 
 }

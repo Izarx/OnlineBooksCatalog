@@ -3,10 +3,11 @@
     *ngFor="let column of sortableColumns"
     (click)="sort(column)"
 >
-	{{column.title}}
-	<span *ngIf="column.direction != null">
-    <span *ngIf="column.direction=='asc'; then sortAscending else sortDescending"></span>
-  </span>
+	<div>{{column.title}}
+		<span *ngIf="column.direction != null">
+	        <span *ngIf="column.direction=='asc'; then sortAscending else sortDescending"></span>
+	    </span>
+	</div>
 </th>
 
 <ng-template #sortDescending>

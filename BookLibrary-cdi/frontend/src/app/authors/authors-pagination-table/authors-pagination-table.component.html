@@ -71,9 +71,10 @@
 												<label class="custom-control-label" for="customCheckAuthor"></label>
 											</div>
 										</th>
-										<th scope="col" class="text-center" >First Name</th>
-										<th scope="col" class="text-center" >Last Name</th>
-										<th scope="col" class="text-center column-width-rating" >Rating</th>
+										<app-sortable-header
+												[sortableColumns]="sortableColumns"
+												(sortEvent)="sort($event)">
+										</app-sortable-header>
 										<th scope="col" class="text-center column-width-actions" ></th>
 									</tr>
 								</thead>

@@ -3,6 +3,7 @@ package com.softserveinc.booklibrary.backend.controller;
 import java.util.List;
 
 import com.softserveinc.booklibrary.backend.dto.AuthorDto;
+import com.softserveinc.booklibrary.backend.dto.CommonAppMapper;
 import com.softserveinc.booklibrary.backend.dto.paging.MyPage;
 import com.softserveinc.booklibrary.backend.dto.paging.PageConstructor;
 import com.softserveinc.booklibrary.backend.entity.Author;
@@ -26,16 +27,19 @@ public class AuthorController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(AuthorController.class);
 
+	private final CommonAppMapper appMapper;
+
 	private final AuthorService authorService;
 
-	public AuthorController(AuthorService authorService) {
+	public AuthorController(CommonAppMapper appMapper, AuthorService authorService) {
+		this.appMapper = appMapper;
 		this.authorService = authorService;
 	}
 
 	@GetMapping("/{id}")
 	public ResponseEntity<AuthorDto> getAuthor(@PathVariable Integer id) {
 		Author author = authorService.getById(id);
-		return author != null ? ResponseEntity.ok(new AuthorDto(author))
+		return author != null ? ResponseEntity.ok(appMapper.authorToAuthorDto(author))
 				: ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 	}
 
@@ -43,7 +47,7 @@ public class AuthorController {
 	public ResponseEntity<MyPage<AuthorDto>> listAuthors(
 			@RequestBody PageConstructor pageConstructor) {
 		return ResponseEntity.status(HttpStatus.OK)
-				.body((MyPage<AuthorDto>) authorService.convertPageEntityDto(
+				.body(convertPageAuthorDto(
 						authorService.listEntities(pageConstructor)));
 	}
 
@@ -52,7 +56,10 @@ public class AuthorController {
 		if (authorDto == null) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
-		return ResponseEntity.ok(new AuthorDto(authorService.create(authorDto.convertDtoToEntity())));
+		return ResponseEntity.ok(appMapper
+				.authorToAuthorDto(authorService
+						.create(appMapper
+								.authorDtoToAuthor(authorDto))));
 	}
 
 	@PutMapping("/update")
@@ -60,7 +67,10 @@ public class AuthorController {
 		if (authorDto == null) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
-		return ResponseEntity.ok(new AuthorDto(authorService.update(authorDto.convertDtoToEntity())));
+		return ResponseEntity.ok(appMapper
+				.authorToAuthorDto(authorService
+						.update(appMapper
+								.authorDtoToAuthor(authorDto))));
 	}
 
 	@DeleteMapping("/delete/{id}")
@@ -73,7 +83,20 @@ public class AuthorController {
 	@GetMapping
 	public ResponseEntity<List<AuthorDto>> getAllAuthors() {
 		return ResponseEntity.status(HttpStatus.OK)
-				.body(AuthorDto.convertListAuthorToDto(authorService.getAll()));
+				.body(appMapper.listAuthorsToListAuthorsDto(authorService.getAll()));
+	}
+
+	public MyPage<AuthorDto> convertPageAuthorDto(MyPage<Author> page) {
+		MyPage<AuthorDto> entityDtoPage = new MyPage<>();
+		entityDtoPage.setPageConstructor(page.getPageConstructor());
+		entityDtoPage.setLast(page.getLast());
+		entityDtoPage.setTotalPages(page.getTotalPages());
+		entityDtoPage.setTotalElements(page.getTotalElements());
+		entityDtoPage.setFirst(page.getFirst());
+		entityDtoPage.setNumberOfFirstPageElement(page.getNumberOfFirstPageElement());
+		entityDtoPage.setNumberOfElements(page.getNumberOfElements());
+		entityDtoPage.setContent(appMapper.listAuthorsToListAuthorsDto(page.getContent()));
+		return entityDtoPage;
 	}
 
 }
