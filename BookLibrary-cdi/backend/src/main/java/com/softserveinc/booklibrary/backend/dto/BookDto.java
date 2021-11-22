@@ -8,7 +8,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class BookDto{
+public final class BookDto{
 
 	private Integer bookId;
 	private String name;

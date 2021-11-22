@@ -16,7 +16,10 @@ export class AuthorsPaginationTableComponent implements OnInit {
   sortableColumns: Array<SortableColumn> = [
       new SortableColumn('firstName', 'First Name', null),
       new SortableColumn('lastName', 'Last Name', null),
-      new SortableColumn('authorRating', 'Rating', 'desc'),
+      new SortableColumn('authorRating', 'Rating', null),
+  ];
+  sortedColumns: Array<SortableColumn> = [
+      new SortableColumn('authorRating', 'Rating', 'desc')
   ];
   page: Page<Author> = new Page()
   author: Author = new Author(null, '', '', 0.0)

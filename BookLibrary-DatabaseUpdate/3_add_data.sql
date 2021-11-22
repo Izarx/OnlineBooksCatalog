@@ -17,3 +17,14 @@ INSERT INTO books (name, year_published, isbn, publisher)
 VALUES ('The Lord of the Rings', 1955, 9666610728, 'George Allen & Unwin');
 INSERT INTO books (name, year_published, isbn, publisher)
 VALUES ('Voina i mir', 1979, 0330258648, 'Pan Books');
+
+INSERT INTO authors_books (author_id, book_id)
+VALUES (1, 1);
+INSERT INTO authors_books (author_id, book_id)
+VALUES (2, 2);
+INSERT INTO authors_books (author_id, book_id)
+VALUES (3, 2);
+INSERT INTO authors_books (author_id, book_id)
+VALUES (4, 3);
+INSERT INTO authors_books (author_id, book_id)
+VALUES (5, 4);

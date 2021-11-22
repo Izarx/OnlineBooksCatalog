@@ -71,10 +71,27 @@
 												<label class="custom-control-label" for="customCheckAuthor"></label>
 											</div>
 										</th>
-										<app-sortable-header
-												[sortableColumns]="sortableColumns"
-												(sortEvent)="sort($event)">
-										</app-sortable-header>
+										<th scope="col"
+										    class="text-center">
+											<app-sortable-column-header
+													[sortableColumn]="sortableColumns[0]"
+													(sortEvent)="sort($event)">
+											</app-sortable-column-header>
+										</th>
+										<th scope="col"
+										    class="text-center">
+											<app-sortable-column-header
+													[sortableColumn]="sortableColumns[1]"
+													(sortEvent)="sort($event)">
+											</app-sortable-column-header>
+										</th>
+										<th scope="col"
+										    class="text-center column-width-rating">
+											<app-sortable-column-header
+													[sortableColumn]="sortableColumns[2]"
+													(sortEvent)="sort($event)">
+											</app-sortable-column-header>
+										</th>
 										<th scope="col" class="text-center column-width-actions" ></th>
 									</tr>
 								</thead>
