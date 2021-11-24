@@ -4,8 +4,8 @@ import java.util.List;
 
 import com.softserveinc.booklibrary.backend.dto.AuthorDto;
 import com.softserveinc.booklibrary.backend.dto.CommonAppMapper;
-import com.softserveinc.booklibrary.backend.dto.paging.ApplicationResponsePage;
 import com.softserveinc.booklibrary.backend.dto.paging.ApplicationRequestPage;
+import com.softserveinc.booklibrary.backend.dto.paging.ApplicationResponsePage;
 import com.softserveinc.booklibrary.backend.entity.Author;
 import com.softserveinc.booklibrary.backend.service.AuthorService;
 import org.slf4j.Logger;

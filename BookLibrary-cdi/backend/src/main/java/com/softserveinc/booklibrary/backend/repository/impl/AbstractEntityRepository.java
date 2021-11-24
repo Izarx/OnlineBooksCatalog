@@ -12,8 +12,8 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Root;
 
-import com.softserveinc.booklibrary.backend.dto.paging.ApplicationResponsePage;
 import com.softserveinc.booklibrary.backend.dto.paging.ApplicationRequestPage;
+import com.softserveinc.booklibrary.backend.dto.paging.ApplicationResponsePage;
 import com.softserveinc.booklibrary.backend.dto.sorting.SortableColumn;
 import com.softserveinc.booklibrary.backend.entity.AbstractEntity;
 import com.softserveinc.booklibrary.backend.exception.NotValidEntityException;
@@ -127,22 +127,23 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 
 	/**
 	 * Create List of Orders from sortable columns to order db entities by it
+	 *
 	 * @param sortableColumns columns, which we receive from UI, they consist from name field and direction for sorting
 	 * @param builder
 	 * @param rootEntity
 	 * @return
 	 */
 
-	protected List<Order> setOrdersByColumns (List<SortableColumn> sortableColumns,
-	                                          CriteriaBuilder builder,
-	                                          Root<T> rootEntity) {
+	protected List<Order> setOrdersByColumns(List<SortableColumn> sortableColumns,
+	                                         CriteriaBuilder builder,
+	                                         Root<T> rootEntity) {
 		List<Order> orderList = new ArrayList<>();
 		if (CollectionUtils.isNotEmpty(sortableColumns)) {
 			for (SortableColumn column : sortableColumns) {
-				if ("asc".equals(column.getDirection())){
+				if ("asc".equals(column.getDirection())) {
 					orderList.add(builder.asc(rootEntity.get(column.getName())));
 				}
-				if ("desc".equals(column.getDirection())){
+				if ("desc".equals(column.getDirection())) {
 					orderList.add(builder.desc(rootEntity.get(column.getName())));
 				}
 			}

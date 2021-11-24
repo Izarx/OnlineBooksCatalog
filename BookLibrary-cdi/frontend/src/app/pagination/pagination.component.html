@@ -8,36 +8,37 @@
 			<span class="text-muted">records per page</span>
 		</div>
 		<div class="dropdown-content">
-			<a class="list-group-item" [routerLink]="" (click)="updatePageSize(5)">5</a>
-			<a class="list-group-item" [routerLink]="" (click)="updatePageSize(10)">10</a>
-			<a class="list-group-item" [routerLink]="" (click)="updatePageSize(25)">25</a>
+			<a (click)="updatePageSize(5)" [routerLink]="" class="list-group-item">5</a>
+			<a (click)="updatePageSize(10)" [routerLink]="" class="list-group-item">10</a>
+			<a (click)="updatePageSize(25)" [routerLink]="" class="list-group-item">25</a>
 		</div>
 	</div>
 
 	<div class="pull-right">
 		<span class="text-muted text-center">
-        Showing {{appRequestPage.numberOfFirstPageElement}} to {{appRequestPage.numberOfElements}} of {{appRequestPage.totalElements}} entries
+        Showing {{appRequestPage.numberOfFirstPageElement}} to {{appRequestPage.numberOfElements}}
+			of {{appRequestPage.totalElements}} entries
     </span>
 		<div class="btn-group">
-			<button [routerLink]=""
-			        class="btn btn-sm" [ngClass]="{'disabled': appRequestPage.first }"
-			        (click)="updatePageNumber(0)"
+			<button (click)="updatePageNumber(0)"
+			        [ngClass]="{'disabled': appRequestPage.first }" [routerLink]=""
+			        class="btn btn-sm"
 			>
 				<i class="fa fa-angle-double-left"></i>
 			</button>
-			<button [routerLink]=""
-			        class="btn btn-sm" [ngClass]="{'disabled': appRequestPage.first }"
-			        (click)="previousPage()">
+			<button (click)="previousPage()"
+			        [ngClass]="{'disabled': appRequestPage.first }" [routerLink]=""
+			        class="btn btn-sm">
 				<i class="fa fa-angle-left"></i>
 			</button>
-			<button [routerLink]=""
-			        class="btn btn-sm" [ngClass]="{'disabled': appRequestPage.last }"
-			        (click)="nextPage()">
+			<button (click)="nextPage()"
+			        [ngClass]="{'disabled': appRequestPage.last }" [routerLink]=""
+			        class="btn btn-sm">
 				<i class="fa fa-angle-right"></i>
 			</button>
-			<button [routerLink]=""
-			        class="btn btn-sm" [ngClass]="{'disabled': appRequestPage.last }"
-			        (click)="updatePageNumber(appRequestPage.totalPages-1)">
+			<button (click)="updatePageNumber(appRequestPage.totalPages-1)"
+			        [ngClass]="{'disabled': appRequestPage.last }" [routerLink]=""
+			        class="btn btn-sm">
 				<i class="fa fa-angle-double-right"></i>
 			</button>
 		</div>

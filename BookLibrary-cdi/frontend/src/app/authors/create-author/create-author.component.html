@@ -1,13 +1,13 @@
-<div class="modal fade"
-     id="createAuthor"
-     tabindex="-1"
-     role="dialog"
+<div aria-hidden="true"
      aria-labelledby="createAuthorLabel"
-     aria-hidden="true"
+     class="modal fade"
+     id="createAuthor"
+     role="dialog"
+     tabindex="-1"
 >
 	<div class="modal-dialog modal-sm">
 		<div class="modal-content">
-			<form [formGroup]="form" (ngSubmit)="submit()">
+			<form (ngSubmit)="submit()" [formGroup]="form">
 				<div class="modal-header">
 					<h4 class="modal-title"
 					    id="createAuthorLabel">Create New Author</h4>
@@ -15,12 +15,13 @@
 				<div class="modal-body">
 					<div class="sub-title">First Name</div>
 					<div>
-						<input type="text"
-						       class="form-control"
+						<input class="form-control"
 						       formControlName="firstName"
+						       type="text"
 						>
 					</div>
-					<div class="invalid-feedback" *ngIf="form.get('firstName').invalid && form.get('firstName').touched">
+					<div *ngIf="form.get('firstName').invalid && form.get('firstName').touched"
+					     class="invalid-feedback">
 						<small *ngIf="form.get('firstName').errors.required">
 							Field can't be empty!
 						</small>
@@ -30,27 +31,29 @@
 					</div>
 					<div class="sub-title">Last Name</div>
 					<div>
-						<input type="text"
-						       class="form-control"
-						       formControlName="lastName">
+						<input class="form-control"
+						       formControlName="lastName"
+						       type="text">
 					</div>
-					<div class="invalid-feedback" *ngIf="form.get('lastName').invalid && form.get('lastName').touched">
+					<div *ngIf="form.get('lastName').invalid && form.get('lastName').touched" class="invalid-feedback">
 						<small *ngIf="form.get('lastName').errors.pattern">
 							Please, enter valid value!
 						</small>
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button"
+					<button (click)="cancel()"
 					        class="btn btn-default"
 					        data-dismiss="modal"
 					        id="createAuthorModalCloseButton"
-					        (click)="cancel()"
-					>Cancel</button>
-					<button type="submit"
+					        type="button"
+					>Cancel
+					</button>
+					<button [disabled]="form.invalid"
 					        class="btn btn-primary"
-					        [disabled]="form.invalid"
-					>Save</button>
+					        type="submit"
+					>Save
+					</button>
 				</div>
 			</form>
 		</div>

@@ -3,23 +3,23 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {BooksPaginationTableComponent} from './books-pagination-table.component';
 
 describe('BooksPaginationTableComponent', () => {
-  let component: BooksPaginationTableComponent;
-  let fixture: ComponentFixture<BooksPaginationTableComponent>;
+    let component: BooksPaginationTableComponent;
+    let fixture: ComponentFixture<BooksPaginationTableComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ BooksPaginationTableComponent ]
-    })
-    .compileComponents();
-  });
+    beforeEach(async () => {
+        await TestBed.configureTestingModule({
+            declarations: [BooksPaginationTableComponent]
+        })
+            .compileComponents();
+    });
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(BooksPaginationTableComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    beforeEach(() => {
+        fixture = TestBed.createComponent(BooksPaginationTableComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
 });
