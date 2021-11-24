@@ -8,7 +8,7 @@ import {RequestOptions} from "../model/request-options";
 })
 export class PaginationComponent implements OnInit {
 
-    @Input() appRequestPage: RequestOptions;
+    @Input() requestOptions: RequestOptions;
     @Output() nextPageEvent = new EventEmitter();
     @Output() previousPageEvent = new EventEmitter();
     @Output() pageSizeEvent: EventEmitter<number> = new EventEmitter<number>();

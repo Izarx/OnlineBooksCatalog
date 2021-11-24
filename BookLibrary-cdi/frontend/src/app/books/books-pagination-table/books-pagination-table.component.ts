@@ -25,7 +25,7 @@ export class BooksPaginationTableComponent implements OnInit {
 
     page: ResponseData<Book> = new ResponseData()
     book: Book = new Book(null, '', 0, 0, '', 0.0, null)
-    appRequestPage: RequestOptions = new RequestOptions();
+    requestOptions: RequestOptions = new RequestOptions();
     authors: Author[]
 
     constructor(
@@ -40,9 +40,15 @@ export class BooksPaginationTableComponent implements OnInit {
     }
 
     public sort(sortableColumn: SortableColumn): void {
-        this.appRequestPage.sorting = this.sortingService.changeSortableStateColumn(sortableColumn, this.appRequestPage.sorting);
-        console.log(this.appRequestPage.sorting);
+        this.requestOptions.sorting = this.sortingService.changeSortableStateColumn(sortableColumn, this.requestOptions.sorting);
+        console.log(this.requestOptions.sorting);
         this.getData();
+    }
+
+    getBookById(bookId: number) {
+        this.bookService.getBookById(bookId).subscribe(
+            book => this.book = book
+        )
     }
 
     deleteBook(bookId: number): void {
@@ -56,22 +62,22 @@ export class BooksPaginationTableComponent implements OnInit {
     }
 
     public getNextPage(): void {
-        this.appRequestPage = this.paginationService.getNextPage(this.appRequestPage);
+        this.requestOptions = this.paginationService.getNextPage(this.requestOptions);
         this.getData();
     }
 
     public getPreviousPage(): void {
-        this.appRequestPage = this.paginationService.getPreviousPage(this.appRequestPage);
+        this.requestOptions = this.paginationService.getPreviousPage(this.requestOptions);
         this.getData();
     }
 
     public getPageInNewSize(pageSize: number): void {
-        this.appRequestPage = this.paginationService.getPageInNewSize(this.appRequestPage, pageSize);
+        this.requestOptions = this.paginationService.getPageInNewSize(this.requestOptions, pageSize);
         this.getData();
     }
 
     public getPageNewNumber(pageNumber: number): void {
-        this.appRequestPage = this.paginationService.getPageNewNumber(this.appRequestPage, pageNumber);
+        this.requestOptions = this.paginationService.getPageNewNumber(this.requestOptions, pageNumber);
         this.getData();
     }
 
@@ -84,9 +90,9 @@ export class BooksPaginationTableComponent implements OnInit {
     }
 
     private getData(): void {
-        this.bookService.getPage(this.appRequestPage)
+        this.bookService.getPage(this.requestOptions)
             .subscribe(page => {
-                    this.paginationService.initPageable(this.appRequestPage, page.totalElements);
+                    this.paginationService.initPageable(this.requestOptions, page.totalElements);
                     this.page = page
                 },
                 error => {

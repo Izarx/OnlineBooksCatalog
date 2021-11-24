@@ -1,8 +1,8 @@
-<div *ngIf="appRequestPage">
+<div *ngIf="requestOptions">
 	<div class="dropdown">
 		<div>
 			<span class="form-control-sm input-sm">
-			{{appRequestPage.pageSize}}
+			{{requestOptions.pageSize}}
 				<i class="fa fa-caret-down"></i>
 			</span>
 			<span class="text-muted">records per page</span>
@@ -16,28 +16,28 @@
 
 	<div class="pull-right">
 		<span class="text-muted text-center">
-        Showing {{appRequestPage.numberOfFirstPageElement}} to {{appRequestPage.numberOfElements}}
-			of {{appRequestPage.totalElements}} entries
+        Showing {{requestOptions.numberOfFirstPageElement}} to {{requestOptions.numberOfElements}}
+			of {{requestOptions.totalElements}} entries
     </span>
 		<div class="btn-group">
 			<button (click)="updatePageNumber(0)"
-			        [ngClass]="{'disabled': appRequestPage.first }" [routerLink]=""
+			        [ngClass]="{'disabled': requestOptions.first }" [routerLink]=""
 			        class="btn btn-sm"
 			>
 				<i class="fa fa-angle-double-left"></i>
 			</button>
 			<button (click)="previousPage()"
-			        [ngClass]="{'disabled': appRequestPage.first }" [routerLink]=""
+			        [ngClass]="{'disabled': requestOptions.first }" [routerLink]=""
 			        class="btn btn-sm">
 				<i class="fa fa-angle-left"></i>
 			</button>
 			<button (click)="nextPage()"
-			        [ngClass]="{'disabled': appRequestPage.last }" [routerLink]=""
+			        [ngClass]="{'disabled': requestOptions.last }" [routerLink]=""
 			        class="btn btn-sm">
 				<i class="fa fa-angle-right"></i>
 			</button>
-			<button (click)="updatePageNumber(appRequestPage.totalPages-1)"
-			        [ngClass]="{'disabled': appRequestPage.last }" [routerLink]=""
+			<button (click)="updatePageNumber(requestOptions.totalPages-1)"
+			        [ngClass]="{'disabled': requestOptions.last }" [routerLink]=""
 			        class="btn btn-sm">
 				<i class="fa fa-angle-double-right"></i>
 			</button>

@@ -55,7 +55,7 @@
 							(pageNumberEvent)="getPageNewNumber($event)"
 							(pageSizeEvent)="getPageInNewSize($event)"
 							(previousPageEvent)="getPreviousPage()"
-							[appRequestPage]="appRequestPage"
+							[requestOptions]="requestOptions"
 					>
 					</app-pagination>
 				</div>
@@ -107,14 +107,14 @@
 									<td class="column-entity-padding">{{ author.lastName}}</td>
 									<td class="text-center">{{author.authorRating.toFixed(2)}}</td>
 									<td class="text-center">
-										<button (click)="setAuthor(author)"
+										<button (click)="getAuthorById(author.authorId)"
 										        class="btn btn-primary btn-sm"
 										        data-target="#updateAuthor"
 										        data-toggle="modal"
 										>
 											<i class="fa fa-edit "></i>
 										</button>
-										<button (click)="setAuthor(author)"
+										<button (click)="getAuthorById(author.authorId)"
 										        class="btn btn-danger btn-sm"
 										        data-target="#deleteAuthorConfirmation"
 										        data-toggle="modal"

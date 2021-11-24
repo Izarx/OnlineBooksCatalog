@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Output} from '@angular/core';
 import {Author} from "../../model/author";
 import {ResponseData} from "../../model/response-data";
 import {AuthorService} from "../author.service";
@@ -14,6 +14,7 @@ import {RequestOptions} from "../../model/request-options";
 })
 export class AuthorsPaginationTableComponent implements OnInit {
 
+    static readonly title: string = 'Authors';
 
     sortableColumns: Array<SortableColumn> = [
         new SortableColumn('firstName', 'First Name', null),
@@ -22,7 +23,7 @@ export class AuthorsPaginationTableComponent implements OnInit {
     ];
 
     page: ResponseData<Author> = new ResponseData();
-    appRequestPage: RequestOptions = new RequestOptions();
+    requestOptions: RequestOptions = new RequestOptions();
     author: Author = new Author(null, '', '', 0.0)
 
     constructor(
@@ -46,36 +47,40 @@ export class AuthorsPaginationTableComponent implements OnInit {
             })
     }
 
+    getAuthorById(authorId: number) {
+        this.authorService.getAuthorById(authorId).subscribe(
+            author => this.author = author
+        )
+    }
+
     public sort(sortableColumn: SortableColumn): void {
-        this.appRequestPage.sorting = this.sortingService.changeSortableStateColumn(sortableColumn, this.appRequestPage.sorting);
-        console.log(this.appRequestPage.sorting);
+        this.requestOptions.sorting = this.sortingService.changeSortableStateColumn(sortableColumn, this.requestOptions.sorting);
+        console.log(this.requestOptions.sorting);
         this.getData();
     }
 
     public getNextPage(): void {
-        this.appRequestPage = this.paginationService.getNextPage(this.appRequestPage);
+        this.requestOptions = this.paginationService.getNextPage(this.requestOptions);
         this.getData();
     }
 
     public getPreviousPage(): void {
-        this.appRequestPage = this.paginationService.getPreviousPage(this.appRequestPage);
+        this.requestOptions = this.paginationService.getPreviousPage(this.requestOptions);
         this.getData();
     }
 
     public getPageInNewSize(pageSize: number): void {
-        this.appRequestPage = this.paginationService.getPageInNewSize(this.appRequestPage, pageSize);
+        this.requestOptions = this.paginationService.getPageInNewSize(this.requestOptions, pageSize);
         this.getData();
     }
 
     public getPageNewNumber(pageNumber: number): void {
-        this.appRequestPage = this.paginationService.getPageNewNumber(this.appRequestPage, pageNumber);
+        this.requestOptions = this.paginationService.getPageNewNumber(this.requestOptions, pageNumber);
         this.getData();
     }
 
     setAuthor(author: Author) {
         this.author = author;
-        // formData.firstName = this.author.firstName;
-        // formData.lastName = this.author.lastName;
     }
 
     getAuthor(): Author {
@@ -83,9 +88,9 @@ export class AuthorsPaginationTableComponent implements OnInit {
     }
 
     private getData(): void {
-        this.authorService.getPage(this.appRequestPage)
+        this.authorService.getPage(this.requestOptions)
             .subscribe(page => {
-                    this.paginationService.initPageable(this.appRequestPage, page.totalElements);
+                    this.paginationService.initPageable(this.requestOptions, page.totalElements);
                     this.page = page;
                 },
                 error => {

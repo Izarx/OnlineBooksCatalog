@@ -11,10 +11,7 @@ export class SortingService {
 
     public changeSortableStateColumn(column: SortableColumn,
                                      sortingColumns: Array<SortableColumn>): Array<SortableColumn> {
-        let sortedColumns = sortingColumns.filter(c => {
-            c.name != column.name;
-            c.direction != null;
-        });
+        let sortedColumns = sortingColumns.filter(c => c.name != column.name);
         if (column.direction != null) {
             sortedColumns.unshift(column);
         }

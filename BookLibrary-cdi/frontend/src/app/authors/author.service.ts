@@ -30,4 +30,8 @@ export class AuthorService {
     public updateAuthor(author: Author): Observable<any> {
         return this.httpClient.put(baseUrl + `/update`, author);
     }
+
+    getAuthorById(authorId: number): Observable<Author> {
+        return this.httpClient.get<Author>(baseUrl + `/${authorId}`);
+    }
 }
