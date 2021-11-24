@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {AppRequestPage} from "../model/app-request-page";
+import {RequestOptions} from "../model/request-options";
 
 @Component({
     selector: 'app-pagination',
@@ -8,7 +8,7 @@ import {AppRequestPage} from "../model/app-request-page";
 })
 export class PaginationComponent implements OnInit {
 
-    @Input() appRequestPage: AppRequestPage;
+    @Input() appRequestPage: RequestOptions;
     @Output() nextPageEvent = new EventEmitter();
     @Output() previousPageEvent = new EventEmitter();
     @Output() pageSizeEvent: EventEmitter<number> = new EventEmitter<number>();

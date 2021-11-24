@@ -1,6 +1,6 @@
 export class SortableColumn {
     name: string;
-    title: string;
+    title?: string;
     direction: string;
 
     public constructor(name: string, title: string, direction: string) {

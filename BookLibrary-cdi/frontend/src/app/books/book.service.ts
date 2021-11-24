@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {AppResponsePage} from "../model/app-response-page";
+import {ResponseData} from "../model/response-data";
 import {Book} from "../model/book";
-import {AppRequestPage} from "../model/app-request-page";
+import {RequestOptions} from "../model/request-options";
 
 const baseUrl = 'http://localhost:8080/api/books';
 
@@ -23,8 +23,8 @@ export class BookService {
         return this.httpClient.delete<void>(baseUrl + `/delete/${bookId}`);
     }
 
-    public getPage(appRequestPage: AppRequestPage): Observable<AppResponsePage<Book>> {
-        return this.httpClient.post<AppResponsePage<Book>>(baseUrl, appRequestPage);
+    public getPage(appRequestPage: RequestOptions): Observable<ResponseData<Book>> {
+        return this.httpClient.post<ResponseData<Book>>(baseUrl, appRequestPage);
     }
 
     public updateBook(book: Book): Observable<any> {

@@ -1,5 +1,11 @@
 package com.softserveinc.booklibrary.backend.repository.impl;
 
+import java.util.List;
+
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.Order;
+import javax.persistence.criteria.Root;
+
 import com.softserveinc.booklibrary.backend.entity.Book;
 import com.softserveinc.booklibrary.backend.entity.Review;
 import com.softserveinc.booklibrary.backend.repository.BookRepository;
@@ -28,4 +34,7 @@ public class ReviewRepositoryImpl extends AbstractEntityRepository<Review> imple
 		}
 		return book != null && book.getBookId() != null;
 	}
+
+	@Override
+	protected void setOrdersByColumnsByDefault(List<Order> orderList, CriteriaBuilder builder, Root<Review> rootEntity) {}
 }

@@ -8,7 +8,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
-public interface CommonAppMapper {
+public interface ApplicationMapper {
 
 	// this annotation sets number format with 2 signs after comma
 	@Mapping(target = "authorRating", source = "authorRating", numberFormat = "$#.00")

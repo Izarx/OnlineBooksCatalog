@@ -2,10 +2,10 @@ package com.softserveinc.booklibrary.backend.controller;
 
 import java.util.List;
 
+import com.softserveinc.booklibrary.backend.dto.ApplicationMapper;
 import com.softserveinc.booklibrary.backend.dto.AuthorDto;
-import com.softserveinc.booklibrary.backend.dto.CommonAppMapper;
-import com.softserveinc.booklibrary.backend.dto.paging.ApplicationRequestPage;
-import com.softserveinc.booklibrary.backend.dto.paging.ApplicationResponsePage;
+import com.softserveinc.booklibrary.backend.pagination.RequestOptions;
+import com.softserveinc.booklibrary.backend.pagination.ResponseData;
 import com.softserveinc.booklibrary.backend.entity.Author;
 import com.softserveinc.booklibrary.backend.service.AuthorService;
 import org.slf4j.Logger;
@@ -27,11 +27,11 @@ public class AuthorController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(AuthorController.class);
 
-	private final CommonAppMapper appMapper;
+	private final ApplicationMapper appMapper;
 
 	private final AuthorService authorService;
 
-	public AuthorController(CommonAppMapper appMapper, AuthorService authorService) {
+	public AuthorController(ApplicationMapper appMapper, AuthorService authorService) {
 		this.appMapper = appMapper;
 		this.authorService = authorService;
 	}
@@ -44,11 +44,11 @@ public class AuthorController {
 	}
 
 	@PostMapping
-	public ResponseEntity<ApplicationResponsePage<AuthorDto>> listAuthors(
-			@RequestBody ApplicationRequestPage applicationRequestPage) {
+	public ResponseEntity<ResponseData<AuthorDto>> listAuthors(
+			@RequestBody RequestOptions requestOptions) {
 		return ResponseEntity.status(HttpStatus.OK)
 				.body(convertAuthorPageToAuthorDtoPage(
-						authorService.listEntities(applicationRequestPage)));
+						authorService.listEntities(requestOptions)));
 	}
 
 	@PostMapping("/create")
@@ -87,11 +87,11 @@ public class AuthorController {
 				.body(appMapper.listAuthorsToListAuthorsDto(authorService.getAll()));
 	}
 
-	private ApplicationResponsePage<AuthorDto> convertAuthorPageToAuthorDtoPage(
-			ApplicationResponsePage<Author> responsePage) {
-		ApplicationResponsePage<AuthorDto> entityDtoPage = new ApplicationResponsePage<>();
-		entityDtoPage.setTotalElements(responsePage.getTotalElements());
-		entityDtoPage.setContent(appMapper.listAuthorsToListAuthorsDto(responsePage.getContent()));
+	private ResponseData<AuthorDto> convertAuthorPageToAuthorDtoPage(
+			ResponseData<Author> responseData) {
+		ResponseData<AuthorDto> entityDtoPage = new ResponseData<>();
+		entityDtoPage.setTotalElements(responseData.getTotalElements());
+		entityDtoPage.setContent(appMapper.listAuthorsToListAuthorsDto(responseData.getContent()));
 		return entityDtoPage;
 	}
 

@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {Author} from "../../model/author";
-import {AppResponsePage} from "../../model/app-response-page";
+import {ResponseData} from "../../model/response-data";
 import {AuthorService} from "../author.service";
 import {PaginationService} from "../../pagination/pagination.service";
 import {SortableColumn} from "../../model/sortable-column";
 import {SortingService} from "../../sorting/sorting.service";
-import {AppRequestPage} from "../../model/app-request-page";
+import {RequestOptions} from "../../model/request-options";
 
 @Component({
     selector: 'app-authors-pagination-table',
@@ -21,8 +21,8 @@ export class AuthorsPaginationTableComponent implements OnInit {
         new SortableColumn('authorRating', 'Rating', null),
     ];
 
-    page: AppResponsePage<Author> = new AppResponsePage();
-    appRequestPage: AppRequestPage = new AppRequestPage();
+    page: ResponseData<Author> = new ResponseData();
+    appRequestPage: RequestOptions = new RequestOptions();
     author: Author = new Author(null, '', '', 0.0)
 
     constructor(

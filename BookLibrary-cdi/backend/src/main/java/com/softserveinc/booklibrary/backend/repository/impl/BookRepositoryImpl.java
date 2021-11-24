@@ -1,6 +1,11 @@
 package com.softserveinc.booklibrary.backend.repository.impl;
 
 import java.time.LocalDate;
+import java.util.List;
+
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.Order;
+import javax.persistence.criteria.Root;
 
 import com.softserveinc.booklibrary.backend.entity.Book;
 import com.softserveinc.booklibrary.backend.repository.BookRepository;
@@ -21,5 +26,13 @@ public class BookRepositoryImpl extends AbstractEntityRepository<Book> implement
 			return false;
 		}
 		return publisher != null && publisher.length() <= Book.PUBLISHER_LENGTH;
+	}
+
+	@Override
+	protected void setOrdersByColumnsByDefault(List<Order> orderList,
+	                                                  CriteriaBuilder builder,
+	                                                  Root<Book> rootEntity) {
+		orderList.add(builder.desc(rootEntity.get("bookRating")));
+		orderList.add(builder.desc(rootEntity.get("createDate")));
 	}
 }

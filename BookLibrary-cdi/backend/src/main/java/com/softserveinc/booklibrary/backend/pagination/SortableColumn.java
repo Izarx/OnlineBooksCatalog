@@ -1,4 +1,4 @@
-package com.softserveinc.booklibrary.backend.dto.sorting;
+package com.softserveinc.booklibrary.backend.pagination;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -8,7 +8,6 @@ import lombok.Setter;
 public class SortableColumn {
 
 	private String name;
-	private String title;
 	private String direction;
 
 }

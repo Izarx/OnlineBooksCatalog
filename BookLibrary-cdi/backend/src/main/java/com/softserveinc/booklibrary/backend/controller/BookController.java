@@ -1,9 +1,9 @@
 package com.softserveinc.booklibrary.backend.controller;
 
+import com.softserveinc.booklibrary.backend.dto.ApplicationMapper;
 import com.softserveinc.booklibrary.backend.dto.BookDto;
-import com.softserveinc.booklibrary.backend.dto.CommonAppMapper;
-import com.softserveinc.booklibrary.backend.dto.paging.ApplicationRequestPage;
-import com.softserveinc.booklibrary.backend.dto.paging.ApplicationResponsePage;
+import com.softserveinc.booklibrary.backend.pagination.RequestOptions;
+import com.softserveinc.booklibrary.backend.pagination.ResponseData;
 import com.softserveinc.booklibrary.backend.entity.Book;
 import com.softserveinc.booklibrary.backend.service.BookService;
 import org.slf4j.Logger;
@@ -25,11 +25,11 @@ public class BookController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(BookController.class);
 
-	private final CommonAppMapper appMapper;
+	private final ApplicationMapper appMapper;
 
 	private final BookService bookService;
 
-	public BookController(CommonAppMapper appMapper, BookService bookService) {
+	public BookController(ApplicationMapper appMapper, BookService bookService) {
 		this.appMapper = appMapper;
 		this.bookService = bookService;
 	}
@@ -42,10 +42,10 @@ public class BookController {
 	}
 
 	@PostMapping
-	public ResponseEntity<ApplicationResponsePage<BookDto>> listBooks(@RequestBody ApplicationRequestPage applicationRequestPage) {
+	public ResponseEntity<ResponseData<BookDto>> listBooks(@RequestBody RequestOptions requestOptions) {
 		return ResponseEntity.status(HttpStatus.OK)
 				.body(convertBookPageToBookDtoPage(
-						bookService.listEntities(applicationRequestPage)));
+						bookService.listEntities(requestOptions)));
 	}
 
 	@PostMapping("/create")
@@ -75,11 +75,11 @@ public class BookController {
 				ResponseEntity.notFound().build();
 	}
 
-	private ApplicationResponsePage<BookDto> convertBookPageToBookDtoPage(
-			ApplicationResponsePage<Book> responsePage) {
-		ApplicationResponsePage<BookDto> entityDtoPage = new ApplicationResponsePage<>();
-		entityDtoPage.setTotalElements(responsePage.getTotalElements());
-		entityDtoPage.setContent(appMapper.listBooksToListBooksDto(responsePage.getContent()));
+	private ResponseData<BookDto> convertBookPageToBookDtoPage(
+			ResponseData<Book> responseData) {
+		ResponseData<BookDto> entityDtoPage = new ResponseData<>();
+		entityDtoPage.setTotalElements(responseData.getTotalElements());
+		entityDtoPage.setContent(appMapper.listBooksToListBooksDto(responseData.getContent()));
 		return entityDtoPage;
 	}
 

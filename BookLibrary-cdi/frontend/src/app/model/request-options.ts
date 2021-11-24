@@ -1,6 +1,6 @@
 import {SortableColumn} from "./sortable-column";
 
-export class AppRequestPage {
+export class RequestOptions {
     static readonly DEFAULT_PAGE_SIZE = 5;
     static readonly FIRST_PAGE_NUMBER = 0;
     pageSize: number;
@@ -14,8 +14,8 @@ export class AppRequestPage {
     sorting: Array<SortableColumn>;
 
     public constructor() {
-        this.pageSize = AppRequestPage.DEFAULT_PAGE_SIZE;
-        this.pageNumber = AppRequestPage.FIRST_PAGE_NUMBER;
+        this.pageSize = RequestOptions.DEFAULT_PAGE_SIZE;
+        this.pageNumber = RequestOptions.FIRST_PAGE_NUMBER;
         this.sorting = new Array<SortableColumn>();
     }
 }

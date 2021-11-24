@@ -3,8 +3,8 @@ package com.softserveinc.booklibrary.backend.service.impl;
 import java.io.Serializable;
 import java.util.List;
 
-import com.softserveinc.booklibrary.backend.dto.paging.ApplicationRequestPage;
-import com.softserveinc.booklibrary.backend.dto.paging.ApplicationResponsePage;
+import com.softserveinc.booklibrary.backend.pagination.RequestOptions;
+import com.softserveinc.booklibrary.backend.pagination.ResponseData;
 import com.softserveinc.booklibrary.backend.entity.AbstractEntity;
 import com.softserveinc.booklibrary.backend.exception.NotValidEntityException;
 import com.softserveinc.booklibrary.backend.exception.NotValidIdException;
@@ -71,7 +71,7 @@ public abstract class AbstractEntityService<T extends AbstractEntity<? extends S
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS)
-	public ApplicationResponsePage<T> listEntities(ApplicationRequestPage applicationRequestPage) {
-		return repository.listEntities(applicationRequestPage);
+	public ResponseData<T> listEntities(RequestOptions requestOptions) {
+		return repository.listEntities(requestOptions);
 	}
 }

@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {AppRequestPage} from "../model/app-request-page";
+import {RequestOptions} from "../model/request-options";
 
 @Injectable({
     providedIn: 'root'
@@ -9,33 +9,33 @@ export class PaginationService {
     constructor() {
     }
 
-    public getNextPage(requestPage: AppRequestPage): AppRequestPage {
+    public getNextPage(requestPage: RequestOptions): RequestOptions {
         if (!requestPage.last) {
             requestPage.pageNumber = requestPage.pageNumber + 1;
         }
         return requestPage;
     }
 
-    public getPreviousPage(requestPage: AppRequestPage): AppRequestPage {
+    public getPreviousPage(requestPage: RequestOptions): RequestOptions {
         if (!requestPage.first) {
             requestPage.pageNumber = requestPage.pageNumber - 1;
         }
         return requestPage;
     }
 
-    public getPageInNewSize(requestPage: AppRequestPage, pageSize: number): AppRequestPage {
+    public getPageInNewSize(requestPage: RequestOptions, pageSize: number): RequestOptions {
         requestPage.pageSize = pageSize;
-        requestPage.pageNumber = AppRequestPage.FIRST_PAGE_NUMBER;
+        requestPage.pageNumber = RequestOptions.FIRST_PAGE_NUMBER;
 
         return requestPage;
     }
 
-    public getPageNewNumber(requestPage: AppRequestPage, pageNumber: number): AppRequestPage {
+    public getPageNewNumber(requestPage: RequestOptions, pageNumber: number): RequestOptions {
         requestPage.pageNumber = pageNumber;
         return requestPage;
     }
 
-    public initPageable(requestPage: AppRequestPage, totalElements: number): AppRequestPage {
+    public initPageable(requestPage: RequestOptions, totalElements: number): RequestOptions {
         requestPage.totalElements = totalElements;
         let totalPages = totalElements != 0 ? Math.ceil(totalElements / requestPage.pageSize) : 1;
         requestPage.totalPages = totalPages;

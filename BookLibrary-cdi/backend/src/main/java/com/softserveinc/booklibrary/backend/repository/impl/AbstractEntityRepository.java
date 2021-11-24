@@ -12,12 +12,12 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Root;
 
-import com.softserveinc.booklibrary.backend.dto.paging.ApplicationRequestPage;
-import com.softserveinc.booklibrary.backend.dto.paging.ApplicationResponsePage;
-import com.softserveinc.booklibrary.backend.dto.sorting.SortableColumn;
 import com.softserveinc.booklibrary.backend.entity.AbstractEntity;
 import com.softserveinc.booklibrary.backend.exception.NotValidEntityException;
 import com.softserveinc.booklibrary.backend.exception.NotValidIdException;
+import com.softserveinc.booklibrary.backend.pagination.RequestOptions;
+import com.softserveinc.booklibrary.backend.pagination.ResponseData;
+import com.softserveinc.booklibrary.backend.pagination.SortableColumn;
 import com.softserveinc.booklibrary.backend.repository.EntityRepository;
 import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
@@ -99,30 +99,25 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS)
-	public ApplicationResponsePage<T> listEntities(ApplicationRequestPage applicationRequestPage) {
-		ApplicationResponsePage<T> responsePage = new ApplicationResponsePage<>();
-		int pageSize = applicationRequestPage.getPageSize();
-		int pageNumber = applicationRequestPage.getPageNumber();
-
+	public ResponseData<T> listEntities(RequestOptions requestOptions) {
+		ResponseData<T> responseData = new ResponseData<>();
+		int pageSize = requestOptions.getPageSize();
 		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-		CriteriaQuery<Long> countCriteriaQuery = builder.createQuery(Long.class);
-		countCriteriaQuery.select(builder.count(countCriteriaQuery.from(type)));
-		Long totalElements = entityManager.createQuery(countCriteriaQuery).getSingleResult();
 
-		responsePage.setTotalElements(totalElements.intValue());
+		responseData.setTotalElements(getTotalElementsFromDb(builder));
 
 		CriteriaQuery<T> criteriaQuery = builder.createQuery(type);
 		Root<T> rootEntity = criteriaQuery.from(type);
 		CriteriaQuery<T> selectEntities = criteriaQuery.select(rootEntity);
 
-		criteriaQuery.orderBy(setOrdersByColumns(applicationRequestPage.getSorting(), builder, rootEntity));
+		criteriaQuery.orderBy(setOrdersByColumns(requestOptions.getSorting(), builder, rootEntity));
 		List<T> getAll = entityManager
 				.createQuery(selectEntities)
-				.setFirstResult(pageNumber * pageSize)
+				.setFirstResult(requestOptions.getPageNumber() * pageSize)
 				.setMaxResults(pageSize)
 				.getResultList();
-		responsePage.setContent(getAll);
-		return responsePage;
+		responseData.setContent(getAll);
+		return responseData;
 	}
 
 	/**
@@ -134,7 +129,7 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 	 * @return
 	 */
 
-	protected List<Order> setOrdersByColumns(List<SortableColumn> sortableColumns,
+	private List<Order> setOrdersByColumns(List<SortableColumn> sortableColumns,
 	                                         CriteriaBuilder builder,
 	                                         Root<T> rootEntity) {
 		List<Order> orderList = new ArrayList<>();
@@ -149,9 +144,20 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 			}
 		}
 		// Default sorting for manage entities pages could be by creation date
-		if (CollectionUtils.isEmpty(sortableColumns)) {
-			orderList.add(builder.desc(rootEntity.get("createDate")));
+		else {
+			setOrdersByColumnsByDefault(orderList, builder, rootEntity);
 		}
 		return orderList;
 	}
+
+	protected abstract void setOrdersByColumnsByDefault(List<Order> orderList,
+	                                                    CriteriaBuilder builder,
+	                                                    Root<T> rootEntity);
+
+	private Integer getTotalElementsFromDb (CriteriaBuilder builder) {
+		CriteriaQuery<Long> countCriteriaQuery = builder.createQuery(Long.class);
+		countCriteriaQuery.select(builder.count(countCriteriaQuery.from(type)));
+		return entityManager.createQuery(countCriteriaQuery).getSingleResult().intValue();
+	}
+
 }
