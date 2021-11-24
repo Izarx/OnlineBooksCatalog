@@ -1,12 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {Page} from "../../model/page";
+import {AppResponsePage} from "../../model/app-response-page";
 import {PaginationService} from "../../pagination/pagination.service";
 import {Book} from "../../model/book";
 import {BookService} from "../book.service";
 import {Author} from "../../model/author";
 import {SortableColumn} from "../../model/sortable-column";
 import {SortingService} from "../../sorting/sorting.service";
-import {PageConstructor} from "../../model/page-constructor";
+import {AppRequestPage} from "../../model/app-request-page";
 
 @Component({
   selector: 'app-books-pagination-table',
@@ -17,15 +17,15 @@ export class BooksPaginationTableComponent implements OnInit {
 
   sortableColumns: Array<SortableColumn> = [
     new SortableColumn('name', 'Book Name', null),
-    new SortableColumn('bookRating', 'Rating', 'desc'),
+    new SortableColumn('bookRating', 'Rating', null),
     new SortableColumn('yearPublished', 'Year', null),
     new SortableColumn('isbn', 'ISBN', null),
     new SortableColumn('publisher', 'Publisher', null),
   ];
 
-  page: Page<Book> = new Page()
+  page: AppResponsePage<Book> = new AppResponsePage()
   book: Book = new Book(null, '', 0, 0, '', 0.0, null)
-  pageConstructor: PageConstructor = new PageConstructor();
+  appRequestPage: AppRequestPage = new AppRequestPage();
   authors: Author[]
 
   constructor(
@@ -39,10 +39,9 @@ export class BooksPaginationTableComponent implements OnInit {
   }
 
   private getData(): void {
-    this.pageConstructor.sorting = this.sortingService.getSortableColumns(this.sortableColumns);
-    this.bookService.getPage(this.pageConstructor)
+    this.bookService.getPage(this.appRequestPage)
         .subscribe(page => {
-              this.paginationService.initPageable(this.pageConstructor.pageable, page.totalElements);
+              this.paginationService.initPageable(this.appRequestPage, page.totalElements);
               this.page = page
             },
             error => {
@@ -51,7 +50,8 @@ export class BooksPaginationTableComponent implements OnInit {
   }
 
   public sort(sortableColumn: SortableColumn): void {
-    this.sortingService.changeSortableStateColumn(sortableColumn, this.sortableColumns);
+    this.appRequestPage.sorting = this.sortingService.changeSortableStateColumn(sortableColumn, this.appRequestPage.sorting);
+    console.log(this.appRequestPage.sorting);
     this.getData();
   }
 
@@ -65,22 +65,22 @@ export class BooksPaginationTableComponent implements OnInit {
         })
   }
   public getNextPage(): void {
-    this.pageConstructor.pageable = this.paginationService.getNextPage(this.pageConstructor.pageable);
+    this.appRequestPage = this.paginationService.getNextPage(this.appRequestPage);
     this.getData();
   }
 
   public getPreviousPage(): void {
-    this.pageConstructor.pageable = this.paginationService.getPreviousPage(this.pageConstructor.pageable);
+    this.appRequestPage = this.paginationService.getPreviousPage(this.appRequestPage);
     this.getData();
   }
 
   public getPageInNewSize(pageSize: number): void {
-    this.pageConstructor.pageable = this.paginationService.getPageInNewSize(this.pageConstructor.pageable, pageSize);
+    this.appRequestPage = this.paginationService.getPageInNewSize(this.appRequestPage, pageSize);
     this.getData();
   }
 
   public getPageNewNumber(pageNumber: number): void {
-    this.pageConstructor.pageable = this.paginationService.getPageNewNumber(this.pageConstructor.pageable, pageNumber);
+    this.appRequestPage = this.paginationService.getPageNewNumber(this.appRequestPage, pageNumber);
     this.getData();
   }
 

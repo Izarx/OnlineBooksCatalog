@@ -4,8 +4,8 @@ import java.util.List;
 
 import com.softserveinc.booklibrary.backend.dto.AuthorDto;
 import com.softserveinc.booklibrary.backend.dto.CommonAppMapper;
-import com.softserveinc.booklibrary.backend.dto.paging.MyPage;
-import com.softserveinc.booklibrary.backend.dto.paging.PageConstructor;
+import com.softserveinc.booklibrary.backend.dto.paging.ApplicationResponsePage;
+import com.softserveinc.booklibrary.backend.dto.paging.ApplicationRequestPage;
 import com.softserveinc.booklibrary.backend.entity.Author;
 import com.softserveinc.booklibrary.backend.service.AuthorService;
 import org.slf4j.Logger;
@@ -44,11 +44,11 @@ public class AuthorController {
 	}
 
 	@PostMapping
-	public ResponseEntity<MyPage<AuthorDto>> listAuthors(
-			@RequestBody PageConstructor pageConstructor) {
+	public ResponseEntity<ApplicationResponsePage<AuthorDto>> listAuthors(
+			@RequestBody ApplicationRequestPage applicationRequestPage) {
 		return ResponseEntity.status(HttpStatus.OK)
-				.body(convertPageAuthorDto(
-						authorService.listEntities(pageConstructor)));
+				.body(convertAuthorPageToAuthorDtoPage(
+						authorService.listEntities(applicationRequestPage)));
 	}
 
 	@PostMapping("/create")
@@ -75,9 +75,10 @@ public class AuthorController {
 
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<AuthorDto> deleteAuthor(@PathVariable Integer id) {
+
 		return authorService.delete(id) ?
 				ResponseEntity.ok().build() :
-				ResponseEntity.notFound().build();
+				ResponseEntity.noContent().build();
 	}
 
 	@GetMapping
@@ -86,10 +87,11 @@ public class AuthorController {
 				.body(appMapper.listAuthorsToListAuthorsDto(authorService.getAll()));
 	}
 
-	public MyPage<AuthorDto> convertPageAuthorDto(MyPage<Author> page) {
-		MyPage<AuthorDto> entityDtoPage = new MyPage<>();
-		entityDtoPage.setTotalElements(page.getTotalElements());
-		entityDtoPage.setContent(appMapper.listAuthorsToListAuthorsDto(page.getContent()));
+	private ApplicationResponsePage<AuthorDto> convertAuthorPageToAuthorDtoPage(
+			ApplicationResponsePage<Author> responsePage) {
+		ApplicationResponsePage<AuthorDto> entityDtoPage = new ApplicationResponsePage<>();
+		entityDtoPage.setTotalElements(responsePage.getTotalElements());
+		entityDtoPage.setContent(appMapper.listAuthorsToListAuthorsDto(responsePage.getContent()));
 		return entityDtoPage;
 	}
 

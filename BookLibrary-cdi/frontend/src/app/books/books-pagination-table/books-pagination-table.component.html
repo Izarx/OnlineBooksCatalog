@@ -72,7 +72,7 @@
 				</div>
 				<div class="col-sm-12">
 					<app-pagination
-							[pageConstructor]="pageConstructor"
+							[appRequestPage]="appRequestPage"
 							(nextPageEvent)="getNextPage()"
 							(previousPageEvent)="getPreviousPage()"
 							(pageSizeEvent)="getPageInNewSize($event)"
@@ -92,12 +92,42 @@
 												<label class="custom-control-label" for="customCheckBook"></label>
 											</div>
 										</th>
-										<th scope="col" class="text-center column-width-book" >Book Name</th>
+										<th scope="col"
+										    class="text-center column-width-book">
+											<app-sortable-column-header
+													[sortableColumn]="sortableColumns[0]"
+													(sortEvent)="sort($event)">
+											</app-sortable-column-header>
+										</th>
 										<th scope="col" class="text-center column-width-authors" >Authors</th>
-										<th scope="col" class="text-center column-width-rating" >Rating</th>
-										<th scope="col" class="text-center" >Year</th>
-										<th scope="col" class="text-center" >ISBN</th>
-										<th scope="col" class="text-center" >Publisher</th>
+										<th scope="col"
+										    class="text-center column-width-rating">
+											<app-sortable-column-header
+													[sortableColumn]="sortableColumns[1]"
+													(sortEvent)="sort($event)">
+											</app-sortable-column-header>
+										</th>
+										<th scope="col"
+										    class="text-center column-width-rating">
+											<app-sortable-column-header
+													[sortableColumn]="sortableColumns[2]"
+													(sortEvent)="sort($event)">
+											</app-sortable-column-header>
+										</th>
+										<th scope="col"
+										    class="text-center">
+											<app-sortable-column-header
+													[sortableColumn]="sortableColumns[3]"
+													(sortEvent)="sort($event)">
+											</app-sortable-column-header>
+										</th>
+										<th scope="col"
+										    class="text-center column-width-publisher">
+											<app-sortable-column-header
+													[sortableColumn]="sortableColumns[4]"
+													(sortEvent)="sort($event)">
+											</app-sortable-column-header>
+										</th>
 										<th scope="col" class="text-center column-width-actions" ></th>
 									</tr>
 								</thead>
@@ -110,7 +140,7 @@
 										</div>
 									</th>
 									<td class="column-entity-padding">{{book.name}}</td>
-									<td>
+									<td class="column-entity-padding">
 										<div *ngFor="let author of book.authors">
 											{{author.firstName + ' ' + author.lastName}}
 										</div>

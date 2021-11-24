@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { AuthorsPaginationTableComponent } from './authors-pagination-table.component';
+import {AuthorsPaginationTableComponent} from './authors-pagination-table.component';
 
 describe('AuthorsPaginationTableComponent', () => {
   let component: AuthorsPaginationTableComponent;

@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class MyPage<T> {
+public class ApplicationResponsePage<T> {
 
 	private List<T> content;
 	private Integer totalElements;

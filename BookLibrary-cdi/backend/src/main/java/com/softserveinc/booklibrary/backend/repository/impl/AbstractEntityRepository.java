@@ -12,13 +12,14 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Root;
 
-import com.softserveinc.booklibrary.backend.dto.paging.MyPage;
-import com.softserveinc.booklibrary.backend.dto.paging.PageConstructor;
+import com.softserveinc.booklibrary.backend.dto.paging.ApplicationResponsePage;
+import com.softserveinc.booklibrary.backend.dto.paging.ApplicationRequestPage;
 import com.softserveinc.booklibrary.backend.dto.sorting.SortableColumn;
 import com.softserveinc.booklibrary.backend.entity.AbstractEntity;
 import com.softserveinc.booklibrary.backend.exception.NotValidEntityException;
 import com.softserveinc.booklibrary.backend.exception.NotValidIdException;
 import com.softserveinc.booklibrary.backend.repository.EntityRepository;
+import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Propagation;
@@ -98,30 +99,30 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS)
-	public MyPage<T> listEntities(PageConstructor pageConstructor) {
-		MyPage<T> page = new MyPage<>();
-		int numEntitiesOnPage = pageConstructor.getPageable().getPageSize();
-		int pageId = pageConstructor.getPageable().getPageNumber();
+	public ApplicationResponsePage<T> listEntities(ApplicationRequestPage applicationRequestPage) {
+		ApplicationResponsePage<T> responsePage = new ApplicationResponsePage<>();
+		int pageSize = applicationRequestPage.getPageSize();
+		int pageNumber = applicationRequestPage.getPageNumber();
 
 		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
 		CriteriaQuery<Long> countCriteriaQuery = builder.createQuery(Long.class);
 		countCriteriaQuery.select(builder.count(countCriteriaQuery.from(type)));
 		Long totalElements = entityManager.createQuery(countCriteriaQuery).getSingleResult();
 
-		page.setTotalElements(totalElements.intValue());
+		responsePage.setTotalElements(totalElements.intValue());
 
 		CriteriaQuery<T> criteriaQuery = builder.createQuery(type);
 		Root<T> rootEntity = criteriaQuery.from(type);
 		CriteriaQuery<T> selectEntities = criteriaQuery.select(rootEntity);
 
-		criteriaQuery.orderBy(setOrdersByColumns(pageConstructor.getSorting(), builder, rootEntity));
+		criteriaQuery.orderBy(setOrdersByColumns(applicationRequestPage.getSorting(), builder, rootEntity));
 		List<T> getAll = entityManager
 				.createQuery(selectEntities)
-				.setFirstResult(pageId * numEntitiesOnPage)
-				.setMaxResults(numEntitiesOnPage)
+				.setFirstResult(pageNumber * pageSize)
+				.setMaxResults(pageSize)
 				.getResultList();
-		page.setContent(getAll);
-		return page;
+		responsePage.setContent(getAll);
+		return responsePage;
 	}
 
 	/**
@@ -136,7 +137,7 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 	                                          CriteriaBuilder builder,
 	                                          Root<T> rootEntity) {
 		List<Order> orderList = new ArrayList<>();
-		if (sortableColumns != null && !sortableColumns.isEmpty()) {
+		if (CollectionUtils.isNotEmpty(sortableColumns)) {
 			for (SortableColumn column : sortableColumns) {
 				if ("asc".equals(column.getDirection())){
 					orderList.add(builder.asc(rootEntity.get(column.getName())));
@@ -146,7 +147,10 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 				}
 			}
 		}
-		orderList.add(builder.desc(rootEntity.get("createDate")));
+		// Default sorting for manage entities pages could be by creation date
+		if (CollectionUtils.isEmpty(sortableColumns)) {
+			orderList.add(builder.desc(rootEntity.get("createDate")));
+		}
 		return orderList;
 	}
 }

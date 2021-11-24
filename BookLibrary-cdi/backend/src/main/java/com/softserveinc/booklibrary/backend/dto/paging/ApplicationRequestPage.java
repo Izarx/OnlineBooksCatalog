@@ -13,9 +13,10 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class PageConstructor {
+public class ApplicationRequestPage {
 
-	private MyPageable pageable;
+	private int pageSize;
+	private int pageNumber;
 	private List<SortableColumn> sorting;
 
 }

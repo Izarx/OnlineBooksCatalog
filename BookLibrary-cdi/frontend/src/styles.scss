@@ -13,11 +13,15 @@ input {
 }
 
 .column-width-book{
-  width: 30%;
+  width: 20%;
 }
 
-.column-width-authors{
-  width: 25%;
+.column-width-authors {
+  width: 20%;
+}
+
+.column-width-publisher {
+  width: 150px;
 }
 
 .column-width-actions {
@@ -29,7 +33,7 @@ input {
 }
 
 .column-width-rating {
-  width: 90px;
+  width: 110px;
 }
 
 .column-entity-padding {

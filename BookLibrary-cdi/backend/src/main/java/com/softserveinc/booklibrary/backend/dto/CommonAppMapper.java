@@ -5,17 +5,23 @@ import java.util.List;
 import com.softserveinc.booklibrary.backend.entity.Author;
 import com.softserveinc.booklibrary.backend.entity.Book;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface CommonAppMapper {
 
-	AuthorDto authorToAuthorDto (Author author);
-	Author authorDtoToAuthor (AuthorDto authorDto);
+	// this annotation sets number format with 2 signs after comma
+	@Mapping(target = "authorRating", source = "authorRating", numberFormat = "$#.00")
+	AuthorDto authorToAuthorDto(Author author);
 
-	BookDto bookToBookDto (Book book);
-	Book bookDtoToBook (BookDto bookDto);
+	Author authorDtoToAuthor(AuthorDto authorDto);
 
-	List<AuthorDto> listAuthorsToListAuthorsDto (List<Author> authors);
-	List<BookDto> listBooksToListBooksDto (List<Book> books);
+	BookDto bookToBookDto(Book book);
+
+	Book bookDtoToBook(BookDto bookDto);
+
+	List<AuthorDto> listAuthorsToListAuthorsDto(List<Author> authors);
+
+	List<BookDto> listBooksToListBooksDto(List<Book> books);
 
 }

@@ -1,8 +1,8 @@
-<div *ngIf="pageConstructor">
+<div *ngIf="appRequestPage">
 	<div class="dropdown">
 		<div>
 			<span class="form-control-sm input-sm">
-			{{pageConstructor.pageable.pageSize}}
+			{{appRequestPage.pageSize}}
 				<i class="fa fa-caret-down"></i>
 			</span>
 			<span class="text-muted">records per page</span>
@@ -16,28 +16,28 @@
 
 	<div class="pull-right">
 		<span class="text-muted text-center">
-        Showing {{pageConstructor.pageable.numberOfFirstPageElement}} to {{pageConstructor.pageable.numberOfElements}} of {{pageConstructor.pageable.totalElements}} entries
+        Showing {{appRequestPage.numberOfFirstPageElement}} to {{appRequestPage.numberOfElements}} of {{appRequestPage.totalElements}} entries
     </span>
 		<div class="btn-group">
 			<button [routerLink]=""
-			        class="btn btn-sm" [ngClass]="{'disabled': pageConstructor.pageable.first }"
+			        class="btn btn-sm" [ngClass]="{'disabled': appRequestPage.first }"
 			        (click)="updatePageNumber(0)"
 			>
 				<i class="fa fa-angle-double-left"></i>
 			</button>
 			<button [routerLink]=""
-			        class="btn btn-sm" [ngClass]="{'disabled': pageConstructor.pageable.first }"
+			        class="btn btn-sm" [ngClass]="{'disabled': appRequestPage.first }"
 			        (click)="previousPage()">
 				<i class="fa fa-angle-left"></i>
 			</button>
 			<button [routerLink]=""
-			        class="btn btn-sm" [ngClass]="{'disabled': pageConstructor.pageable.last }"
+			        class="btn btn-sm" [ngClass]="{'disabled': appRequestPage.last }"
 			        (click)="nextPage()">
 				<i class="fa fa-angle-right"></i>
 			</button>
 			<button [routerLink]=""
-			        class="btn btn-sm" [ngClass]="{'disabled': pageConstructor.pageable.last }"
-			        (click)="updatePageNumber(pageConstructor.pageable.totalPages-1)">
+			        class="btn btn-sm" [ngClass]="{'disabled': appRequestPage.last }"
+			        (click)="updatePageNumber(appRequestPage.totalPages-1)">
 				<i class="fa fa-angle-double-right"></i>
 			</button>
 		</div>

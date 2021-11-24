@@ -8,13 +8,16 @@ export class SortingService {
 
   constructor() { }
 
-  public getSortableColumns(sortableColumns: Array<SortableColumn>): Array<SortableColumn> {
-    return sortableColumns.filter(column => column.direction != null);
-  }
-
   public changeSortableStateColumn (column: SortableColumn,
-                                    sortableColumns: Array<SortableColumn>) {
-    sortableColumns.find(col => col.name == column.name).direction = column.direction;
+                                    sortingColumns: Array<SortableColumn>): Array<SortableColumn> {
+    let sortedColumns = sortingColumns.filter(c => {
+      c.name != column.name;
+      c.direction != null;
+    });
+    if ( column.direction != null) {
+      sortedColumns.unshift(column);
+    }
+    return sortedColumns;
   }
 
 }

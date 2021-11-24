@@ -17,7 +17,7 @@
 					<div>
 						<input type="text"
 						       class="form-control"
-						       [value]="author.firstName"
+						       [(ngModel)]="author.firstName"
 						       formControlName="firstName"
 						>
 					</div>
@@ -34,7 +34,7 @@
 					<div>
 						<input type="text"
 						       class="form-control"
-						       [value]="author.lastName"
+						       [(ngModel)]="author.lastName"
 						       formControlName="lastName">
 					</div>
 					<div class="invalid-feedback"

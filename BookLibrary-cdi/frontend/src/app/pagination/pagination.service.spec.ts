@@ -1,6 +1,6 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { PaginationService } from './pagination.service';
+import {PaginationService} from './pagination.service';
 
 describe('PaginationService', () => {
   let service: PaginationService;

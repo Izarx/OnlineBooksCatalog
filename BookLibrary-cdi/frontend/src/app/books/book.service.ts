@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {Page} from "../model/page";
+import {AppResponsePage} from "../model/app-response-page";
 import {Book} from "../model/book";
-import {PageConstructor} from "../model/page-constructor";
+import {AppRequestPage} from "../model/app-request-page";
 
 const baseUrl = 'http://localhost:8080/api/books';
 
@@ -22,8 +22,8 @@ export class BookService {
     return this.httpClient.delete<void>(baseUrl + `/delete/${bookId}`);
   }
 
-  public getPage(pageConstructor: PageConstructor): Observable<Page<Book>> {
-    return this.httpClient.post<Page<Book>>(baseUrl, pageConstructor);
+  public getPage(appRequestPage: AppRequestPage): Observable<AppResponsePage<Book>> {
+    return this.httpClient.post<AppResponsePage<Book>>(baseUrl, appRequestPage);
   }
 
   public updateBook(book: Book) : Observable<any> {

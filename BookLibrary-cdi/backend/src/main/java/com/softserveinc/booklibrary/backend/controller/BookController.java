@@ -2,8 +2,8 @@ package com.softserveinc.booklibrary.backend.controller;
 
 import com.softserveinc.booklibrary.backend.dto.BookDto;
 import com.softserveinc.booklibrary.backend.dto.CommonAppMapper;
-import com.softserveinc.booklibrary.backend.dto.paging.MyPage;
-import com.softserveinc.booklibrary.backend.dto.paging.PageConstructor;
+import com.softserveinc.booklibrary.backend.dto.paging.ApplicationResponsePage;
+import com.softserveinc.booklibrary.backend.dto.paging.ApplicationRequestPage;
 import com.softserveinc.booklibrary.backend.entity.Book;
 import com.softserveinc.booklibrary.backend.service.BookService;
 import org.slf4j.Logger;
@@ -42,10 +42,10 @@ public class BookController {
 	}
 
 	@PostMapping
-	public ResponseEntity<MyPage<BookDto>> listBooks(@RequestBody PageConstructor pageConstructor) {
+	public ResponseEntity<ApplicationResponsePage<BookDto>> listBooks(@RequestBody ApplicationRequestPage applicationRequestPage) {
 		return ResponseEntity.status(HttpStatus.OK)
-				.body(convertPageBookDto(
-						bookService.listEntities(pageConstructor)));
+				.body(convertBookPageToBookDtoPage(
+						bookService.listEntities(applicationRequestPage)));
 	}
 
 	@PostMapping("/create")
@@ -75,10 +75,11 @@ public class BookController {
 				ResponseEntity.notFound().build();
 	}
 
-	public MyPage<BookDto> convertPageBookDto(MyPage<Book> page) {
-		MyPage<BookDto> entityDtoPage = new MyPage<>();
-		entityDtoPage.setTotalElements(page.getTotalElements());
-		entityDtoPage.setContent(appMapper.listBooksToListBooksDto(page.getContent()));
+	private ApplicationResponsePage<BookDto> convertBookPageToBookDtoPage(
+			ApplicationResponsePage<Book> responsePage) {
+		ApplicationResponsePage<BookDto> entityDtoPage = new ApplicationResponsePage<>();
+		entityDtoPage.setTotalElements(responsePage.getTotalElements());
+		entityDtoPage.setContent(appMapper.listBooksToListBooksDto(responsePage.getContent()));
 		return entityDtoPage;
 	}
 

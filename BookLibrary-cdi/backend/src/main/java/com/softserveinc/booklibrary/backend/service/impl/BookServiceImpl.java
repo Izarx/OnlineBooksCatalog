@@ -1,7 +1,7 @@
 package com.softserveinc.booklibrary.backend.service.impl;
 
-import com.softserveinc.booklibrary.backend.dto.paging.MyPage;
-import com.softserveinc.booklibrary.backend.dto.paging.PageConstructor;
+import com.softserveinc.booklibrary.backend.dto.paging.ApplicationResponsePage;
+import com.softserveinc.booklibrary.backend.dto.paging.ApplicationRequestPage;
 import com.softserveinc.booklibrary.backend.entity.Book;
 import com.softserveinc.booklibrary.backend.repository.BookRepository;
 import com.softserveinc.booklibrary.backend.service.BookService;
@@ -20,8 +20,8 @@ public class BookServiceImpl extends AbstractEntityService<Book> implements Book
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS)
-	public MyPage<Book> listEntities(PageConstructor pageConstructor) {
-		MyPage<Book> page = super.listEntities(pageConstructor);
+	public ApplicationResponsePage<Book> listEntities(ApplicationRequestPage applicationRequestPage) {
+		ApplicationResponsePage<Book> page = super.listEntities(applicationRequestPage);
 		page.getContent().forEach(b -> b.getAuthors().size());
 		return page;
 	}

@@ -2,8 +2,6 @@ package com.softserveinc.booklibrary.backend.repository.impl;
 
 import java.time.LocalDate;
 
-import com.softserveinc.booklibrary.backend.dto.paging.MyPage;
-import com.softserveinc.booklibrary.backend.dto.paging.PageConstructor;
 import com.softserveinc.booklibrary.backend.entity.Book;
 import com.softserveinc.booklibrary.backend.repository.BookRepository;
 import org.springframework.stereotype.Repository;

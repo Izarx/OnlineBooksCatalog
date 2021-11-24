@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { BooksPaginationTableComponent } from './books-pagination-table.component';
+import {BooksPaginationTableComponent} from './books-pagination-table.component';
 
 describe('BooksPaginationTableComponent', () => {
   let component: BooksPaginationTableComponent;

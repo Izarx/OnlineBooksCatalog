@@ -51,7 +51,7 @@
 				</div>
 				<div class="col-sm-12">
 					<app-pagination
-							[pageConstructor]="pageConstructor"
+							[appRequestPage]="appRequestPage"
 							(nextPageEvent)="getNextPage()"
 							(previousPageEvent)="getPreviousPage()"
 							(pageSizeEvent)="getPageInNewSize($event)"
