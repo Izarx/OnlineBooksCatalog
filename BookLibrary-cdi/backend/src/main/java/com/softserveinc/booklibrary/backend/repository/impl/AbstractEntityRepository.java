@@ -102,9 +102,14 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 	public ResponseData<T> listEntities(RequestOptions requestOptions) {
 		ResponseData<T> responseData = new ResponseData<>();
 		int pageSize = requestOptions.getPageSize();
+		int pageNumber = requestOptions.getPageNumber();
 		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
 
-		responseData.setTotalElements(getTotalElementsFromDb(builder));
+		int totalElementsFromDb = getTotalElementsFromDb(builder);
+		while (pageSize * pageNumber >= totalElementsFromDb) {
+			pageNumber--;
+		}
+		responseData.setTotalElements(totalElementsFromDb);
 
 		CriteriaQuery<T> criteriaQuery = builder.createQuery(type);
 		Root<T> rootEntity = criteriaQuery.from(type);
@@ -113,7 +118,7 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 		criteriaQuery.orderBy(setOrdersByColumns(requestOptions.getSorting(), builder, rootEntity));
 		List<T> getAll = entityManager
 				.createQuery(selectEntities)
-				.setFirstResult(requestOptions.getPageNumber() * pageSize)
+				.setFirstResult(pageNumber * pageSize)
 				.setMaxResults(pageSize)
 				.getResultList();
 		responseData.setContent(getAll);

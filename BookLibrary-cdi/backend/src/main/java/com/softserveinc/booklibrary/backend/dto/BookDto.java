@@ -1,7 +1,7 @@
 package com.softserveinc.booklibrary.backend.dto;
 
 import java.math.BigDecimal;
-import java.util.List;
+import java.util.Set;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -16,6 +16,6 @@ public final class BookDto {
 	private Long isbn;
 	private String publisher;
 	private BigDecimal bookRating;
-	private List<AuthorDto> authors;
+	private Set<AuthorDto> authors;
 
 }

@@ -34,4 +34,8 @@ export class BookService {
     getBookById(bookId: number) : Observable<Book> {
         return this.httpClient.get<Book>(baseUrl + `/${bookId}`);
     }
+
+    getBookByIdWithAuthors(bookId: number) : Observable<Book> {
+        return this.httpClient.get<Book>(baseUrl + `/authors/${bookId}`);
+    }
 }

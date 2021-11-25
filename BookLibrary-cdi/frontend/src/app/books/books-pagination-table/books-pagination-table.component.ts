@@ -39,14 +39,25 @@ export class BooksPaginationTableComponent implements OnInit {
         this.getData()
     }
 
-    public sort(sortableColumn: SortableColumn): void {
-        this.requestOptions.sorting = this.sortingService.changeSortableStateColumn(sortableColumn, this.requestOptions.sorting);
-        console.log(this.requestOptions.sorting);
-        this.getData();
+    getData(): void {
+        this.bookService.getPage(this.requestOptions)
+            .subscribe(page => {
+                    this.paginationService.initPageable(this.requestOptions, page.totalElements);
+                    this.page = page
+                },
+                error => {
+                    console.log(error)
+                });
     }
 
     getBookById(bookId: number) {
         this.bookService.getBookById(bookId).subscribe(
+            book => this.book = book
+        )
+    }
+
+    getBookByIdWithAuthors(bookId: number) {
+        this.bookService.getBookByIdWithAuthors(bookId).subscribe(
             book => this.book = book
         )
     }
@@ -59,6 +70,12 @@ export class BooksPaginationTableComponent implements OnInit {
             error => {
                 console.log(error)
             })
+    }
+
+    public sort(sortableColumn: SortableColumn): void {
+        this.requestOptions.sorting = this.sortingService.changeSortableStateColumn(sortableColumn, this.requestOptions.sorting);
+        console.log(this.requestOptions.sorting);
+        this.getData();
     }
 
     public getNextPage(): void {
@@ -79,24 +96,5 @@ export class BooksPaginationTableComponent implements OnInit {
     public getPageNewNumber(pageNumber: number): void {
         this.requestOptions = this.paginationService.getPageNewNumber(this.requestOptions, pageNumber);
         this.getData();
-    }
-
-    setBook(book: Book) {
-        this.book = book
-    }
-
-    getBook(): Book {
-        return this.book;
-    }
-
-    private getData(): void {
-        this.bookService.getPage(this.requestOptions)
-            .subscribe(page => {
-                    this.paginationService.initPageable(this.requestOptions, page.totalElements);
-                    this.page = page
-                },
-                error => {
-                    console.log(error)
-                });
     }
 }

@@ -37,6 +37,17 @@ export class AuthorsPaginationTableComponent implements OnInit {
         this.getData()
     }
 
+    getData(): void {
+        this.authorService.getPage(this.requestOptions)
+            .subscribe(page => {
+                    this.paginationService.initPageable(this.requestOptions, page.totalElements);
+                    this.page = page;
+                },
+                error => {
+                    console.log(error)
+                });
+    }
+
     deleteAuthor(authorId: number): void {
         this.authorService.deleteAuthor(authorId).subscribe(
             () => {
@@ -55,7 +66,6 @@ export class AuthorsPaginationTableComponent implements OnInit {
 
     public sort(sortableColumn: SortableColumn): void {
         this.requestOptions.sorting = this.sortingService.changeSortableStateColumn(sortableColumn, this.requestOptions.sorting);
-        console.log(this.requestOptions.sorting);
         this.getData();
     }
 
@@ -77,24 +87,5 @@ export class AuthorsPaginationTableComponent implements OnInit {
     public getPageNewNumber(pageNumber: number): void {
         this.requestOptions = this.paginationService.getPageNewNumber(this.requestOptions, pageNumber);
         this.getData();
-    }
-
-    setAuthor(author: Author) {
-        this.author = author;
-    }
-
-    getAuthor(): Author {
-        return this.author;
-    }
-
-    private getData(): void {
-        this.authorService.getPage(this.requestOptions)
-            .subscribe(page => {
-                    this.paginationService.initPageable(this.requestOptions, page.totalElements);
-                    this.page = page;
-                },
-                error => {
-                    console.log(error)
-                });
     }
 }

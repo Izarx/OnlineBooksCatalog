@@ -150,14 +150,14 @@
 									<td class="text-center">{{book.isbn}}</td>
 									<td class="text-center">{{book.publisher}}</td>
 									<td class="text-center">
-										<button (click)="getBookById(book.bookId)"
+										<button (click)="getBookByIdWithAuthors(book.bookId)"
 										        class="btn btn-primary btn-sm"
 										        data-target="#updateBook"
 										        data-toggle="modal"
 										>
 											<i class="fa fa-edit "></i>
 										</button>
-										<button (click)="getBookById(book.bookId)"
+										<button (click)="getBookByIdWithAuthors(book.bookId)"
 										        class="btn btn-danger btn-sm"
 										        data-target="#deleteBookConfirmation"
 										        data-toggle="modal"
@@ -191,7 +191,7 @@
 				        data-dismiss="modal"
 				        type="button">Cancel
 				</button>
-				<button (click)="deleteBook(getBook().bookId)"
+				<button (click)="deleteBook(book.bookId)"
 				        class="btn btn-danger"
 				        data-dismiss="modal"
 				        type="submit"
@@ -202,5 +202,10 @@
 	</div>
 </div>
 
-<app-update-book>
-</app-update-book>
+<app-create-book
+		(initParentPage)="getData()"
+></app-create-book>
+<app-update-book
+		[book]="book"
+		(initParentPage)="getData()"
+></app-update-book>

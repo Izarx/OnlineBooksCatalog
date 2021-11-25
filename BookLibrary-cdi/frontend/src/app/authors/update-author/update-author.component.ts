@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Author} from "../../model/author";
 import {AuthorService} from "../author.service";
@@ -13,10 +13,10 @@ export class UpdateAuthorComponent implements OnInit {
 
     form: FormGroup = new FormGroup({})
     @Input() author: Author
+    @Output() initParentPage: EventEmitter<any> = new EventEmitter<any>()
 
     constructor(
-        private authorService: AuthorService,
-        private authors: AuthorsPaginationTableComponent
+        private authorService: AuthorService
     ) {
     }
 
@@ -29,14 +29,15 @@ export class UpdateAuthorComponent implements OnInit {
             lastName: new FormControl('', [
                 Validators.pattern("[a-zA-Zа-яА-Я][a-zA-Zа-яА-Я ]+")
             ])
-        })
+        });
+        console.log(this.author);
     }
 
     updateAuthor(): void {
         this.authorService.updateAuthor(this.author).subscribe(
             author => {
                 this.author = author;
-                this.authors.ngOnInit()
+                this.initParentPage.emit(null);
             },
             error => {
                 console.log(error)
@@ -56,8 +57,6 @@ export class UpdateAuthorComponent implements OnInit {
     }
 
     cancel() {
-        if (this.form.valid) {
-            this.form.reset()
-        }
+        this.form.reset();
     }
 }

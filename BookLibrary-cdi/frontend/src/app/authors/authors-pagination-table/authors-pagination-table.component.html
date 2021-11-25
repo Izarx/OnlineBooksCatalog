@@ -148,7 +148,7 @@
 				        data-dismiss="modal"
 				        type="button">Cancel
 				</button>
-				<button (click)="deleteAuthor(getAuthor().authorId)"
+				<button (click)="deleteAuthor(author.authorId)"
 				        class="btn btn-danger"
 				        data-dismiss="modal"
 				        type="submit"
@@ -159,8 +159,11 @@
 	</div>
 </div>
 
-<app-create-author></app-create-author>
+<app-create-author
+		(initParentPage)="getData()"
+></app-create-author>
 
 <app-update-author
 		[author]="author"
+		(initParentPage)="getData()"
 ></app-update-author>
