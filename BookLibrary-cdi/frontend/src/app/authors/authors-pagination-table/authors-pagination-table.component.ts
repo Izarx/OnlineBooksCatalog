@@ -24,13 +24,16 @@ export class AuthorsPaginationTableComponent implements OnInit {
 
     page: ResponseData<Author> = new ResponseData();
     requestOptions: RequestOptions = new RequestOptions();
-    author: Author = new Author(null, '', '', 0.0)
+    author: Author = new Author(null, '', '', 0.0);
+    deniedToDeletionAuthors: Author[] = []
+    isAllChecked: boolean;
 
     constructor(
         private authorService: AuthorService,
         private paginationService: PaginationService,
         private sortingService: SortingService
     ) {
+        this.isAllChecked  = false;
     }
 
     ngOnInit(): void {
@@ -42,6 +45,7 @@ export class AuthorsPaginationTableComponent implements OnInit {
             .subscribe(page => {
                     this.paginationService.initPageable(this.requestOptions, page.totalElements);
                     this.page = page;
+                    this.isAllChecked  = false;
                 },
                 error => {
                     console.log(error)
@@ -56,6 +60,18 @@ export class AuthorsPaginationTableComponent implements OnInit {
             error => {
                 console.log(error)
             })
+    }
+
+    bulkDeleteAuthors() {
+        this.authorService.bulkDeleteAuthors(this.setAuthorsForDelete().map(a => a.authorId)).subscribe(
+            authors => {
+                this.deniedToDeletionAuthors = authors
+                this.getData()
+            },
+            error => {
+                console.log(error)
+            }
+        )
     }
 
     getAuthorById(authorId: number) {
@@ -88,4 +104,13 @@ export class AuthorsPaginationTableComponent implements OnInit {
         this.requestOptions = this.paginationService.getPageNewNumber(this.requestOptions, pageNumber);
         this.getData();
     }
+
+    setCheckForAll() {
+        this.page.content.forEach(a => a.isChecked = this.isAllChecked);
+    }
+
+    setAuthorsForDelete(): Author[] {
+        return this.page.content.filter(a => a.isChecked);
+    }
+
 }

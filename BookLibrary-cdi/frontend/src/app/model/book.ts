@@ -8,6 +8,7 @@ export class Book {
     publisher: string
     bookRating: number
     authors: Author[]
+    isChecked: boolean
 
 
     constructor(bookId: number, name: string, yearPublished: number, isbn: number, publisher: string, bookRating: number, authors: Author[]) {
@@ -18,5 +19,6 @@ export class Book {
         this.publisher = publisher;
         this.bookRating = bookRating;
         this.authors = authors;
+        this.isChecked = false
     }
 }

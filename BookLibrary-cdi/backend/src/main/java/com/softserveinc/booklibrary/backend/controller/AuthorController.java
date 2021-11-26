@@ -1,12 +1,15 @@
 package com.softserveinc.booklibrary.backend.controller;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.softserveinc.booklibrary.backend.dto.ApplicationMapper;
 import com.softserveinc.booklibrary.backend.dto.AuthorDto;
+import com.softserveinc.booklibrary.backend.dto.AuthorNameDto;
+import com.softserveinc.booklibrary.backend.entity.Author;
 import com.softserveinc.booklibrary.backend.pagination.RequestOptions;
 import com.softserveinc.booklibrary.backend.pagination.ResponseData;
-import com.softserveinc.booklibrary.backend.entity.Author;
 import com.softserveinc.booklibrary.backend.service.AuthorService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,11 +46,19 @@ public class AuthorController {
 				: ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 	}
 
+	@PostMapping("/bulk-delete")
+	public ResponseEntity<List<AuthorNameDto>> bulkDeleteAuthors(
+			@RequestBody List<Integer> authorsIdsForDelete) {
+		return ResponseEntity
+				.ok(appMapper.listAuthorsToListAuthorsNameDto(
+						authorService.bulkDeleteEntities(new ArrayList<>(authorsIdsForDelete))));
+	}
+
 	@PostMapping
 	public ResponseEntity<ResponseData<AuthorDto>> listAuthors(
 			@RequestBody RequestOptions requestOptions) {
-		return ResponseEntity.status(HttpStatus.OK)
-				.body(convertAuthorPageToAuthorDtoPage(
+		return ResponseEntity
+				.ok(convertAuthorPageToAuthorDtoPage(
 						authorService.listEntities(requestOptions)));
 	}
 
@@ -56,8 +67,8 @@ public class AuthorController {
 		if (authorDto == null) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
-		return ResponseEntity.ok(appMapper
-				.authorToAuthorDto(authorService
+		return ResponseEntity
+				.ok(appMapper.authorToAuthorDto(authorService
 						.create(appMapper
 								.authorDtoToAuthor(authorDto))));
 	}
@@ -67,8 +78,8 @@ public class AuthorController {
 		if (authorDto == null) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
-		return ResponseEntity.ok(appMapper
-				.authorToAuthorDto(authorService
+		return ResponseEntity
+				.ok(appMapper.authorToAuthorDto(authorService
 						.update(appMapper
 								.authorDtoToAuthor(authorDto))));
 	}
@@ -83,8 +94,8 @@ public class AuthorController {
 
 	@GetMapping
 	public ResponseEntity<List<AuthorDto>> getAllAuthors() {
-		return ResponseEntity.status(HttpStatus.OK)
-				.body(appMapper.listAuthorsToListAuthorsDto(authorService.getAll()));
+		return ResponseEntity
+				.ok(appMapper.listAuthorsToListAuthorsDto(authorService.getAll()));
 	}
 
 	private ResponseData<AuthorDto> convertAuthorPageToAuthorDtoPage(

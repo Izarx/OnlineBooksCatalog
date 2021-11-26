@@ -16,11 +16,15 @@ public interface ApplicationMapper {
 
 	Author authorDtoToAuthor(AuthorDto authorDto);
 
+	AuthorNameDto authorToAuthorNameDto (Author author);
+
 	BookDto bookToBookDto(Book book);
 
 	Book bookDtoToBook(BookDto bookDto);
 
 	List<AuthorDto> listAuthorsToListAuthorsDto(List<Author> authors);
+
+	List<AuthorNameDto> listAuthorsToListAuthorsNameDto(List<Author> authors);
 
 	List<BookDto> listBooksToListBooksDto(List<Book> books);
 

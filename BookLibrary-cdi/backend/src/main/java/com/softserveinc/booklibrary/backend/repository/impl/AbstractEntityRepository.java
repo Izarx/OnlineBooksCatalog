@@ -1,13 +1,19 @@
 package com.softserveinc.booklibrary.backend.repository.impl;
 
 import java.io.Serializable;
+import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Id;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaBuilder.In;
+import javax.persistence.criteria.CriteriaDelete;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Root;
@@ -125,6 +131,28 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 		return responseData;
 	}
 
+	@Override
+	public List<T> bulkDeleteEntities(List<Serializable> entitiesIdsForDelete) {
+		Optional<Field> field = Stream.of(type.getFields()).filter(f -> f.isAnnotationPresent(Id.class)).findFirst();
+		String columnName = field.orElseThrow().getName();
+		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+
+		List<T> unavailableToDeleteEntities = getUnavailableToDeleteEntities(entitiesIdsForDelete);
+		if (CollectionUtils.isNotEmpty(unavailableToDeleteEntities)) {
+			unavailableToDeleteEntities.forEach(entity -> entitiesIdsForDelete.remove(entity.getEntityId()));
+		}
+		CriteriaDelete<T> delete = builder.createCriteriaDelete(type);
+		Root<T> rootDelete = delete.from(type);
+		In<Serializable> inClause = builder.in(rootDelete.get(columnName));
+		entitiesIdsForDelete.forEach(inClause::value);
+		delete.where(inClause);
+		entityManager.createQuery(delete).executeUpdate();
+
+		return unavailableToDeleteEntities;
+	}
+
+	protected abstract List<T> getUnavailableToDeleteEntities(List<Serializable> entitiesIdsForDelete);
+
 	/**
 	 * Create List of Orders from sortable columns to order db entities by it
 	 *
@@ -164,5 +192,6 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 		countCriteriaQuery.select(builder.count(countCriteriaQuery.from(type)));
 		return entityManager.createQuery(countCriteriaQuery).getSingleResult().intValue();
 	}
+
 
 }

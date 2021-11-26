@@ -15,6 +15,10 @@ export class AuthorService {
     constructor(private httpClient: HttpClient) {
     }
 
+    public bulkDeleteAuthors(authorsIdsForDelete: number[]): Observable<Array<Author>> {
+        return this.httpClient.post<Array<Author>>(baseUrl + `/bulk-delete`, authorsIdsForDelete);
+    }
+
     public createAuthor(author: Author): Observable<Author> {
         return this.httpClient.post<Author>(baseUrl + `/create`, author);
     }
@@ -31,7 +35,7 @@ export class AuthorService {
         return this.httpClient.put(baseUrl + `/update`, author);
     }
 
-    getAuthorById(authorId: number): Observable<Author> {
+    public getAuthorById(authorId: number): Observable<Author> {
         return this.httpClient.get<Author>(baseUrl + `/${authorId}`);
     }
 }

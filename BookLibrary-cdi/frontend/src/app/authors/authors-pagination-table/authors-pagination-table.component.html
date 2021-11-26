@@ -10,7 +10,7 @@
 							        data-toggle="modal"> + Add Author
 							</button>
 							<button class="btn btn-danger btn-header"
-							        data-target="#deleteAuthors"
+							        data-target="#bulkDeleteAuthorsConfirmation"
 							        data-toggle="modal"> Delete Authors
 							</button>
 							<button class="btn btn-primary collapsed"
@@ -67,8 +67,10 @@
 								<tr>
 									<th class="text-center column-width-checkbox" scope="col">
 										<div class="custom-control checkbox-check">
-											<input class="custom-control-input" id="customCheckAuthor" type="checkbox">
-											<label class="custom-control-label" for="customCheckAuthor"></label>
+											<input class="custom-control-input"
+											       type="checkbox"
+											       (change)="setCheckForAll()"
+											       [(ngModel)]="isAllChecked">
 										</div>
 									</th>
 									<th class="text-center"
@@ -99,8 +101,10 @@
 								<tr>
 									<th class="text-center" scope="row">
 										<div class="custom-control checkbox-check">
-											<input class="custom-control-input" id="customCheck2" type="checkbox">
-											<label class="custom-control-label" for="customCheck2"></label>
+											<input class="custom-control-input"
+											       type="checkbox"
+											       [(ngModel)]="author.isChecked"
+											>
 										</div>
 									</th>
 									<td class="column-entity-padding">{{ author.firstName}}</td>
@@ -149,6 +153,37 @@
 				        type="button">Cancel
 				</button>
 				<button (click)="deleteAuthor(author.authorId)"
+				        class="btn btn-danger"
+				        data-dismiss="modal"
+				        type="submit"
+				>Delete
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div aria-hidden="true"
+     class="modal fade"
+     id="bulkDeleteAuthorsConfirmation"
+     role="dialog"
+     tabindex="-1">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-body">
+				<h4>Are you sure that you want to delete :
+					<div *ngFor="let delAuthor of page.content">
+						<p *ngIf="delAuthor.isChecked">{{delAuthor.firstName + ' ' + delAuthor.lastName}}</p>
+					</div>
+					?
+				</h4>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-default"
+				        data-dismiss="modal"
+				        type="button">Cancel
+				</button>
+				<button (click)="bulkDeleteAuthors()"
 				        class="btn btn-danger"
 				        data-dismiss="modal"
 				        type="submit"

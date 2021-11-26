@@ -30,7 +30,6 @@ export class UpdateAuthorComponent implements OnInit {
                 Validators.pattern("[a-zA-Zа-яА-Я][a-zA-Zа-яА-Я ]+")
             ])
         });
-        console.log(this.author);
     }
 
     updateAuthor(): void {
