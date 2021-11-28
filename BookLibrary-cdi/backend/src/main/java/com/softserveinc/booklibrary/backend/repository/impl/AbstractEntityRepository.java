@@ -1,24 +1,31 @@
 package com.softserveinc.booklibrary.backend.repository.impl;
 
 import java.io.Serializable;
+import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Id;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaBuilder.In;
+import javax.persistence.criteria.CriteriaDelete;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Root;
 
-import com.softserveinc.booklibrary.backend.dto.paging.MyPage;
-import com.softserveinc.booklibrary.backend.dto.paging.PageConstructor;
-import com.softserveinc.booklibrary.backend.dto.sorting.SortableColumn;
 import com.softserveinc.booklibrary.backend.entity.AbstractEntity;
 import com.softserveinc.booklibrary.backend.exception.NotValidEntityException;
 import com.softserveinc.booklibrary.backend.exception.NotValidIdException;
+import com.softserveinc.booklibrary.backend.pagination.RequestOptions;
+import com.softserveinc.booklibrary.backend.pagination.ResponseData;
+import com.softserveinc.booklibrary.backend.pagination.SortableColumn;
 import com.softserveinc.booklibrary.backend.repository.EntityRepository;
+import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Propagation;
@@ -98,55 +105,97 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS)
-	public MyPage<T> listEntities(PageConstructor pageConstructor) {
-		MyPage<T> page = new MyPage<>();
-		int numEntitiesOnPage = pageConstructor.getPageable().getPageSize();
-		int pageId = pageConstructor.getPageable().getPageNumber();
-
+	public ResponseData<T> listEntities(RequestOptions requestOptions) {
+		ResponseData<T> responseData = new ResponseData<>();
+		int pageSize = requestOptions.getPageSize();
+		int pageNumber = requestOptions.getPageNumber();
 		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-		CriteriaQuery<Long> countCriteriaQuery = builder.createQuery(Long.class);
-		countCriteriaQuery.select(builder.count(countCriteriaQuery.from(type)));
-		Long totalElements = entityManager.createQuery(countCriteriaQuery).getSingleResult();
 
-		page.setTotalElements(totalElements.intValue());
+		int totalElementsFromDb = getTotalElementsFromDb(builder);
+		while (pageSize * pageNumber >= totalElementsFromDb) {
+			pageNumber--;
+		}
+		responseData.setTotalElements(totalElementsFromDb);
 
 		CriteriaQuery<T> criteriaQuery = builder.createQuery(type);
 		Root<T> rootEntity = criteriaQuery.from(type);
 		CriteriaQuery<T> selectEntities = criteriaQuery.select(rootEntity);
 
-		criteriaQuery.orderBy(setOrdersByColumns(pageConstructor.getSorting(), builder, rootEntity));
+		criteriaQuery.orderBy(setOrdersByColumns(requestOptions.getSorting(), builder, rootEntity));
 		List<T> getAll = entityManager
 				.createQuery(selectEntities)
-				.setFirstResult(pageId * numEntitiesOnPage)
-				.setMaxResults(numEntitiesOnPage)
+				.setFirstResult(pageNumber * pageSize)
+				.setMaxResults(pageSize)
 				.getResultList();
-		page.setContent(getAll);
-		return page;
+		responseData.setContent(getAll);
+		return responseData;
 	}
+
+	@Override
+	@Transactional(propagation = Propagation.MANDATORY)
+	public List<T> bulkDeleteEntities(List<Serializable> entitiesIdsForDelete) {
+		Optional<Field> field = Stream.of(type.getDeclaredFields()).filter(f -> f.isAnnotationPresent(Id.class)).findFirst();
+		String columnName = field.orElseThrow().getName();
+		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+
+		CriteriaQuery<T> criteriaQuery = builder.createQuery(type);
+		CriteriaDelete<T> criteriaDelete = builder.createCriteriaDelete(type);
+		Root<T> rootDelete = criteriaDelete.from(type);
+
+		List<T> unavailableToDeleteEntities =
+				getUnavailableToDeleteEntities(entitiesIdsForDelete, criteriaQuery, builder);
+		if (CollectionUtils.isNotEmpty(unavailableToDeleteEntities)) {
+			unavailableToDeleteEntities.forEach(entity -> entitiesIdsForDelete.remove(entity.getEntityId()));
+		}
+		criteriaDelete.where(rootDelete.get(columnName).in(entitiesIdsForDelete));
+		entityManager.createQuery(criteriaDelete).executeUpdate();
+
+		return unavailableToDeleteEntities;
+	}
+
+	protected abstract List<T> getUnavailableToDeleteEntities(List<Serializable> entitiesIdsForDelete,
+	                                                          CriteriaQuery<T> criteriaQuery,
+	                                                          CriteriaBuilder builder);
+
+	protected abstract void setOrdersByColumnsByDefault(List<Order> orderList,
+	                                                    CriteriaBuilder builder,
+	                                                    Root<T> rootEntity);
 
 	/**
 	 * Create List of Orders from sortable columns to order db entities by it
+	 *
 	 * @param sortableColumns columns, which we receive from UI, they consist from name field and direction for sorting
 	 * @param builder
 	 * @param rootEntity
 	 * @return
 	 */
 
-	protected List<Order> setOrdersByColumns (List<SortableColumn> sortableColumns,
-	                                          CriteriaBuilder builder,
-	                                          Root<T> rootEntity) {
+	private List<Order> setOrdersByColumns(List<SortableColumn> sortableColumns,
+	                                       CriteriaBuilder builder,
+	                                       Root<T> rootEntity) {
 		List<Order> orderList = new ArrayList<>();
-		if (sortableColumns != null && !sortableColumns.isEmpty()) {
+		if (CollectionUtils.isNotEmpty(sortableColumns)) {
 			for (SortableColumn column : sortableColumns) {
-				if ("asc".equals(column.getDirection())){
+				if ("asc".equals(column.getDirection())) {
 					orderList.add(builder.asc(rootEntity.get(column.getName())));
 				}
-				if ("desc".equals(column.getDirection())){
+				if ("desc".equals(column.getDirection())) {
 					orderList.add(builder.desc(rootEntity.get(column.getName())));
 				}
 			}
 		}
-		orderList.add(builder.desc(rootEntity.get("createDate")));
+		// Default sorting for manage entities pages could be by creation date
+		else {
+			setOrdersByColumnsByDefault(orderList, builder, rootEntity);
+		}
 		return orderList;
 	}
+
+	private Integer getTotalElementsFromDb (CriteriaBuilder builder) {
+		CriteriaQuery<Long> countCriteriaQuery = builder.createQuery(Long.class);
+		countCriteriaQuery.select(builder.count(countCriteriaQuery.from(type)));
+		return entityManager.createQuery(countCriteriaQuery).getSingleResult().intValue();
+	}
+
+
 }

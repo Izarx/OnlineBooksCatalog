@@ -13,5 +13,4 @@ public class AuthorServiceImpl extends AbstractEntityService<Author> implements 
 	public AuthorServiceImpl(AuthorRepository authorRepository) {
 		repository = authorRepository;
 	}
-
 }

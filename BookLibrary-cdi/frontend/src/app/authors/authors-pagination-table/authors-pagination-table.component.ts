@@ -1,93 +1,116 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, Output} from '@angular/core';
 import {Author} from "../../model/author";
-import {Page} from "../../model/page";
+import {ResponseData} from "../../model/response-data";
 import {AuthorService} from "../author.service";
 import {PaginationService} from "../../pagination/pagination.service";
 import {SortableColumn} from "../../model/sortable-column";
 import {SortingService} from "../../sorting/sorting.service";
-import {PageConstructor} from "../../model/page-constructor";
+import {RequestOptions} from "../../model/request-options";
 
 @Component({
-  selector: 'app-authors-pagination-table',
-  templateUrl: './authors-pagination-table.component.html',
-  styleUrls: ['./authors-pagination-table.component.scss']
+    selector: 'app-authors-pagination-table',
+    templateUrl: './authors-pagination-table.component.html',
+    styleUrls: ['./authors-pagination-table.component.scss']
 })
 export class AuthorsPaginationTableComponent implements OnInit {
 
-  sortableColumns: Array<SortableColumn> = [
-      new SortableColumn('firstName', 'First Name', null),
-      new SortableColumn('lastName', 'Last Name', null),
-      new SortableColumn('authorRating', 'Rating', null),
-  ];
-  sortedColumns: Array<SortableColumn> = [
-      new SortableColumn('authorRating', 'Rating', 'desc')
-  ];
-  page: Page<Author> = new Page();
-  pageConstructor: PageConstructor = new PageConstructor();
-  author: Author = new Author(null, '', '', 0.0)
+    static readonly title: string = 'Authors';
 
-  constructor(
-      private authorService: AuthorService,
-      private paginationService: PaginationService,
-      private sortingService: SortingService
-  ) { }
+    sortableColumns: Array<SortableColumn> = [
+        new SortableColumn('firstName', 'First Name', null),
+        new SortableColumn('lastName', 'Last Name', null),
+        new SortableColumn('authorRating', 'Rating', null),
+    ];
 
-  ngOnInit(): void {
-    this.getData()
-  }
+    page: ResponseData<Author> = new ResponseData();
+    requestOptions: RequestOptions = new RequestOptions();
+    author: Author = new Author(null, '', '', 0.0);
+    deniedToDeletionAuthors: Author[] = []
+    isAllChecked: boolean;
 
-  private getData(): void {
-      this.pageConstructor.sorting = this.sortingService.getSortableColumns(this.sortableColumns);
-      this.authorService.getPage(this.pageConstructor)
-        .subscribe(page => {
-            this.paginationService.initPageable(this.pageConstructor.pageable, page.totalElements);
-            this.page = page;
-        },
+    constructor(
+        private authorService: AuthorService,
+        private paginationService: PaginationService,
+        private sortingService: SortingService
+    ) {
+        this.isAllChecked  = false;
+    }
+
+    ngOnInit(): void {
+        this.getData()
+    }
+
+    getData(): void {
+        this.authorService.getPage(this.requestOptions)
+            .subscribe(page => {
+                    this.paginationService.initPageable(this.requestOptions, page.totalElements);
+                    this.page = page;
+                    this.isAllChecked  = false;
+                },
+                error => {
+                    console.log(error)
+                });
+    }
+
+    deleteAuthor(authorId: number): void {
+        this.authorService.deleteAuthor(authorId).subscribe(
+            () => {
+                this.getData()
+            },
             error => {
-              console.log(error)
-            });
-  }
+                console.log(error)
+            })
+    }
 
-  deleteAuthor(authorId : number) : void {
-    this.authorService.deleteAuthor(authorId).subscribe(
-        () => {
-          this.getData()
-        },
-        error => {
-          console.log(error)
-        })
-  }
+    bulkDeleteAuthors() {
+        this.authorService.bulkDeleteAuthors(this.setAuthorsForDelete().map(a => a.authorId)).subscribe(
+            authors => {
+                this.deniedToDeletionAuthors = authors
+                this.getData()
+            },
+            error => {
+                console.log(error)
+            }
+        )
+    }
 
-  public sort(sortableColumn: SortableColumn): void {
-      this.sortingService.changeSortableStateColumn(sortableColumn, this.sortableColumns);
-      this.getData();
-  }
+    getAuthorById(authorId: number) {
+        this.authorService.getAuthorById(authorId).subscribe(
+            author => this.author = author
+        )
+    }
 
-  public getNextPage(): void {
-    this.pageConstructor.pageable = this.paginationService.getNextPage(this.pageConstructor.pageable);
-    this.getData();
-  }
+    public sort(sortableColumn: SortableColumn): void {
+        this.requestOptions.sorting = this.sortingService.changeSortableStateColumn(sortableColumn, this.requestOptions.sorting);
+        this.getData();
+    }
 
-  public getPreviousPage(): void {
-    this.pageConstructor.pageable = this.paginationService.getPreviousPage(this.pageConstructor.pageable);
-    this.getData();
-  }
+    public getNextPage(): void {
+        this.requestOptions = this.paginationService.getNextPage(this.requestOptions);
+        this.getData();
+    }
 
-  public getPageInNewSize(pageSize: number): void {
-    this.pageConstructor.pageable = this.paginationService.getPageInNewSize(this.pageConstructor.pageable, pageSize);
-    this.getData();
-  }
+    public getPreviousPage(): void {
+        this.requestOptions = this.paginationService.getPreviousPage(this.requestOptions);
+        this.getData();
+    }
 
-  public getPageNewNumber(pageNumber: number): void {
-      this.pageConstructor.pageable = this.paginationService.getPageNewNumber(this.pageConstructor.pageable, pageNumber);
-      this.getData();
-  }
+    public getPageInNewSize(pageSize: number): void {
+        this.requestOptions = this.paginationService.getPageInNewSize(this.requestOptions, pageSize);
+        this.getData();
+    }
 
-  setAuthor(author: Author) {
-    this.author = author
-  }
+    public getPageNewNumber(pageNumber: number): void {
+        this.requestOptions = this.paginationService.getPageNewNumber(this.requestOptions, pageNumber);
+        this.getData();
+    }
 
-  getAuthor() : Author {
-    return this.author;
-  }
+    setCheckForAll() {
+        this.page.content.forEach(a => a.isChecked = this.isAllChecked);
+    }
+
+    setAuthorsForDelete(): Author[] {
+        return this.page.content.filter(a => a.isChecked);
+    }
+
 }

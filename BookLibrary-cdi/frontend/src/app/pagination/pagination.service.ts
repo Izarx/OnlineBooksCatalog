@@ -1,64 +1,65 @@
 import {Injectable} from '@angular/core';
-import {Pageable} from "../model/pagable";
+import {RequestOptions} from "../model/request-options";
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class PaginationService {
 
-  constructor() { }
-
-  public getNextPage(pageable: Pageable): Pageable {
-    if(!pageable.last) {
-      pageable.pageNumber = pageable.pageNumber+1;
+    constructor() {
     }
-    return pageable;
-  }
 
-  public getPreviousPage(pageable: Pageable): Pageable {
-    if(!pageable.first) {
-      pageable.pageNumber = pageable.pageNumber-1;
+    public getNextPage(requestPage: RequestOptions): RequestOptions {
+        if (!requestPage.last) {
+            requestPage.pageNumber = requestPage.pageNumber + 1;
+        }
+        return requestPage;
     }
-    return pageable;
-  }
 
-  public getPageInNewSize(pageable: Pageable, pageSize: number): Pageable {
-    pageable.pageSize = pageSize;
-    pageable.pageNumber = Pageable.FIRST_PAGE_NUMBER;
-
-    return pageable;
-  }
-
-  public getPageNewNumber(pageable: Pageable, pageNumber: number): Pageable {
-    pageable.pageNumber = pageNumber;
-    return pageable;
-  }
-
-  public initPageable(pageable: Pageable, totalElements: number) : Pageable{
-    pageable.totalElements = totalElements;
-    let totalPages = totalElements != 0 ? Math.ceil( totalElements / pageable.pageSize) : 1;
-    pageable.totalPages = totalPages;
-    if (totalPages == 1) {
-      pageable.first = true;
-      pageable.last = true;
-      pageable.numberOfFirstPageElement = 1;
-      pageable.numberOfElements = totalElements;
-    } else if (pageable.pageNumber == 0) {
-      pageable.first = true;
-      pageable.last = false;
-      pageable.numberOfFirstPageElement = 1;
-      pageable.numberOfElements = pageable.pageSize;
-    } else if (pageable.pageNumber + 1 == totalPages) {
-      pageable.first = false;
-      pageable.last = true;
-      pageable.numberOfFirstPageElement = pageable.pageNumber * pageable.pageSize + 1;
-      pageable.numberOfElements = totalElements;
-    } else {
-      pageable.first = false;
-      pageable.last = false;
-      pageable.numberOfFirstPageElement = pageable.pageNumber * pageable.pageSize + 1;
-      pageable.numberOfElements = (pageable.pageNumber + 1) * pageable.pageSize;
+    public getPreviousPage(requestPage: RequestOptions): RequestOptions {
+        if (!requestPage.first) {
+            requestPage.pageNumber = requestPage.pageNumber - 1;
+        }
+        return requestPage;
     }
-    return pageable;
-  }
+
+    public getPageInNewSize(requestPage: RequestOptions, pageSize: number): RequestOptions {
+        requestPage.pageSize = pageSize;
+        requestPage.pageNumber = RequestOptions.FIRST_PAGE_NUMBER;
+
+        return requestPage;
+    }
+
+    public getPageNewNumber(requestPage: RequestOptions, pageNumber: number): RequestOptions {
+        requestPage.pageNumber = pageNumber;
+        return requestPage;
+    }
+
+    public initPageable(requestPage: RequestOptions, totalElements: number): RequestOptions {
+        requestPage.totalElements = totalElements;
+        let totalPages = totalElements != 0 ? Math.ceil(totalElements / requestPage.pageSize) : 1;
+        requestPage.totalPages = totalPages;
+        if (totalPages == 1) {
+            requestPage.first = true;
+            requestPage.last = true;
+            requestPage.numberOfFirstPageElement = 1;
+            requestPage.numberOfElements = totalElements;
+        } else if (requestPage.pageNumber == 0) {
+            requestPage.first = true;
+            requestPage.last = false;
+            requestPage.numberOfFirstPageElement = 1;
+            requestPage.numberOfElements = requestPage.pageSize;
+        } else if (requestPage.pageNumber + 1 == totalPages) {
+            requestPage.first = false;
+            requestPage.last = true;
+            requestPage.numberOfFirstPageElement = requestPage.pageNumber * requestPage.pageSize + 1;
+            requestPage.numberOfElements = totalElements;
+        } else {
+            requestPage.first = false;
+            requestPage.last = false;
+            requestPage.numberOfFirstPageElement = requestPage.pageNumber * requestPage.pageSize + 1;
+            requestPage.numberOfElements = (requestPage.pageNumber + 1) * requestPage.pageSize;
+        }
+        return requestPage;
+    }
 }

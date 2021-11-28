@@ -1,9 +1,15 @@
 package com.softserveinc.booklibrary.backend.repository.impl;
 
+import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
-import com.softserveinc.booklibrary.backend.dto.paging.MyPage;
-import com.softserveinc.booklibrary.backend.dto.paging.PageConstructor;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Order;
+import javax.persistence.criteria.Root;
+
 import com.softserveinc.booklibrary.backend.entity.Book;
 import com.softserveinc.booklibrary.backend.repository.BookRepository;
 import org.springframework.stereotype.Repository;
@@ -23,5 +29,20 @@ public class BookRepositoryImpl extends AbstractEntityRepository<Book> implement
 			return false;
 		}
 		return publisher != null && publisher.length() <= Book.PUBLISHER_LENGTH;
+	}
+
+	@Override
+	protected List<Book> getUnavailableToDeleteEntities(List<Serializable> entitiesIdsForDelete,
+	                                                    CriteriaQuery<Book> criteriaQuery,
+	                                                    CriteriaBuilder builder) {
+		return new ArrayList<>();
+	}
+
+	@Override
+	protected void setOrdersByColumnsByDefault(List<Order> orderList,
+	                                                  CriteriaBuilder builder,
+	                                                  Root<Book> rootEntity) {
+		orderList.add(builder.desc(rootEntity.get("bookRating")));
+		orderList.add(builder.desc(rootEntity.get("createDate")));
 	}
 }

@@ -3,8 +3,9 @@ package com.softserveinc.booklibrary.backend.service.impl;
 import java.io.Serializable;
 import java.util.List;
 
-import com.softserveinc.booklibrary.backend.dto.paging.MyPage;
-import com.softserveinc.booklibrary.backend.dto.paging.PageConstructor;
+import com.softserveinc.booklibrary.backend.entity.Author;
+import com.softserveinc.booklibrary.backend.pagination.RequestOptions;
+import com.softserveinc.booklibrary.backend.pagination.ResponseData;
 import com.softserveinc.booklibrary.backend.entity.AbstractEntity;
 import com.softserveinc.booklibrary.backend.exception.NotValidEntityException;
 import com.softserveinc.booklibrary.backend.exception.NotValidIdException;
@@ -71,7 +72,13 @@ public abstract class AbstractEntityService<T extends AbstractEntity<? extends S
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS)
-	public MyPage<T> listEntities(PageConstructor pageConstructor) {
-		return repository.listEntities(pageConstructor);
+	public ResponseData<T> listEntities(RequestOptions requestOptions) {
+		return repository.listEntities(requestOptions);
+	}
+
+	@Transactional
+	@Override
+	public List<T> bulkDeleteEntities(List<Serializable> entitiesIdsForDelete) {
+		return repository.bulkDeleteEntities(entitiesIdsForDelete);
 	}
 }

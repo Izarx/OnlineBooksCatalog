@@ -1,6 +1,6 @@
 export class SortableColumn {
     name: string;
-    title: string;
+    title?: string;
     direction: string;
 
     public constructor(name: string, title: string, direction: string) {
@@ -10,9 +10,9 @@ export class SortableColumn {
     }
 
     public toggleDirection() {
-        if(this.direction == 'desc') {
+        if (this.direction == 'desc') {
             this.direction = null;
-        } else if(this.direction == 'asc') {
+        } else if (this.direction == 'asc') {
             this.direction = 'desc';
         } else {
             this.direction = 'asc';

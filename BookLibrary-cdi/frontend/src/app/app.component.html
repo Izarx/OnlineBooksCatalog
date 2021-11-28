@@ -2,7 +2,7 @@
 	<!-- MENU SIDEBAR-->
 	<nav class="navbar navbar-default top-navbar" role="navigation">
 		<div class="navbar-header">
-			<a class="navbar-brand" [routerLink]="['/']" (click)="setTitle('Home')">
+			<a (click)="setTitle('Home')" [routerLink]="['/']" class="navbar-brand">
 				<strong><i class="fa fa-book" style="margin-right: 10px"></i>Library</strong>
 			</a>
 
@@ -14,16 +14,17 @@
 		<div class="sidebar-collapse">
 			<ul class="nav" id="main-menu">
 				<li [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active">
-					<a [routerLink]="['/']" (click)="setTitle('Home')"><i class="fa fa-home"></i>Home</a>
+					<a (click)="setTitle('Home')" [routerLink]="['/']"><i class="fa fa-home"></i>Home</a>
 				</li>
 				<li routerLinkActive="active">
-					<a [routerLink]="['/authors']" (click)="setTitle('Authors')"><i class="fa fa-male"></i>Authors</a>
+					<a (click)="setTitle('Authors')" [routerLink]="['/authors']"><i class="fa fa-male"></i>Authors</a>
 				</li>
 				<li routerLinkActive="active">
-					<a [routerLink]="['/books']" (click)="setTitle('Books')"><i class="fa fa-book"></i>Books</a>
+					<a (click)="setTitle('Books')" [routerLink]="['/books']"><i class="fa fa-book"></i>Books</a>
 				</li>
 				<li routerLinkActive="active">
-					<a [routerLink]="['/reviews']" (click)="setTitle('Reviews')"><i class="fa fa-comment"></i>Reviews</a>
+					<a (click)="setTitle('Reviews')" [routerLink]="['/reviews']"><i
+							class="fa fa-comment"></i>Reviews</a>
 				</li>
 			</ul>
 		</div>

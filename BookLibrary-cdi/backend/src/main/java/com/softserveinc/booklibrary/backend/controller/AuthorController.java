@@ -1,12 +1,15 @@
 package com.softserveinc.booklibrary.backend.controller;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
+import com.softserveinc.booklibrary.backend.dto.ApplicationMapper;
 import com.softserveinc.booklibrary.backend.dto.AuthorDto;
-import com.softserveinc.booklibrary.backend.dto.CommonAppMapper;
-import com.softserveinc.booklibrary.backend.dto.paging.MyPage;
-import com.softserveinc.booklibrary.backend.dto.paging.PageConstructor;
+import com.softserveinc.booklibrary.backend.dto.AuthorNameDto;
 import com.softserveinc.booklibrary.backend.entity.Author;
+import com.softserveinc.booklibrary.backend.pagination.RequestOptions;
+import com.softserveinc.booklibrary.backend.pagination.ResponseData;
 import com.softserveinc.booklibrary.backend.service.AuthorService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,11 +30,11 @@ public class AuthorController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(AuthorController.class);
 
-	private final CommonAppMapper appMapper;
+	private final ApplicationMapper appMapper;
 
 	private final AuthorService authorService;
 
-	public AuthorController(CommonAppMapper appMapper, AuthorService authorService) {
+	public AuthorController(ApplicationMapper appMapper, AuthorService authorService) {
 		this.appMapper = appMapper;
 		this.authorService = authorService;
 	}
@@ -43,12 +46,20 @@ public class AuthorController {
 				: ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 	}
 
+	@PostMapping("/bulk-delete")
+	public ResponseEntity<List<AuthorNameDto>> bulkDeleteAuthors(
+			@RequestBody List<Integer> authorsIdsForDelete) {
+		return ResponseEntity
+				.ok(appMapper.listAuthorsToListAuthorsNameDto(
+						authorService.bulkDeleteEntities(new ArrayList<>(authorsIdsForDelete))));
+	}
+
 	@PostMapping
-	public ResponseEntity<MyPage<AuthorDto>> listAuthors(
-			@RequestBody PageConstructor pageConstructor) {
-		return ResponseEntity.status(HttpStatus.OK)
-				.body(convertPageAuthorDto(
-						authorService.listEntities(pageConstructor)));
+	public ResponseEntity<ResponseData<AuthorDto>> listAuthors(
+			@RequestBody RequestOptions requestOptions) {
+		return ResponseEntity
+				.ok(convertAuthorPageToAuthorDtoPage(
+						authorService.listEntities(requestOptions)));
 	}
 
 	@PostMapping("/create")
@@ -56,8 +67,8 @@ public class AuthorController {
 		if (authorDto == null) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
-		return ResponseEntity.ok(appMapper
-				.authorToAuthorDto(authorService
+		return ResponseEntity
+				.ok(appMapper.authorToAuthorDto(authorService
 						.create(appMapper
 								.authorDtoToAuthor(authorDto))));
 	}
@@ -67,29 +78,31 @@ public class AuthorController {
 		if (authorDto == null) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
-		return ResponseEntity.ok(appMapper
-				.authorToAuthorDto(authorService
+		return ResponseEntity
+				.ok(appMapper.authorToAuthorDto(authorService
 						.update(appMapper
 								.authorDtoToAuthor(authorDto))));
 	}
 
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<AuthorDto> deleteAuthor(@PathVariable Integer id) {
+
 		return authorService.delete(id) ?
 				ResponseEntity.ok().build() :
-				ResponseEntity.notFound().build();
+				ResponseEntity.noContent().build();
 	}
 
 	@GetMapping
 	public ResponseEntity<List<AuthorDto>> getAllAuthors() {
-		return ResponseEntity.status(HttpStatus.OK)
-				.body(appMapper.listAuthorsToListAuthorsDto(authorService.getAll()));
+		return ResponseEntity
+				.ok(appMapper.listAuthorsToListAuthorsDto(authorService.getAll()));
 	}
 
-	public MyPage<AuthorDto> convertPageAuthorDto(MyPage<Author> page) {
-		MyPage<AuthorDto> entityDtoPage = new MyPage<>();
-		entityDtoPage.setTotalElements(page.getTotalElements());
-		entityDtoPage.setContent(appMapper.listAuthorsToListAuthorsDto(page.getContent()));
+	private ResponseData<AuthorDto> convertAuthorPageToAuthorDtoPage(
+			ResponseData<Author> responseData) {
+		ResponseData<AuthorDto> entityDtoPage = new ResponseData<>();
+		entityDtoPage.setTotalElements(responseData.getTotalElements());
+		entityDtoPage.setContent(appMapper.listAuthorsToListAuthorsDto(responseData.getContent()));
 		return entityDtoPage;
 	}
 

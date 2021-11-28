@@ -1,4 +1,4 @@
-export class Page<T> {
+export class ResponseData<T> {
     content: Array<T>;
     totalElements: number;
 

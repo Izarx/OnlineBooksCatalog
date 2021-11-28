@@ -2,19 +2,20 @@ import {Injectable} from '@angular/core';
 import {SortableColumn} from "../model/sortable-column";
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class SortingService {
 
-  constructor() { }
+    constructor() {
+    }
 
-  public getSortableColumns(sortableColumns: Array<SortableColumn>): Array<SortableColumn> {
-    return sortableColumns.filter(column => column.direction != null);
-  }
-
-  public changeSortableStateColumn (column: SortableColumn,
-                                    sortableColumns: Array<SortableColumn>) {
-    sortableColumns.find(col => col.name == column.name).direction = column.direction;
-  }
+    public changeSortableStateColumn(column: SortableColumn,
+                                     sortingColumns: Array<SortableColumn>): Array<SortableColumn> {
+        let sortedColumns = sortingColumns.filter(c => c.name != column.name);
+        if (column.direction != null) {
+            sortedColumns.unshift(column);
+        }
+        return sortedColumns;
+    }
 
 }

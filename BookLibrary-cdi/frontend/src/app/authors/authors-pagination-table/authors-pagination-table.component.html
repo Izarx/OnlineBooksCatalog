@@ -6,18 +6,18 @@
 					<div class="row p-2">
 						<div class="col-6">
 							<button class="btn btn-success btn-header"
-							        data-toggle="modal"
-							        data-target="#createAuthor"> + Add Author
+							        data-target="#createAuthor"
+							        data-toggle="modal"> + Add Author
 							</button>
 							<button class="btn btn-danger btn-header"
-							        data-toggle="modal"
-							        data-target="#deleteAuthors"> Delete Authors
+							        data-target="#bulkDeleteAuthorsConfirmation"
+							        data-toggle="modal"> Delete Authors
 							</button>
 							<button class="btn btn-primary collapsed"
-							        id="accordion"
-							        data-toggle="collapse"
 							        data-parent="#accordion"
+							        data-toggle="collapse"
 							        href="#collapseOne"
+							        id="accordion"
 							>
 								<i class="fa fa-filter"></i>
 								Filters
@@ -25,24 +25,24 @@
 						</div>
 					</div>
 					<div class="col-md-12 col-md-12-without-lr-padding">
-						<div id="collapseOne" class="panel-collapse collapse" style="height: 0px;">
+						<div class="panel-collapse collapse" id="collapseOne" style="height: 0px;">
 							<div class="panel-body panel-body-without-lr-padding">
 								<form class="form-inline">
 									<div class="form-group">
 										<label for="inputFilter1">First Name</label>
-										<input type="text" class="form-control" id="inputFilter1">
+										<input class="form-control" id="inputFilter1" type="text">
 									</div>
 									<div class="form-group">
 										<label for="inputFilter2">Last Name</label>
-										<input type="text" class="form-control" id="inputFilter2">
+										<input class="form-control" id="inputFilter2" type="text">
 									</div>
 									<div class="form-group">
 										<label for="inputFilter3">Rating</label>
-										<input type="text" class="form-control" id="inputFilter3">
+										<input class="form-control" id="inputFilter3" type="text">
 									</div>
 									<div class="form-group">
-										<button type="submit" class="btn btn-header btn-primary">Search</button>
-										<button type="submit" class="btn btn-default">Reset</button>
+										<button class="btn btn-header btn-primary" type="submit">Search</button>
+										<button class="btn btn-default" type="submit">Reset</button>
 									</div>
 								</form>
 							</div>
@@ -51,11 +51,11 @@
 				</div>
 				<div class="col-sm-12">
 					<app-pagination
-							[pageConstructor]="pageConstructor"
 							(nextPageEvent)="getNextPage()"
-							(previousPageEvent)="getPreviousPage()"
-							(pageSizeEvent)="getPageInNewSize($event)"
 							(pageNumberEvent)="getPageNewNumber($event)"
+							(pageSizeEvent)="getPageInNewSize($event)"
+							(previousPageEvent)="getPreviousPage()"
+							[requestOptions]="requestOptions"
 					>
 					</app-pagination>
 				</div>
@@ -64,60 +64,64 @@
 						<div class="table-responsive">
 							<table class="table table-striped table-bordered">
 								<thead>
-									<tr>
-										<th scope="col" class="text-center column-width-checkbox" >
-											<div class="custom-control checkbox-check">
-												<input type="checkbox" class="custom-control-input" id="customCheckAuthor">
-												<label class="custom-control-label" for="customCheckAuthor"></label>
-											</div>
-										</th>
-										<th scope="col"
-										    class="text-center">
-											<app-sortable-column-header
-													[sortableColumn]="sortableColumns[0]"
-													(sortEvent)="sort($event)">
-											</app-sortable-column-header>
-										</th>
-										<th scope="col"
-										    class="text-center">
-											<app-sortable-column-header
-													[sortableColumn]="sortableColumns[1]"
-													(sortEvent)="sort($event)">
-											</app-sortable-column-header>
-										</th>
-										<th scope="col"
-										    class="text-center column-width-rating">
-											<app-sortable-column-header
-													[sortableColumn]="sortableColumns[2]"
-													(sortEvent)="sort($event)">
-											</app-sortable-column-header>
-										</th>
-										<th scope="col" class="text-center column-width-actions" ></th>
-									</tr>
+								<tr>
+									<th class="text-center column-width-checkbox" scope="col">
+										<div class="custom-control checkbox-check">
+											<input class="custom-control-input"
+											       type="checkbox"
+											       (change)="setCheckForAll()"
+											       [(ngModel)]="isAllChecked">
+										</div>
+									</th>
+									<th class="text-center"
+									    scope="col">
+										<app-sortable-column-header
+												(sortEvent)="sort($event)"
+												[sortableColumn]="sortableColumns[0]">
+										</app-sortable-column-header>
+									</th>
+									<th class="text-center"
+									    scope="col">
+										<app-sortable-column-header
+												(sortEvent)="sort($event)"
+												[sortableColumn]="sortableColumns[1]">
+										</app-sortable-column-header>
+									</th>
+									<th class="text-center column-width-rating"
+									    scope="col">
+										<app-sortable-column-header
+												(sortEvent)="sort($event)"
+												[sortableColumn]="sortableColumns[2]">
+										</app-sortable-column-header>
+									</th>
+									<th class="text-center column-width-actions" scope="col"></th>
+								</tr>
 								</thead>
 								<tbody *ngFor="let author of page.content">
 								<tr>
-									<th scope="row" class="text-center">
+									<th class="text-center" scope="row">
 										<div class="custom-control checkbox-check">
-											<input type="checkbox" class="custom-control-input" id="customCheck2">
-											<label class="custom-control-label" for="customCheck2"></label>
+											<input class="custom-control-input"
+											       type="checkbox"
+											       [(ngModel)]="author.isChecked"
+											>
 										</div>
 									</th>
 									<td class="column-entity-padding">{{ author.firstName}}</td>
 									<td class="column-entity-padding">{{ author.lastName}}</td>
 									<td class="text-center">{{author.authorRating.toFixed(2)}}</td>
 									<td class="text-center">
-										<button class="btn btn-primary btn-sm"
-										        data-toggle="modal"
+										<button (click)="getAuthorById(author.authorId)"
+										        class="btn btn-primary btn-sm"
 										        data-target="#updateAuthor"
-										        (click)="setAuthor(author)"
+										        data-toggle="modal"
 										>
 											<i class="fa fa-edit "></i>
 										</button>
-										<button class="btn btn-danger btn-sm"
-										        data-toggle="modal"
+										<button (click)="getAuthorById(author.authorId)"
+										        class="btn btn-danger btn-sm"
 										        data-target="#deleteAuthorConfirmation"
-										        (click)="setAuthor(author)"
+										        data-toggle="modal"
 										><i class="fa fa-trash-o"></i>
 										</button>
 									</td>
@@ -133,32 +137,68 @@
 	</div>
 </div>
 
-<div class="modal fade"
+<div aria-hidden="true"
+     class="modal fade"
      id="deleteAuthorConfirmation"
-     tabindex="-1"
      role="dialog"
-     aria-hidden="true">
+     tabindex="-1">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-body">
 				<h4>Are you sure that you want to delete {{author.firstName + ' ' + author.lastName}} ?</h4>
 			</div>
 			<div class="modal-footer">
-				<button type="button"
-				        class="btn btn-default"
-				        data-dismiss="modal">Cancel</button>
-				<button type="submit"
+				<button class="btn btn-default"
+				        data-dismiss="modal"
+				        type="button">Cancel
+				</button>
+				<button (click)="deleteAuthor(author.authorId)"
 				        class="btn btn-danger"
 				        data-dismiss="modal"
-				        (click)="deleteAuthor(getAuthor().authorId)"
-				>Delete</button>
+				        type="submit"
+				>Delete
+				</button>
 			</div>
 		</div>
 	</div>
 </div>
 
-<app-create-author></app-create-author>
+<div aria-hidden="true"
+     class="modal fade"
+     id="bulkDeleteAuthorsConfirmation"
+     role="dialog"
+     tabindex="-1">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-body">
+				<h4>Are you sure that you want to delete :
+					<div *ngFor="let delAuthor of page.content">
+						<p *ngIf="delAuthor.isChecked">{{delAuthor.firstName + ' ' + delAuthor.lastName}}</p>
+					</div>
+					?
+				</h4>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-default"
+				        data-dismiss="modal"
+				        type="button">Cancel
+				</button>
+				<button (click)="bulkDeleteAuthors()"
+				        class="btn btn-danger"
+				        data-dismiss="modal"
+				        type="submit"
+				>Delete
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<app-create-author
+		(initParentPage)="getData()"
+></app-create-author>
 
 <app-update-author
 		[author]="author"
+		(initParentPage)="getData()"
 ></app-update-author>

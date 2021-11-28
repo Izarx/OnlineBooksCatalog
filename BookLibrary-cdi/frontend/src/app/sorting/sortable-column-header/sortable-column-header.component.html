@@ -1,17 +1,23 @@
 <th (click)="sort(sortableColumn)"
 >
 	<div>
-		{{sortableColumn.title}}
-		<span *ngIf="sortableColumn.direction != null">
-	        <span *ngIf="sortableColumn.direction=='asc'; then sortAscending else sortDescending"></span>
-	    </span>
+		<label>{{sortableColumn.title}}</label>
+		<button class="btn btn-default btn-sm">
+			<span *ngIf="sortableColumn.direction != null; else sortNone">
+	            <span *ngIf="sortableColumn.direction=='asc'; then sortAscending else sortDescending"></span>
+	        </span>
+		</button>
 	</div>
 </th>
 
+<ng-template #sortNone>
+	<i class="fa fa-unsorted"></i>
+</ng-template>
+
 <ng-template #sortDescending>
-	<i class="fa fa-angle-down"></i>
+	<i class="fa fa-sort-down"></i>
 </ng-template>
 
 <ng-template #sortAscending>
-	<i class="fa fa-angle-up"></i>
+	<i class="fa fa-sort-up"></i>
 </ng-template>
