@@ -6,10 +6,12 @@ import java.util.List;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Root;
 
 import com.softserveinc.booklibrary.backend.entity.Author;
+import com.softserveinc.booklibrary.backend.entity.Book;
 import com.softserveinc.booklibrary.backend.repository.AuthorRepository;
 import org.springframework.stereotype.Repository;
 
@@ -27,11 +29,13 @@ public class AuthorRepositoryImpl extends AbstractEntityRepository<Author> imple
 	}
 
 	@Override
-	protected List<Author> getUnavailableToDeleteEntities(List<Serializable> entitiesIdsForDelete) {
-		String sql = "SELECT a " +
-				"FROM authors a JOIN authors_books ab on a.author_id = ab.author_id " +
-				"WHERE a.author_id IN (:entitiesIdsForDelete)";
-		return entityManager.createQuery(sql, Author.class).getResultList();
+	protected List<Author> getUnavailableToDeleteEntities(List<Serializable> entitiesIdsForDelete,
+	                                                      CriteriaQuery<Author> criteriaQuery,
+	                                                      CriteriaBuilder builder) {
+		Root<Author> root = criteriaQuery.from(Author.class);
+		root.join("books");
+		criteriaQuery.select(root).where(root.get("authorId").in(entitiesIdsForDelete));
+		return entityManager.createQuery(criteriaQuery).getResultList();
 	}
 
 	@Override

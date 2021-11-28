@@ -2,7 +2,6 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {Author} from "../../model/author";
 import {AuthorService} from "../author.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {AuthorsPaginationTableComponent} from "../authors-pagination-table/authors-pagination-table.component";
 
 @Component({
     selector: 'app-create-author',
@@ -17,9 +16,7 @@ export class CreateAuthorComponent implements OnInit {
 
     constructor(
         private authorService: AuthorService,
-        private authors: AuthorsPaginationTableComponent
-    ) {
-    }
+    ) {}
 
     ngOnInit(): void {
         this.form = new FormGroup({
@@ -36,7 +33,6 @@ export class CreateAuthorComponent implements OnInit {
     createAuthor(): void {
         this.authorService.createAuthor(this.author).subscribe(
             author => {
-                this.author = author;
                 this.initParentPage.emit(null)
             },
             error => {
@@ -47,17 +43,18 @@ export class CreateAuthorComponent implements OnInit {
     submit() {
         if (this.form.valid) {
             const formData = {...this.form.value}
+            console.log(formData.firstName);
             this.author.firstName = formData.firstName;
             this.author.lastName = formData.lastName;
+            console.log(this.author);
             this.createAuthor();
-            this.form.reset();
             document.getElementById('createAuthorModalCloseButton').click()
         }
     }
 
     cancel() {
         if (this.form.valid) {
-            this.form.reset()
+            this.form.reset();
         }
     }
 }

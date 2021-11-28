@@ -132,26 +132,34 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.MANDATORY)
 	public List<T> bulkDeleteEntities(List<Serializable> entitiesIdsForDelete) {
-		Optional<Field> field = Stream.of(type.getFields()).filter(f -> f.isAnnotationPresent(Id.class)).findFirst();
+		Optional<Field> field = Stream.of(type.getDeclaredFields()).filter(f -> f.isAnnotationPresent(Id.class)).findFirst();
 		String columnName = field.orElseThrow().getName();
 		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
 
-		List<T> unavailableToDeleteEntities = getUnavailableToDeleteEntities(entitiesIdsForDelete);
+		CriteriaQuery<T> criteriaQuery = builder.createQuery(type);
+		CriteriaDelete<T> criteriaDelete = builder.createCriteriaDelete(type);
+		Root<T> rootDelete = criteriaDelete.from(type);
+
+		List<T> unavailableToDeleteEntities =
+				getUnavailableToDeleteEntities(entitiesIdsForDelete, criteriaQuery, builder);
 		if (CollectionUtils.isNotEmpty(unavailableToDeleteEntities)) {
 			unavailableToDeleteEntities.forEach(entity -> entitiesIdsForDelete.remove(entity.getEntityId()));
 		}
-		CriteriaDelete<T> delete = builder.createCriteriaDelete(type);
-		Root<T> rootDelete = delete.from(type);
-		In<Serializable> inClause = builder.in(rootDelete.get(columnName));
-		entitiesIdsForDelete.forEach(inClause::value);
-		delete.where(inClause);
-		entityManager.createQuery(delete).executeUpdate();
+		criteriaDelete.where(rootDelete.get(columnName).in(entitiesIdsForDelete));
+		entityManager.createQuery(criteriaDelete).executeUpdate();
 
 		return unavailableToDeleteEntities;
 	}
 
-	protected abstract List<T> getUnavailableToDeleteEntities(List<Serializable> entitiesIdsForDelete);
+	protected abstract List<T> getUnavailableToDeleteEntities(List<Serializable> entitiesIdsForDelete,
+	                                                          CriteriaQuery<T> criteriaQuery,
+	                                                          CriteriaBuilder builder);
+
+	protected abstract void setOrdersByColumnsByDefault(List<Order> orderList,
+	                                                    CriteriaBuilder builder,
+	                                                    Root<T> rootEntity);
 
 	/**
 	 * Create List of Orders from sortable columns to order db entities by it
@@ -163,8 +171,8 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 	 */
 
 	private List<Order> setOrdersByColumns(List<SortableColumn> sortableColumns,
-	                                         CriteriaBuilder builder,
-	                                         Root<T> rootEntity) {
+	                                       CriteriaBuilder builder,
+	                                       Root<T> rootEntity) {
 		List<Order> orderList = new ArrayList<>();
 		if (CollectionUtils.isNotEmpty(sortableColumns)) {
 			for (SortableColumn column : sortableColumns) {
@@ -182,10 +190,6 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 		}
 		return orderList;
 	}
-
-	protected abstract void setOrdersByColumnsByDefault(List<Order> orderList,
-	                                                    CriteriaBuilder builder,
-	                                                    Root<T> rootEntity);
 
 	private Integer getTotalElementsFromDb (CriteriaBuilder builder) {
 		CriteriaQuery<Long> countCriteriaQuery = builder.createQuery(Long.class);

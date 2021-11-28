@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Root;
 
@@ -31,7 +32,9 @@ public class BookRepositoryImpl extends AbstractEntityRepository<Book> implement
 	}
 
 	@Override
-	protected List<Book> getUnavailableToDeleteEntities(List<Serializable> entitiesIdsForDelete) {
+	protected List<Book> getUnavailableToDeleteEntities(List<Serializable> entitiesIdsForDelete,
+	                                                    CriteriaQuery<Book> criteriaQuery,
+	                                                    CriteriaBuilder builder) {
 		return new ArrayList<>();
 	}
 
