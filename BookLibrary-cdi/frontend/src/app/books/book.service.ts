@@ -4,6 +4,7 @@ import {Observable} from "rxjs";
 import {ResponseData} from "../model/response-data";
 import {Book} from "../model/book";
 import {RequestOptions} from "../model/request-options";
+import {Author} from "../model/author";
 
 const baseUrl = 'http://localhost:8080/api/books';
 
@@ -37,5 +38,9 @@ export class BookService {
 
     getBookByIdWithAuthors(bookId: number) : Observable<Book> {
         return this.httpClient.get<Book>(baseUrl + `/authors/${bookId}`);
+    }
+
+    bulkDeleteBooks(booksIdsForDelete: number[]): Observable<Array<Book>> {
+        return this.httpClient.post<Array<Book>>(baseUrl + `/bulk-delete`, booksIdsForDelete);
     }
 }

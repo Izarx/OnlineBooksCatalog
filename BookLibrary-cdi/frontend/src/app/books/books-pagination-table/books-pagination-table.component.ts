@@ -26,13 +26,16 @@ export class BooksPaginationTableComponent implements OnInit {
     page: ResponseData<Book> = new ResponseData()
     book: Book = new Book(null, '', 0, 0, '', 0.0, null)
     requestOptions: RequestOptions = new RequestOptions();
+    idBookForDelete: number = 0;
     authors: Author[]
+    isAllChecked: boolean;
 
     constructor(
         private bookService: BookService,
         private paginationService: PaginationService,
         private sortingService: SortingService,
     ) {
+        this.isAllChecked  = false;
     }
 
     ngOnInit(): void {
@@ -44,6 +47,7 @@ export class BooksPaginationTableComponent implements OnInit {
             .subscribe(page => {
                     this.paginationService.initPageable(this.requestOptions, page.totalElements);
                     this.page = page
+                    this.isAllChecked  = false;
                 },
                 error => {
                     console.log(error)
@@ -72,6 +76,17 @@ export class BooksPaginationTableComponent implements OnInit {
             })
     }
 
+    bulkDeleteBooks() {
+        this.bookService.bulkDeleteBooks(this.setBooksForDelete().map(a => a.bookId)).subscribe(
+            authors => {
+                this.getData();
+            },
+            error => {
+                console.log(error)
+            }
+        )
+    }
+
     public sort(sortableColumn: SortableColumn): void {
         this.requestOptions.sorting = this.sortingService.changeSortableStateColumn(sortableColumn, this.requestOptions.sorting);
         console.log(this.requestOptions.sorting);
@@ -96,5 +111,21 @@ export class BooksPaginationTableComponent implements OnInit {
     public getPageNewNumber(pageNumber: number): void {
         this.requestOptions = this.paginationService.getPageNewNumber(this.requestOptions, pageNumber);
         this.getData();
+    }
+
+    setCheckForAll() {
+        this.page.content.forEach(a => a.isChecked = this.isAllChecked);
+    }
+
+    setBooksForDelete(): Book[] {
+        return this.page.content.filter(a => a.isChecked);
+    }
+
+    setIdBookForDelete(bookId: number) {
+        this.idBookForDelete = bookId;
+    }
+
+    getIdBookToDelete() : number {
+        return this.idBookForDelete;
     }
 }

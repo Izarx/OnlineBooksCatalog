@@ -118,7 +118,7 @@
 										>
 											<i class="fa fa-edit "></i>
 										</button>
-										<button (click)="getAuthorById(author.authorId)"
+										<button (click)="setIdAuthorToDelete(author.authorId)"
 										        class="btn btn-danger btn-sm"
 										        data-target="#deleteAuthorConfirmation"
 										        data-toggle="modal"
@@ -152,7 +152,7 @@
 				        data-dismiss="modal"
 				        type="button">Cancel
 				</button>
-				<button (click)="deleteAuthor(author.authorId)"
+				<button (click)="deleteAuthor(getIdAuthorToDelete())"
 				        class="btn btn-danger"
 				        data-dismiss="modal"
 				        type="submit"
@@ -171,12 +171,10 @@
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-body">
-				<h4>Are you sure that you want to delete :
-					<div *ngFor="let delAuthor of page.content">
-						<p *ngIf="delAuthor.isChecked">{{delAuthor.firstName + ' ' + delAuthor.lastName}}</p>
-					</div>
-					?
-				</h4>
+				<h4>Are you sure that you want to delete next authors?</h4>
+				<div *ngFor="let delAuthor of page.content">
+					<p *ngIf="delAuthor.isChecked">{{delAuthor.firstName + ' ' + delAuthor.lastName}}</p>
+				</div>
 			</div>
 			<div class="modal-footer">
 				<button class="btn btn-default"
