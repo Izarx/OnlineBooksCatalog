@@ -30,7 +30,6 @@ export class CreateBookComponent implements OnInit {
     createBook(book: Book) {
         this.bookService.createBook(book).subscribe(
             book => {
-                this.book = book;
                 this.initParentPage.emit(null);
             },
             error => {
@@ -47,7 +46,6 @@ export class CreateBookComponent implements OnInit {
             this.book.isbn = formData.isbn;
             this.book.authors = formData.authors;
             this.createBook(this.book);
-            this.form.reset();
             document.getElementById('createBookModalCloseButton').click()
         }
     }
