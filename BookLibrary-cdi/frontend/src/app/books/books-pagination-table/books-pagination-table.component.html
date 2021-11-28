@@ -10,6 +10,7 @@
 							        data-toggle="modal"> + Add Book
 							</button>
 							<button class="btn btn-danger btn-header"
+							        [disabled]="setBooksForDelete().length == 0"
 							        data-target="#deleteBooks"
 							        data-toggle="modal"> Delete Books
 							</button>

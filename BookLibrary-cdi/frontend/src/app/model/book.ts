@@ -8,7 +8,7 @@ export class Book {
     publisher: string
     bookRating: number
     authors: Author[]
-    isChecked: boolean
+    isChecked?: boolean
 
 
     constructor(bookId: number, name: string, yearPublished: number, isbn: number, publisher: string, bookRating: number, authors: Author[]) {

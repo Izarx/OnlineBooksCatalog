@@ -61,3 +61,11 @@ input {
   min-height: 1px;
   padding: 10px 0px 10px
 }
+
+.btn-group-sm > .btn, .btn-sort {
+  padding: 5px 8px;
+  font-size: 12px;
+  line-height: 0;
+  margin-left: 5px;
+  border: none;
+}
