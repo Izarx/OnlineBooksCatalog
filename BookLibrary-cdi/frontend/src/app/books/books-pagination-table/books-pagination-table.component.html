@@ -1,5 +1,5 @@
 <div id="page-inner">
-	<div class="row">
+	<div class="row row-without-lr-margin">
 		<div class="col-md-12">
 			<div class="panel panel-default">
 				<div class="panel-heading">
@@ -9,7 +9,8 @@
 							        data-target="#createBook"
 							        data-toggle="modal"> + Add Book
 							</button>
-							<button class="btn btn-danger btn-header"
+							<button [disabled]="setBooksForDelete().length == 0"
+									class="btn btn-danger btn-header"
 							        data-target="#deleteBooks"
 							        data-toggle="modal"> Delete Books
 							</button>
@@ -24,49 +25,34 @@
 							</button>
 						</div>
 					</div>
-					<div class="col-md-12 col-md-12-without-lr-padding">
-						<div class="panel-collapse collapse" id="collapseBookFilter" style="height: 0px;">
-							<div class="panel-body panel-body-without-lr-padding">
-								<form class="form-inline">
-									<div class="row p-2">
-										<div class="form-group col-md-3">
-											<div>
-												<label for="inputFilterName">Name</label>
-											</div>
-											<input class="form-control" id="inputFilterName" type="text">
-										</div>
-										<div class="form-group col-md-3">
-											<div>
-												<label for="inputFilterAuthor">Author</label>
-											</div>
-											<input class="form-control" id="inputFilterAuthor" type="text">
-										</div>
-										<div class="form-group col-md-3">
-											<div>
-												<label for="inputFilterRating">Rating</label>
-											</div>
-											<input class="form-control" id="inputFilterRating" type="text">
-										</div>
-										<div class="form-group col-md-3">
-											<div>
-												<label for="inputFilterYear">Year</label>
-											</div>
-											<input class="form-control" id="inputFilterYear" type="text">
-										</div>
-										<div class="form-group col-md-3">
-											<div>
-												<label for="inputFilterIsbn">ISBN</label>
-											</div>
-											<input class="form-control" id="inputFilterIsbn" type="text">
-										</div>
-										<div class="form-group  col-md-3">
-											<button class="btn btn-header btn-primary" type="submit">Search</button>
-											<button class="btn btn-default" type="submit">Reset</button>
-										</div>
-									</div>
-
-								</form>
-							</div>
+					<div class="panel-collapse collapse" id="collapseBookFilter">
+						<div class="panel-body panel-body-without-lr-padding">
+							<form class="form-inline">
+								<span class="form-group add-top-bottom-padding">
+									<label for="inputFilterName">Name</label>
+									<input class="form-control" id="inputFilterName" type="text">
+								</span>
+								<span class="form-group add-top-bottom-padding">
+									<label for="inputFilterAuthor">Author</label>
+									<input class="form-control" id="inputFilterAuthor" type="text">
+								</span>
+								<span class="form-group add-top-bottom-padding">
+									<label for="inputFilterRating">Rating</label>
+									<input class="form-control" id="inputFilterRating" type="number">
+								</span>
+								<span class="form-group add-top-bottom-padding">
+									<label for="inputFilterYear">Year</label>
+									<input class="form-control" id="inputFilterYear" type="number">
+								</span>
+								<span class="form-group add-top-bottom-padding">
+									<label for="inputFilterIsbn">ISBN</label>
+									<input class="form-control" id="inputFilterIsbn" type="text">
+								</span>
+								<span class="form-group add-top-bottom-padding pull-right">
+									<button class="btn btn-header btn-primary" type="submit">Search</button>
+									<button class="btn btn-default" type="submit">Reset</button>
+								</span>
+							</form>
 						</div>
 					</div>
 				</div>
@@ -88,8 +74,10 @@
 								<tr>
 									<th class="text-center column-width-checkbox" scope="col">
 										<div class="custom-control checkbox-check">
-											<input class="custom-control-input" id="customCheckBook" type="checkbox">
-											<label class="custom-control-label" for="customCheckBook"></label>
+											<input class="custom-control-input"
+											       type="checkbox"
+											       (change)="setCheckForAll()"
+											       [(ngModel)]="isAllChecked">
 										</div>
 									</th>
 									<th class="text-center column-width-book"
@@ -135,8 +123,10 @@
 								<tr>
 									<th class="text-center" scope="row">
 										<div class="custom-control checkbox-check">
-											<input class="custom-control-input" id="customCheck2" type="checkbox">
-											<label class="custom-control-label" for="customCheck2"></label>
+											<input class="custom-control-input"
+											       type="checkbox"
+											       [(ngModel)]="book.isChecked"
+											>
 										</div>
 									</th>
 									<td class="column-entity-padding">{{book.name}}</td>
@@ -157,7 +147,7 @@
 										>
 											<i class="fa fa-edit "></i>
 										</button>
-										<button (click)="getBookByIdWithAuthors(book.bookId)"
+										<button (click)="setBook(book)"
 										        class="btn btn-danger btn-sm"
 										        data-target="#deleteBookConfirmation"
 										        data-toggle="modal"
@@ -167,7 +157,6 @@
 								</tr>
 								</tbody>
 							</table>
-							<hr class="my-no w-100">
 						</div>
 					</div>
 				</div>
@@ -184,7 +173,7 @@
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-body">
-				<h4>Are you sure that you want to delete {{book.name}} ?</h4>
+				<h4>Are you sure that you want to delete "{{book.name}}" ?</h4>
 			</div>
 			<div class="modal-footer">
 				<button class="btn btn-default"

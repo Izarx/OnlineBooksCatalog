@@ -25,7 +25,7 @@ export class AuthorsPaginationTableComponent implements OnInit {
     page: ResponseData<Author> = new ResponseData();
     requestOptions: RequestOptions = new RequestOptions();
     author: Author = new Author(null, '', '', 0.0);
-    deniedToDeletionAuthors: Author[] = []
+    deniedToDeleteAuthors: Author[] = []
     isAllChecked: boolean;
 
     constructor(
@@ -65,8 +65,8 @@ export class AuthorsPaginationTableComponent implements OnInit {
     bulkDeleteAuthors() {
         this.authorService.bulkDeleteAuthors(this.setAuthorsForDelete().map(a => a.authorId)).subscribe(
             authors => {
-                this.deniedToDeletionAuthors = authors
-                this.getData()
+                this.deniedToDeleteAuthors = authors;
+                this.getData();
             },
             error => {
                 console.log(error)
@@ -113,4 +113,7 @@ export class AuthorsPaginationTableComponent implements OnInit {
         return this.page.content.filter(a => a.isChecked);
     }
 
+    setAuthor(author: Author) {
+        this.author = author;
+    }
 }

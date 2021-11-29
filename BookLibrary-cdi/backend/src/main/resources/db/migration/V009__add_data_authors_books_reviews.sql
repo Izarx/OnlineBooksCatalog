@@ -1,14 +1,4 @@
 INSERT INTO authors (first_name, last_name, create_date)
-VALUES ('Lev', 'Tolstoi', '2001-01-27 12:12:00.220225');
-INSERT INTO authors (first_name, last_name, create_date)
-VALUES ('Nick', 'Perumov', '2003-01-27 12:12:00.220225');
-INSERT INTO authors (first_name, last_name, create_date)
-VALUES ('Serhii', 'Lukianenko', '2012-01-27 12:12:00.220225');
-INSERT INTO authors (first_name, last_name, create_date)
-VALUES ('John', 'Tolkien', '2007-01-27 12:12:00.220225');
-INSERT INTO authors (first_name, last_name, create_date)
-VALUES ('Douglas', 'Adams', '2011-01-27 12:12:00.220225');
-INSERT INTO authors (first_name, last_name, create_date)
 VALUES ('George', 'R. R. Martin', '2020-01-27 12:12:00.220225');
 INSERT INTO authors (first_name, last_name, create_date)
 VALUES ('Patrick', 'Rothfuss', '2021-01-23 16:12:00.220225');
@@ -55,14 +45,6 @@ VALUES ('Юлий', 'Буркин', '2009-01-23 16:12:00.220225');
 INSERT INTO authors (first_name, last_name, create_date)
 VALUES ('Станислав', 'Буркин', '2016-01-23 16:55:00.220225');
 
-INSERT INTO books (name, year_published, isbn, publisher, create_date)
-VALUES ('Voina i mir', 1867, 9780192833983, 'Oxford World''s Classics', '2015-01-23 16:55:00.220225');
-INSERT INTO books (name, year_published, isbn, publisher, create_date)
-VALUES ('Ne vremia dlia drakonov', 1997, 9785040046529, 'Eksmo', '2010-01-23 16:55:00.220225');
-INSERT INTO books (name, year_published, isbn, publisher, create_date)
-VALUES ('The Lord of the Rings', 1955, 9789666610728, 'George Allen & Unwin', '2004-01-23 16:55:00.220225');
-INSERT INTO books (name, year_published, isbn, publisher, create_date)
-VALUES ('The Hitchhikers Guide to the Galaxy', 1979, 9780330258648, 'Pan Books', '2009-01-23 16:55:00.220225');
 INSERT INTO books (name, year_published, isbn, publisher, create_date)
 VALUES ('A Game of Thrones', 1996, 9780007441426, 'Harper Voyager', '2011-01-23 16:55:00.220225');
 INSERT INTO books (name, year_published, isbn, publisher, create_date)
@@ -150,16 +132,6 @@ VALUES ('Остров Русь', 1997, 9785170577163, 'ACT', '2009-08-17 21:43:0
 INSERT INTO books (name, year_published, isbn, publisher, create_date)
 VALUES ('Русалка и зелёная ночь', 2011, 9785429000091, 'Ekslibris', '2011-08-17 21:43:00.220235');
 
-INSERT INTO authors_books (author_id, book_id)
-VALUES (1, 1);
-INSERT INTO authors_books (author_id, book_id)
-VALUES (2, 2);
-INSERT INTO authors_books (author_id, book_id)
-VALUES (3, 2);
-INSERT INTO authors_books (author_id, book_id)
-VALUES (4, 3);
-INSERT INTO authors_books (author_id, book_id)
-VALUES (5, 4);
 INSERT INTO authors_books (author_id, book_id)
 VALUES (6, 5);
 INSERT INTO authors_books (author_id, book_id)
@@ -270,42 +242,6 @@ INSERT INTO authors_books (author_id, book_id)
 VALUES (27, 47);
 INSERT INTO authors_books (author_id, book_id)
 VALUES (28, 47);
-
-INSERT INTO reviews (commenter_name, comment, rating, book_id)
-VALUES ('Petro Oneko', 'Very important comment with good rating', 5, 1);
-INSERT INTO reviews (commenter_name, comment, rating, book_id)
-VALUES ('Ivan Twoko', 'Very important comment with good rating', 4, 1);
-INSERT INTO reviews (commenter_name, comment, rating, book_id)
-VALUES ('Taras Threeko', 'Very important comment with good rating', 3, 1);
-INSERT INTO reviews (commenter_name, comment, rating, book_id)
-VALUES ('Bohdan Fourko', 'Very important comment with good rating', 5, 1);
-
-INSERT INTO reviews (commenter_name, comment, rating, book_id)
-VALUES ('Petro Oneko', 'Very important comment with good rating', 5, 2);
-INSERT INTO reviews (commenter_name, comment, rating, book_id)
-VALUES ('Ivan Twok', 'Very important comment with good rating', 3, 2);
-INSERT INTO reviews (commenter_name, comment, rating, book_id)
-VALUES ('Taras Threeko', 'Very important comment with good rating', 3, 2);
-INSERT INTO reviews (commenter_name, comment, rating, book_id)
-VALUES ('Bohdan Fourko', 'Very important comment with good rating', 2, 2);
-
-INSERT INTO reviews (commenter_name, comment, rating, book_id)
-VALUES ('Petro Oneko', 'Very important comment with good rating', 5, 3);
-INSERT INTO reviews (commenter_name, comment, rating, book_id)
-VALUES ('Ivan Twok', 'Very important comment with good rating', 5, 3);
-INSERT INTO reviews (commenter_name, comment, rating, book_id)
-VALUES ('Taras Threeko', 'Very important comment with good rating', 4,3);
-INSERT INTO reviews (commenter_name, comment, rating, book_id)
-VALUES ('Bohdan Fourko', 'Very important comment with good rating', 4, 3);
-
-INSERT INTO reviews (commenter_name, comment, rating, book_id)
-VALUES ('Petro Oneko', 'Very important comment with good rating', 3, 4);
-INSERT INTO reviews (commenter_name, comment, rating, book_id)
-VALUES ('Ivan Twok', 'Very important comment with good rating', 3, 4);
-INSERT INTO reviews (commenter_name, comment, rating, book_id)
-VALUES ('Taras Threeko', 'Very important comment with good rating', 3, 4);
-INSERT INTO reviews (commenter_name, comment, rating, book_id)
-VALUES ('Bohdan Fourko', 'Very important comment with good rating', 2, 4);
 
 INSERT INTO reviews (commenter_name, comment, rating, book_id)
 VALUES ('Petro Oneko', 'Very important comment with good rating', 5, 5);
