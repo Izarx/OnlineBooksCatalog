@@ -25,7 +25,6 @@ export class AuthorsPaginationTableComponent implements OnInit {
     page: ResponseData<Author> = new ResponseData();
     requestOptions: RequestOptions = new RequestOptions();
     author: Author = new Author(null, '', '', 0.0);
-    idAuthorForDelete: number = 0;
     deniedToDeleteAuthors: Author[] = []
     isAllChecked: boolean;
 
@@ -114,11 +113,7 @@ export class AuthorsPaginationTableComponent implements OnInit {
         return this.page.content.filter(a => a.isChecked);
     }
 
-    setIdAuthorToDelete(authorId: number) {
-        this.idAuthorForDelete = authorId;
-    }
-
-    getIdAuthorToDelete() : number {
-        return this.idAuthorForDelete;
+    setAuthor(author: Author) {
+        this.author = author;
     }
 }

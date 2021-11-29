@@ -9,7 +9,8 @@
 							        data-target="#createAuthor"
 							        data-toggle="modal"> + Add Author
 							</button>
-							<button class="btn btn-danger btn-header"
+							<button [disabled]="setAuthorsForDelete().length == 0"
+									class="btn btn-danger btn-header"
 							        data-target="#bulkDeleteAuthorsConfirmation"
 							        data-toggle="modal"> Delete Authors
 							</button>
@@ -24,28 +25,26 @@
 							</button>
 						</div>
 					</div>
-					<div class="col-md-12 col-md-12-without-lr-padding">
-						<div class="panel-collapse collapse" id="collapseOne" style="height: 0px;">
-							<div class="panel-body panel-body-without-lr-padding">
-								<form class="form-inline">
-									<div class="form-group">
+					<div class="panel-collapse collapse" id="collapseOne">
+						<div class="panel-body panel-body-without-lr-padding">
+							<form class="form-inline">
+								<span class="form-group add-top-bottom-padding">
 										<label for="inputFilter1">First Name</label>
 										<input class="form-control" id="inputFilter1" type="text">
-									</div>
-									<div class="form-group">
+									</span>
+								<span class="form-group add-top-bottom-padding">
 										<label for="inputFilter2">Last Name</label>
 										<input class="form-control" id="inputFilter2" type="text">
-									</div>
-									<div class="form-group">
+									</span>
+								<span class="form-group add-top-bottom-padding">
 										<label for="inputFilter3">Rating</label>
-										<input class="form-control" id="inputFilter3" type="text">
-									</div>
-									<div class="form-group">
+										<input class="form-control" id="inputFilter3" type="number">
+									</span>
+								<span class="form-group add-top-bottom-padding pull-right">
 										<button class="btn btn-header btn-primary" type="submit">Search</button>
 										<button class="btn btn-default" type="submit">Reset</button>
-									</div>
-								</form>
-							</div>
+									</span>
+							</form>
 						</div>
 					</div>
 				</div>
@@ -118,7 +117,7 @@
 										>
 											<i class="fa fa-edit "></i>
 										</button>
-										<button (click)="setIdAuthorToDelete(author.authorId)"
+										<button (click)="setAuthor(author)"
 										        class="btn btn-danger btn-sm"
 										        data-target="#deleteAuthorConfirmation"
 										        data-toggle="modal"
@@ -152,7 +151,7 @@
 				        data-dismiss="modal"
 				        type="button">Cancel
 				</button>
-				<button (click)="deleteAuthor(getIdAuthorToDelete())"
+				<button (click)="deleteAuthor(author.authorId)"
 				        class="btn btn-danger"
 				        data-dismiss="modal"
 				        type="submit"

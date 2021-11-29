@@ -26,7 +26,6 @@ export class BooksPaginationTableComponent implements OnInit {
     page: ResponseData<Book> = new ResponseData()
     book: Book = new Book(null, '', 0, 0, '', 0.0, null)
     requestOptions: RequestOptions = new RequestOptions();
-    idBookForDelete: number = 0;
     authors: Author[]
     isAllChecked: boolean;
 
@@ -121,11 +120,7 @@ export class BooksPaginationTableComponent implements OnInit {
         return this.page.content.filter(a => a.isChecked);
     }
 
-    setIdBookForDelete(bookId: number) {
-        this.idBookForDelete = bookId;
-    }
-
-    getIdBookToDelete() : number {
-        return this.idBookForDelete;
+    setBook(book: Book) {
+        this.book = book;
     }
 }

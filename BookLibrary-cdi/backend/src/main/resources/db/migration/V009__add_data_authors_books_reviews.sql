@@ -1,136 +1,136 @@
-INSERT INTO authors (author_id, first_name, last_name, create_date)
-VALUES (6, 'George', 'R. R. Martin', '2020-01-27 12:12:00.220225');
-INSERT INTO authors (author_id, first_name, last_name, create_date)
-VALUES (7, 'Patrick', 'Rothfuss', '2021-01-23 16:12:00.220225');
-INSERT INTO authors (author_id, first_name, last_name, create_date)
-VALUES (8, 'Arkadii', 'Strugatskii', '2020-11-23 11:12:00.220225');
-INSERT INTO authors (author_id, first_name, last_name, create_date)
-VALUES (9, 'Boris', 'Strugatskii', '2020-02-23 12:12:00.220225');
-INSERT INTO authors (author_id, first_name, last_name, create_date)
-VALUES (10, 'Brandon', 'Sanderson', '2019-01-22 16:12:00.220225');
-INSERT INTO authors (author_id, first_name, last_name, create_date)
-VALUES (11, 'Robert', 'Jordan', '2014-05-23 11:12:00.220225');
-INSERT INTO authors (author_id, first_name, last_name, create_date)
-VALUES (12, 'Jules', 'Verne', '2021-10-23 17:12:00.220225');
-INSERT INTO authors (author_id, first_name, last_name, create_date)
-VALUES (13, 'Andrzej', 'Sapkowski', '2020-01-13 18:12:00.220225');
-INSERT INTO authors (author_id, first_name, last_name, create_date)
-VALUES (14, 'Joan', 'K. Rowling', '2020-11-03 16:12:00.220225');
-INSERT INTO authors (author_id, first_name, last_name, create_date)
-VALUES (15, 'Frank', 'Herbert', '2011-11-13 16:12:00.220225');
-INSERT INTO authors (author_id, first_name, last_name, create_date)
-VALUES (16, 'Bill', 'Ransome', '2020-01-13 06:12:00.220225');
-INSERT INTO authors (author_id, first_name, last_name, create_date)
-VALUES (17, 'Ray', 'Bradbury', '2015-01-03 01:12:00.220225');
-INSERT INTO authors (author_id, first_name, last_name, create_date)
-VALUES (18, 'Terry', 'Pratchett', '2020-09-23 23:12:00.220225');
-INSERT INTO authors (author_id, first_name, last_name, create_date)
-VALUES (19, 'Roger', 'Zelazny', '2020-08-03 11:12:00.220225');
-INSERT INTO authors (author_id, first_name, last_name, create_date)
-VALUES (20, 'Ed', 'Greenwood', '2010-12-13 21:12:00.220225');
-INSERT INTO authors (author_id, first_name, last_name, create_date)
-VALUES (21, 'Isaac', 'Asimov', '2020-04-23 10:12:00.220225');
-INSERT INTO authors (author_id, first_name, last_name, create_date)
-VALUES (22, 'Robert', 'Sheckley', '2020-12-29 06:12:00.220225');
-INSERT INTO authors (author_id, first_name, last_name, create_date)
-VALUES (23, 'Макс', 'Фрай', '2013-01-23 11:12:00.220225');
-INSERT INTO authors (author_id, first_name, last_name, create_date)
-VALUES (24, 'Tom', 'Shippey', '2020-11-13 19:15:00.220225');
-INSERT INTO authors (author_id, first_name, last_name, create_date)
-VALUES (25, 'Harry', 'Harrison', '2020-01-20 16:59:00.220225');
-INSERT INTO authors (author_id, first_name, last_name, create_date)
-VALUES (26, 'Guy Gavriel', 'Kay', '2020-12-31 16:12:00.220225');
-INSERT INTO authors (author_id, first_name, last_name, create_date)
-VALUES (27, 'Юлий', 'Буркин', '2009-01-23 16:12:00.220225');
-INSERT INTO authors (author_id, first_name, last_name, create_date)
-VALUES (28, 'Станислав', 'Буркин', '2016-01-23 16:55:00.220225');
+INSERT INTO authors (first_name, last_name, create_date)
+VALUES ('George', 'R. R. Martin', '2020-01-27 12:12:00.220225');
+INSERT INTO authors (first_name, last_name, create_date)
+VALUES ('Patrick', 'Rothfuss', '2021-01-23 16:12:00.220225');
+INSERT INTO authors (first_name, last_name, create_date)
+VALUES ('Arkadii', 'Strugatskii', '2020-11-23 11:12:00.220225');
+INSERT INTO authors (first_name, last_name, create_date)
+VALUES ('Boris', 'Strugatskii', '2020-02-23 12:12:00.220225');
+INSERT INTO authors (first_name, last_name, create_date)
+VALUES ('Brandon', 'Sanderson', '2019-01-22 16:12:00.220225');
+INSERT INTO authors (first_name, last_name, create_date)
+VALUES ('Robert', 'Jordan', '2014-05-23 11:12:00.220225');
+INSERT INTO authors (first_name, last_name, create_date)
+VALUES ('Jules', 'Verne', '2021-10-23 17:12:00.220225');
+INSERT INTO authors (first_name, last_name, create_date)
+VALUES ('Andrzej', 'Sapkowski', '2020-01-13 18:12:00.220225');
+INSERT INTO authors (first_name, last_name, create_date)
+VALUES ('Joan', 'K. Rowling', '2020-11-03 16:12:00.220225');
+INSERT INTO authors (first_name, last_name, create_date)
+VALUES ('Frank', 'Herbert', '2011-11-13 16:12:00.220225');
+INSERT INTO authors (first_name, last_name, create_date)
+VALUES ('Bill', 'Ransome', '2020-01-13 06:12:00.220225');
+INSERT INTO authors (first_name, last_name, create_date)
+VALUES ('Ray', 'Bradbury', '2015-01-03 01:12:00.220225');
+INSERT INTO authors (first_name, last_name, create_date)
+VALUES ('Terry', 'Pratchett', '2020-09-23 23:12:00.220225');
+INSERT INTO authors (first_name, last_name, create_date)
+VALUES ('Roger', 'Zelazny', '2020-08-03 11:12:00.220225');
+INSERT INTO authors (first_name, last_name, create_date)
+VALUES ('Ed', 'Greenwood', '2010-12-13 21:12:00.220225');
+INSERT INTO authors (first_name, last_name, create_date)
+VALUES ('Isaac', 'Asimov', '2020-04-23 10:12:00.220225');
+INSERT INTO authors (first_name, last_name, create_date)
+VALUES ('Robert', 'Sheckley', '2020-12-29 06:12:00.220225');
+INSERT INTO authors (first_name, last_name, create_date)
+VALUES ('Макс', 'Фрай', '2013-01-23 11:12:00.220225');
+INSERT INTO authors (first_name, last_name, create_date)
+VALUES ('Tom', 'Shippey', '2020-11-13 19:15:00.220225');
+INSERT INTO authors (first_name, last_name, create_date)
+VALUES ('Harry', 'Harrison', '2020-01-20 16:59:00.220225');
+INSERT INTO authors (first_name, last_name, create_date)
+VALUES ('Guy Gavriel', 'Kay', '2020-12-31 16:12:00.220225');
+INSERT INTO authors (first_name, last_name, create_date)
+VALUES ('Юлий', 'Буркин', '2009-01-23 16:12:00.220225');
+INSERT INTO authors (first_name, last_name, create_date)
+VALUES ('Станислав', 'Буркин', '2016-01-23 16:55:00.220225');
 
-INSERT INTO books (book_id, name, year_published, isbn, publisher, create_date)
-VALUES (5, 'A Game of Thrones', 1996, 9780007441426, 'Harper Voyager', '2011-01-23 16:55:00.220225');
-INSERT INTO books (book_id, name, year_published, isbn, publisher, create_date)
-VALUES (6, 'The Name of the Wind', 2007, 9780756404079, 'DAW Books', '2007-01-23 16:55:00.220225');
-INSERT INTO books (book_id, name, year_published, isbn, publisher, create_date)
-VALUES (7, 'Monday Starts on Saturday', 1965, 9781613739235, 'Chicago Review Press', '2017-01-23 16:55:00.220225');
-INSERT INTO books (book_id, name, year_published, isbn, publisher, create_date)
-VALUES (8, 'Hard to be a God', 1964, 9781613748282, 'Chicago Review Press', '2014-01-13 16:55:00.220225');
-INSERT INTO books (book_id, name, year_published, isbn, publisher, create_date)
-VALUES (9, 'The Gathering Storm', 2009, 9780765302304, 'Tor Books', '2009-11-13 16:55:00.220225');
-INSERT INTO books (book_id, name, year_published, isbn, publisher, create_date)
-VALUES (10, 'Legion', 2012, 9781596064850, 'Tor Books', '2012-12-20 11:55:00.220000');
-INSERT INTO books (book_id, name, year_published, isbn, publisher, create_date)
-VALUES (11, 'The Dragon Reborn', 1991, 9780765334350, 'Tor Books', '2012-11-11 11:55:00.220000');
-INSERT INTO books (book_id, name, year_published, isbn, publisher, create_date)
-VALUES (12, 'Lord of Chaos', 1994, 9781250251978, 'Tor Fantasy', '2019-01-11 23:55:00.220000');
-INSERT INTO books (book_id, name, year_published, isbn, publisher, create_date)
-VALUES (13, 'Journey to the Center of the Earth', 1864, 9780486822495, 'Dover Publications', '2018-07-21 22:55:00.220000');
-INSERT INTO books (book_id, name, year_published, isbn, publisher, create_date)
-VALUES (14, 'Around the World in Eighty Days', 1872, 9780008313807, 'Collins', '2019-07-21 22:55:00.220235');
-INSERT INTO books (book_id, name, year_published, isbn, publisher, create_date)
-VALUES (15, 'The Final Circle of Paradise', 1872, 9780879972646, 'DAW Books', '2010-09-30 02:55:00.220235');
-INSERT INTO books (book_id, name, year_published, isbn, publisher, create_date)
-VALUES (16, 'Witcher: Sword of Destiny', 1992, 9785170928569, 'ACT', '2015-09-30 02:55:00.220235');
-INSERT INTO books (book_id, name, year_published, isbn, publisher, create_date)
-VALUES (17, 'Harry Potter and the Chamber of Secrets', 1998, 9780747562184, 'Bloomsbury', '2002-03-21 12:55:00.220235');
-INSERT INTO books (book_id, name, year_published, isbn, publisher, create_date)
-VALUES (18, 'Harry Potter and the Order of the Phoenix', 2003, 9780545582971, 'Scholastic', '2013-12-11 22:55:00.220235');
-INSERT INTO books (book_id, name, year_published, isbn, publisher, create_date)
-VALUES (19, 'Dune', 1965, 9780425266540, 'Ace Books', '2013-02-11 12:55:00.220235');
-INSERT INTO books (book_id, name, year_published, isbn, publisher, create_date)
-VALUES (20, 'Dune Messiah', 1969, 9780425029527, 'Berkley Medallion Books', '1975-02-11 12:55:00.220235');
-INSERT INTO books (book_id, name, year_published, isbn, publisher, create_date)
-VALUES (21, 'The Lazarus Effect', 1983, 9780425071294, 'Berkley Books', '1984-02-11 12:55:00.220235');
-INSERT INTO books (book_id, name, year_published, isbn, publisher, create_date)
-VALUES (22, 'Dandelion Wine', 1957, 9785811229635, 'Iris Press', '2009-02-11 12:55:00.220235');
-INSERT INTO books (book_id, name, year_published, isbn, publisher, create_date)
-VALUES (23, 'Summer morning, summer night', 2007, 9785699912315, 'E', '2016-03-13 12:55:00.220235');
-INSERT INTO books (book_id, name, year_published, isbn, publisher, create_date)
-VALUES (24, 'The Colour of Magic', 1983, 9780312150846, 'St Martin`s Press', '1983-06-13 12:55:00.220235');
-INSERT INTO books (book_id, name, year_published, isbn, publisher, create_date)
-VALUES (25, 'The Light Fantastic', 1986, 9780062225689, 'Harper', '2013-07-19 12:55:00.220235');
-INSERT INTO books (book_id, name, year_published, isbn, publisher, create_date)
-VALUES (26, 'Chronicles of Amber', 1970, 9780839824275, 'Gregg Press', '1979-09-19 12:55:00.220235');
-INSERT INTO books (book_id, name, year_published, isbn, publisher, create_date)
-VALUES (27, 'Nine Princes in Amber', 2009, 9781886778818, 'NESFA Press', '2009-11-19 22:55:00.220235');
-INSERT INTO books (book_id, name, year_published, isbn, publisher, create_date)
-VALUES (28, 'The Caves of Steel', 1953, 9785992504927, 'KARO', '2010-01-19 22:55:00.220235');
-INSERT INTO books (book_id, name, year_published, isbn, publisher, create_date)
-VALUES (29, 'I, Robot', 1947, 9780007491513, 'Harper Voyager', '2010-01-19 22:55:00.220235');
-INSERT INTO books (book_id, name, year_published, isbn, publisher, create_date)
-VALUES (30, 'Bring me the head of beautiful prince', 1991, 9785699712687, 'Eksmo', '2014-01-19 22:55:00.220235');
-INSERT INTO books (book_id, name, year_published, isbn, publisher, create_date)
-VALUES (31, 'If at Faust you do not successed', 1993, 9785699730186, 'Eksmo', '2014-11-29 12:25:00.220235');
-INSERT INTO books (book_id, name, year_published, isbn, publisher, create_date)
-VALUES (32, 'Dimension of Miracles', 1968, 9785389180475, 'Azbuka', '2020-11-29 12:25:00.220235');
-INSERT INTO books (book_id, name, year_published, isbn, publisher, create_date)
-VALUES (33, 'Мой Рагнарек', 1968, 9785367016260, 'Amphora', '2010-08-04 19:25:00.220235');
-INSERT INTO books (book_id, name, year_published, isbn, publisher, create_date)
-VALUES (34, 'Чуб Земли', 2004, 9785170988099, 'ACT', '2016-05-14 19:25:00.220235');
-INSERT INTO books (book_id, name, year_published, isbn, publisher, create_date)
-VALUES (35, 'Тяжелый свет Куртейна. Зеленый. Том 1', 2020, 9785171207410, 'ACT', '2020-05-14 09:25:00.220235');
-INSERT INTO books (book_id, name, year_published, isbn, publisher, create_date)
-VALUES (36, 'Тяжелый свет Куртейна. Зеленый. Том 2', 2020, 9785171347178, 'ACT', '2020-12-19 09:25:00.220235');
-INSERT INTO books (book_id, name, year_published, isbn, publisher, create_date)
-VALUES (37, 'The Hammer and the Cross', 1993, 9785389088269, 'Azbuka', '2015-12-11 19:25:00.220235');
-INSERT INTO books (book_id, name, year_published, isbn, publisher, create_date)
-VALUES (38, 'One King s Way', 1994, 9785389100916, 'Azbuka', '2015-12-29 19:55:00.220235');
-INSERT INTO books (book_id, name, year_published, isbn, publisher, create_date)
-VALUES (39, 'The Road to Middle-Earth', 1982, 9780048090182, 'George Allen & Unwin', '2000-12-29 19:55:00.220235');
-INSERT INTO books (book_id, name, year_published, isbn, publisher, create_date)
-VALUES (40, 'A Stainless Steel Rat is Born', 1985, 9785699405817, 'Eksmo', '2010-07-14 02:23:00.220235');
-INSERT INTO books (book_id, name, year_published, isbn, publisher, create_date)
-VALUES (41, 'Bill, the Galactic Hero', 1965, 9780380003952, 'Equinox', '1975-07-14 02:23:00.220235');
-INSERT INTO books (book_id, name, year_published, isbn, publisher, create_date)
-VALUES (42, 'West of Eden', 1984, 9780586057810, 'Panther Books', '1985-09-16 22:43:00.220235');
-INSERT INTO books (book_id, name, year_published, isbn, publisher, create_date)
-VALUES (43, 'The Lions of Al-Rassan', 1995, 9780143194064, 'Penguin Canada', '2017-10-26 22:43:00.220235');
-INSERT INTO books (book_id, name, year_published, isbn, publisher, create_date)
-VALUES (44, 'Lord of Emperors', 2000, 9785699086382, 'Eksmo', '2004-11-06 22:43:00.220235');
-INSERT INTO books (book_id, name, year_published, isbn, publisher, create_date)
-VALUES (45, 'River of Stars', 2013, 9780451464972, 'Roc', '2013-01-07 22:43:00.220235');
-INSERT INTO books (book_id, name, year_published, isbn, publisher, create_date)
-VALUES (46, 'Остров Русь', 1997, 9785170577163, 'ACT', '2009-08-17 21:43:00.220235');
-INSERT INTO books (book_id, name, year_published, isbn, publisher, create_date)
-VALUES (47, 'Русалка и зелёная ночь', 2011, 9785429000091, 'Ekslibris', '2011-08-17 21:43:00.220235');
+INSERT INTO books (name, year_published, isbn, publisher, create_date)
+VALUES ('A Game of Thrones', 1996, 9780007441426, 'Harper Voyager', '2011-01-23 16:55:00.220225');
+INSERT INTO books (name, year_published, isbn, publisher, create_date)
+VALUES ('The Name of the Wind', 2007, 9780756404079, 'DAW Books', '2007-01-23 16:55:00.220225');
+INSERT INTO books (name, year_published, isbn, publisher, create_date)
+VALUES ('Monday Starts on Saturday', 1965, 9781613739235, 'Chicago Review Press', '2017-01-23 16:55:00.220225');
+INSERT INTO books (name, year_published, isbn, publisher, create_date)
+VALUES ('Hard to be a God', 1964, 9781613748282, 'Chicago Review Press', '2014-01-13 16:55:00.220225');
+INSERT INTO books (name, year_published, isbn, publisher, create_date)
+VALUES ('The Gathering Storm', 2009, 9780765302304, 'Tor Books', '2009-11-13 16:55:00.220225');
+INSERT INTO books (name, year_published, isbn, publisher, create_date)
+VALUES ('Legion', 2012, 9781596064850, 'Tor Books', '2012-12-20 11:55:00.220000');
+INSERT INTO books (name, year_published, isbn, publisher, create_date)
+VALUES ('The Dragon Reborn', 1991, 9780765334350, 'Tor Books', '2012-11-11 11:55:00.220000');
+INSERT INTO books (name, year_published, isbn, publisher, create_date)
+VALUES ('Lord of Chaos', 1994, 9781250251978, 'Tor Fantasy', '2019-01-11 23:55:00.220000');
+INSERT INTO books (name, year_published, isbn, publisher, create_date)
+VALUES ('Journey to the Center of the Earth', 1864, 9780486822495, 'Dover Publications', '2018-07-21 22:55:00.220000');
+INSERT INTO books (name, year_published, isbn, publisher, create_date)
+VALUES ('Around the World in Eighty Days', 1872, 9780008313807, 'Collins', '2019-07-21 22:55:00.220235');
+INSERT INTO books (name, year_published, isbn, publisher, create_date)
+VALUES ('The Final Circle of Paradise', 1872, 9780879972646, 'DAW Books', '2010-09-30 02:55:00.220235');
+INSERT INTO books (name, year_published, isbn, publisher, create_date)
+VALUES ('Witcher: Sword of Destiny', 1992, 9785170928569, 'ACT', '2015-09-30 02:55:00.220235');
+INSERT INTO books (name, year_published, isbn, publisher, create_date)
+VALUES ('Harry Potter and the Chamber of Secrets', 1998, 9780747562184, 'Bloomsbury', '2002-03-21 12:55:00.220235');
+INSERT INTO books (name, year_published, isbn, publisher, create_date)
+VALUES ('Harry Potter and the Order of the Phoenix', 2003, 9780545582971, 'Scholastic', '2013-12-11 22:55:00.220235');
+INSERT INTO books (name, year_published, isbn, publisher, create_date)
+VALUES ('Dune', 1965, 9780425266540, 'Ace Books', '2013-02-11 12:55:00.220235');
+INSERT INTO books (name, year_published, isbn, publisher, create_date)
+VALUES ('Dune Messiah', 1969, 9780425029527, 'Berkley Medallion Books', '1975-02-11 12:55:00.220235');
+INSERT INTO books (name, year_published, isbn, publisher, create_date)
+VALUES ('The Lazarus Effect', 1983, 9780425071294, 'Berkley Books', '1984-02-11 12:55:00.220235');
+INSERT INTO books (name, year_published, isbn, publisher, create_date)
+VALUES ('Dandelion Wine', 1957, 9785811229635, 'Iris Press', '2009-02-11 12:55:00.220235');
+INSERT INTO books (name, year_published, isbn, publisher, create_date)
+VALUES ('Summer morning, summer night', 2007, 9785699912315, 'E', '2016-03-13 12:55:00.220235');
+INSERT INTO books (name, year_published, isbn, publisher, create_date)
+VALUES ('The Colour of Magic', 1983, 9780312150846, 'St Martin`s Press', '1983-06-13 12:55:00.220235');
+INSERT INTO books (name, year_published, isbn, publisher, create_date)
+VALUES ('The Light Fantastic', 1986, 9780062225689, 'Harper', '2013-07-19 12:55:00.220235');
+INSERT INTO books (name, year_published, isbn, publisher, create_date)
+VALUES ('Chronicles of Amber', 1970, 9780839824275, 'Gregg Press', '1979-09-19 12:55:00.220235');
+INSERT INTO books (name, year_published, isbn, publisher, create_date)
+VALUES ('Nine Princes in Amber', 2009, 9781886778818, 'NESFA Press', '2009-11-19 22:55:00.220235');
+INSERT INTO books (name, year_published, isbn, publisher, create_date)
+VALUES ('The Caves of Steel', 1953, 9785992504927, 'KARO', '2010-01-19 22:55:00.220235');
+INSERT INTO books (name, year_published, isbn, publisher, create_date)
+VALUES ('I, Robot', 1947, 9780007491513, 'Harper Voyager', '2010-01-19 22:55:00.220235');
+INSERT INTO books (name, year_published, isbn, publisher, create_date)
+VALUES ('Bring me the head of beautiful prince', 1991, 9785699712687, 'Eksmo', '2014-01-19 22:55:00.220235');
+INSERT INTO books (name, year_published, isbn, publisher, create_date)
+VALUES ('If at Faust you do not successed', 1993, 9785699730186, 'Eksmo', '2014-11-29 12:25:00.220235');
+INSERT INTO books (name, year_published, isbn, publisher, create_date)
+VALUES ('Dimension of Miracles', 1968, 9785389180475, 'Azbuka', '2020-11-29 12:25:00.220235');
+INSERT INTO books (name, year_published, isbn, publisher, create_date)
+VALUES ('Мой Рагнарек', 1968, 9785367016260, 'Amphora', '2010-08-04 19:25:00.220235');
+INSERT INTO books (name, year_published, isbn, publisher, create_date)
+VALUES ('Чуб Земли', 2004, 9785170988099, 'ACT', '2016-05-14 19:25:00.220235');
+INSERT INTO books (name, year_published, isbn, publisher, create_date)
+VALUES ('Тяжелый свет Куртейна. Зеленый. Том 1', 2020, 9785171207410, 'ACT', '2020-05-14 09:25:00.220235');
+INSERT INTO books (name, year_published, isbn, publisher, create_date)
+VALUES ('Тяжелый свет Куртейна. Зеленый. Том 2', 2020, 9785171347178, 'ACT', '2020-12-19 09:25:00.220235');
+INSERT INTO books (name, year_published, isbn, publisher, create_date)
+VALUES ('The Hammer and the Cross', 1993, 9785389088269, 'Azbuka', '2015-12-11 19:25:00.220235');
+INSERT INTO books (name, year_published, isbn, publisher, create_date)
+VALUES ('One King s Way', 1994, 9785389100916, 'Azbuka', '2015-12-29 19:55:00.220235');
+INSERT INTO books (name, year_published, isbn, publisher, create_date)
+VALUES ('The Road to Middle-Earth', 1982, 9780048090182, 'George Allen & Unwin', '2000-12-29 19:55:00.220235');
+INSERT INTO books (name, year_published, isbn, publisher, create_date)
+VALUES ('A Stainless Steel Rat is Born', 1985, 9785699405817, 'Eksmo', '2010-07-14 02:23:00.220235');
+INSERT INTO books (name, year_published, isbn, publisher, create_date)
+VALUES ('Bill, the Galactic Hero', 1965, 9780380003952, 'Equinox', '1975-07-14 02:23:00.220235');
+INSERT INTO books (name, year_published, isbn, publisher, create_date)
+VALUES ('West of Eden', 1984, 9780586057810, 'Panther Books', '1985-09-16 22:43:00.220235');
+INSERT INTO books (name, year_published, isbn, publisher, create_date)
+VALUES ('The Lions of Al-Rassan', 1995, 9780143194064, 'Penguin Canada', '2017-10-26 22:43:00.220235');
+INSERT INTO books (name, year_published, isbn, publisher, create_date)
+VALUES ('Lord of Emperors', 2000, 9785699086382, 'Eksmo', '2004-11-06 22:43:00.220235');
+INSERT INTO books (name, year_published, isbn, publisher, create_date)
+VALUES ('River of Stars', 2013, 9780451464972, 'Roc', '2013-01-07 22:43:00.220235');
+INSERT INTO books (name, year_published, isbn, publisher, create_date)
+VALUES ('Остров Русь', 1997, 9785170577163, 'ACT', '2009-08-17 21:43:00.220235');
+INSERT INTO books (name, year_published, isbn, publisher, create_date)
+VALUES ('Русалка и зелёная ночь', 2011, 9785429000091, 'Ekslibris', '2011-08-17 21:43:00.220235');
 
 INSERT INTO authors_books (author_id, book_id)
 VALUES (6, 5);
