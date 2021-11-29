@@ -74,3 +74,12 @@ input {
   padding-top: 5px;
   padding-bottom: 5px;
 }
+
+.row-without-lr-margin {
+  margin-right: 0px;
+  margin-left: 0px;
+}
+
+#page-wrapper {
+  min-height:500px;
+}
