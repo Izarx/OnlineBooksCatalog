@@ -27,7 +27,8 @@ export class AuthorService {
         return this.httpClient.delete<void>(baseUrl + `/delete/${authorId}`);
     }
 
-    public getPage(appRequestPage: RequestOptions): Observable<ResponseData<Author>> {
+    public getPage(appRequestPage: RequestOptions<Author>): Observable<ResponseData<Author>> {
+        console.log('Authors Service', appRequestPage);
         return this.httpClient.post<ResponseData<Author>>(baseUrl, appRequestPage);
     }
 

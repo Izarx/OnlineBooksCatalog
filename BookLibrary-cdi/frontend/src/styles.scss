@@ -8,6 +8,10 @@ input {
   }
 }
 
+header h3 {
+  margin-bottom: 10px;
+}
+
 .column-width-7{
   width: 7%;
 }
@@ -17,7 +21,7 @@ input {
 }
 
 .column-width-authors {
-  width: 20%;
+  width: 180px;
 }
 
 .column-width-publisher {
@@ -38,6 +42,10 @@ input {
 
 .column-entity-padding {
   padding-left: 3%;
+}
+
+.header-padding {
+  padding: 20px;
 }
 
 .panel-body-without-lr-padding {
@@ -62,12 +70,18 @@ input {
   padding: 10px 0px 10px
 }
 
-.btn-group-sm > .btn, .btn-sort {
+.btn-sort {
   padding: 5px 8px;
   font-size: 12px;
   line-height: 0;
   margin-left: 5px;
   border: none;
+}
+
+.btn-sort.active, .btn-sort.focus, .btn-sort:active, .btn-sort:focus, .btn-sort:hover {
+  color: #333;
+  background-color: #fff;
+  border-color: #fff
 }
 
 .add-top-bottom-padding {
@@ -81,5 +95,28 @@ input {
 }
 
 #page-wrapper {
-  min-height:500px;
+  min-height:520px;
+}
+
+.btn.active.focus, .btn.active:focus, .btn.focus, .btn:active.focus, .btn:active:focus, .btn:focus {
+  outline: none;
+  outline: none;
+  outline-offset: 0px;
+}
+
+.panel-heading ~ .panel-body {
+  min-height: 400px;
+}
+
+.panel-heading {
+  min-height: 80px;
+}
+
+div > article {
+  vertical-align: center;
+  margin: 40px 50px;
+}
+
+.checked {
+  color: orange;
 }

@@ -3,13 +3,15 @@ CREATE OR REPLACE FUNCTION calculate_rating()
     $calculate_rating$
     BEGIN
 	    update books b set book_rating = (
-	        select avg(rating) from reviews r where r.book_id = b.book_id
+	        select coalesce(avg(rating), 0)
+	        from reviews r
+	        where r.book_id = b.book_id
 		    )
 	    WHERE b.book_id = new.book_id;
 
 	    update authors a
 	    set author_rating = (
-	        select avg(book_rating)
+		    select coalesce(avg(book_rating), 0)
 	        from books
 	            join authors_books bab on bab.book_id = books.book_id
 	        where bab.author_id = a.author_id
@@ -21,6 +23,8 @@ CREATE OR REPLACE FUNCTION calculate_rating()
 		    where aab.book_id = new.book_id
 		    ) as authos_to_update
 	    where authos_to_update.author_id = a.author_id;
+
+
 
     RETURN new;
     END;

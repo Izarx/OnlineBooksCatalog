@@ -8,14 +8,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
-public class RequestOptions {
+public class RequestOptions<T> {
 
 	private int pageSize;
 	private int pageNumber;
 	private List<SortableColumn> sorting;
+	private T filteredEntity;
 
 }

@@ -29,6 +29,12 @@
 						       type="number"
 						>
 					</div>
+					<div *ngIf="form.get('yearPublished').invalid && form.get('yearPublished').touched"
+					     class="invalid-feedback">
+						<small *ngIf="form.get('yearPublished').errors.max">
+							Please, enter valid value!
+						</small>
+					</div>
 					<div class="sub-title">ISBN</div>
 					<div>
 						<input [(ngModel)]="book.isbn"

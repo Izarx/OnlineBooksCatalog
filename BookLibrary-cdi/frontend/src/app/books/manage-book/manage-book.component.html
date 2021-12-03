@@ -1,0 +1,32 @@
+<div id="page-inner">
+	<header class="header-padding">
+		<h3>{{book.name}}</h3>
+		<div>
+			<span class="fa fa-star checked"></span>
+			<span class="fa fa-star checked"></span>
+			<span class="fa fa-star checked"></span>
+			<span class="fa fa-star checked"></span>
+			<span class="fa fa-star checked"></span>
+		</div>
+		<div>votes [10]</div>
+	</header>
+	<div class="row row-without-lr-margin">
+		<div class="col-md-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<article>
+						<div class="pull-left">
+							<h4>Authors:</h4>
+						</div>
+						<div class="text-center" *ngFor="let author of book.authors">
+							<ul>{{author.firstName + ' ' + author.lastName}}</ul>
+						</div>
+					</article>
+					<article></article>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+

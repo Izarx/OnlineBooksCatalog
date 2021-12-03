@@ -13,7 +13,7 @@ export class SortingService {
                                      sortingColumns: Array<SortableColumn>): Array<SortableColumn> {
         let sortedColumns = sortingColumns.filter(c => c.name != column.name);
         if (column.direction != null) {
-            sortedColumns.unshift(column);
+            sortedColumns.push(column);
         }
         return sortedColumns;
     }

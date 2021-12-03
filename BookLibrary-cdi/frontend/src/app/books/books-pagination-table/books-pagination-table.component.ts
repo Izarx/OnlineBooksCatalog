@@ -15,6 +15,8 @@ import {RequestOptions} from "../../model/request-options";
 })
 export class BooksPaginationTableComponent implements OnInit {
 
+    static readonly title: string = 'Books';
+
     sortableColumns: Array<SortableColumn> = [
         new SortableColumn('name', 'Book Name', null),
         new SortableColumn('bookRating', 'Rating', null),
@@ -25,13 +27,13 @@ export class BooksPaginationTableComponent implements OnInit {
 
     page: ResponseData<Book> = new ResponseData()
     book: Book = new Book(null, '', 0, 0, '', 0.0, null)
-    requestOptions: RequestOptions = new RequestOptions();
+    requestOptions: RequestOptions<Book> = new RequestOptions();
     authors: Author[]
     isAllChecked: boolean;
 
     constructor(
         private bookService: BookService,
-        private paginationService: PaginationService,
+        private paginationService: PaginationService<Book>,
         private sortingService: SortingService,
     ) {
         this.isAllChecked  = false;
@@ -122,5 +124,10 @@ export class BooksPaginationTableComponent implements OnInit {
 
     setBook(book: Book) {
         this.book = book;
+    }
+
+    isbnOutput(isbn: number) : string {
+        let isbnString = isbn.toString();
+        return isbnString.substr(0, 3) + '-' + isbnString.substr(3, 9) + '-' + isbnString.substr(12, 1)
     }
 }

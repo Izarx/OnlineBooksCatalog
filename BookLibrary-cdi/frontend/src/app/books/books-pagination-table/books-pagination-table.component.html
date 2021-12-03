@@ -7,12 +7,12 @@
 						<div class="col-6">
 							<button class="btn btn-success btn-header"
 							        data-target="#createBook"
-							        data-toggle="modal"> + Add Book
+							        data-toggle="modal"> + Add
 							</button>
-							<button [disabled]="setBooksForDelete().length == 0"
+							<button
 									class="btn btn-danger btn-header"
-							        data-target="#deleteBooks"
-							        data-toggle="modal"> Delete Books
+							        data-target="#bulkDeleteBooksConfirmation"
+							        data-toggle="modal"> Bulk Delete
 							</button>
 							<button class="btn btn-primary collapsed"
 							        data-parent="#accordionBook"
@@ -102,7 +102,7 @@
 												[sortableColumn]="sortableColumns[2]">
 										</app-sortable-column-header>
 									</th>
-									<th class="text-center"
+									<th class="text-center column-width-publisher"
 									    scope="col">
 										<app-sortable-column-header
 												(sortEvent)="sort($event)"
@@ -129,7 +129,7 @@
 											>
 										</div>
 									</th>
-									<td class="column-entity-padding">{{book.name}}</td>
+									<td class="column-entity-padding"><a [routerLink]="['/books', book.bookId]">{{book.name}}</a></td>
 									<td class="column-entity-padding">
 										<div *ngFor="let author of book.authors">
 											{{author.firstName + ' ' + author.lastName}}
@@ -137,7 +137,7 @@
 									</td>
 									<td class="text-center">{{book.bookRating.toFixed(2)}}</td>
 									<td class="text-center">{{book.yearPublished}}</td>
-									<td class="text-center">{{book.isbn}}</td>
+									<td class="text-center">{{isbnOutput(book.isbn)}}</td>
 									<td class="text-center">{{book.publisher}}</td>
 									<td class="text-center">
 										<button (click)="getBookByIdWithAuthors(book.bookId)"
@@ -181,6 +181,35 @@
 				        type="button">Cancel
 				</button>
 				<button (click)="deleteBook(book.bookId)"
+				        class="btn btn-danger"
+				        data-dismiss="modal"
+				        type="submit"
+				>Delete
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div aria-hidden="true"
+     class="modal fade"
+     id="bulkDeleteBooksConfirmation"
+     role="dialog"
+     tabindex="-1">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-body">
+				<h4>Are you sure that you want to delete next books?</h4>
+				<div *ngFor="let delBook of page.content">
+					<p *ngIf="delBook.isChecked">"{{delBook.name}}"</p>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-default"
+				        data-dismiss="modal"
+				        type="button">Cancel
+				</button>
+				<button (click)="bulkDeleteBooks()"
 				        class="btn btn-danger"
 				        data-dismiss="modal"
 				        type="submit"

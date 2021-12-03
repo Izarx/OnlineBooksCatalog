@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -134,8 +135,11 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
 	public List<T> bulkDeleteEntities(List<Serializable> entitiesIdsForDelete) {
-		Optional<Field> field = Stream.of(type.getDeclaredFields()).filter(f -> f.isAnnotationPresent(Id.class)).findFirst();
-		String columnName = field.orElseThrow().getName();
+		String columnName = Stream.of(type.getDeclaredFields())
+				.filter(f -> f.isAnnotationPresent(Id.class))
+				.findFirst()
+				.orElseThrow()
+				.getName();
 		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
 
 		CriteriaQuery<T> criteriaQuery = builder.createQuery(type);
@@ -145,7 +149,8 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 		List<T> unavailableToDeleteEntities =
 				getUnavailableToDeleteEntities(entitiesIdsForDelete, criteriaQuery, builder);
 		if (CollectionUtils.isNotEmpty(unavailableToDeleteEntities)) {
-			unavailableToDeleteEntities.forEach(entity -> entitiesIdsForDelete.remove(entity.getEntityId()));
+			unavailableToDeleteEntities
+					.forEach(entity -> entitiesIdsForDelete.remove(entity.getEntityId()));
 		}
 		criteriaDelete.where(rootDelete.get(columnName).in(entitiesIdsForDelete));
 		entityManager.createQuery(criteriaDelete).executeUpdate();
@@ -153,9 +158,11 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 		return unavailableToDeleteEntities;
 	}
 
-	protected abstract List<T> getUnavailableToDeleteEntities(List<Serializable> entitiesIdsForDelete,
+	protected List<T> getUnavailableToDeleteEntities(List<Serializable> entitiesIdsForDelete,
 	                                                          CriteriaQuery<T> criteriaQuery,
-	                                                          CriteriaBuilder builder);
+	                                                          CriteriaBuilder builder) {
+		return Collections.emptyList();
+	}
 
 	protected abstract void setOrdersByColumnsByDefault(List<Order> orderList,
 	                                                    CriteriaBuilder builder,

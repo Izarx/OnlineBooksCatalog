@@ -32,13 +32,6 @@ public class BookRepositoryImpl extends AbstractEntityRepository<Book> implement
 	}
 
 	@Override
-	protected List<Book> getUnavailableToDeleteEntities(List<Serializable> entitiesIdsForDelete,
-	                                                    CriteriaQuery<Book> criteriaQuery,
-	                                                    CriteriaBuilder builder) {
-		return new ArrayList<>();
-	}
-
-	@Override
 	protected void setOrdersByColumnsByDefault(List<Order> orderList,
 	                                                  CriteriaBuilder builder,
 	                                                  Root<Book> rootEntity) {

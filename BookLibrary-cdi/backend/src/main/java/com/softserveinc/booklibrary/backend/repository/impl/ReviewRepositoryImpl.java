@@ -32,13 +32,6 @@ public class ReviewRepositoryImpl extends AbstractEntityRepository<Review> imple
 	}
 
 	@Override
-	protected List<Review> getUnavailableToDeleteEntities(List<Serializable> entitiesIdsForDelete,
-	                                                      CriteriaQuery<Review> criteriaQuery,
-	                                                      CriteriaBuilder builder) {
-		return new ArrayList<>();
-	}
-
-	@Override
 	protected void setOrdersByColumnsByDefault(List<Order> orderList, CriteriaBuilder builder, Root<Review> rootEntity) {}
 
 }
