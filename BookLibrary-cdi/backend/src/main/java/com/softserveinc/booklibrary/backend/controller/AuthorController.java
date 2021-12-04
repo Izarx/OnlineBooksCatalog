@@ -1,6 +1,5 @@
 package com.softserveinc.booklibrary.backend.controller;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,10 +55,10 @@ public class AuthorController {
 
 	@PostMapping
 	public ResponseEntity<ResponseData<AuthorDto>> listAuthors(
-			@RequestBody RequestOptions requestOptions) {
+			@RequestBody RequestOptions<AuthorDto> requestOptions) {
 		return ResponseEntity
-				.ok(convertAuthorPageToAuthorDtoPage(
-						authorService.listEntities(requestOptions)));
+				.ok(convertAuthorResponseToAuthorDtoResponse(
+						authorService.listEntities(convertAuthorDtoRequestToAuthorRequest(requestOptions))));
 	}
 
 	@PostMapping("/create")
@@ -98,12 +97,23 @@ public class AuthorController {
 				.ok(appMapper.listAuthorsToListAuthorsDto(authorService.getAll()));
 	}
 
-	private ResponseData<AuthorDto> convertAuthorPageToAuthorDtoPage(
+	private ResponseData<AuthorDto> convertAuthorResponseToAuthorDtoResponse(
 			ResponseData<Author> responseData) {
-		ResponseData<AuthorDto> entityDtoPage = new ResponseData<>();
-		entityDtoPage.setTotalElements(responseData.getTotalElements());
-		entityDtoPage.setContent(appMapper.listAuthorsToListAuthorsDto(responseData.getContent()));
-		return entityDtoPage;
+		ResponseData<AuthorDto> authorDtoResponseData = new ResponseData<>();
+		authorDtoResponseData.setTotalElements(responseData.getTotalElements());
+		authorDtoResponseData.setContent(appMapper.listAuthorsToListAuthorsDto(responseData.getContent()));
+		return authorDtoResponseData;
+	}
+
+	private RequestOptions<Author> convertAuthorDtoRequestToAuthorRequest(
+			RequestOptions<AuthorDto> authorDtoRequestOptions
+	) {
+		RequestOptions<Author> options = new RequestOptions<>();
+		options.setPageSize(authorDtoRequestOptions.getPageSize());
+		options.setPageNumber(authorDtoRequestOptions.getPageNumber());
+		options.setSorting(authorDtoRequestOptions.getSorting());
+		options.setFilteredEntity(appMapper.authorDtoToAuthor(authorDtoRequestOptions.getFilteredEntity()));
+		return options;
 	}
 
 }

@@ -21,7 +21,7 @@ public interface EntityService<T extends AbstractEntity<? extends Serializable>>
 
 	List<T> getAll();
 
-	ResponseData<T> listEntities(RequestOptions requestOptions);
+	ResponseData<T> listEntities(RequestOptions<T> requestOptions);
 
 	List<T> bulkDeleteEntities(List<Serializable> entitiesIdsForDelete);
 

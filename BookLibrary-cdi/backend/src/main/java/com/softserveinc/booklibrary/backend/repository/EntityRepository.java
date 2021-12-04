@@ -22,7 +22,7 @@ public interface EntityRepository<T extends AbstractEntity<? extends Serializabl
 
 	List<T> getAll();
 
-	ResponseData<T> listEntities(RequestOptions requestOptions);
+	ResponseData<T> listEntities(RequestOptions<T> requestOptions);
 
 	List<T> bulkDeleteEntities (List<Serializable> entitiesIdsForDelete);
 }
