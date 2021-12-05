@@ -33,7 +33,7 @@ export class AuthorsPaginationTableComponent implements OnInit {
         private paginationService: PaginationService<Author>,
         private sortingService: SortingService
     ) {
-        this.requestOptions.filteredEntity = new Author(null, null, null, null)
+        this.requestOptions.filteredEntity = new Author(null, null, null, 0.00)
         this.isAllChecked  = false;
     }
 

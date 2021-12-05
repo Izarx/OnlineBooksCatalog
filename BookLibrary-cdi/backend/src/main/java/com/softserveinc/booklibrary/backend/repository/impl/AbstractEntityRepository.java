@@ -210,7 +210,14 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 		return orderList;
 	}
 
-	private List<Predicate> getFilteringParams(RequestOptions<T> options,
+	/**
+	 * Create list of predicates to obtain objects according to filtering options
+	 * @param options request options which consists entity with filtering fields
+	 * @param builder
+	 * @param rootEntity
+	 * @return
+	 */
+	protected List<Predicate> getFilteringParams(RequestOptions<T> options,
 	                                           CriteriaBuilder builder,
 	                                           Root<T> rootEntity){
 		List<Predicate> predicates = new ArrayList<>();
@@ -221,7 +228,7 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 
 		for (Field field : fields) {
 			Object fieldValue = ReflectionUtils.getField(field, options.getFilteredEntity());
-			if (ObjectUtils.isEmpty(fieldValue)) {
+			if (ObjectUtils.isEmpty(fieldValue) && ObjectUtils.isEmpty(options.getRanges().get(field.getName()))) {
 				continue;
 			}
 			if (fieldValue instanceof String) {
@@ -230,10 +237,12 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 			}
 			else if (fieldValue instanceof Number) {
 				BigDecimal range = (BigDecimal) options.getRanges().get(field.getName());
-				if (ObjectUtils.isNotEmpty(range)) {
-					Path<BigDecimal> path = rootEntity.get(field.getName());
-					predicates.add(builder
-							.between(path , (BigDecimal) fieldValue, range));
+				Path<BigDecimal> path = rootEntity.get(field.getName());
+				if (ObjectUtils.isNotEmpty(range) && ObjectUtils.isNotEmpty(fieldValue)) {
+					predicates.add(builder.between(path , (BigDecimal) fieldValue, range));
+				}
+				if (ObjectUtils.isEmpty(range) && ObjectUtils.isNotEmpty(fieldValue)) {
+					predicates.add(builder.greaterThanOrEqualTo(path,(BigDecimal) fieldValue));
 				}
 			}
 		}
