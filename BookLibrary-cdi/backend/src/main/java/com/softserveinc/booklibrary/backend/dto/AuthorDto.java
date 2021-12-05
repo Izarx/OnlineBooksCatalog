@@ -13,5 +13,6 @@ public final class AuthorDto {
 	private String firstName;
 	private String lastName;
 	private BigDecimal authorRating;
+	private BigDecimal authorRatingRange;
 
 }

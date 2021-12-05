@@ -2,10 +2,9 @@ package com.softserveinc.booklibrary.backend.pagination;
 
 
 import java.util.List;
+import java.util.Map;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
@@ -16,5 +15,6 @@ public class RequestOptions<T> {
 	private int pageNumber;
 	private List<SortableColumn> sorting;
 	private T filteredEntity;
+	private Map<String, Number> ranges;
 
 }

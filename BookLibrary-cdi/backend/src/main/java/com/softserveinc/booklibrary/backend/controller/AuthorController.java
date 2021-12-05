@@ -1,6 +1,7 @@
 package com.softserveinc.booklibrary.backend.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import com.softserveinc.booklibrary.backend.dto.ApplicationMapper;
@@ -113,6 +114,8 @@ public class AuthorController {
 		options.setPageNumber(authorDtoRequestOptions.getPageNumber());
 		options.setSorting(authorDtoRequestOptions.getSorting());
 		options.setFilteredEntity(appMapper.authorDtoToAuthor(authorDtoRequestOptions.getFilteredEntity()));
+		options.setRanges(new HashMap<>());
+		options.getRanges().put("authorRating", authorDtoRequestOptions.getFilteredEntity().getAuthorRatingRange());
 		return options;
 	}
 

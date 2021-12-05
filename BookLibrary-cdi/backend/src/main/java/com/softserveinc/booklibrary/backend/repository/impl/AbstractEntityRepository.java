@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -20,6 +21,7 @@ import javax.persistence.criteria.CriteriaBuilder.In;
 import javax.persistence.criteria.CriteriaDelete;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Order;
+import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
@@ -116,14 +118,13 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 		ResponseData<T> responseData = new ResponseData<>();
 		int pageSize = requestOptions.getPageSize();
 		int pageNumber = requestOptions.getPageNumber();
-		T filteredEntity = requestOptions.getFilteredEntity();
 		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
 
 		CriteriaQuery<T> criteriaQuery = builder.createQuery(type);
 		Root<T> rootEntity = criteriaQuery.from(type);
 		CriteriaQuery<T> selectEntities = criteriaQuery.select(rootEntity);
 
-		List<Predicate> predicates = getFilteringParams(filteredEntity, builder, rootEntity);
+		List<Predicate> predicates = getFilteringParams(requestOptions, builder, rootEntity);
 
 		criteriaQuery.where(predicates.toArray(new Predicate[]{}));
 
@@ -209,17 +210,17 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 		return orderList;
 	}
 
-	private List<Predicate> getFilteringParams(T filteredEntity,
+	private List<Predicate> getFilteringParams(RequestOptions<T> options,
 	                                           CriteriaBuilder builder,
 	                                           Root<T> rootEntity){
 		List<Predicate> predicates = new ArrayList<>();
-		List<Field> fields = Arrays.stream(filteredEntity.getClass().getDeclaredFields())
+		List<Field> fields = Arrays.stream(options.getFilteredEntity().getClass().getDeclaredFields())
 				.filter(f -> !Modifier.isStatic(f.getModifiers()))
 				.peek(f -> f.setAccessible(true))
 				.collect(Collectors.toList());
 
 		for (Field field : fields) {
-			Object fieldValue = ReflectionUtils.getField(field, filteredEntity);
+			Object fieldValue = ReflectionUtils.getField(field, options.getFilteredEntity());
 			if (ObjectUtils.isEmpty(fieldValue)) {
 				continue;
 			}
@@ -228,7 +229,12 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 						"%" + fieldValue + '%'));
 			}
 			else if (fieldValue instanceof Number) {
-				predicates.add(builder.equal(rootEntity.get(field.getName()), fieldValue));
+				BigDecimal range = (BigDecimal) options.getRanges().get(field.getName());
+				if (ObjectUtils.isNotEmpty(range)) {
+					Path<BigDecimal> path = rootEntity.get(field.getName());
+					predicates.add(builder
+							.between(path , (BigDecimal) fieldValue, range));
+				}
 			}
 		}
 		return predicates;

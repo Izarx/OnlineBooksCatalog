@@ -22,6 +22,13 @@
 			       type="number"
 			       min="0" value="0" step="0.01"
 			>
+			<label>to</label>
+			<input [(ngModel)]="filteredAuthor.authorRatingRange"
+			       class="form-control"
+			       formControlName="authorRating"
+			       type="number"
+			       min="0.00" value="0.00" step="0.01"
+			>
 		</span>
 		<span class="form-group add-top-bottom-padding pull-right">
 			<button class="btn btn-header btn-primary" type="submit">Search</button>

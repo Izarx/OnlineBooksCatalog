@@ -24,7 +24,7 @@ export class AuthorsPaginationTableComponent implements OnInit {
 
     page: ResponseData<Author> = new ResponseData();
     requestOptions: RequestOptions<Author> = new RequestOptions();
-    author: Author = new Author(null, '', '', 0.0);
+    author: Author = new Author(null, '', '', 0.00);
     deniedToDeleteAuthors: Author[] = []
     isAllChecked: boolean;
 

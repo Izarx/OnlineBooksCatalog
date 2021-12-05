@@ -18,9 +18,13 @@ export class AuthorsFilteringComponent implements OnInit {
     this.authorFilteringForm = new FormGroup({
       firstName: new FormControl('', []),
       lastName: new FormControl('', []),
-      authorRating: new FormControl('', [
-        Validators.min(0),
-        Validators.max(5)
+      authorRating: new FormControl(null, [
+        Validators.min(0.00),
+        Validators.max(5.00)
+      ]),
+      authorRatingRange: new FormControl(null, [
+        Validators.min(0.00),
+        Validators.max(5.00)
       ])
     });
   }
@@ -33,5 +37,6 @@ export class AuthorsFilteringComponent implements OnInit {
     this.filteredAuthor.firstName = null;
     this.filteredAuthor.lastName = null;
     this.filteredAuthor.authorRating = null;
+    this.filteredAuthor.authorRatingRange = null;
   }
 }
