@@ -38,4 +38,8 @@ export class AuthorService {
     public getAuthorById(authorId: number): Observable<Author> {
         return this.httpClient.get<Author>(baseUrl + `/${authorId}`);
     }
+
+    public getAuthors() : Observable<Array<Author>> {
+        return this.httpClient.get<Array<Author>>(baseUrl);
+    }
 }

@@ -29,7 +29,7 @@ export class AuthorsFilteringComponent implements OnInit {
     });
   }
 
-  searchFilteredAuthor(filteredAuthor: Author) {
+  searchFilteredAuthors(filteredAuthor: Author) {
     if (filteredAuthor.authorRating === null) {
       filteredAuthor.authorRating = 0.00;
     }

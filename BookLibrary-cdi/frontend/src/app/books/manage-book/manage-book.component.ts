@@ -10,7 +10,7 @@ import {Book} from "../../model/book";
 })
 export class ManageBookComponent implements OnInit {
 
-  book: Book = new Book(null, '', 0, 0, '', 0, [])
+  book: Book = new Book(null, '', 0, '', '', 0, [])
 
   constructor(
       private route: ActivatedRoute,

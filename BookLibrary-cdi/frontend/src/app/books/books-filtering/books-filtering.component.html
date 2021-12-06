@@ -1,0 +1,70 @@
+<div class="panel-body panel-body-without-lr-padding">
+	<form class="form-inline" (ngSubmit)="searchFilteredBooks(filteredBook)" [formGroup]="bookFilteringForm">
+		<span class="pull-left">
+			<span class="form-group add-top-bottom-padding">
+				<label>Name</label>
+				<input [(ngModel)]="filteredBook.name"
+				       class="form-control"
+				       formControlName="name"
+				       type="text">
+			</span>
+			<span class="form-group add-top-bottom-padding">
+				<label>Rating from</label>
+				<input [(ngModel)]="filteredBook.bookRating"
+				       class="form-control form-control-for-numbers"
+				       formControlName="bookRating"
+				       type="number"
+				       min="0.00" max="5.00" step="0.01"
+				>
+				<label>to</label>
+				<input [(ngModel)]="filteredBook.bookRatingRange"
+				       class="form-control form-control-for-numbers"
+				       formControlName="bookRatingRange"
+				       type="number"
+				       [min]="filteredBook.bookRating" max="5.00" step="0.01"
+				>
+			</span>
+			<span class="form-group add-top-bottom-padding">
+				<label>Year from</label>
+				<input [(ngModel)]="filteredBook.yearPublished"
+				       class="form-control form-control-for-numbers"
+				       formControlName="yearPublished"
+				       type="number"
+				       min="0" [max]="getCurrentYear()" step="1"
+				>
+				<label>to</label>
+				<input [(ngModel)]="filteredBook.yearPublishedRange"
+				       class="form-control form-control-for-numbers"
+				       formControlName="yearPublishedRange"
+				       type="number"
+				       [min]="filteredBook.yearPublished" [max]="getCurrentYear()" step="1"
+				>
+			</span>
+			<span class="form-group add-top-bottom-padding">
+				<label>ISBN</label>
+				<input [(ngModel)]="filteredBook.isbn"
+				       class="form-control"
+				       formControlName="isbn"
+				       type="text">
+			</span>
+			<span class="form-group add-top-bottom-padding">
+<!--				<label>Authors</label>-->
+<!--				<select [(ngModel)]="authorFilteringString"-->
+<!--				        class="form-control"-->
+<!--				        formControlName="authors"-->
+<!--				>-->
+<!--					<option *ngFor="let author of getAllAuthors()"-->
+<!--					        [ngValue]="author"-->
+<!--					>-->
+<!--						{{author.firstName + ' ' + author.lastName}}-->
+<!--					</option>-->
+
+<!--				</select>-->
+			</span>
+		</span>
+		<span class="form-group add-top-bottom-padding pull-right">
+			<button class="btn btn-header btn-primary" type="submit">Search</button>
+			<button class="btn btn-default" (click)="reset()">Reset</button>
+		</span>
+	</form>
+</div>

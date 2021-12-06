@@ -24,6 +24,7 @@ export class BookService {
     }
 
     public getPage(appRequestPage: RequestOptions<Book>): Observable<ResponseData<Book>> {
+        console.log(appRequestPage);
         return this.httpClient.post<ResponseData<Book>>(baseUrl, appRequestPage);
     }
 

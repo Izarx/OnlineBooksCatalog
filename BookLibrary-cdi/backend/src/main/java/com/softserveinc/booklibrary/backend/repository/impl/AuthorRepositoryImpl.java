@@ -30,8 +30,7 @@ public class AuthorRepositoryImpl extends AbstractEntityRepository<Author> imple
 
 	@Override
 	protected List<Author> getUnavailableToDeleteEntities(List<Serializable> entitiesIdsForDelete,
-	                                                      CriteriaQuery<Author> criteriaQuery,
-	                                                      CriteriaBuilder builder) {
+	                                                      CriteriaQuery<Author> criteriaQuery) {
 		Root<Author> root = criteriaQuery.from(Author.class);
 		root.join("books");
 		criteriaQuery.select(root).where(root.get("authorId").in(entitiesIdsForDelete));

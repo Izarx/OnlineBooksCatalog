@@ -37,7 +37,7 @@ public class Book implements AbstractEntity<Integer> {
 	private Integer yearPublished;
 
 	@Column(name = "isbn", nullable = false, unique = true)
-	private Long isbn;
+	private String isbn;
 
 	@Column(name = "publisher", length = PUBLISHER_LENGTH)
 	private String publisher;

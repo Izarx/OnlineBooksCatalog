@@ -124,15 +124,15 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 		Root<T> rootEntity = criteriaQuery.from(type);
 		CriteriaQuery<T> selectEntities = criteriaQuery.select(rootEntity);
 
-		List<Predicate> predicates = getFilteringParams(requestOptions, builder, rootEntity);
+		List<Predicate> predicates = new ArrayList<>();
+
+		if (ObjectUtils.isNotEmpty(requestOptions.getFilteredEntity())) {
+			predicates = getFilteringParams(requestOptions, builder, rootEntity);
+		}
 
 		criteriaQuery.where(predicates.toArray(new Predicate[]{}));
 
 		responseData.setTotalElements(getTotalElementsFromDb(builder, predicates));
-
-		while (pageSize * pageNumber >= responseData.getTotalElements()) {
-			pageNumber--;
-		}
 
 		criteriaQuery.orderBy(setOrdersByColumns(requestOptions.getSorting(), builder, rootEntity));
 		List<T> getAll = entityManager
@@ -159,7 +159,7 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 		Root<T> rootDelete = criteriaDelete.from(type);
 
 		List<T> unavailableToDeleteEntities =
-				getUnavailableToDeleteEntities(entitiesIdsForDelete, criteriaQuery, builder);
+				getUnavailableToDeleteEntities(entitiesIdsForDelete, criteriaQuery);
 		if (CollectionUtils.isNotEmpty(unavailableToDeleteEntities)) {
 			unavailableToDeleteEntities
 					.forEach(entity -> entitiesIdsForDelete.remove(entity.getEntityId()));
@@ -171,8 +171,7 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 	}
 
 	protected List<T> getUnavailableToDeleteEntities(List<Serializable> entitiesIdsForDelete,
-	                                                          CriteriaQuery<T> criteriaQuery,
-	                                                          CriteriaBuilder builder) {
+	                                                          CriteriaQuery<T> criteriaQuery) {
 		return Collections.emptyList();
 	}
 
@@ -236,19 +235,30 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 						"%" + fieldValue + '%'));
 			}
 			else if (fieldValue instanceof Number) {
-				BigDecimal range = (BigDecimal) options.getRanges().get(field.getName());
-				Path<BigDecimal> path = rootEntity.get(field.getName());
-				if (ObjectUtils.isNotEmpty(range) && ObjectUtils.isNotEmpty(fieldValue)) {
-					predicates.add(builder.between(path , (BigDecimal) fieldValue, range));
+				if (fieldValue instanceof BigDecimal) {
+					BigDecimal range = (BigDecimal) options.getRanges().get(field.getName());
+					Path<BigDecimal> path = rootEntity.get(field.getName());
+					if (ObjectUtils.isNotEmpty(range) && ObjectUtils.isNotEmpty(fieldValue)) {
+						predicates.add(builder.between(path , (BigDecimal) fieldValue, range));
+					}
+					if (ObjectUtils.isEmpty(range) && ObjectUtils.isNotEmpty(fieldValue)) {
+						predicates.add(builder.greaterThanOrEqualTo(path,(BigDecimal) fieldValue));
+					}
 				}
-				if (ObjectUtils.isEmpty(range) && ObjectUtils.isNotEmpty(fieldValue)) {
-					predicates.add(builder.greaterThanOrEqualTo(path,(BigDecimal) fieldValue));
+				else if (fieldValue instanceof Integer) {
+					Integer range = (Integer) options.getRanges().get(field.getName());
+					Path<Integer> path = rootEntity.get(field.getName());
+					if (ObjectUtils.isNotEmpty(range) && ObjectUtils.isNotEmpty(fieldValue)) {
+						predicates.add(builder.between(path , (Integer) fieldValue, range));
+					}
+					if (ObjectUtils.isEmpty(range) && ObjectUtils.isNotEmpty(fieldValue)) {
+						predicates.add(builder.greaterThanOrEqualTo(path,(Integer) fieldValue));
+					}
 				}
 			}
 		}
 		return predicates;
 	}
-
 
 	private Integer getTotalElementsFromDb (CriteriaBuilder builder, List<Predicate> predicates) {
 		CriteriaQuery<Long> countCriteriaQuery = builder.createQuery(Long.class);

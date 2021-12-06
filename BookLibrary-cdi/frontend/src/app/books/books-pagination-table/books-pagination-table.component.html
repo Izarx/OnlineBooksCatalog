@@ -26,34 +26,10 @@
 						</div>
 					</div>
 					<div class="panel-collapse collapse" id="collapseBookFilter">
-						<div class="panel-body panel-body-without-lr-padding">
-							<form class="form-inline">
-								<span class="form-group add-top-bottom-padding">
-									<label for="inputFilterName">Name</label>
-									<input class="form-control" id="inputFilterName" type="text">
-								</span>
-								<span class="form-group add-top-bottom-padding">
-									<label for="inputFilterAuthor">Author</label>
-									<input class="form-control" id="inputFilterAuthor" type="text">
-								</span>
-								<span class="form-group add-top-bottom-padding">
-									<label for="inputFilterRating">Rating</label>
-									<input class="form-control" id="inputFilterRating" type="number">
-								</span>
-								<span class="form-group add-top-bottom-padding">
-									<label for="inputFilterYear">Year</label>
-									<input class="form-control" id="inputFilterYear" type="number">
-								</span>
-								<span class="form-group add-top-bottom-padding">
-									<label for="inputFilterIsbn">ISBN</label>
-									<input class="form-control" id="inputFilterIsbn" type="text">
-								</span>
-								<span class="form-group add-top-bottom-padding pull-right">
-									<button class="btn btn-header btn-primary" type="submit">Search</button>
-									<button class="btn btn-default" type="submit">Reset</button>
-								</span>
-							</form>
-						</div>
+						<app-books-filtering
+								[filteredBook]="requestOptions.filteredEntity"
+								(initFilteredBook)="getFilteredData($event)"
+						></app-books-filtering>
 					</div>
 				</div>
 				<div class="col-sm-12">

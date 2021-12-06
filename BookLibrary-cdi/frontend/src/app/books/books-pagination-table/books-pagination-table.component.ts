@@ -26,7 +26,7 @@ export class BooksPaginationTableComponent implements OnInit {
     ];
 
     page: ResponseData<Book> = new ResponseData()
-    book: Book = new Book(null, '', 0, 0, '', 0.0, null)
+    book: Book = new Book(null, '', 0, '', '', 0.0, [])
     requestOptions: RequestOptions<Book> = new RequestOptions();
     authors: Author[]
     isAllChecked: boolean;
@@ -36,6 +36,7 @@ export class BooksPaginationTableComponent implements OnInit {
         private paginationService: PaginationService<Book>,
         private sortingService: SortingService,
     ) {
+        this.requestOptions.filteredEntity = new Book(null, null, null, null, null, 0.00, null);
         this.isAllChecked  = false;
     }
 
@@ -114,6 +115,11 @@ export class BooksPaginationTableComponent implements OnInit {
         this.getData();
     }
 
+    public getFilteredData(filteredBook: Book) {
+        this.requestOptions.filteredEntity = filteredBook;
+        this.getData();
+    }
+
     setCheckForAll() {
         this.page.content.forEach(a => a.isChecked = this.isAllChecked);
     }
@@ -126,8 +132,7 @@ export class BooksPaginationTableComponent implements OnInit {
         this.book = book;
     }
 
-    isbnOutput(isbn: number) : string {
-        let isbnString = isbn.toString();
-        return isbnString.substr(0, 3) + '-' + isbnString.substr(3, 9) + '-' + isbnString.substr(12, 1)
+    isbnOutput(isbn: string) : string {
+        return isbn.substr(0, 3) + '-' + isbn.substr(3, 9) + '-' + isbn.substr(12, 1)
     }
 }

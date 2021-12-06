@@ -1,11 +1,16 @@
 package com.softserveinc.booklibrary.backend.controller;
 
+import java.util.HashMap;
+
 import com.softserveinc.booklibrary.backend.dto.ApplicationMapper;
+import com.softserveinc.booklibrary.backend.dto.AuthorDto;
 import com.softserveinc.booklibrary.backend.dto.BookDto;
+import com.softserveinc.booklibrary.backend.entity.Author;
 import com.softserveinc.booklibrary.backend.entity.Book;
 import com.softserveinc.booklibrary.backend.pagination.RequestOptions;
 import com.softserveinc.booklibrary.backend.pagination.ResponseData;
 import com.softserveinc.booklibrary.backend.service.BookService;
+import org.apache.commons.lang3.ObjectUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -49,10 +54,10 @@ public class BookController {
 	}
 
 	@PostMapping
-	public ResponseEntity<ResponseData<BookDto>> listBooks(@RequestBody RequestOptions requestOptions) {
+	public ResponseEntity<ResponseData<BookDto>> listBooks(@RequestBody RequestOptions<BookDto> requestOptions) {
 		return ResponseEntity.status(HttpStatus.OK)
 				.body(convertBookPageToBookDtoPage(
-						bookService.listEntities(requestOptions)));
+						bookService.listEntities(convertBookDtoRequestToBookRequest(requestOptions))));
 	}
 
 	@PostMapping("/create")
@@ -89,5 +94,23 @@ public class BookController {
 		entityDtoPage.setContent(appMapper.listBooksToListBooksDto(responseData.getContent()));
 		return entityDtoPage;
 	}
+
+	private RequestOptions<Book> convertBookDtoRequestToBookRequest(
+			RequestOptions<BookDto> bookDtoRequestOptions
+	) {
+		RequestOptions<Book> options = new RequestOptions<>();
+		options.setPageSize(bookDtoRequestOptions.getPageSize());
+		options.setPageNumber(bookDtoRequestOptions.getPageNumber());
+		options.setSorting(bookDtoRequestOptions.getSorting());
+		BookDto filteredBook = bookDtoRequestOptions.getFilteredEntity();
+		if (ObjectUtils.isNotEmpty(filteredBook)) {
+			options.setFilteredEntity(appMapper.bookDtoToBook(filteredBook));
+			options.setRanges(new HashMap<>());
+			options.getRanges().put("bookRating", filteredBook.getBookRatingRange());
+			options.getRanges().put("yearPublished", filteredBook.getYearPublishedRange());
+		}
+		return options;
+	}
+
 
 }

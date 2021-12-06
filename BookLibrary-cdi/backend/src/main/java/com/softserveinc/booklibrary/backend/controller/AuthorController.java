@@ -11,6 +11,7 @@ import com.softserveinc.booklibrary.backend.entity.Author;
 import com.softserveinc.booklibrary.backend.pagination.RequestOptions;
 import com.softserveinc.booklibrary.backend.pagination.ResponseData;
 import com.softserveinc.booklibrary.backend.service.AuthorService;
+import org.apache.commons.lang3.ObjectUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -93,9 +94,9 @@ public class AuthorController {
 	}
 
 	@GetMapping
-	public ResponseEntity<List<AuthorDto>> getAllAuthors() {
+	public ResponseEntity<List<AuthorNameDto>> getAllAuthors() {
 		return ResponseEntity
-				.ok(appMapper.listAuthorsToListAuthorsDto(authorService.getAll()));
+				.ok(appMapper.listAuthorsToListAuthorsNameDto(authorService.getAll()));
 	}
 
 	private ResponseData<AuthorDto> convertAuthorResponseToAuthorDtoResponse(
@@ -113,9 +114,12 @@ public class AuthorController {
 		options.setPageSize(authorDtoRequestOptions.getPageSize());
 		options.setPageNumber(authorDtoRequestOptions.getPageNumber());
 		options.setSorting(authorDtoRequestOptions.getSorting());
-		options.setFilteredEntity(appMapper.authorDtoToAuthor(authorDtoRequestOptions.getFilteredEntity()));
-		options.setRanges(new HashMap<>());
-		options.getRanges().put("authorRating", authorDtoRequestOptions.getFilteredEntity().getAuthorRatingRange());
+		AuthorDto filteredAuthor = authorDtoRequestOptions.getFilteredEntity();
+		if (ObjectUtils.isNotEmpty(filteredAuthor)) {
+			options.setFilteredEntity(appMapper.authorDtoToAuthor(filteredAuthor));
+			options.setRanges(new HashMap<>());
+			options.getRanges().put("authorRating", filteredAuthor.getAuthorRatingRange());
+		}
 		return options;
 	}
 

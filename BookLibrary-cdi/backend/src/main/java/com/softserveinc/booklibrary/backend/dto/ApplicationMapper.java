@@ -19,6 +19,8 @@ public interface ApplicationMapper {
 
 	AuthorNameDto authorToAuthorNameDto (Author author);
 
+	@Mapping(target = "bookRatingRange", ignore = true)
+	@Mapping(target = "yearPublishedRange", ignore = true)
 	BookDto bookToBookDto(Book book);
 
 	Book bookDtoToBook(BookDto bookDto);
