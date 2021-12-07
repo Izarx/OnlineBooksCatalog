@@ -3,32 +3,25 @@
 		<span class="pull-left">
 			<span class="form-group add-top-bottom-padding">
 				<label>First Name</label>
-				<input [(ngModel)]="authorFilter.firstName"
+				<input [(ngModel)]="authorFilter.name"
 				       class="form-control"
-				       formControlName="firstName"
-				       type="text">
-			</span>
-			<span class="form-group add-top-bottom-padding">
-				<label>Last Name</label>
-				<input [(ngModel)]="authorFilter.lastName"
-				       class="form-control"
-				       formControlName="lastName"
+				       formControlName="name"
 				       type="text">
 			</span>
 			<span class="form-group add-top-bottom-padding">
 				<label>Rating from</label>
-				<input [(ngModel)]="authorFilter.authorRating"
+				<input [(ngModel)]="authorFilter.authorRatingFrom"
 				       class="form-control form-control-for-numbers"
-				       formControlName="authorRating"
+				       formControlName="authorRatingFrom"
 				       type="number"
 				       min="0.00" max="5.00" step="0.01"
 				>
 				<label>to</label>
-				<input [(ngModel)]="authorFilter.authorRatingRange"
+				<input [(ngModel)]="authorFilter.authorRatingTo"
 				       class="form-control form-control-for-numbers"
-				       formControlName="authorRatingRange"
+				       formControlName="authorRatingTo"
 				       type="number"
-				       [min]="authorFilter.authorRating" max="5.00" step="0.01"
+				       [min]="authorFilter.authorRatingTo" max="5.00" step="0.01"
 				>
 			</span>
 		</span>

@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormGroup} from "@angular/forms";
+import {FormControl, FormGroup} from "@angular/forms";
 import {AuthorFilter} from "../../model/author-filter";
 
 @Component({
@@ -15,13 +15,14 @@ export class AuthorsFilteringComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.authorFilteringForm = new FormGroup({});
+    this.authorFilteringForm = new FormGroup({
+      name: new FormControl(null, []),
+      authorRatingFrom: new FormControl(null, []),
+      authorRatingTo: new FormControl(null, [])
+    });
   }
 
   searchFilteredAuthors(authorFilter: AuthorFilter) {
-    if (authorFilter.authorRatingFrom === null) {
-      authorFilter.authorRatingFrom = 0.00;
-    }
     this.initFilteredAuthor.emit(authorFilter);
   }
 

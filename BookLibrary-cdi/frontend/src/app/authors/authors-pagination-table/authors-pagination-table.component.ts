@@ -6,7 +6,7 @@ import {PaginationService} from "../../pagination/pagination.service";
 import {SortableColumn} from "../../model/sortable-column";
 import {SortingService} from "../../sorting/sorting.service";
 import {RequestOptions} from "../../model/request-options";
-import {AuthorFilter} from "../../model/author-filter";
+import {AuthorFilter} from '../../model/author-filter';
 
 @Component({
     selector: 'app-authors-pagination-table',
@@ -46,6 +46,7 @@ export class AuthorsPaginationTableComponent implements OnInit {
         this.authorService.getPage(this.requestOptions)
             .subscribe(page => {
                     this.paginationService.initPageable(this.requestOptions, page.totalElements);
+                    console.log(page);
                     this.page = page;
                     this.isAllChecked  = false;
                 },

@@ -126,7 +126,7 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 
 		List<Predicate> predicates = new ArrayList<>();
 
-		if (ObjectUtils.isNotEmpty(requestOptions.getEntityFilter())) {
+		if (ObjectUtils.isNotEmpty(requestOptions.getFilteredEntity())) {
 			predicates = getFilteringParams(requestOptions, builder, rootEntity);
 		}
 
@@ -219,47 +219,6 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 	protected abstract List<Predicate> getFilteringParams(RequestOptions<V> options,
 	                                           CriteriaBuilder builder,
 	                                           Root<T> rootEntity);
-//	{
-//		List<Predicate> predicates = new ArrayList<>();
-//		List<Field> fields = Arrays.stream(options.getFilteredEntity().getClass().getDeclaredFields())
-//				.filter(f -> !Modifier.isStatic(f.getModifiers()))
-//				.peek(f -> f.setAccessible(true))
-//				.collect(Collectors.toList());
-//
-//		for (Field field : fields) {
-//			Object fieldValue = ReflectionUtils.getField(field, options.getFilteredEntity());
-//			if (ObjectUtils.isEmpty(fieldValue) && ObjectUtils.isEmpty(options.getRanges().get(field.getName()))) {
-//				continue;
-//			}
-//			if (fieldValue instanceof String) {
-//				predicates.add(builder.like(rootEntity.get(field.getName()),
-//						"%" + fieldValue + '%'));
-//			}
-//			else if (fieldValue instanceof Number) {
-//				if (fieldValue instanceof BigDecimal) {
-//					BigDecimal range = (BigDecimal) options.getRanges().get(field.getName());
-//					Path<BigDecimal> path = rootEntity.get(field.getName());
-//					if (ObjectUtils.isNotEmpty(range) && ObjectUtils.isNotEmpty(fieldValue)) {
-//						predicates.add(builder.between(path , (BigDecimal) fieldValue, range));
-//					}
-//					if (ObjectUtils.isEmpty(range) && ObjectUtils.isNotEmpty(fieldValue)) {
-//						predicates.add(builder.greaterThanOrEqualTo(path,(BigDecimal) fieldValue));
-//					}
-//				}
-//				else if (fieldValue instanceof Integer) {
-//					Integer range = (Integer) options.getRanges().get(field.getName());
-//					Path<Integer> path = rootEntity.get(field.getName());
-//					if (ObjectUtils.isNotEmpty(range) && ObjectUtils.isNotEmpty(fieldValue)) {
-//						predicates.add(builder.between(path , (Integer) fieldValue, range));
-//					}
-//					if (ObjectUtils.isEmpty(range) && ObjectUtils.isNotEmpty(fieldValue)) {
-//						predicates.add(builder.greaterThanOrEqualTo(path,(Integer) fieldValue));
-//					}
-//				}
-//			}
-//		}
-//		return predicates;
-//	}
 
 	private Integer getTotalElementsFromDb (CriteriaBuilder builder, List<Predicate> predicates) {
 		CriteriaQuery<Long> countCriteriaQuery = builder.createQuery(Long.class);

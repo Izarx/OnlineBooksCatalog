@@ -13,6 +13,6 @@ public class RequestOptions<V> {
 	private int pageSize;
 	private int pageNumber;
 	private List<SortableColumn> sorting;
-	private V entityFilter;
+	private V filteredEntity;
 
 }

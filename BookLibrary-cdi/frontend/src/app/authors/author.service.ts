@@ -29,6 +29,7 @@ export class AuthorService {
     }
 
     public getPage(appRequestPage: RequestOptions<AuthorFilter>): Observable<ResponseData<Author>> {
+        console.log('author service {}', appRequestPage)
         return this.httpClient.post<ResponseData<Author>>(baseUrl, appRequestPage);
     }
 

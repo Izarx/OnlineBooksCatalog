@@ -50,6 +50,7 @@ public class BookRepositoryImpl extends AbstractEntityRepository<Book, BookFilte
 	}
 
 
+	@Override
 	protected List<Predicate> getFilteringParams(RequestOptions<BookFilter> options,
 	                                             CriteriaBuilder builder,
 	                                             Root<Book> rootEntity) {
