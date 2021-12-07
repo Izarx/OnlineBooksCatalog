@@ -1,11 +1,10 @@
-<div *ngIf="requestOptions">
+<div class="pager-container" *ngIf="requestOptions">
 	<div class="dropdown">
 		<div>
 			<span class="form-control-sm input-sm">
 			{{requestOptions.pageSize}}
 				<i class="fa fa-caret-down"></i>
 			</span>
-			<span class="text-muted">records per page</span>
 		</div>
 		<div class="dropdown-content">
 			<a (click)="updatePageSize(5)" [routerLink]="" class="list-group-item">5</a>
@@ -13,12 +12,13 @@
 			<a (click)="updatePageSize(25)" [routerLink]="" class="list-group-item">25</a>
 		</div>
 	</div>
+	<span class="text-muted pager-element">records per page</span>
 
 	<div class="pull-right">
 		<span class="text-muted text-center">
-        Showing {{requestOptions.numberOfFirstPageElement}} to {{requestOptions.numberOfElements}}
+            Showing {{requestOptions.numberOfFirstPageElement}} to {{requestOptions.numberOfElements}}
 			of {{requestOptions.totalElements}} entries
-    </span>
+        </span>
 		<div class="btn-group">
 			<button (click)="updatePageNumber(0)"
 			        [ngClass]="{'disabled': requestOptions.first }" [routerLink]=""

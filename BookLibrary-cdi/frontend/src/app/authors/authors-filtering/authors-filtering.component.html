@@ -1,0 +1,33 @@
+<div class="panel-body panel-body-without-lr-padding">
+	<form class="form-inline" (ngSubmit)="searchFilteredAuthors(authorFilter)" [formGroup]="authorFilteringForm">
+		<span class="pull-left">
+			<span class="form-group add-top-bottom-padding">
+				<label>First Name</label>
+				<input [(ngModel)]="authorFilter.name"
+				       class="form-control"
+				       formControlName="name"
+				       type="text">
+			</span>
+			<span class="form-group add-top-bottom-padding">
+				<label>Rating from</label>
+				<input [(ngModel)]="authorFilter.authorRatingFrom"
+				       class="form-control form-control-for-numbers"
+				       formControlName="authorRatingFrom"
+				       type="number"
+				       min="0.00" max="5.00" step="0.01"
+				>
+				<label>to</label>
+				<input [(ngModel)]="authorFilter.authorRatingTo"
+				       class="form-control form-control-for-numbers"
+				       formControlName="authorRatingTo"
+				       type="number"
+				       [min]="authorFilter.authorRatingTo" max="5.00" step="0.01"
+				>
+			</span>
+		</span>
+		<span class="form-group add-top-bottom-padding pull-right">
+			<button class="btn btn-header btn-primary" type="submit">Search</button>
+			<button class="btn btn-default" (click)="reset()">Reset</button>
+		</span>
+	</form>
+</div>

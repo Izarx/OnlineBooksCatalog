@@ -13,7 +13,7 @@ public final class BookDto {
 	private Integer bookId;
 	private String name;
 	private Integer yearPublished;
-	private Long isbn;
+	private String isbn;
 	private String publisher;
 	private BigDecimal bookRating;
 	private Set<AuthorDto> authors;

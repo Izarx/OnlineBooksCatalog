@@ -4,7 +4,7 @@ import {Observable} from "rxjs";
 import {ResponseData} from "../model/response-data";
 import {Book} from "../model/book";
 import {RequestOptions} from "../model/request-options";
-import {Author} from "../model/author";
+import {BookFilter} from "../model/book-filter";
 
 const baseUrl = 'http://localhost:8080/api/books';
 
@@ -24,7 +24,7 @@ export class BookService {
         return this.httpClient.delete<void>(baseUrl + `/delete/${bookId}`);
     }
 
-    public getPage(appRequestPage: RequestOptions): Observable<ResponseData<Book>> {
+    public getPage(appRequestPage: RequestOptions<BookFilter>): Observable<ResponseData<Book>> {
         return this.httpClient.post<ResponseData<Book>>(baseUrl, appRequestPage);
     }
 

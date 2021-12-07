@@ -15,6 +15,9 @@ import {BooksPaginationTableComponent} from './books/books-pagination-table/book
 import {CreateBookComponent} from './books/create-book/create-book.component';
 import {UpdateBookComponent} from './books/update-book/update-book.component';
 import {SortableColumnHeaderComponent} from './sorting/sortable-column-header/sortable-column-header.component';
+import { ManageBookComponent } from './books/manage-book/manage-book.component';
+import { AuthorsFilteringComponent } from './authors/authors-filtering/authors-filtering.component';
+import { BooksFilteringComponent } from './books/books-filtering/books-filtering.component';
 
 @NgModule({
     declarations: [
@@ -28,7 +31,10 @@ import {SortableColumnHeaderComponent} from './sorting/sortable-column-header/so
         BooksPaginationTableComponent,
         CreateBookComponent,
         UpdateBookComponent,
-        SortableColumnHeaderComponent
+        SortableColumnHeaderComponent,
+        ManageBookComponent,
+        AuthorsFilteringComponent,
+        BooksFilteringComponent
     ],
     imports: [
         BrowserModule,

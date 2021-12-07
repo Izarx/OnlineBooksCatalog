@@ -1,16 +1,18 @@
 package com.softserveinc.booklibrary.backend.controller;
 
-import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import com.softserveinc.booklibrary.backend.dto.ApplicationMapper;
 import com.softserveinc.booklibrary.backend.dto.AuthorDto;
 import com.softserveinc.booklibrary.backend.dto.AuthorNameDto;
+import com.softserveinc.booklibrary.backend.dto.filtering.AuthorFilter;
 import com.softserveinc.booklibrary.backend.entity.Author;
 import com.softserveinc.booklibrary.backend.pagination.RequestOptions;
 import com.softserveinc.booklibrary.backend.pagination.ResponseData;
 import com.softserveinc.booklibrary.backend.service.AuthorService;
+import org.apache.commons.lang3.ObjectUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -56,9 +58,9 @@ public class AuthorController {
 
 	@PostMapping
 	public ResponseEntity<ResponseData<AuthorDto>> listAuthors(
-			@RequestBody RequestOptions requestOptions) {
+			@RequestBody RequestOptions<AuthorFilter> requestOptions) {
 		return ResponseEntity
-				.ok(convertAuthorPageToAuthorDtoPage(
+				.ok(convertAuthorResponseToAuthorDtoResponse(
 						authorService.listEntities(requestOptions)));
 	}
 
@@ -93,17 +95,17 @@ public class AuthorController {
 	}
 
 	@GetMapping
-	public ResponseEntity<List<AuthorDto>> getAllAuthors() {
+	public ResponseEntity<List<AuthorNameDto>> getAllAuthors() {
 		return ResponseEntity
-				.ok(appMapper.listAuthorsToListAuthorsDto(authorService.getAll()));
+				.ok(appMapper.listAuthorsToListAuthorsNameDto(authorService.getAll()));
 	}
 
-	private ResponseData<AuthorDto> convertAuthorPageToAuthorDtoPage(
+	private ResponseData<AuthorDto> convertAuthorResponseToAuthorDtoResponse(
 			ResponseData<Author> responseData) {
-		ResponseData<AuthorDto> entityDtoPage = new ResponseData<>();
-		entityDtoPage.setTotalElements(responseData.getTotalElements());
-		entityDtoPage.setContent(appMapper.listAuthorsToListAuthorsDto(responseData.getContent()));
-		return entityDtoPage;
+		ResponseData<AuthorDto> authorDtoResponseData = new ResponseData<>();
+		authorDtoResponseData.setTotalElements(responseData.getTotalElements());
+		authorDtoResponseData.setContent(appMapper.listAuthorsToListAuthorsDto(responseData.getContent()));
+		return authorDtoResponseData;
 	}
 
 }

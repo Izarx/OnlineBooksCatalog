@@ -1,5 +1,5 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {FormControl, FormGroup} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Book} from "../../model/book";
 import {BookService} from "../book.service";
 
@@ -22,8 +22,10 @@ export class CreateBookComponent implements OnInit {
     ngOnInit(): void {
         this.form = new FormGroup({
             name: new FormControl(),
-            yearPublished: new FormControl(),
-            isbn: new FormControl(),
+            yearPublished: new FormControl('',
+                Validators.max(new Date().getFullYear())),
+            isbn: new FormControl('',
+                Validators.pattern("^(?=(?:\\D*\\d){10}(?:(?:\\D*\\d){3})?$)[\\d-]+$"))
         })
     }
 
@@ -43,7 +45,7 @@ export class CreateBookComponent implements OnInit {
             const formData = {...this.form.value};
             this.book.name = formData.name;
             this.book.yearPublished = formData.yearPublished;
-            this.book.isbn = formData.isbn;
+            this.book.isbn = formData.isbn.trim();
             this.book.authors = formData.authors;
             this.createBook(this.book);
             document.getElementById('createBookModalCloseButton').click()

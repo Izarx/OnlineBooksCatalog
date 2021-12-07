@@ -4,38 +4,38 @@ import {RequestOptions} from "../model/request-options";
 @Injectable({
     providedIn: 'root'
 })
-export class PaginationService {
+export class PaginationService<V> {
 
     constructor() {
     }
 
-    public getNextPage(requestPage: RequestOptions): RequestOptions {
+    public getNextPage(requestPage: RequestOptions<V>): RequestOptions<V> {
         if (!requestPage.last) {
             requestPage.pageNumber = requestPage.pageNumber + 1;
         }
         return requestPage;
     }
 
-    public getPreviousPage(requestPage: RequestOptions): RequestOptions {
+    public getPreviousPage(requestPage: RequestOptions<V>): RequestOptions<V> {
         if (!requestPage.first) {
             requestPage.pageNumber = requestPage.pageNumber - 1;
         }
         return requestPage;
     }
 
-    public getPageInNewSize(requestPage: RequestOptions, pageSize: number): RequestOptions {
+    public getPageInNewSize(requestPage: RequestOptions<V>, pageSize: number): RequestOptions<V> {
         requestPage.pageSize = pageSize;
         requestPage.pageNumber = RequestOptions.FIRST_PAGE_NUMBER;
 
         return requestPage;
     }
 
-    public getPageNewNumber(requestPage: RequestOptions, pageNumber: number): RequestOptions {
+    public getPageNewNumber(requestPage: RequestOptions<V>, pageNumber: number): RequestOptions<V> {
         requestPage.pageNumber = pageNumber;
         return requestPage;
     }
 
-    public initPageable(requestPage: RequestOptions, totalElements: number): RequestOptions {
+    public initPageable(requestPage: RequestOptions<V>, totalElements: number): RequestOptions<V> {
         requestPage.totalElements = totalElements;
         let totalPages = totalElements != 0 ? Math.ceil(totalElements / requestPage.pageSize) : 1;
         requestPage.totalPages = totalPages;

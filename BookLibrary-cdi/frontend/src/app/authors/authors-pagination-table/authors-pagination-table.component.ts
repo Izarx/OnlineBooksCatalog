@@ -6,6 +6,7 @@ import {PaginationService} from "../../pagination/pagination.service";
 import {SortableColumn} from "../../model/sortable-column";
 import {SortingService} from "../../sorting/sorting.service";
 import {RequestOptions} from "../../model/request-options";
+import {AuthorFilter} from '../../model/author-filter';
 
 @Component({
     selector: 'app-authors-pagination-table',
@@ -23,16 +24,17 @@ export class AuthorsPaginationTableComponent implements OnInit {
     ];
 
     page: ResponseData<Author> = new ResponseData();
-    requestOptions: RequestOptions = new RequestOptions();
-    author: Author = new Author(null, '', '', 0.0);
+    requestOptions: RequestOptions<AuthorFilter> = new RequestOptions();
+    author: Author = new Author(null, '', '', 0.00);
     deniedToDeleteAuthors: Author[] = []
     isAllChecked: boolean;
 
     constructor(
         private authorService: AuthorService,
-        private paginationService: PaginationService,
+        private paginationService: PaginationService<AuthorFilter>,
         private sortingService: SortingService
     ) {
+        this.requestOptions.filteredEntity = new AuthorFilter(null, null, null)
         this.isAllChecked  = false;
     }
 
@@ -105,6 +107,11 @@ export class AuthorsPaginationTableComponent implements OnInit {
         this.getData();
     }
 
+    public getFilteredData(filteredAuthor: AuthorFilter) {
+        this.requestOptions.filteredEntity = filteredAuthor;
+        this.getData();
+    }
+
     setCheckForAll() {
         this.page.content.forEach(a => a.isChecked = this.isAllChecked);
     }
@@ -116,4 +123,5 @@ export class AuthorsPaginationTableComponent implements OnInit {
     setAuthor(author: Author) {
         this.author = author;
     }
+
 }

@@ -2,7 +2,6 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Author} from "../../model/author";
 import {AuthorService} from "../author.service";
-import {AuthorsPaginationTableComponent} from "../authors-pagination-table/authors-pagination-table.component";
 
 @Component({
     selector: 'app-update-author',

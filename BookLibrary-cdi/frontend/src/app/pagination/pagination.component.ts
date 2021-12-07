@@ -6,9 +6,9 @@ import {RequestOptions} from "../model/request-options";
     templateUrl: './pagination.component.html',
     styleUrls: ['./pagination.component.scss']
 })
-export class PaginationComponent implements OnInit {
+export class PaginationComponent<T> implements OnInit {
 
-    @Input() requestOptions: RequestOptions;
+    @Input() requestOptions: RequestOptions<T>;
     @Output() nextPageEvent = new EventEmitter();
     @Output() previousPageEvent = new EventEmitter();
     @Output() pageSizeEvent: EventEmitter<number> = new EventEmitter<number>();

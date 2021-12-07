@@ -2,6 +2,7 @@ package com.softserveinc.booklibrary.backend.controller;
 
 import com.softserveinc.booklibrary.backend.dto.ApplicationMapper;
 import com.softserveinc.booklibrary.backend.dto.BookDto;
+import com.softserveinc.booklibrary.backend.dto.filtering.BookFilter;
 import com.softserveinc.booklibrary.backend.entity.Book;
 import com.softserveinc.booklibrary.backend.pagination.RequestOptions;
 import com.softserveinc.booklibrary.backend.pagination.ResponseData;
@@ -49,7 +50,7 @@ public class BookController {
 	}
 
 	@PostMapping
-	public ResponseEntity<ResponseData<BookDto>> listBooks(@RequestBody RequestOptions requestOptions) {
+	public ResponseEntity<ResponseData<BookDto>> listBooks(@RequestBody RequestOptions<BookFilter> requestOptions) {
 		return ResponseEntity.status(HttpStatus.OK)
 				.body(convertBookPageToBookDtoPage(
 						bookService.listEntities(requestOptions)));

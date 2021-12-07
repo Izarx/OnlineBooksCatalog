@@ -1,0 +1,57 @@
+<div class="panel-body panel-body-without-lr-padding">
+	<form class="form-inline" (ngSubmit)="searchFilteredBooks(bookFilter)" [formGroup]="bookFilteringForm">
+		<span class="pull-left">
+			<span class="form-group add-top-bottom-padding">
+				<label>Name</label>
+				<input [(ngModel)]="bookFilter.name"
+				       class="form-control"
+				       formControlName="name"
+				       type="text">
+			</span>
+			<span class="form-group add-top-bottom-padding">
+				<label>Authors</label>
+				<input [(ngModel)]="bookFilter.authorFilter.name"
+				       class="form-control"
+				       formControlName="authors"
+				       type="text"
+				>
+			</span>
+			<span class="form-group add-top-bottom-padding">
+				<label>Rating from</label>
+				<input [(ngModel)]="bookFilter.bookRatingFrom"
+				       class="form-control form-control-for-numbers"
+				       formControlName="bookRating"
+				       type="number"
+				       step="0.01"
+				>
+				<label>to</label>
+				<input [(ngModel)]="bookFilter.bookRatingTo"
+				       class="form-control form-control-for-numbers"
+				       formControlName="bookRatingRange"
+				       type="number"
+				       step="0.01"
+				>
+			</span>
+			<span class="form-group add-top-bottom-padding">
+				<label>Year</label>
+				<input [(ngModel)]="bookFilter.year"
+				       class="form-control form-control-for-numbers"
+				       formControlName="yearPublished"
+				       type="number"
+				       min="0" [max]="getCurrentYear()" step="1"
+				>
+			</span>
+			<span class="form-group add-top-bottom-padding">
+				<label>ISBN</label>
+				<input [(ngModel)]="bookFilter.isbn"
+				       class="form-control"
+				       formControlName="isbn"
+				       type="text">
+			</span>
+		</span>
+		<span class="form-group add-top-bottom-padding pull-right">
+			<button class="btn btn-header btn-primary" type="submit">Search</button>
+			<button class="btn btn-default" (click)="reset()">Reset</button>
+		</span>
+	</form>
+</div>

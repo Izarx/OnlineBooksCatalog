@@ -3488,10 +3488,6 @@ select[multiple].form-group-lg .form-control, textarea.form-group-lg .form-contr
 	border-radius: 4px
 }
 
-.btn-header {
-	margin-right: 10px;
-}
-
 .btn.active.focus, .btn.active:focus, .btn.focus, .btn:active.focus, .btn:active:focus, .btn:focus {
 	outline: thin dotted;
 	outline: 5px auto -webkit-focus-ring-color;
@@ -3831,7 +3827,7 @@ tbody.collapse.in {
 .dropdown-content a {
 	float: inherit;
 	color: black;
-	padding: 0px 12px 0px 12px;
+	padding: 5px 12px 5px 12px;
 	text-decoration: none;
 	display: block;
 	text-align: center;

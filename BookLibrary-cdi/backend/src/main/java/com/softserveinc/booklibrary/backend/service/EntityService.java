@@ -9,7 +9,7 @@ import com.softserveinc.booklibrary.backend.pagination.ResponseData;
 import com.softserveinc.booklibrary.backend.entity.AbstractEntity;
 import org.springframework.transaction.annotation.Transactional;
 
-public interface EntityService<T extends AbstractEntity<? extends Serializable>> {
+public interface EntityService<T extends AbstractEntity<? extends Serializable>, V> {
 
 	T create(T entity);
 
@@ -21,7 +21,7 @@ public interface EntityService<T extends AbstractEntity<? extends Serializable>>
 
 	List<T> getAll();
 
-	ResponseData<T> listEntities(RequestOptions requestOptions);
+	ResponseData<T> listEntities(RequestOptions<V> requestOptions);
 
 	List<T> bulkDeleteEntities(List<Serializable> entitiesIdsForDelete);
 

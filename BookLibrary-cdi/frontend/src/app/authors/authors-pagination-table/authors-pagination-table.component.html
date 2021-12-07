@@ -7,12 +7,13 @@
 						<div class="col-6">
 							<button class="btn btn-success btn-header"
 							        data-target="#createAuthor"
-							        data-toggle="modal"> + Add Author
+							        data-toggle="modal"> + Add
 							</button>
-							<button [disabled]="setAuthorsForDelete().length == 0"
+							<button
+									[disabled]="setAuthorsForDelete().length === 0"
 									class="btn btn-danger btn-header"
 							        data-target="#bulkDeleteAuthorsConfirmation"
-							        data-toggle="modal"> Delete Authors
+							        data-toggle="modal"> Bulk Delete
 							</button>
 							<button class="btn btn-primary collapsed"
 							        data-parent="#accordion"
@@ -26,26 +27,11 @@
 						</div>
 					</div>
 					<div class="panel-collapse collapse" id="collapseOne">
-						<div class="panel-body panel-body-without-lr-padding">
-							<form class="form-inline">
-								<span class="form-group add-top-bottom-padding">
-										<label for="inputFilter1">First Name</label>
-										<input class="form-control" id="inputFilter1" type="text">
-									</span>
-								<span class="form-group add-top-bottom-padding">
-										<label for="inputFilter2">Last Name</label>
-										<input class="form-control" id="inputFilter2" type="text">
-									</span>
-								<span class="form-group add-top-bottom-padding">
-										<label for="inputFilter3">Rating</label>
-										<input class="form-control" id="inputFilter3" type="number">
-									</span>
-								<span class="form-group add-top-bottom-padding pull-right">
-										<button class="btn btn-header btn-primary" type="submit">Search</button>
-										<button class="btn btn-default" type="submit">Reset</button>
-									</span>
-							</form>
-						</div>
+						<app-authors-filtering
+								[authorFilter]="requestOptions.filteredEntity"
+								(initFilteredAuthor)="getFilteredData($event)"
+						>
+						</app-authors-filtering>
 					</div>
 				</div>
 				<div class="col-sm-12">

@@ -1,6 +1,6 @@
 import {SortableColumn} from "./sortable-column";
 
-export class RequestOptions {
+export class RequestOptions<T> {
     static readonly DEFAULT_PAGE_SIZE = 5;
     static readonly FIRST_PAGE_NUMBER = 0;
     pageSize: number;
@@ -12,6 +12,7 @@ export class RequestOptions {
     numberOfElements?: number;
     totalElements?: number;
     sorting: Array<SortableColumn>;
+    filteredEntity: T
 
     public constructor() {
         this.pageSize = RequestOptions.DEFAULT_PAGE_SIZE;

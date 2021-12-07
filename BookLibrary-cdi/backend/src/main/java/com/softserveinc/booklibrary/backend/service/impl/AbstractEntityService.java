@@ -3,12 +3,11 @@ package com.softserveinc.booklibrary.backend.service.impl;
 import java.io.Serializable;
 import java.util.List;
 
-import com.softserveinc.booklibrary.backend.entity.Author;
-import com.softserveinc.booklibrary.backend.pagination.RequestOptions;
-import com.softserveinc.booklibrary.backend.pagination.ResponseData;
 import com.softserveinc.booklibrary.backend.entity.AbstractEntity;
 import com.softserveinc.booklibrary.backend.exception.NotValidEntityException;
 import com.softserveinc.booklibrary.backend.exception.NotValidIdException;
+import com.softserveinc.booklibrary.backend.pagination.RequestOptions;
+import com.softserveinc.booklibrary.backend.pagination.ResponseData;
 import com.softserveinc.booklibrary.backend.repository.EntityRepository;
 import com.softserveinc.booklibrary.backend.service.EntityService;
 import org.slf4j.Logger;
@@ -16,10 +15,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-public abstract class AbstractEntityService<T extends AbstractEntity<? extends Serializable>> implements EntityService<T> {
+public abstract class AbstractEntityService<T extends AbstractEntity<? extends Serializable>, V> implements EntityService<T, V> {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(AbstractEntityService.class);
-	protected EntityRepository<T> repository;
+	protected EntityRepository<T, V> repository;
 
 	@Override
 	@Transactional
@@ -72,7 +71,7 @@ public abstract class AbstractEntityService<T extends AbstractEntity<? extends S
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS)
-	public ResponseData<T> listEntities(RequestOptions requestOptions) {
+	public ResponseData<T> listEntities(RequestOptions<V> requestOptions) {
 		return repository.listEntities(requestOptions);
 	}
 
