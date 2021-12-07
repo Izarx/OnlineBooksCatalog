@@ -132,7 +132,7 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 
 		criteriaQuery.where(predicates.toArray(new Predicate[]{}));
 
-		responseData.setTotalElements(getTotalElementsFromDb(builder, predicates));
+		responseData.setTotalElements(getTotalElementsFromDb(requestOptions, builder));
 
 		criteriaQuery.orderBy(setOrdersByColumns(requestOptions.getSorting(), builder, rootEntity));
 		List<T> getAll = entityManager
@@ -220,11 +220,17 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 	                                           CriteriaBuilder builder,
 	                                           Root<T> rootEntity);
 
-	private Integer getTotalElementsFromDb (CriteriaBuilder builder, List<Predicate> predicates) {
+	protected Integer getTotalElementsFromDb (RequestOptions<V> options,
+	                                          CriteriaBuilder builder) {
 		CriteriaQuery<Long> countCriteriaQuery = builder.createQuery(Long.class);
-		countCriteriaQuery.select(builder.count(countCriteriaQuery.from(type)));
-		entityManager.createQuery(countCriteriaQuery);
-		countCriteriaQuery.where(predicates.toArray(new Predicate[]{}));
+		Root<T> rootEntity = countCriteriaQuery.from(type);
+		countCriteriaQuery.select(builder.count(rootEntity));
+
+		if (ObjectUtils.isNotEmpty(options.getFilteredEntity())) {
+			entityManager.createQuery(countCriteriaQuery);
+			countCriteriaQuery.where(getFilteringParams(options, builder, rootEntity).toArray(new Predicate[]{}));
+		}
+
 		return entityManager.createQuery(countCriteriaQuery).getSingleResult().intValue();
 	}
 
