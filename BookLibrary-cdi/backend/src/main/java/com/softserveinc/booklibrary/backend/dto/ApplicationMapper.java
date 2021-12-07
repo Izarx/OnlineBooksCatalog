@@ -12,15 +12,12 @@ public interface ApplicationMapper {
 
 	// this annotation sets number format with 2 signs after comma
 	@Mapping(target = "authorRating", source = "authorRating", numberFormat = "$#.00")
-	@Mapping(target = "authorRatingRange", ignore = true)
 	AuthorDto authorToAuthorDto(Author author);
 
 	Author authorDtoToAuthor(AuthorDto authorDto);
 
 	AuthorNameDto authorToAuthorNameDto (Author author);
 
-	@Mapping(target = "bookRatingRange", ignore = true)
-	@Mapping(target = "yearPublishedRange", ignore = true)
 	BookDto bookToBookDto(Book book);
 
 	Book bookDtoToBook(BookDto bookDto);

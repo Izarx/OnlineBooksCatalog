@@ -10,6 +10,7 @@
 							        data-toggle="modal"> + Add
 							</button>
 							<button
+									[disabled]="setAuthorsForDelete().length === 0"
 									class="btn btn-danger btn-header"
 							        data-target="#bulkDeleteAuthorsConfirmation"
 							        data-toggle="modal"> Bulk Delete
@@ -27,7 +28,7 @@
 					</div>
 					<div class="panel-collapse collapse" id="collapseOne">
 						<app-authors-filtering
-								[filteredAuthor]="requestOptions.filteredEntity"
+								[authorFilter]="requestOptions.filteredEntity"
 								(initFilteredAuthor)="getFilteredData($event)"
 						>
 						</app-authors-filtering>

@@ -7,6 +7,7 @@ import java.util.List;
 import com.softserveinc.booklibrary.backend.dto.ApplicationMapper;
 import com.softserveinc.booklibrary.backend.dto.AuthorDto;
 import com.softserveinc.booklibrary.backend.dto.AuthorNameDto;
+import com.softserveinc.booklibrary.backend.dto.filtering.AuthorFilter;
 import com.softserveinc.booklibrary.backend.entity.Author;
 import com.softserveinc.booklibrary.backend.pagination.RequestOptions;
 import com.softserveinc.booklibrary.backend.pagination.ResponseData;
@@ -57,10 +58,10 @@ public class AuthorController {
 
 	@PostMapping
 	public ResponseEntity<ResponseData<AuthorDto>> listAuthors(
-			@RequestBody RequestOptions<AuthorDto> requestOptions) {
+			@RequestBody RequestOptions<AuthorFilter> requestOptions) {
 		return ResponseEntity
 				.ok(convertAuthorResponseToAuthorDtoResponse(
-						authorService.listEntities(convertAuthorDtoRequestToAuthorRequest(requestOptions))));
+						authorService.listEntities(requestOptions)));
 	}
 
 	@PostMapping("/create")
@@ -105,22 +106,6 @@ public class AuthorController {
 		authorDtoResponseData.setTotalElements(responseData.getTotalElements());
 		authorDtoResponseData.setContent(appMapper.listAuthorsToListAuthorsDto(responseData.getContent()));
 		return authorDtoResponseData;
-	}
-
-	private RequestOptions<Author> convertAuthorDtoRequestToAuthorRequest(
-			RequestOptions<AuthorDto> authorDtoRequestOptions
-	) {
-		RequestOptions<Author> options = new RequestOptions<>();
-		options.setPageSize(authorDtoRequestOptions.getPageSize());
-		options.setPageNumber(authorDtoRequestOptions.getPageNumber());
-		options.setSorting(authorDtoRequestOptions.getSorting());
-		AuthorDto filteredAuthor = authorDtoRequestOptions.getFilteredEntity();
-		if (ObjectUtils.isNotEmpty(filteredAuthor)) {
-			options.setFilteredEntity(appMapper.authorDtoToAuthor(filteredAuthor));
-			options.setRanges(new HashMap<>());
-			options.getRanges().put("authorRating", filteredAuthor.getAuthorRatingRange());
-		}
-		return options;
 	}
 
 }

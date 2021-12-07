@@ -48,18 +48,17 @@
 				       type="text">
 			</span>
 			<span class="form-group add-top-bottom-padding">
-<!--				<label>Authors</label>-->
-<!--				<select [(ngModel)]="authorFilteringString"-->
-<!--				        class="form-control"-->
-<!--				        formControlName="authors"-->
-<!--				>-->
-<!--					<option *ngFor="let author of getAllAuthors()"-->
-<!--					        [ngValue]="author"-->
-<!--					>-->
-<!--						{{author.firstName + ' ' + author.lastName}}-->
-<!--					</option>-->
+				<label>Authors</label>
+				<select [(ngModel)]="author"
+				        class="form-control"
+				        formControlName="authors"
+				>
+					<option *ngFor="let author of authors" [ngValue]="author"
+					>
+						{{author.firstName + ' ' + author.lastName}}
+					</option>
 
-<!--				</select>-->
+				</select>
 			</span>
 		</span>
 		<span class="form-group add-top-bottom-padding pull-right">

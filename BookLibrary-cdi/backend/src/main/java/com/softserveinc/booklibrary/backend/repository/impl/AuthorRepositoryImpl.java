@@ -3,20 +3,20 @@ package com.softserveinc.booklibrary.backend.repository.impl;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Order;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import com.softserveinc.booklibrary.backend.dto.filtering.AuthorFilter;
 import com.softserveinc.booklibrary.backend.entity.Author;
-import com.softserveinc.booklibrary.backend.entity.Book;
+import com.softserveinc.booklibrary.backend.pagination.RequestOptions;
 import com.softserveinc.booklibrary.backend.repository.AuthorRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class AuthorRepositoryImpl extends AbstractEntityRepository<Author> implements AuthorRepository {
+public class AuthorRepositoryImpl extends AbstractEntityRepository<Author, AuthorFilter> implements AuthorRepository {
 
 	@Override
 	public boolean isEntityValid(Author author) {
@@ -43,5 +43,10 @@ public class AuthorRepositoryImpl extends AbstractEntityRepository<Author> imple
 	                                                  Root<Author> rootEntity) {
 		orderList.add(builder.desc(rootEntity.get("authorRating")));
 		orderList.add(builder.desc(rootEntity.get("createDate")));
+	}
+
+	@Override
+	protected List<Predicate> getFilteringParams(RequestOptions<AuthorFilter> options, CriteriaBuilder builder, Root<Author> rootEntity) {
+		return null;
 	}
 }

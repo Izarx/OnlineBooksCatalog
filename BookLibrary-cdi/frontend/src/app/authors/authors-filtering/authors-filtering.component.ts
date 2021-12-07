@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Author} from "../../model/author";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormGroup} from "@angular/forms";
+import {AuthorFilter} from "../../model/author-filter";
 
 @Component({
   selector: 'app-authors-filtering',
@@ -8,38 +8,26 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
   styleUrls: ['./authors-filtering.component.scss']
 })
 export class AuthorsFilteringComponent implements OnInit {
-  @Input() filteredAuthor: Author;
-  @Output() initFilteredAuthor: EventEmitter<Author> = new EventEmitter<Author>()
+  @Input() authorFilter: AuthorFilter;
+  @Output() initFilteredAuthor: EventEmitter<AuthorFilter> = new EventEmitter<AuthorFilter>()
   authorFilteringForm: FormGroup = new FormGroup({});
 
   constructor() { }
 
   ngOnInit(): void {
-    this.authorFilteringForm = new FormGroup({
-      firstName: new FormControl('', []),
-      lastName: new FormControl('', []),
-      authorRating: new FormControl(null, [
-        Validators.min(0.00),
-        Validators.max(5.00),
-      ]),
-      authorRatingRange: new FormControl(null, [
-        Validators.min(this.filteredAuthor.authorRating),
-        Validators.max(5.00)
-      ])
-    });
+    this.authorFilteringForm = new FormGroup({});
   }
 
-  searchFilteredAuthors(filteredAuthor: Author) {
-    if (filteredAuthor.authorRating === null) {
-      filteredAuthor.authorRating = 0.00;
+  searchFilteredAuthors(authorFilter: AuthorFilter) {
+    if (authorFilter.authorRatingFrom === null) {
+      authorFilter.authorRatingFrom = 0.00;
     }
-    this.initFilteredAuthor.emit(filteredAuthor);
+    this.initFilteredAuthor.emit(authorFilter);
   }
 
   reset() {
-    this.filteredAuthor.firstName = null;
-    this.filteredAuthor.lastName = null;
-    this.filteredAuthor.authorRating = 0.00;
-    this.filteredAuthor.authorRatingRange = null;
+    this.authorFilter.name = null;
+    this.authorFilter.authorRatingFrom = null;
+    this.authorFilter.authorRatingTo = null;
   }
 }

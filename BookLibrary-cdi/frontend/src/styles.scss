@@ -122,5 +122,23 @@ div > article {
 }
 
 .form-inline .form-control-for-numbers {
-  width: 70px;
+  width: 80px;
+}
+
+.panel-heading .btn-danger:disabled {
+  color: grey;
+}
+
+.btn-header {
+  margin-right: 10px;
+}
+
+div.pager-container {
+  position: relative
+}
+
+div.pager-container span.pager-element {
+  position: absolute;
+  top: 50%;
+  transform: translate(0, 20%)
 }

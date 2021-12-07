@@ -3,7 +3,6 @@ export class Author {
     firstName: string
     lastName: string
     authorRating: number
-    authorRatingRange?: number
     isChecked?: boolean
 
     constructor(authorId: number, firstName: string, lastName: string, authorRating: number) {
@@ -11,7 +10,6 @@ export class Author {
         this.firstName = firstName;
         this.lastName = lastName;
         this.authorRating = authorRating;
-        this.authorRatingRange = null;
         this.isChecked = false
     }
 }

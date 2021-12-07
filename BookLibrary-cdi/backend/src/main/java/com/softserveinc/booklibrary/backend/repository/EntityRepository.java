@@ -8,7 +8,7 @@ import com.softserveinc.booklibrary.backend.entity.Author;
 import com.softserveinc.booklibrary.backend.pagination.RequestOptions;
 import com.softserveinc.booklibrary.backend.pagination.ResponseData;
 
-public interface EntityRepository<T extends AbstractEntity<? extends Serializable>> {
+public interface EntityRepository<T extends AbstractEntity<? extends Serializable>, V> {
 
 	T create(T entity);
 
@@ -22,7 +22,7 @@ public interface EntityRepository<T extends AbstractEntity<? extends Serializabl
 
 	List<T> getAll();
 
-	ResponseData<T> listEntities(RequestOptions<T> requestOptions);
+	ResponseData<T> listEntities(RequestOptions<V> requestOptions);
 
 	List<T> bulkDeleteEntities (List<Serializable> entitiesIdsForDelete);
 }

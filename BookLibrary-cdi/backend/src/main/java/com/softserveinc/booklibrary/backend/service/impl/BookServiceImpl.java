@@ -2,6 +2,7 @@ package com.softserveinc.booklibrary.backend.service.impl;
 
 import java.io.Serializable;
 
+import com.softserveinc.booklibrary.backend.dto.filtering.BookFilter;
 import com.softserveinc.booklibrary.backend.entity.Book;
 import com.softserveinc.booklibrary.backend.pagination.RequestOptions;
 import com.softserveinc.booklibrary.backend.pagination.ResponseData;
@@ -13,7 +14,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class BookServiceImpl extends AbstractEntityService<Book> implements BookService {
+public class BookServiceImpl extends AbstractEntityService<Book, BookFilter> implements BookService {
 
 	@Autowired
 	public BookServiceImpl(BookRepository bookRepository) {
@@ -22,7 +23,7 @@ public class BookServiceImpl extends AbstractEntityService<Book> implements Book
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS)
-	public ResponseData<Book> listEntities(RequestOptions requestOptions) {
+	public ResponseData<Book> listEntities(RequestOptions<BookFilter> requestOptions) {
 		ResponseData<Book> page = super.listEntities(requestOptions);
 		page.getContent().forEach(b -> b.getAuthors().size());
 		return page;

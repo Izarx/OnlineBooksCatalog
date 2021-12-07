@@ -3,7 +3,6 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Book} from "../../model/book";
 import {AuthorService} from "../../authors/author.service";
 import {Author} from "../../model/author";
-import {RequestOptions} from "../../model/request-options";
 
 @Component({
   selector: 'app-books-filtering',
@@ -16,6 +15,7 @@ export class BooksFilteringComponent implements OnInit {
   @Output() initFilteredBook: EventEmitter<Book> = new EventEmitter<Book>()
   bookFilteringForm: FormGroup = new FormGroup({});
   authorFilteringString: string = '';
+  author: Author;
   authors: Array<Author>;
 
   constructor(
@@ -23,6 +23,7 @@ export class BooksFilteringComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.getAuthors();
     this.bookFilteringForm = new FormGroup({
       name: new FormControl('', []),
       authors: new FormControl('', []),
@@ -53,36 +54,38 @@ export class BooksFilteringComponent implements OnInit {
     if (filteredBook.yearPublished === null) {
       filteredBook.yearPublished = 0;
     }
+    if (this.author != null) {
+      this.filteredBook.authors = [];
+      this.filteredBook.authors.push(this.author);
+    }
+    console.log(filteredBook);
     this.initFilteredBook.emit(filteredBook);
   }
 
   reset() {
     this.filteredBook.name = null;
-    this.filteredBook.authors = [];
+    this.filteredBook.authors = null;
     this.filteredBook.bookRating = 0.00;
     this.filteredBook.bookRatingRange = null;
     this.filteredBook.yearPublished = 0;
     this.filteredBook.yearPublishedRange = null;
     this.filteredBook.isbn = null;
-    this.authorFilteringString = null
+    this.author = null
   }
 
   getCurrentYear() {
     return new Date().getFullYear();
   }
 
-  getAllAuthors() : Array<Author> {
-    let options = new RequestOptions<Author>();
-    options.filteredEntity.firstName = this.authorFilteringString;
-    this.authorService.getPage(options).subscribe(
+  getAuthors() {
+    this.authorService.getAuthors().subscribe(
         authors => {
-          this.authors = authors.content;
+          this.authors = authors;
         },
         error => {
           console.log(error);
         }
     )
-    return this.authors;
   }
 
 }

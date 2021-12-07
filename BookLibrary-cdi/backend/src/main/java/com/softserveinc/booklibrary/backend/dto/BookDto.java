@@ -17,7 +17,5 @@ public final class BookDto {
 	private String publisher;
 	private BigDecimal bookRating;
 	private Set<AuthorDto> authors;
-	private BigDecimal bookRatingRange;
-	private Integer yearPublishedRange;
 
 }

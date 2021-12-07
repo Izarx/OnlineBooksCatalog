@@ -10,6 +10,7 @@
 							        data-toggle="modal"> + Add
 							</button>
 							<button
+									[disabled]="setBooksForDelete().length===0"
 									class="btn btn-danger btn-header"
 							        data-target="#bulkDeleteBooksConfirmation"
 							        data-toggle="modal"> Bulk Delete
