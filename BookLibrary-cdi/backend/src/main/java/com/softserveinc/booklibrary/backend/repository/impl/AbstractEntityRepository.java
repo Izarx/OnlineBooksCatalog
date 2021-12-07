@@ -183,9 +183,9 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 	 * Create List of Orders from sortable columns to order db entities by it
 	 *
 	 * @param sortableColumns columns, which we receive from UI, they consist from name field and direction for sorting
-	 * @param builder
-	 * @param rootEntity
-	 * @return
+	 * @param builder criteria builder
+	 * @param rootEntity root
+	 * @return list of sorting orders for each sortable column which was activated
 	 */
 
 	private List<Order> setOrdersByColumns(List<SortableColumn> sortableColumns,
@@ -212,9 +212,9 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 	/**
 	 * Create list of predicates to obtain objects according to filtering options
 	 * @param options request options which consists entity with filtering fields
-	 * @param builder
-	 * @param rootEntity
-	 * @return
+	 * @param builder criteria builder
+	 * @param rootEntity root
+	 * @return list of predicates according to request options
 	 */
 	protected abstract List<Predicate> getFilteringParams(RequestOptions<V> options,
 	                                           CriteriaBuilder builder,

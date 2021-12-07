@@ -125,8 +125,9 @@ div > article {
   width: 80px;
 }
 
-.panel-heading .btn-danger:disabled {
-  color: grey;
+.panel-heading .btn-danger:disabled, .btn.disabled, .btn[disabled], fieldset[disabled] .btn {
+  color: black;
+  filter: none;
 }
 
 .btn-header {
