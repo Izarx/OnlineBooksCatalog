@@ -3,10 +3,11 @@ import {ResponseData} from "../../model/response-data";
 import {PaginationService} from "../../pagination/pagination.service";
 import {Book} from "../../model/book";
 import {BookService} from "../book.service";
-import {Author} from "../../model/author";
 import {SortableColumn} from "../../model/sortable-column";
 import {SortingService} from "../../sorting/sorting.service";
 import {RequestOptions} from "../../model/request-options";
+import {BookFilter} from "../../model/book-filter";
+import {AuthorFilter} from "../../model/author-filter";
 
 @Component({
     selector: 'app-books-pagination-table',
@@ -26,17 +27,17 @@ export class BooksPaginationTableComponent implements OnInit {
     ];
 
     page: ResponseData<Book> = new ResponseData()
-    book: Book = new Book(null, '', 0, '', '', 0.0, [])
-    requestOptions: RequestOptions<Book> = new RequestOptions();
+    book: Book = new Book(null, '', 0, '', '', 0.00, [])
+    requestOptions: RequestOptions<BookFilter> = new RequestOptions();
     deniedToDeleteBooks: Book[] = []
     isAllChecked: boolean;
 
     constructor(
         private bookService: BookService,
-        private paginationService: PaginationService<Book>,
+        private paginationService: PaginationService<BookFilter>,
         private sortingService: SortingService,
     ) {
-        this.requestOptions.filteredEntity = new Book(null, null, null, null, null, 0.00, []);
+        this.requestOptions.filteredEntity = new BookFilter(null, new AuthorFilter(null, null, null), null, null, null, null);
         this.isAllChecked  = false;
     }
 
@@ -48,7 +49,7 @@ export class BooksPaginationTableComponent implements OnInit {
         this.bookService.getPage(this.requestOptions)
             .subscribe(page => {
                     this.paginationService.initPageable(this.requestOptions, page.totalElements);
-                    this.page = page
+                    this.page = page;
                     this.isAllChecked  = false;
                 },
                 error => {
@@ -115,7 +116,7 @@ export class BooksPaginationTableComponent implements OnInit {
         this.getData();
     }
 
-    public getFilteredData(filteredBook: Book) {
+    public getFilteredData(filteredBook: BookFilter) {
         this.requestOptions.filteredEntity = filteredBook;
         this.getData();
     }

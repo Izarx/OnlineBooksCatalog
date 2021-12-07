@@ -28,7 +28,7 @@
 					</div>
 					<div class="panel-collapse collapse" id="collapseBookFilter">
 						<app-books-filtering
-								[filteredBook]="requestOptions.filteredEntity"
+								[bookFilter]="requestOptions.filteredEntity"
 								(initFilteredBook)="getFilteredData($event)"
 						></app-books-filtering>
 					</div>

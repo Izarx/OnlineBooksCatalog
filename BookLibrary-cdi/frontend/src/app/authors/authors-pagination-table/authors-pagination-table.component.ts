@@ -46,7 +46,6 @@ export class AuthorsPaginationTableComponent implements OnInit {
         this.authorService.getPage(this.requestOptions)
             .subscribe(page => {
                     this.paginationService.initPageable(this.requestOptions, page.totalElements);
-                    console.log(page);
                     this.page = page;
                     this.isAllChecked  = false;
                 },

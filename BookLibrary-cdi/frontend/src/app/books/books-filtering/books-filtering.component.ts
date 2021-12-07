@@ -1,8 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {Book} from "../../model/book";
-import {AuthorService} from "../../authors/author.service";
-import {Author} from "../../model/author";
+import {FormControl, FormGroup} from "@angular/forms";
+import {BookFilter} from "../../model/book-filter";
+import {AuthorFilter} from "../../model/author-filter";
 
 @Component({
   selector: 'app-books-filtering',
@@ -11,81 +10,40 @@ import {Author} from "../../model/author";
 })
 export class BooksFilteringComponent implements OnInit {
 
-  @Input() filteredBook: Book;
-  @Output() initFilteredBook: EventEmitter<Book> = new EventEmitter<Book>()
+  @Input() bookFilter: BookFilter;
+  @Output() initFilteredBook: EventEmitter<BookFilter> = new EventEmitter<BookFilter>()
   bookFilteringForm: FormGroup = new FormGroup({});
-  authorFilteringString: string = '';
-  author: Author;
-  authors: Array<Author>;
 
   constructor(
-      private authorService: AuthorService
   ) { }
 
   ngOnInit(): void {
-    this.getAuthors();
     this.bookFilteringForm = new FormGroup({
-      name: new FormControl('', []),
-      authors: new FormControl('', []),
-      bookRating: new FormControl(0.00, [
-        Validators.min(0.00),
-        Validators.max(5.00),
-      ]),
-      bookRatingRange: new FormControl(null, [
-        Validators.min(this.filteredBook.bookRating),
-        Validators.max(5.00)
-      ]),
-      yearPublished: new FormControl(0, [
-          Validators.min(0),
-          Validators.max(this.getCurrentYear())
-      ]),
-      yearPublishedRange: new FormControl(null, [
-          Validators.min(this.filteredBook.bookRating),
-          Validators.max(this.getCurrentYear())
-      ]),
-      isbn: new FormControl('', []),
+      name: new FormControl(null, []),
+      authors: new FormControl(null, []),
+      bookRating: new FormControl(null, []),
+      bookRatingRange: new FormControl(null, []),
+      yearPublished: new FormControl(null, []),
+      yearPublishedRange: new FormControl(null, []),
+      isbn: new FormControl(null, []),
     });
   }
 
-  searchFilteredBooks(filteredBook: Book) {
-    if (filteredBook.bookRating === null) {
-      filteredBook.bookRating = 0.00;
-    }
-    if (filteredBook.yearPublished === null) {
-      filteredBook.yearPublished = 0;
-    }
-    if (this.author != null) {
-      this.filteredBook.authors = [];
-      this.filteredBook.authors.push(this.author);
-    }
-    console.log(filteredBook);
-    this.initFilteredBook.emit(filteredBook);
+  searchFilteredBooks(bookFilter: BookFilter) {
+    console.log(bookFilter);
+    this.initFilteredBook.emit(bookFilter);
   }
 
   reset() {
-    this.filteredBook.name = null;
-    this.filteredBook.authors = null;
-    this.filteredBook.bookRating = 0.00;
-    this.filteredBook.bookRatingRange = null;
-    this.filteredBook.yearPublished = 0;
-    this.filteredBook.yearPublishedRange = null;
-    this.filteredBook.isbn = null;
-    this.author = null
+    this.bookFilter.name = null;
+    this.bookFilter.authorFilter = new AuthorFilter(null, null, null);
+    this.bookFilter.bookRatingFrom = null;
+    this.bookFilter.bookRatingTo = null;
+    this.bookFilter.year = null;
+    this.bookFilter.isbn = null;
   }
 
   getCurrentYear() {
     return new Date().getFullYear();
   }
-
-  getAuthors() {
-    this.authorService.getAuthors().subscribe(
-        authors => {
-          this.authors = authors;
-        },
-        error => {
-          console.log(error);
-        }
-    )
-  }
-
 }

@@ -1,9 +1,7 @@
 package com.softserveinc.booklibrary.backend.dto.filtering;
 
 import java.math.BigDecimal;
-import java.util.List;
 
-import com.softserveinc.booklibrary.backend.entity.Author;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,7 +10,7 @@ import lombok.Setter;
 public class BookFilter {
 
 	private String name;
-	private List<Author> authors;
+	private AuthorFilter authorFilter;
 	private BigDecimal bookRatingFrom;
 	private BigDecimal bookRatingTo;
 	private Integer year;
