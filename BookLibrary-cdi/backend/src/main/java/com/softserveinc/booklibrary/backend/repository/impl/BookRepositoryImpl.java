@@ -44,15 +44,15 @@ public class BookRepositoryImpl extends AbstractEntityRepository<Book, BookFilte
 
 	@Override
 	protected void setOrdersByColumnsByDefault(List<Order> orderList,
-	                                                  CriteriaBuilder builder,
-	                                                  Root<Book> rootEntity) {
+	                                           CriteriaBuilder builder,
+	                                           Root<Book> rootEntity) {
 		orderList.add(builder.desc(rootEntity.get("bookRating")));
 		orderList.add(builder.desc(rootEntity.get("createDate")));
 	}
 
 
 	@Override
-	protected List<Predicate> getFilteringParams( RequestOptions<BookFilter> options,
+	protected List<Predicate> getFilteringParams(RequestOptions<BookFilter> options,
 	                                             CriteriaBuilder builder,
 	                                             Root<Book> rootEntity) {
 		// todo: the same problems as in AuthorRepositoryImpl.getFilteringParams
@@ -80,18 +80,16 @@ public class BookRepositoryImpl extends AbstractEntityRepository<Book, BookFilte
 
 			Join<Book, Author> bookAuthorJoin = rootEntity.join("authors");
 			predicates.add(bookAuthorJoin.on(builder.or(builder.like(bookAuthorJoin.get("firstName"),
-					'%' + authorFilter.getName() + '%'),
+							'%' + authorFilter.getName() + '%'),
 					builder.like(bookAuthorJoin.get("lastName"),
-					'%' + authorFilter.getName() + '%'))).getOn());
+							'%' + authorFilter.getName() + '%'))).getOn());
 
 		}
 		if (ObjectUtils.isNotEmpty(bookRatingFrom) && ObjectUtils.isNotEmpty(bookRatingTo)) {
 			predicates.add(builder.between(rootEntity.get("bookRating"), bookRatingFrom, bookRatingTo));
-		}
-		else if (ObjectUtils.isNotEmpty(bookRatingFrom) && ObjectUtils.isEmpty(bookRatingTo)){
+		} else if (ObjectUtils.isNotEmpty(bookRatingFrom) && ObjectUtils.isEmpty(bookRatingTo)) {
 			predicates.add(builder.greaterThanOrEqualTo(rootEntity.get("bookRating"), bookRatingFrom));
-		}
-		else if (ObjectUtils.isEmpty(bookRatingFrom) && ObjectUtils.isNotEmpty(bookRatingTo)) {
+		} else if (ObjectUtils.isEmpty(bookRatingFrom) && ObjectUtils.isNotEmpty(bookRatingTo)) {
 			predicates.add(builder.lessThanOrEqualTo(rootEntity.get("bookRating"), bookRatingTo));
 		}
 		if (ObjectUtils.isNotEmpty(year)) {

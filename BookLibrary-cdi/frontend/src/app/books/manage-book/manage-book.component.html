@@ -1,32 +1,96 @@
 <div id="page-inner">
 	<header class="header-padding">
 		<h3>{{book.name}}</h3>
-		<div>
-			<span class="fa fa-star checked"></span>
-			<span class="fa fa-star checked"></span>
-			<span class="fa fa-star checked"></span>
-			<span class="fa fa-star checked"></span>
-			<span class="fa fa-star checked"></span>
-		</div>
-		<div>votes [10]</div>
+		<div>[{{book.bookRating}}]</div>
+		<span *ngFor="let r of initStarsRating(book.bookRating)">
+			<span *ngIf="r >= 0.5" class="fa fa-star checked"></span>
+			<span *ngIf="r < 0.5 " class="fa fa-star"></span>
+		</span>
+
+		<div>votes [{{page.totalElements}}]</div>
 	</header>
+
+	<div class="row row-without-lr-margin">
+		<div class="col-md-5 col-for-tab">
+			<ul class="nav nav-tabs">
+				<li class="active">
+					<a href="#bookInfo" data-toggle="tab" (click)="tabBookInfoButtonVisible()">Book Info</a>
+				</li>
+				<li class="">
+					<a href="#comments" data-toggle="tab" (click)="tabCommentButtonVisible()">Comments</a>
+				</li>
+			</ul>
+		</div>
+	</div>
 	<div class="row row-without-lr-margin">
 		<div class="col-md-12">
 			<div class="panel panel-default">
-				<div class="panel-heading">
-					<article>
-						<div class="pull-left">
-							<h4>Authors:</h4>
-						</div>
-						<div class="text-center" *ngFor="let author of book.authors">
-							<ul>{{author.firstName + ' ' + author.lastName}}</ul>
-						</div>
-					</article>
-					<article></article>
+				<div class="panel-heading panel-heading-for-tab">
+					<div id="bookInfoButton">
+						<button class="btn btn-success">Change Info</button>
+					</div>
+					<div id="addCommentButton">
+						<button class="btn btn-success">Add Comment</button>
+					</div>
 				</div>
+				<div class="panel-body">
+					<div class="tab-content">
+						<div class="tab-pane fade active in" id="bookInfo">
+							<div class="table-responsive">
+								<table class="table table-striped">
+									<tbody>
+									<tr>
+										<td class="font-bold">Year Published</td>
+										<td>{{book.yearPublished}}</td>
+									</tr>
+									<tr>
+										<td class="font-bold">ISBN</td>
+										<td>{{book.isbn}}</td>
+									</tr>
+									<tr>
+										<td class="font-bold">Publisher</td>
+										<td>{{book.publisher}}</td>
+									</tr>
+									<tr>
+										<td class="font-bold">Authors</td>
+										<td>
+											<div *ngFor="let author of book.authors">
+												<p>{{author.firstName + ' ' + author.lastName}}</p>
+											</div>
+										</td>
+									</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
 
+						<div class="tab-pane fade" id="comments">
+							<div class="table-responsive">
+								<table class="table table-striped">
+									<tbody *ngFor="let review of page.content">
+									<tr>
+										<td>
+											<span class="font-bold">{{review.commenterName}}</span>
+											<span class="pull-right" *ngFor="let r of initStarsRating(review.rating)">
+												<span *ngIf="r >= 0.5" class="fa fa-star checked"></span>
+												<span *ngIf="r < 0.5 " class="fa fa-star"></span>
+											</span>
+										</td>
+									</tr>
+									<tr>
+										<td class="font-small">{{review.comment}}</td>
+									</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
 </div>
+
+
+
 

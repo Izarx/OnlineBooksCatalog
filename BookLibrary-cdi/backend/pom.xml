@@ -179,7 +179,9 @@
 					<execution>
 						<id>copy-resources</id>
 						<phase>validate</phase>
-						<goals><goal>copy-resources</goal></goals>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
 						<configuration>
 							<outputDirectory>${project.build.directory}/classes/resources/</outputDirectory>
 							<resources>

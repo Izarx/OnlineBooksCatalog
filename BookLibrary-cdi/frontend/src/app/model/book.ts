@@ -9,8 +9,6 @@ export class Book {
     bookRating: number
     authors: Author[]
     isChecked?: boolean
-    bookRatingRange?: number;
-    yearPublishedRange?: number;
 
 
     constructor(bookId: number, name: string, yearPublished: number, isbn: string, publisher: string, bookRating: number, authors: Author[]) {
@@ -22,7 +20,5 @@ export class Book {
         this.bookRating = bookRating;
         this.authors = authors;
         this.isChecked = false;
-        this.bookRatingRange = null;
-        this.yearPublishedRange = null;
     }
 }

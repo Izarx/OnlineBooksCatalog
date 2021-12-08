@@ -112,6 +112,14 @@ header h3 {
   min-height: 80px;
 }
 
+.panel-heading-for-tab {
+  min-height: 10px;
+}
+
+.panel-heading-for-tab ~ .panel-body {
+  min-height: 200px;
+}
+
 div > article {
   vertical-align: center;
   margin: 40px 50px;
@@ -125,9 +133,10 @@ div > article {
   width: 80px;
 }
 
-.panel-heading .btn-danger:disabled, .btn.disabled, .btn[disabled], fieldset[disabled] .btn {
+.panel-heading .btn-danger:disabled {
   color: black;
   filter: none;
+  opacity: .85;
 }
 
 .btn-header {
@@ -142,4 +151,26 @@ div.pager-container span.pager-element {
   position: absolute;
   top: 50%;
   transform: translate(0, 20%)
+}
+
+.col-for-tab {
+  padding-bottom: 0;
+}
+
+.col-for-button {
+  padding: 5px;
+}
+
+table p {
+  font-size: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+.font-bold {
+  font-weight: bold;
+}
+
+.font-small {
+  font-size: small;
 }

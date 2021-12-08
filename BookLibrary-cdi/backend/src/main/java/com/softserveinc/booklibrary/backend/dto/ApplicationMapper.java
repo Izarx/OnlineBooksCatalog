@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.softserveinc.booklibrary.backend.entity.Author;
 import com.softserveinc.booklibrary.backend.entity.Book;
+import com.softserveinc.booklibrary.backend.entity.Review;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -16,7 +17,7 @@ public interface ApplicationMapper {
 
 	Author authorDtoToAuthor(AuthorDto authorDto);
 
-	AuthorNameDto authorToAuthorNameDto (Author author);
+	AuthorNameDto authorToAuthorNameDto(Author author);
 
 	BookDto bookToBookDto(Book book);
 
@@ -28,4 +29,5 @@ public interface ApplicationMapper {
 
 	List<BookDto> listBooksToListBooksDto(List<Book> books);
 
+	List<ReviewDto> listReviewsToListReviewsDto(List<Review> reviews);
 }

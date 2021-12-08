@@ -43,8 +43,8 @@ public class AuthorRepositoryImpl extends AbstractEntityRepository<Author, Autho
 
 	@Override
 	protected void setOrdersByColumnsByDefault(List<Order> orderList,
-	                                                  CriteriaBuilder builder,
-	                                                  Root<Author> rootEntity) {
+	                                           CriteriaBuilder builder,
+	                                           Root<Author> rootEntity) {
 		orderList.add(builder.desc(rootEntity.get("authorRating")));
 		orderList.add(builder.desc(rootEntity.get("createDate")));
 	}
@@ -66,9 +66,9 @@ public class AuthorRepositoryImpl extends AbstractEntityRepository<Author, Autho
 			authorRatingTo = authorFilter.getAuthorRatingTo();
 		}
 		if (StringUtils.isNotEmpty(name)) {
-			Predicate predicateFirstName =  builder.like(rootEntity.get("firstName"),
+			Predicate predicateFirstName = builder.like(rootEntity.get("firstName"),
 					'%' + name + '%');
-			Predicate predicateLastName =  builder.like(rootEntity.get("lastName"),
+			Predicate predicateLastName = builder.like(rootEntity.get("lastName"),
 					'%' + name + '%');
 			predicates.add(builder.or(predicateFirstName, predicateLastName));
 		}
@@ -76,12 +76,10 @@ public class AuthorRepositoryImpl extends AbstractEntityRepository<Author, Autho
 		// todo: could be simplified (remove between ;) )
 		if (ObjectUtils.isNotEmpty(authorRatingFrom) && ObjectUtils.isNotEmpty(authorRatingTo)) {
 			predicates.add(builder.between(rootEntity.get("authorRating"), authorRatingFrom, authorRatingTo));
-		}
-		else if (ObjectUtils.isNotEmpty(authorRatingFrom) && ObjectUtils.isEmpty(authorRatingTo)){
-			predicates.add(builder.greaterThanOrEqualTo(rootEntity.get("authorRating"),authorRatingFrom));
-		}
-		else if (ObjectUtils.isEmpty(authorRatingFrom) && ObjectUtils.isNotEmpty(authorRatingTo)) {
-			predicates.add(builder.lessThanOrEqualTo(rootEntity.get("authorRating"),authorRatingTo));
+		} else if (ObjectUtils.isNotEmpty(authorRatingFrom) && ObjectUtils.isEmpty(authorRatingTo)) {
+			predicates.add(builder.greaterThanOrEqualTo(rootEntity.get("authorRating"), authorRatingFrom));
+		} else if (ObjectUtils.isEmpty(authorRatingFrom) && ObjectUtils.isNotEmpty(authorRatingTo)) {
+			predicates.add(builder.lessThanOrEqualTo(rootEntity.get("authorRating"), authorRatingTo));
 		}
 		return predicates;
 	}

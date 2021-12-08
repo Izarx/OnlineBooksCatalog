@@ -1,6 +1,6 @@
 <div class="panel-body panel-body-without-lr-padding">
-	<form class="form-inline" (ngSubmit)="searchFilteredBooks(bookFilter)" [formGroup]="bookFilteringForm">
-		<span class="pull-left">
+	<form class="form-inline row p-2" (ngSubmit)="searchFilteredBooks(bookFilter)" [formGroup]="bookFilteringForm">
+		<div class="col-md-7">
 			<span class="form-group add-top-bottom-padding">
 				<label>Name</label>
 				<input [(ngModel)]="bookFilter.name"
@@ -48,10 +48,10 @@
 				       formControlName="isbn"
 				       type="text">
 			</span>
-		</span>
-		<span class="form-group add-top-bottom-padding pull-right">
-			<button class="btn btn-header btn-primary" type="submit">Search</button>
-			<button class="btn btn-default" (click)="reset()">Reset</button>
-		</span>
+		</div>
+		<div class="form-group add-top-bottom-padding col-md-3 row p-2">
+			<button class="btn btn-default col-md-4 pull-right" (click)="reset()">Reset</button>
+			<button class="btn btn-header btn-primary col-md-4 pull-right" type="submit">Search</button>
+		</div>
 	</form>
 </div>

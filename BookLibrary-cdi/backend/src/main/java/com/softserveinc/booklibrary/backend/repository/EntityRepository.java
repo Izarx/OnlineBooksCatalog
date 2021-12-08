@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.List;
 
 import com.softserveinc.booklibrary.backend.entity.AbstractEntity;
-import com.softserveinc.booklibrary.backend.entity.Author;
 import com.softserveinc.booklibrary.backend.pagination.RequestOptions;
 import com.softserveinc.booklibrary.backend.pagination.ResponseData;
 
@@ -25,5 +24,5 @@ public interface EntityRepository<T extends AbstractEntity<? extends Serializabl
 
 	ResponseData<T> listEntities(RequestOptions<V> requestOptions);
 
-	List<T> bulkDeleteEntities (List<Serializable> entitiesIdsForDelete);
+	List<T> bulkDeleteEntities(List<Serializable> entitiesIdsForDelete);
 }
