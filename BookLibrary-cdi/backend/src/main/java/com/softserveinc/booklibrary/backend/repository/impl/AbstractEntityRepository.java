@@ -41,7 +41,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ReflectionUtils;
 
 public abstract class AbstractEntityRepository<T extends AbstractEntity<? extends Serializable>, V> implements EntityRepository<T, V> {
-
+	// todo: must use LOGGER
 	private static final Logger LOGGER = LoggerFactory.getLogger(AbstractEntityRepository.class);
 	private final Class<T> type;
 	@PersistenceContext
@@ -98,17 +98,17 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 			entityManager.remove(entity);
 			return true;
 		}
-		return false;
+		return false;   // todo: why false?
 	}
 
 	@Override
-	public abstract boolean isEntityValid(T entity);
+	public abstract boolean isEntityValid(T entity); // todo: remove this method from here
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS)
 	public List<T> getAll() {
 		CriteriaQuery<T> criteriaQuery = entityManager.getCriteriaBuilder().createQuery(type);
-		CriteriaQuery<T> getAll = criteriaQuery.select(criteriaQuery.from(type));
+		CriteriaQuery<T> getAll = criteriaQuery.select(criteriaQuery.from(type)); // todo: redundant variable getAll
 		return entityManager.createQuery(getAll).getResultList();
 	}
 
@@ -117,20 +117,21 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 	public ResponseData<T> listEntities(RequestOptions<V> requestOptions) {
 		ResponseData<T> responseData = new ResponseData<>();
 		int pageSize = requestOptions.getPageSize();
-		int pageNumber = requestOptions.getPageNumber();
+		int pageNumber = requestOptions.getPageNumber();    // todo: redundant variable pageNumber
 		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
 
 		CriteriaQuery<T> criteriaQuery = builder.createQuery(type);
 		Root<T> rootEntity = criteriaQuery.from(type);
-		CriteriaQuery<T> selectEntities = criteriaQuery.select(rootEntity);
+		CriteriaQuery<T> selectEntities = criteriaQuery.select(rootEntity); // todo: redundant variable selectEntities
 
-		List<Predicate> predicates = new ArrayList<>();
+		List<Predicate> predicates = new ArrayList<>(); // todo: redundant variable here - move it inside 'if'
 
-		if (ObjectUtils.isNotEmpty(requestOptions.getFilteredEntity())) {
+		// todo: why this check here? Need to do this check inside getFilteringParams
+		if (ObjectUtils.isNotEmpty(requestOptions.getFilteredEntity())) { // todo: why is using ObjectUtils.isNotEmpty instead of simple null check?
 			predicates = getFilteringParams(requestOptions, builder, rootEntity);
 		}
 
-		criteriaQuery.where(predicates.toArray(new Predicate[]{}));
+		criteriaQuery.where(predicates.toArray(new Predicate[]{}));     // todo move inside 'if'
 
 		responseData.setTotalElements(getTotalElementsFromDb(requestOptions, builder));
 
@@ -175,6 +176,7 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 		return Collections.emptyList();
 	}
 
+	// todo: this method must have default implementation
 	protected abstract void setOrdersByColumnsByDefault(List<Order> orderList,
 	                                                    CriteriaBuilder builder,
 	                                                    Root<T> rootEntity);
@@ -194,10 +196,10 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 		List<Order> orderList = new ArrayList<>();
 		if (CollectionUtils.isNotEmpty(sortableColumns)) {
 			for (SortableColumn column : sortableColumns) {
-				if ("asc".equals(column.getDirection())) {
+				if ("asc".equals(column.getDirection())) {  // todo: why still is using string for "asc" and "desc"? Enum!
 					orderList.add(builder.asc(rootEntity.get(column.getName())));
 				}
-				if ("desc".equals(column.getDirection())) {
+				if ("desc".equals(column.getDirection())) { // todo: why not 'else if' ?
 					orderList.add(builder.desc(rootEntity.get(column.getName())));
 				}
 			}
@@ -216,18 +218,20 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 	 * @param rootEntity root
 	 * @return list of predicates according to request options
 	 */
+	// todo: this method must have default implementation
 	protected abstract List<Predicate> getFilteringParams(RequestOptions<V> options,
 	                                           CriteriaBuilder builder,
 	                                           Root<T> rootEntity);
 
-	protected Integer getTotalElementsFromDb (RequestOptions<V> options,
+	protected Integer getTotalElementsFromDb (RequestOptions<V> options,    // todo: please rename this method to more understandable name
 	                                          CriteriaBuilder builder) {
-		CriteriaQuery<Long> countCriteriaQuery = builder.createQuery(Long.class);
+		CriteriaQuery<Long> countCriteriaQuery = builder.createQuery(Long.class);   // todo: not use Long here
 		Root<T> rootEntity = countCriteriaQuery.from(type);
 		countCriteriaQuery.select(builder.count(rootEntity));
 
-		if (ObjectUtils.isNotEmpty(options.getFilteredEntity())) {
-			entityManager.createQuery(countCriteriaQuery);
+		// todo: why this check here? Need to do this check inside getFilteringParams
+		if (ObjectUtils.isNotEmpty(options.getFilteredEntity())) {  // todo: why is using ObjectUtils.isNotEmpty instead of simple null check?
+			entityManager.createQuery(countCriteriaQuery);  // todo what is reason?
 			countCriteriaQuery.where(getFilteringParams(options, builder, rootEntity).toArray(new Predicate[]{}));
 		}
 

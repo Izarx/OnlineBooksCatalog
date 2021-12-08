@@ -80,7 +80,7 @@ public class BookController {
 	public ResponseEntity<BookDto> deleteBook(@PathVariable Integer id) {
 		return bookService.delete(id) ?
 				ResponseEntity.ok().build() :
-				ResponseEntity.notFound().build();
+				ResponseEntity.notFound().build(); // todo: reason?
 	}
 
 	private ResponseData<BookDto> convertBookPageToBookDtoPage(

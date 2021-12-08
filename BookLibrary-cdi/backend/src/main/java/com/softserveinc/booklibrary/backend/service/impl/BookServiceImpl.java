@@ -24,14 +24,15 @@ public class BookServiceImpl extends AbstractEntityService<Book, BookFilter> imp
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS)
 	public ResponseData<Book> listEntities(RequestOptions<BookFilter> requestOptions) {
-		ResponseData<Book> page = super.listEntities(requestOptions);
+		ResponseData<Book> page = super.listEntities(requestOptions);   // todo: rename variable
+		// todo: need to add sorting authors by name
 		page.getContent().forEach(b -> b.getAuthors().size());
 		return page;
 	}
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS)
-	public Book getByIdWithAuthors(Serializable id) {
+	public Book getByIdWithAuthors(Serializable id) {   // todo: why Serializable ?
 		Book book = repository.getById(id);
 		book.getAuthors().size();
 		return book;

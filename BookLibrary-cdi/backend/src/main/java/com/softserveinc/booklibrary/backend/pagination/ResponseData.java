@@ -10,6 +10,6 @@ import lombok.Setter;
 public class ResponseData<T> {
 
 	private List<T> content;
-	private Integer totalElements;
+	private Integer totalElements;  // todo: is really need Integer? maybe int?
 
 }

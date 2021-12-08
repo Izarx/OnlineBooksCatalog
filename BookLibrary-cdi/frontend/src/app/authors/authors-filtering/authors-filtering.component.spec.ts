@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AuthorsFilteringComponent } from './authors-filtering.component';
 
-describe('BooksFilteringComponent', () => {
+describe('BooksFilteringComponent', () => { // todo: author or book ?
   let component: AuthorsFilteringComponent;
   let fixture: ComponentFixture<AuthorsFilteringComponent>;
 

@@ -35,6 +35,7 @@ export class PaginationService<V> {
         return requestPage;
     }
 
+    // todo: :( ?
     public initPageable(requestPage: RequestOptions<V>, totalElements: number): RequestOptions<V> {
         requestPage.totalElements = totalElements;
         let totalPages = totalElements != 0 ? Math.ceil(totalElements / requestPage.pageSize) : 1;

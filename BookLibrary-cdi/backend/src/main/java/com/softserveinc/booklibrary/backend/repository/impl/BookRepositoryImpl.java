@@ -29,7 +29,7 @@ public class BookRepositoryImpl extends AbstractEntityRepository<Book, BookFilte
 		String name = book.getName();
 		Integer yearPublished = book.getYearPublished();
 		String publisher = book.getPublisher();
-		String isbn = book.getIsbn();
+		String isbn = book.getIsbn();   // todo: redundant variable
 		if (!isbn.matches("[0-9]+")) {
 			return false;
 		}
@@ -55,6 +55,8 @@ public class BookRepositoryImpl extends AbstractEntityRepository<Book, BookFilte
 	protected List<Predicate> getFilteringParams( RequestOptions<BookFilter> options,
 	                                             CriteriaBuilder builder,
 	                                             Root<Book> rootEntity) {
+		// todo: the same problems as in AuthorRepositoryImpl.getFilteringParams
+
 		List<Predicate> predicates = new ArrayList<>();
 		BookFilter bookFilter = options.getFilteredEntity();
 		String name = null;

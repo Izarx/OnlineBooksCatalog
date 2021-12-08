@@ -10,9 +10,9 @@ import lombok.Setter;
 public class BookFilter {
 
 	private String name;
-	private AuthorFilter authorFilter;
-	private BigDecimal bookRatingFrom;
-	private BigDecimal bookRatingTo;
+	private AuthorFilter authorFilter;  // todo: why are you object here?
+	private BigDecimal bookRatingFrom;  // todo rename to ratingFrom
+	private BigDecimal bookRatingTo;    // todo rename to ratingTo
 	private Integer year;
 	private String isbn;
 

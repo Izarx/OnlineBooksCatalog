@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
+// todo: What this class do?
 public class GlobalExceptionHandler {
 
 	@ExceptionHandler({NotValidIdException.class})

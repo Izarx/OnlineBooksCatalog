@@ -17,7 +17,7 @@ export class AuthorsPaginationTableComponent implements OnInit {
 
     static readonly title: string = 'Authors';
 
-    sortableColumns: Array<SortableColumn> = [
+    sortableColumns: Array<SortableColumn> = [  // todo: is this array really needed?
         new SortableColumn('firstName', 'First Name', null),
         new SortableColumn('lastName', 'Last Name', null),
         new SortableColumn('authorRating', 'Rating', null),

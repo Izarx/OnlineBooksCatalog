@@ -29,7 +29,7 @@ public class AuthorRepositoryImpl extends AbstractEntityRepository<Author, Autho
 			return false;
 		}
 		String lastName = author.getLastName();
-		return lastName != null && lastName.length() <= Author.LAST_NAME_LENGTH;
+		return lastName != null && lastName.length() <= Author.LAST_NAME_LENGTH;  // todo: use StringUtils.length
 	}
 
 	@Override
@@ -58,6 +58,8 @@ public class AuthorRepositoryImpl extends AbstractEntityRepository<Author, Autho
 		String name = null;
 		BigDecimal authorRatingFrom = null;
 		BigDecimal authorRatingTo = null;
+		// todo: Why are you use ObjectUtils.isNotEmpty ? Do you look inside this method?
+		// todo: PLEASE use simple null check
 		if (ObjectUtils.isNotEmpty(authorFilter)) {
 			name = authorFilter.getName();
 			authorRatingFrom = authorFilter.getAuthorRatingFrom();
@@ -70,6 +72,8 @@ public class AuthorRepositoryImpl extends AbstractEntityRepository<Author, Autho
 					'%' + name + '%');
 			predicates.add(builder.or(predicateFirstName, predicateLastName));
 		}
+		// todo: PLEASE use simple null check
+		// todo: could be simplified (remove between ;) )
 		if (ObjectUtils.isNotEmpty(authorRatingFrom) && ObjectUtils.isNotEmpty(authorRatingTo)) {
 			predicates.add(builder.between(rootEntity.get("authorRating"), authorRatingFrom, authorRatingTo));
 		}

@@ -9,6 +9,7 @@ import com.softserveinc.booklibrary.backend.pagination.ResponseData;
 import com.softserveinc.booklibrary.backend.entity.AbstractEntity;
 import org.springframework.transaction.annotation.Transactional;
 
+// todo: need to remove second generic class in declaration
 public interface EntityService<T extends AbstractEntity<? extends Serializable>, V> {
 
 	T create(T entity);

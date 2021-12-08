@@ -10,7 +10,7 @@ import lombok.Setter;
 public class AuthorFilter {
 
 	private String name;
-	private BigDecimal authorRatingFrom;
-	private BigDecimal authorRatingTo;
+	private BigDecimal authorRatingFrom;    // todo rename to ratingFrom
+	private BigDecimal authorRatingTo;      // todo rename to ratingTo
 
 }

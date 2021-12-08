@@ -91,7 +91,7 @@ public class AuthorController {
 
 		return authorService.delete(id) ?
 				ResponseEntity.ok().build() :
-				ResponseEntity.noContent().build();
+				ResponseEntity.noContent().build(); // todo: reason?
 	}
 
 	@GetMapping

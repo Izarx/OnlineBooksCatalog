@@ -8,6 +8,7 @@ import com.softserveinc.booklibrary.backend.entity.Author;
 import com.softserveinc.booklibrary.backend.pagination.RequestOptions;
 import com.softserveinc.booklibrary.backend.pagination.ResponseData;
 
+// todo: need to remove second generic class in declaration
 public interface EntityRepository<T extends AbstractEntity<? extends Serializable>, V> {
 
 	T create(T entity);
