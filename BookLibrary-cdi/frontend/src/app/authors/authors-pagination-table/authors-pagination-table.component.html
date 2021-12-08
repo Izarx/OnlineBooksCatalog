@@ -128,8 +128,8 @@
      tabindex="-1">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<div class="modal-body">
-				<h4 class="ellipsis">Are you sure that you want to delete {{author.firstName + ' ' + author.lastName}} ?</h4>
+			<div class="modal-body text-center">
+				<h4>Are you sure that you want to delete <span class="ellipsis">{{author.firstName + ' ' + author.lastName}}</span> ?</h4>
 			</div>
 			<div class="modal-footer">
 				<button class="btn btn-default"
@@ -154,7 +154,7 @@
      tabindex="-1">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<div class="modal-body">
+			<div class="modal-body text-center">
 				<h4>Are you sure that you want to delete next authors?</h4>
 				<div *ngFor="let delAuthor of page.content">
 					<p class="ellipsis" *ngIf="delAuthor.isChecked">{{delAuthor.firstName + ' ' + delAuthor.lastName}}</p>
