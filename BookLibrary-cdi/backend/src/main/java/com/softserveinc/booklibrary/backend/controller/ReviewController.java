@@ -2,6 +2,7 @@ package com.softserveinc.booklibrary.backend.controller;
 
 import com.softserveinc.booklibrary.backend.dto.ApplicationMapper;
 import com.softserveinc.booklibrary.backend.dto.ReviewDto;
+import com.softserveinc.booklibrary.backend.dto.ReviewDtoWithoutBook;
 import com.softserveinc.booklibrary.backend.dto.filtering.ReviewFilter;
 import com.softserveinc.booklibrary.backend.entity.Review;
 import com.softserveinc.booklibrary.backend.pagination.RequestOptions;
@@ -30,18 +31,20 @@ public class ReviewController {
 		this.reviewService = reviewService;
 	}
 
-	@PostMapping
-	public ResponseEntity<ResponseData<ReviewDto>> listReviewsOfBook(
-			@RequestBody RequestOptions<ReviewFilter> requestOptions) {
-		return ResponseEntity
-				.ok(convertAuthorResponseToAuthorDtoResponse(
-						reviewService.listEntities(requestOptions)));
+	@PostMapping("/create")
+	public ResponseEntity<ReviewDto> createReview(@RequestBody ReviewDto reviewDto) {
+		return ResponseEntity.ok(appMapper.reviewToReviewDto(reviewService.create(appMapper.reviewDtoToReview(reviewDto))));
 	}
 
-	private ResponseData<ReviewDto> convertAuthorResponseToAuthorDtoResponse(ResponseData<Review> responseData) {
-		ResponseData<ReviewDto> reviewDtoResponseData = new ResponseData<>();
+	@PostMapping
+	public ResponseEntity<ResponseData<ReviewDtoWithoutBook>> listReviewsOfBook(@RequestBody RequestOptions<ReviewFilter> requestOptions) {
+		return ResponseEntity.ok(convertReviewResponseToReviewDtoResponse(reviewService.listEntities(requestOptions)));
+	}
+
+	private ResponseData<ReviewDtoWithoutBook> convertReviewResponseToReviewDtoResponse(ResponseData<Review> responseData) {
+		ResponseData<ReviewDtoWithoutBook> reviewDtoResponseData = new ResponseData<>();
 		reviewDtoResponseData.setTotalElements(responseData.getTotalElements());
-		reviewDtoResponseData.setContent(appMapper.listReviewsToListReviewsDto(responseData.getContent()));
+		reviewDtoResponseData.setContent(appMapper.listReviewsToListReviewsDtoWithoutBook(responseData.getContent()));
 		return reviewDtoResponseData;
 	}
 

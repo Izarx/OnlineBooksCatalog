@@ -43,10 +43,8 @@ export class CreateAuthorComponent implements OnInit {
     submit() {
         if (this.form.valid) {
             const formData = {...this.form.value}
-            console.log(formData.firstName);
             this.author.firstName = formData.firstName.trim();
             this.author.lastName = formData.lastName.trim();
-            console.log(this.author);
             this.createAuthor();
             document.getElementById('createAuthorModalCloseButton').click()
         }

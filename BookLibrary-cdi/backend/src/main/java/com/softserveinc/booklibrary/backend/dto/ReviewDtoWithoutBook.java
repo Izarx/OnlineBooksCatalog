@@ -1,17 +1,15 @@
 package com.softserveinc.booklibrary.backend.dto;
 
-import com.softserveinc.booklibrary.backend.entity.Book;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
 @Setter
-public final class ReviewDto {
+@Getter
+public class ReviewDtoWithoutBook {
 
 	private Integer reviewId;
 	private String commenterName;
 	private String comment;
 	private Integer rating;
-	private Book book;
 
 }

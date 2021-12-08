@@ -1,7 +1,6 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {Book} from "../model/book";
 import {RequestOptions} from "../model/request-options";
 import {ReviewFilter} from "../model/review-Filter";
 import {ResponseData} from "../model/response-data";
@@ -18,5 +17,9 @@ export class ReviewService {
 
   getPage(appRequestPage: RequestOptions<ReviewFilter>) : Observable<ResponseData<Review>> {
     return this.httpClient.post<ResponseData<Review>>(baseUrl, appRequestPage);
+  }
+
+  createReview(review: Review): Observable<Review> {
+    return this.httpClient.post<Review>(baseUrl+ `/create`, review );
   }
 }

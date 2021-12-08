@@ -7,6 +7,7 @@ import {RequestOptions} from "../../model/request-options";
 import {ReviewFilter} from "../../model/review-Filter";
 import {ResponseData} from "../../model/response-data";
 import {Review} from "../../model/review";
+import {PaginationService} from "../../pagination/pagination.service";
 
 @Component({
   selector: 'app-manage-book',
@@ -24,7 +25,8 @@ export class ManageBookComponent implements OnInit {
   constructor(
       private route: ActivatedRoute,
       private bookService: BookService,
-      private reviewService: ReviewService
+      private reviewService: ReviewService,
+      private paginationService: PaginationService<ReviewFilter>
   ) {
     this.requestOptions.filteredEntity = new ReviewFilter(null);
   }
@@ -38,12 +40,12 @@ export class ManageBookComponent implements OnInit {
 
   tabBookInfoButtonVisible() {
     document.getElementById("bookInfoButton").hidden = false;
-    document.getElementById("addCommentButton").hidden = true;
+    document.getElementById("addReviewButton").hidden = true;
   }
 
-  tabCommentButtonVisible() {
+  tabReviewButtonVisible() {
     document.getElementById("bookInfoButton").hidden = true;
-    document.getElementById("addCommentButton").hidden = false;
+    document.getElementById("addReviewButton").hidden = false;
   }
 
   initStarsRating(rating: number): Array<number> {
@@ -78,6 +80,7 @@ export class ManageBookComponent implements OnInit {
       );
       this.reviewService.getPage(this.requestOptions).subscribe(
           page => {
+            this.paginationService.initPageable(this.requestOptions, page.totalElements);
             this.reviews = page;
           },
           error => {

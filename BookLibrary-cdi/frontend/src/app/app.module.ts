@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {AppComponent} from './app.component';
-import {ReviewsComponent} from './reviews/reviews.component';
+import {CreateReviewComponent} from './reviews/create-review.component';
 import {HomeComponent} from './home/home.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {AppRoutingModule} from "./app-routing.module";
@@ -22,7 +22,7 @@ import { BooksFilteringComponent } from './books/books-filtering/books-filtering
 @NgModule({
     declarations: [
         AppComponent,
-        ReviewsComponent,
+        CreateReviewComponent,
         HomeComponent,
         CreateAuthorComponent,
         PaginationComponent,

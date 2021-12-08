@@ -1,0 +1,55 @@
+<div aria-hidden="true"
+     aria-labelledby="createReviewLabel"
+     class="modal fade"
+     id="createReview"
+     role="dialog"
+     tabindex="-1"
+>
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<form (ngSubmit)="submit()" [formGroup]="form">
+				<div class="modal-header">
+					<h4 class="modal-title"
+					    id="createReviewLabel">Leave Review For Book "<span class="ellipsis">{{book.name}}</span>"</h4>
+				</div>
+				<div class="modal-body">
+					<div class="sub-title">Your Name</div>
+					<div>
+						<input class="form-control"
+						       formControlName="commenterName"
+						       type="text"
+						>
+					</div>
+					<div>
+						<textarea
+								class="form-control"
+								formControlName="comment"
+								type="text"
+						></textarea>
+					</div>
+					<div>
+						<a (click)="setRating(1)" class="fa fa-star" id="1star"></a>
+						<a (click)="setRating(2)" class="fa fa-star" id="2star"></a>
+						<a (click)="setRating(3)" class="fa fa-star" id="3star"></a>
+						<a (click)="setRating(4)" class="fa fa-star" id="4star"></a>
+						<a (click)="setRating(5)" class="fa fa-star" id="5star"></a>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button (click)="cancel()"
+					        class="btn btn-default"
+					        data-dismiss="modal"
+					        id="createReviewModalCloseButton"
+					        type="button"
+					>Cancel
+					</button>
+					<button [disabled]="form.invalid"
+					        class="btn btn-primary"
+					        type="submit"
+					>Save
+					</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
