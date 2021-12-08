@@ -18,7 +18,7 @@ export class ManageBookComponent implements OnInit {
   book: Book = new Book(null, '', 0, '', '', 0.00, []);
   ratingStarsArray: Array<number>;
   requestOptions: RequestOptions<ReviewFilter> = new RequestOptions();
-  page: ResponseData<Review> = new ResponseData<Review>();
+  reviews: ResponseData<Review> = new ResponseData<Review>();
   votes: number;
 
   constructor(
@@ -31,27 +31,10 @@ export class ManageBookComponent implements OnInit {
 
   ngOnInit(): void {
     this.tabBookInfoButtonVisible();
-    this.route.params.subscribe((params: Params) => {
-      let bookId = params.bookId;
-      this.requestOptions.filteredEntity.bookId = bookId;
-      this.bookService.getBookByIdWithAuthors(bookId).subscribe(
-          book => {
-            this.book = book;
-          },
-          error => {
-            console.log(error);
-          }
-      );
-      this.reviewService.getPage(this.requestOptions).subscribe(
-          page => {
-            this.page = page;
-          },
-          error => {
-            console.log(error);
-          }
-      )
-    })
+    this.getData();
   }
+
+
 
   tabBookInfoButtonVisible() {
     document.getElementById("bookInfoButton").hidden = false;
@@ -81,4 +64,32 @@ export class ManageBookComponent implements OnInit {
     return this.ratingStarsArray;
   }
 
+  getData() {
+    this.route.params.subscribe((params: Params) => {
+      let bookId = params.bookId;
+      this.requestOptions.filteredEntity.bookId = bookId;
+      this.bookService.getBookByIdWithAuthors(bookId).subscribe(
+          book => {
+            this.book = book;
+          },
+          error => {
+            console.log(error);
+          }
+      );
+      this.reviewService.getPage(this.requestOptions).subscribe(
+          page => {
+            this.reviews = page;
+          },
+          error => {
+            console.log(error);
+          }
+      )
+    })
+  }
+
+  getBookByIdWithAuthors(bookId: number) {
+    this.bookService.getBookByIdWithAuthors(bookId).subscribe(
+        book => this.book = book
+    )
+  }
 }

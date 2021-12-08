@@ -92,8 +92,8 @@
 											>
 										</div>
 									</th>
-									<td class="column-entity-padding">{{ author.firstName}}</td>
-									<td class="column-entity-padding">{{ author.lastName}}</td>
+									<td class="column-entity-padding ellipsis">{{ author.firstName}}</td>
+									<td class="column-entity-padding ellipsis">{{ author.lastName}}</td>
 									<td class="text-center">{{author.authorRating.toFixed(2)}}</td>
 									<td class="text-center">
 										<button (click)="getAuthorById(author.authorId)"
@@ -129,7 +129,7 @@
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-body">
-				<h4>Are you sure that you want to delete {{author.firstName + ' ' + author.lastName}} ?</h4>
+				<h4 class="ellipsis">Are you sure that you want to delete {{author.firstName + ' ' + author.lastName}} ?</h4>
 			</div>
 			<div class="modal-footer">
 				<button class="btn btn-default"
@@ -157,7 +157,7 @@
 			<div class="modal-body">
 				<h4>Are you sure that you want to delete next authors?</h4>
 				<div *ngFor="let delAuthor of page.content">
-					<p *ngIf="delAuthor.isChecked">{{delAuthor.firstName + ' ' + delAuthor.lastName}}</p>
+					<p class="ellipsis" *ngIf="delAuthor.isChecked">{{delAuthor.firstName + ' ' + delAuthor.lastName}}</p>
 				</div>
 			</div>
 			<div class="modal-footer">

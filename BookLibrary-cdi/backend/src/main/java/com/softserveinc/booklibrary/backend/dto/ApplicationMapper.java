@@ -30,4 +30,6 @@ public interface ApplicationMapper {
 	List<BookDto> listBooksToListBooksDto(List<Book> books);
 
 	List<ReviewDto> listReviewsToListReviewsDto(List<Review> reviews);
+
+	List<BookNameDto> listBooksToListBooksNameDto(List<Book> bulkDeleteEntities);
 }

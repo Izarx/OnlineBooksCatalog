@@ -161,6 +161,10 @@ div.pager-container span.pager-element {
   padding: 5px;
 }
 
+.margin-for-button {
+  margin: 0px 5px;
+}
+
 table p {
   font-size: inherit;
   margin: 0;
@@ -173,4 +177,16 @@ table p {
 
 .font-small {
   font-size: small;
+}
+
+.ellipsis {
+  max-width: 200px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.filter-button {
+  height: 34px;
+  width: 70px;
 }

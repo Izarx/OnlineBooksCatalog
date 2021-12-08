@@ -1,7 +1,12 @@
 package com.softserveinc.booklibrary.backend.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.softserveinc.booklibrary.backend.dto.ApplicationMapper;
+import com.softserveinc.booklibrary.backend.dto.AuthorNameDto;
 import com.softserveinc.booklibrary.backend.dto.BookDto;
+import com.softserveinc.booklibrary.backend.dto.BookNameDto;
 import com.softserveinc.booklibrary.backend.dto.filtering.BookFilter;
 import com.softserveinc.booklibrary.backend.entity.Book;
 import com.softserveinc.booklibrary.backend.pagination.RequestOptions;
@@ -81,6 +86,14 @@ public class BookController {
 		return bookService.delete(id) ?
 				ResponseEntity.ok().build() :
 				ResponseEntity.notFound().build(); // todo: reason?
+	}
+
+	@PostMapping("/bulk-delete")
+	public ResponseEntity<List<BookNameDto>> bulkDeleteBooks(
+			@RequestBody List<Integer> booksIdsForDelete) {
+		return ResponseEntity
+				.ok(appMapper.listBooksToListBooksNameDto(
+						bookService.bulkDeleteEntities(new ArrayList<>(booksIdsForDelete))));
 	}
 
 	private ResponseData<BookDto> convertBookPageToBookDtoPage(

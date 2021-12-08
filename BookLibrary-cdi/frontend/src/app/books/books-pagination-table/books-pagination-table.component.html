@@ -106,11 +106,11 @@
 											>
 										</div>
 									</th>
-									<td class="column-entity-padding"><a [routerLink]="['/books', book.bookId]">{{book.name}}</a></td>
-									<td class="column-entity-padding">
-										<div *ngFor="let author of book.authors">
+									<td class="column-entity-padding ellipsis"><a [routerLink]="['/books', book.bookId]">{{book.name}}</a></td>
+									<td class="column-entity-padding ellipsis">
+										<p *ngFor="let author of book.authors" >
 											{{author.firstName + ' ' + author.lastName}}
-										</div>
+										</p>
 									</td>
 									<td class="text-center">{{book.bookRating.toFixed(2)}}</td>
 									<td class="text-center">{{book.yearPublished}}</td>
