@@ -190,7 +190,20 @@ table p {
   white-space: nowrap;
 }
 
+.review-ellipsis {
+  max-width: 200px;
+  max-height: 50px;
+  text-overflow: clip;
+  overflow: hidden;
+  white-space: pre;
+}
+
 .filter-button {
   height: 34px;
   width: 70px;
 }
+
+div[class="modal-body"] textarea {
+  resize: vertical;
+}
+

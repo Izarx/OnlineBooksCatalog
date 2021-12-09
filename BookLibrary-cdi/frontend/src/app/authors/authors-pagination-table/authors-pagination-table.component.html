@@ -92,7 +92,7 @@
 											>
 										</div>
 									</th>
-									<td class="column-entity-padding ellipsis">{{ author.firstName}}</td>
+									<td class="column-entity-padding ellipsis"><a [routerLink]="['/authors', author.authorId]">{{ author.firstName}}</a></td>
 									<td class="column-entity-padding ellipsis">{{ author.lastName}}</td>
 									<td class="text-center">{{author.authorRating.toFixed(2)}}</td>
 									<td class="text-center">

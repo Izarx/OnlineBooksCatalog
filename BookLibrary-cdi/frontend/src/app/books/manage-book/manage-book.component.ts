@@ -41,6 +41,8 @@ export class ManageBookComponent implements OnInit {
   tabBookInfoButtonVisible() {
     document.getElementById("bookInfoButton").hidden = false;
     document.getElementById("addReviewButton").hidden = true;
+    this.requestOptions.pageSize = 5;
+    this.getData();
   }
 
   tabReviewButtonVisible() {
@@ -94,5 +96,10 @@ export class ManageBookComponent implements OnInit {
     this.bookService.getBookByIdWithAuthors(bookId).subscribe(
         book => this.book = book
     )
+  }
+
+  setPageSize() {
+    this.requestOptions.pageSize += 5;
+    this.getData();
   }
 }

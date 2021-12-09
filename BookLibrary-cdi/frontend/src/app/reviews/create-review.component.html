@@ -14,19 +14,21 @@
 				</div>
 				<div class="modal-body">
 					<div class="sub-title">Your Name</div>
-					<div>
+					<div class="add-top-bottom-padding">
 						<input class="form-control"
 						       formControlName="commenterName"
 						       type="text"
 						>
 					</div>
-					<div>
+					<div class="sub-title">Leave Your Comment</div>
+					<div class="add-top-bottom-padding">
 						<textarea
 								class="form-control"
 								formControlName="comment"
 								type="text"
 						></textarea>
 					</div>
+					<div class="sub-title">Set Rating</div>
 					<div>
 						<a (click)="setRating(1)" class="fa fa-star" id="1star"></a>
 						<a (click)="setRating(2)" class="fa fa-star" id="2star"></a>

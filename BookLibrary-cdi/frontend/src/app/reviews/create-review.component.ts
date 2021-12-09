@@ -54,14 +54,13 @@ export class CreateReviewComponent implements OnInit {
     setRating(number: number) {
         this.review.rating = number;
         let i = 1;
-        let j = number;
         let s = 'star'
         this.resetRatingView();
         while(i < 6) {
             if (number > 0) {
                 document.getElementById(i + s).classList.add('checked')
             }
-            j--;
+            number--;
             i++;
         }
     }

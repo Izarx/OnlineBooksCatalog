@@ -78,17 +78,28 @@
 									<tr>
 										<td>
 											<span class="font-bold">{{review.commenterName}}</span>
-											<span class="pull-right" *ngFor="let r of initStarsRating(review.rating)">
+											<span class="pull-right">
+												<span *ngFor="let r of initStarsRating(review.rating)">
 												<span *ngIf="r >= 0.5" class="fa fa-star checked"></span>
 												<span *ngIf="r < 0.5 " class="fa fa-star"></span>
+											</span>
 											</span>
 										</td>
 									</tr>
 									<tr>
-										<td class="font-small">{{review.comment}}</td>
+										<td class="font-small review-ellipsis"
+										>{{review.comment}}</td>
 									</tr>
 									</tbody>
 								</table>
+							</div>
+							<div class="panel-footer">
+								<div id="viewMoreReviews">
+									<button [disabled]="requestOptions.pageSize >= reviews.totalElements"
+									        (click)="setPageSize()"
+									        class="btn btn-primary"
+									>More Reviews</button>
+								</div>
 							</div>
 						</div>
 					</div>

@@ -18,6 +18,7 @@ import {SortableColumnHeaderComponent} from './sorting/sortable-column-header/so
 import { ManageBookComponent } from './books/manage-book/manage-book.component';
 import { AuthorsFilteringComponent } from './authors/authors-filtering/authors-filtering.component';
 import { BooksFilteringComponent } from './books/books-filtering/books-filtering.component';
+import { ManageAuthorComponent } from './authors/manage-author/manage-author.component';
 
 @NgModule({
     declarations: [
@@ -34,7 +35,8 @@ import { BooksFilteringComponent } from './books/books-filtering/books-filtering
         SortableColumnHeaderComponent,
         ManageBookComponent,
         AuthorsFilteringComponent,
-        BooksFilteringComponent
+        BooksFilteringComponent,
+        ManageAuthorComponent
     ],
     imports: [
         BrowserModule,
