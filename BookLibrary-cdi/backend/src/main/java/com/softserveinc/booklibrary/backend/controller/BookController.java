@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 
 import com.softserveinc.booklibrary.backend.dto.ApplicationMapper;
 import com.softserveinc.booklibrary.backend.dto.AuthorDto;
-import com.softserveinc.booklibrary.backend.dto.AuthorNameDto;
 import com.softserveinc.booklibrary.backend.dto.BookDto;
 import com.softserveinc.booklibrary.backend.dto.BookNameDto;
 import com.softserveinc.booklibrary.backend.dto.filtering.BookFilter;

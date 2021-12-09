@@ -2,7 +2,6 @@ package com.softserveinc.booklibrary.backend.dto;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Set;
 
 import lombok.Getter;
 import lombok.Setter;

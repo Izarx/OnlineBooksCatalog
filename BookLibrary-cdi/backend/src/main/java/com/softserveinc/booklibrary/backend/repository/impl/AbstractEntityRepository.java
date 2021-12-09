@@ -212,10 +212,10 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 	 */
 	// todo: this method must have default implementation
 	protected List<Predicate> getFilteringParams(RequestOptions<V> options,
-	                                                      CriteriaBuilder builder,
-	                                                      Root<T> rootEntity) {
+	                                             CriteriaBuilder builder,
+	                                             Root<T> rootEntity) {
 		return Collections.emptyList();
-	};
+	}
 
 	protected Integer getTotalElementsFromDb (RequestOptions<V> options,    // todo: please rename this method to more understandable name
 	                                          CriteriaBuilder builder) {

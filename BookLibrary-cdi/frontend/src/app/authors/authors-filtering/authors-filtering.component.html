@@ -2,7 +2,7 @@
 	<form class="form-inline row" (ngSubmit)="searchFilteredAuthors(authorFilter)" [formGroup]="authorFilteringForm">
 		<div class="col-md-8 pull-left">
 			<span class="form-group add-top-bottom-padding">
-				<label>First Name</label>
+				<label>Name</label>
 				<input [(ngModel)]="authorFilter.name"
 				       class="form-control"
 				       formControlName="name"

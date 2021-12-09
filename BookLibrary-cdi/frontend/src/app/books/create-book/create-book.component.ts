@@ -2,6 +2,7 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Book} from "../../model/book";
 import {BookService} from "../book.service";
+import {Author} from "../../model/author";
 
 @Component({
     selector: 'app-create-book',
@@ -58,5 +59,9 @@ export class CreateBookComponent implements OnInit {
         if (this.form.valid) {
             this.form.reset();
         }
+    }
+
+    setAuthors(authors: Array<Author>) {
+        this.book.authors = authors;
     }
 }

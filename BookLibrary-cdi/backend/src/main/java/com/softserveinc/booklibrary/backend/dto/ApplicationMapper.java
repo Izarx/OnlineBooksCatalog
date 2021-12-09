@@ -2,11 +2,9 @@ package com.softserveinc.booklibrary.backend.dto;
 
 import java.util.List;
 
-import com.softserveinc.booklibrary.backend.controller.HomeController;
 import com.softserveinc.booklibrary.backend.entity.Author;
 import com.softserveinc.booklibrary.backend.entity.Book;
 import com.softserveinc.booklibrary.backend.entity.Review;
-import com.softserveinc.booklibrary.backend.service.ReviewService;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

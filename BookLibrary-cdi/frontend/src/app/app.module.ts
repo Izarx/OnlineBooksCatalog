@@ -15,10 +15,17 @@ import {BooksPaginationTableComponent} from './books/books-pagination-table/book
 import {CreateBookComponent} from './books/create-book/create-book.component';
 import {UpdateBookComponent} from './books/update-book/update-book.component';
 import {SortableColumnHeaderComponent} from './sorting/sortable-column-header/sortable-column-header.component';
-import { ManageBookComponent } from './books/manage-book/manage-book.component';
-import { AuthorsFilteringComponent } from './authors/authors-filtering/authors-filtering.component';
-import { BooksFilteringComponent } from './books/books-filtering/books-filtering.component';
-import { ManageAuthorComponent } from './authors/manage-author/manage-author.component';
+import {ManageBookComponent} from './books/manage-book/manage-book.component';
+import {AuthorsFilteringComponent} from './authors/authors-filtering/authors-filtering.component';
+import {BooksFilteringComponent} from './books/books-filtering/books-filtering.component';
+import {ManageAuthorComponent} from './authors/manage-author/manage-author.component';
+import {ChipsAutocompleteComponent} from './chips-autocomplete/chips-autocomplete.component';
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatAutocompleteModule} from "@angular/material/autocomplete";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {MatCheckboxModule} from "@angular/material/checkbox";
+import {MatInputModule} from "@angular/material/input";
+import {MatListModule} from "@angular/material/list";
 
 @NgModule({
     declarations: [
@@ -36,7 +43,8 @@ import { ManageAuthorComponent } from './authors/manage-author/manage-author.com
         ManageBookComponent,
         AuthorsFilteringComponent,
         BooksFilteringComponent,
-        ManageAuthorComponent
+        ManageAuthorComponent,
+        ChipsAutocompleteComponent
     ],
     imports: [
         BrowserModule,
@@ -44,7 +52,13 @@ import { ManageAuthorComponent } from './authors/manage-author/manage-author.com
         AppRoutingModule,
         HttpClientModule,
         ReactiveFormsModule,
-        NgbModule
+        NgbModule,
+        MatAutocompleteModule,
+        MatCheckboxModule,
+        MatListModule,
+        MatFormFieldModule,
+        MatInputModule,
+        BrowserAnimationsModule
     ],
     providers: [],
     bootstrap: [AppComponent]
