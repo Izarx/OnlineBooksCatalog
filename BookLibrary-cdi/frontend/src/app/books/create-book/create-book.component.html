@@ -43,6 +43,16 @@
 						       type="number"
 						>
 					</div>
+					<div>
+						<div class="sub-title">Publisher</div>
+					</div>
+					<div>
+						<input [(ngModel)]="book.publisher"
+						       class="form-control"
+						       formControlName="publisher"
+						       type="text"
+						>
+					</div>
 				</div>
 				<div class="modal-footer">
 					<button (click)="cancel()"

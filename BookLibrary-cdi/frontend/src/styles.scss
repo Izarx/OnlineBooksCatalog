@@ -192,8 +192,8 @@ table p {
 
 .review-ellipsis {
   max-width: 200px;
-  max-height: 50px;
-  text-overflow: clip;
+  max-height: 10px;
+  text-overflow: ellipsis;
   overflow: hidden;
   white-space: pre;
 }
@@ -205,5 +205,15 @@ table p {
 
 div[class="modal-body"] textarea {
   resize: vertical;
+}
+
+.table-home-page > tbody > tr > td, .table-home-page > tbody > tr > th, .table-home-page > tfoot > tr > td, .table-home-page > tfoot > tr > th, .table-home-page > thead > tr > td, .table-home-page > thead > tr > th {
+  height: 60px;
+  vertical-align: middle;
+  font-weight: bold;
+}
+
+.tab-font {
+  font-size: medium;
 }
 

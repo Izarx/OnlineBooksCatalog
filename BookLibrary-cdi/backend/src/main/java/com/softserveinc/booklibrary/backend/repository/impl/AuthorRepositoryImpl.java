@@ -25,11 +25,8 @@ public class AuthorRepositoryImpl extends AbstractEntityRepository<Author, Autho
 	@Override
 	public boolean isEntityValid(Author author) {
 		String firstName = author.getFirstName();
-		if (firstName == null || firstName.length() > Author.FIRST_NAME_LENGTH) {
-			return false;
-		}
-		String lastName = author.getLastName();
-		return lastName != null && lastName.length() <= Author.LAST_NAME_LENGTH;  // todo: use StringUtils.length
+		// todo: use StringUtils.length
+		return firstName != null && firstName.length() <= Author.FIRST_NAME_LENGTH;
 	}
 
 	@Override

@@ -17,6 +17,7 @@ import {PaginationService} from "../../pagination/pagination.service";
 export class ManageBookComponent implements OnInit {
 
   book: Book = new Book(null, '', 0, '', '', 0.00, []);
+  bookForUpdate: Book = new Book(null, '', 0, '', '', 0.00, []);
   ratingStarsArray: Array<number>;
   requestOptions: RequestOptions<ReviewFilter> = new RequestOptions();
   reviews: ResponseData<Review> = new ResponseData<Review>();
@@ -94,7 +95,7 @@ export class ManageBookComponent implements OnInit {
 
   getBookByIdWithAuthors(bookId: number) {
     this.bookService.getBookByIdWithAuthors(bookId).subscribe(
-        book => this.book = book
+        book => this.bookForUpdate = book
     )
   }
 

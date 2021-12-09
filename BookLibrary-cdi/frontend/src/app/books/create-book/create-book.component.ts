@@ -25,7 +25,8 @@ export class CreateBookComponent implements OnInit {
             yearPublished: new FormControl('',
                 Validators.max(new Date().getFullYear())),
             isbn: new FormControl('',
-                Validators.pattern("^(?=(?:\\D*\\d){10}(?:(?:\\D*\\d){3})?$)[\\d-]+$"))
+                Validators.pattern("^(?=(?:\\D*\\d){10}(?:(?:\\D*\\d){3})?$)[\\d-]+$")),
+            publisher: new FormControl('', [])
         })
     }
 
@@ -43,10 +44,11 @@ export class CreateBookComponent implements OnInit {
     submit() {
         if (this.form.valid) {
             const formData = {...this.form.value};
-            this.book.name = formData.name;
+            this.book.name = formData.name.trim();
             this.book.yearPublished = formData.yearPublished;
             this.book.isbn = formData.isbn.trim();
             this.book.authors = formData.authors;
+            this.book.publisher = formData.publisher.trim();
             this.createBook(this.book);
             document.getElementById('createBookModalCloseButton').click()
         }

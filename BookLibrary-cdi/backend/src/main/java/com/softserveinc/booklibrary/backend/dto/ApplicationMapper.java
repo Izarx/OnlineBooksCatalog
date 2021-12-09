@@ -40,4 +40,6 @@ public interface ApplicationMapper {
 	List<BookNameDto> listBooksToListBooksNameDto(List<Book> bulkDeleteEntities);
 
 	List<ReviewDtoWithoutBook> listReviewsToListReviewsDtoWithoutBook(List<Review> content);
+
+
 }
