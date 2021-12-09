@@ -21,12 +21,9 @@ export class CreateAuthorComponent implements OnInit {
     ngOnInit(): void {
         this.form = new FormGroup({
             firstName: new FormControl('', [
-                Validators.pattern("[a-zA-Zа-яА-Я][a-zA-Zа-яА-Я ]+"),
                 Validators.required
             ]),
-            lastName: new FormControl('', [
-                Validators.pattern("[a-zA-Zа-яА-Я][a-zA-Zа-яА-Я ]+")
-            ])
+            lastName: new FormControl('', [])
         })
     }
 
@@ -43,10 +40,8 @@ export class CreateAuthorComponent implements OnInit {
     submit() {
         if (this.form.valid) {
             const formData = {...this.form.value}
-            console.log(formData.firstName);
-            this.author.firstName = formData.firstName;
-            this.author.lastName = formData.lastName;
-            console.log(this.author);
+            this.author.firstName = formData.firstName.trim();
+            this.author.lastName = formData.lastName.trim();
             this.createAuthor();
             document.getElementById('createAuthorModalCloseButton').click()
         }

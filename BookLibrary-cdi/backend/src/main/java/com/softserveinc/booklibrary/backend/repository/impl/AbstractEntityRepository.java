@@ -1,27 +1,19 @@
 package com.softserveinc.booklibrary.backend.repository.impl;
 
 import java.io.Serializable;
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
-import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Id;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaBuilder.In;
 import javax.persistence.criteria.CriteriaDelete;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Order;
-import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
@@ -38,7 +30,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.ReflectionUtils;
 
 public abstract class AbstractEntityRepository<T extends AbstractEntity<? extends Serializable>, V> implements EntityRepository<T, V> {
 	// todo: must use LOGGER
@@ -172,7 +163,7 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 	}
 
 	protected List<T> getUnavailableToDeleteEntities(List<Serializable> entitiesIdsForDelete,
-	                                                          CriteriaQuery<T> criteriaQuery) {
+	                                                 CriteriaQuery<T> criteriaQuery) {
 		return Collections.emptyList();
 	}
 
@@ -185,8 +176,8 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 	 * Create List of Orders from sortable columns to order db entities by it
 	 *
 	 * @param sortableColumns columns, which we receive from UI, they consist from name field and direction for sorting
-	 * @param builder criteria builder
-	 * @param rootEntity root
+	 * @param builder         criteria builder
+	 * @param rootEntity      root
 	 * @return list of sorting orders for each sortable column which was activated
 	 */
 
@@ -213,15 +204,18 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 
 	/**
 	 * Create list of predicates to obtain objects according to filtering options
-	 * @param options request options which consists entity with filtering fields
-	 * @param builder criteria builder
+	 *
+	 * @param options    request options which consists entity with filtering fields
+	 * @param builder    criteria builder
 	 * @param rootEntity root
 	 * @return list of predicates according to request options
 	 */
 	// todo: this method must have default implementation
-	protected abstract List<Predicate> getFilteringParams(RequestOptions<V> options,
-	                                           CriteriaBuilder builder,
-	                                           Root<T> rootEntity);
+	protected List<Predicate> getFilteringParams(RequestOptions<V> options,
+	                                             CriteriaBuilder builder,
+	                                             Root<T> rootEntity) {
+		return Collections.emptyList();
+	}
 
 	protected Integer getTotalElementsFromDb (RequestOptions<V> options,    // todo: please rename this method to more understandable name
 	                                          CriteriaBuilder builder) {

@@ -54,9 +54,7 @@ export class UpdateBookComponent implements OnInit {
     }
 
     cancel() {
-        if (this.form.valid) {
-            this.form.reset();
-        }
+        this.form.reset();
     }
 
 }

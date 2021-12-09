@@ -1,7 +1,14 @@
 package com.softserveinc.booklibrary.backend.controller;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import com.softserveinc.booklibrary.backend.dto.ApplicationMapper;
+import com.softserveinc.booklibrary.backend.dto.AuthorDto;
 import com.softserveinc.booklibrary.backend.dto.BookDto;
+import com.softserveinc.booklibrary.backend.dto.BookNameDto;
 import com.softserveinc.booklibrary.backend.dto.filtering.BookFilter;
 import com.softserveinc.booklibrary.backend.entity.Book;
 import com.softserveinc.booklibrary.backend.pagination.RequestOptions;
@@ -83,11 +90,21 @@ public class BookController {
 				ResponseEntity.notFound().build(); // todo: reason?
 	}
 
+	@PostMapping("/bulk-delete")
+	public ResponseEntity<List<BookNameDto>> bulkDeleteBooks(
+			@RequestBody List<Integer> booksIdsForDelete) {
+		return ResponseEntity
+				.ok(appMapper.listBooksToListBooksNameDto(
+						bookService.bulkDeleteEntities(new ArrayList<>(booksIdsForDelete))));
+	}
+
 	private ResponseData<BookDto> convertBookPageToBookDtoPage(
 			ResponseData<Book> responseData) {
 		ResponseData<BookDto> entityDtoPage = new ResponseData<>();
 		entityDtoPage.setTotalElements(responseData.getTotalElements());
-		entityDtoPage.setContent(appMapper.listBooksToListBooksDto(responseData.getContent()));
+		List<Book> content = responseData.getContent();
+		entityDtoPage.setContent(appMapper.listBooksToListBooksDto(content));
+		entityDtoPage.getContent().forEach(b -> b.setAuthors(b.getAuthors().stream().sorted(Comparator.comparingInt(AuthorDto::getAuthorId)).collect(Collectors.toList())));
 		return entityDtoPage;
 	}
 

@@ -1,4 +1,6 @@
 import {Component, OnInit} from '@angular/core';
+import {AuthorService} from "../authors/author.service";
+import {BookService} from "../books/book.service";
 
 @Component({
     selector: 'app-home',
@@ -9,10 +11,14 @@ export class HomeComponent implements OnInit {
 
     static readonly title: string = 'Home';
 
-    constructor() {
+    constructor(private authorService: AuthorService,
+                private bookService: BookService) {
     }
 
     ngOnInit(): void {
+
     }
+
+
 
 }

@@ -2,6 +2,7 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Book} from "../../model/book";
 import {BookService} from "../book.service";
+import {Author} from "../../model/author";
 
 @Component({
     selector: 'app-create-book',
@@ -25,7 +26,8 @@ export class CreateBookComponent implements OnInit {
             yearPublished: new FormControl('',
                 Validators.max(new Date().getFullYear())),
             isbn: new FormControl('',
-                Validators.pattern("^(?=(?:\\D*\\d){10}(?:(?:\\D*\\d){3})?$)[\\d-]+$"))
+                Validators.pattern("^(?=(?:\\D*\\d){10}(?:(?:\\D*\\d){3})?$)[\\d-]+$")),
+            publisher: new FormControl('', [])
         })
     }
 
@@ -43,10 +45,11 @@ export class CreateBookComponent implements OnInit {
     submit() {
         if (this.form.valid) {
             const formData = {...this.form.value};
-            this.book.name = formData.name;
+            this.book.name = formData.name.trim();
             this.book.yearPublished = formData.yearPublished;
             this.book.isbn = formData.isbn.trim();
             this.book.authors = formData.authors;
+            this.book.publisher = formData.publisher.trim();
             this.createBook(this.book);
             document.getElementById('createBookModalCloseButton').click()
         }
@@ -56,5 +59,9 @@ export class CreateBookComponent implements OnInit {
         if (this.form.valid) {
             this.form.reset();
         }
+    }
+
+    setAuthors(authors: Array<Author>) {
+        this.book.authors = authors;
     }
 }

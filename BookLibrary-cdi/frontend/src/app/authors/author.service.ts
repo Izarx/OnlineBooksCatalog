@@ -28,8 +28,8 @@ export class AuthorService {
         return this.httpClient.delete<void>(baseUrl + `/delete/${authorId}`);
     }
 
-    public getPage(appRequestPage: RequestOptions<AuthorFilter>): Observable<ResponseData<Author>> {
-        return this.httpClient.post<ResponseData<Author>>(baseUrl, appRequestPage);
+    public getPage(requestOptions: RequestOptions<AuthorFilter>): Observable<ResponseData<Author>> {
+        return this.httpClient.post<ResponseData<Author>>(baseUrl, requestOptions);
     }
 
     public updateAuthor(author: Author): Observable<any> {

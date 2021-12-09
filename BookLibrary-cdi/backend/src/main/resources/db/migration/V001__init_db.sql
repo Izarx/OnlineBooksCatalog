@@ -21,7 +21,7 @@ CREATE TABLE authors_books
 (
 	author_id INTEGER
 		CONSTRAINT authors_books_author_id_fkey
-			REFERENCES authors NOT NULL,
+			REFERENCES authors                 NOT NULL,
 	book_id   INTEGER
 		CONSTRAINT authors_books_book_id_fkey
 			REFERENCES books ON DELETE CASCADE NOT NULL

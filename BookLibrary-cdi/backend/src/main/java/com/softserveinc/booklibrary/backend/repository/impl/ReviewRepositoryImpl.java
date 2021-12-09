@@ -1,12 +1,9 @@
 package com.softserveinc.booklibrary.backend.repository.impl;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
@@ -16,6 +13,7 @@ import com.softserveinc.booklibrary.backend.entity.Book;
 import com.softserveinc.booklibrary.backend.entity.Review;
 import com.softserveinc.booklibrary.backend.pagination.RequestOptions;
 import com.softserveinc.booklibrary.backend.repository.ReviewRepository;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -36,11 +34,23 @@ public class ReviewRepositoryImpl extends AbstractEntityRepository<Review, Revie
 	}
 
 	@Override
-	protected void setOrdersByColumnsByDefault(List<Order> orderList, CriteriaBuilder builder, Root<Review> rootEntity) {}
+	protected void setOrdersByColumnsByDefault(List<Order> orderList, CriteriaBuilder builder, Root<Review> rootEntity) {
+		orderList.add(builder.desc(rootEntity.get("createDate")));
+	}
 
 	@Override
 	protected List<Predicate> getFilteringParams(RequestOptions<ReviewFilter> options, CriteriaBuilder builder, Root<Review> rootEntity) {
-		return Collections.emptyList();
+		List<Predicate> predicates = new ArrayList<>();
+		ReviewFilter reviewFilter = options.getFilteredEntity();
+		Integer bookId = null;
+		if (ObjectUtils.isNotEmpty(reviewFilter)) {
+			bookId = reviewFilter.getBookId();
+		}
+		if (bookId == null) {
+			bookId = 0;
+		}
+		predicates.add(builder.equal(rootEntity.get("book"), bookId));
+		return predicates;
 	}
 
 }

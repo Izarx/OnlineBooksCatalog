@@ -21,7 +21,7 @@ VALUES ('Petro Oneko', 'Very important comment with good rating', 5, 3);
 INSERT INTO reviews (commenter_name, comment, rating, book_id)
 VALUES ('Ivan Twok', 'Very important comment with good rating', 5, 3);
 INSERT INTO reviews (commenter_name, comment, rating, book_id)
-VALUES ('Taras Threeko', 'Very important comment with good rating', 4,3);
+VALUES ('Taras Threeko', 'Very important comment with good rating', 4, 3);
 INSERT INTO reviews (commenter_name, comment, rating, book_id)
 VALUES ('Bohdan Fourko', 'Very important comment with good rating', 4, 3);
 

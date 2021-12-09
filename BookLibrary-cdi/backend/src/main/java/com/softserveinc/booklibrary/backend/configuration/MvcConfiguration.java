@@ -30,11 +30,11 @@ public class MvcConfiguration implements WebMvcConfigurer {
 				.addResourceLocations("classpath:/resources/")
 				.resourceChain(true)
 				.addResolver(new PathResourceResolver() {
-			@Override
-			protected Resource getResource(String resourcePath, Resource location) throws IOException {
-				Resource requestedResource = location.createRelative(resourcePath);
-				return requestedResource.exists() && requestedResource.isReadable() ? requestedResource : new ClassPathResource("/resources/index.html");
-			}
-		});
+					@Override
+					protected Resource getResource(String resourcePath, Resource location) throws IOException {
+						Resource requestedResource = location.createRelative(resourcePath);
+						return requestedResource.exists() && requestedResource.isReadable() ? requestedResource : new ClassPathResource("/resources/index.html");
+					}
+				});
 	}
 }

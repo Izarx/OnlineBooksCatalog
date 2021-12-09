@@ -22,11 +22,9 @@ export class UpdateAuthorComponent implements OnInit {
     ngOnInit(): void {
         this.form = new FormGroup({
             firstName: new FormControl('', [
-                Validators.pattern("[a-zA-Zа-яА-Я][a-zA-Zа-яА-Я ]+"),
                 Validators.required
             ]),
             lastName: new FormControl('', [
-                Validators.pattern("[a-zA-Zа-яА-Я][a-zA-Zа-яА-Я ]+")
             ])
         });
     }

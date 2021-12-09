@@ -112,6 +112,14 @@ header h3 {
   min-height: 80px;
 }
 
+.panel-heading-for-tab {
+  min-height: 10px;
+}
+
+.panel-heading-for-tab ~ .panel-body {
+  min-height: 200px;
+}
+
 div > article {
   vertical-align: center;
   margin: 40px 50px;
@@ -121,13 +129,18 @@ div > article {
   color: orange;
 }
 
+.modal-content .fa-star:hover {
+  color: orange;
+}
+
 .form-inline .form-control-for-numbers {
   width: 80px;
 }
 
-.panel-heading .btn-danger:disabled, .btn.disabled, .btn[disabled], fieldset[disabled] .btn {
+.panel-heading .btn-danger:disabled {
   color: black;
   filter: none;
+  opacity: .85;
 }
 
 .btn-header {
@@ -143,3 +156,112 @@ div.pager-container span.pager-element {
   top: 50%;
   transform: translate(0, 20%)
 }
+
+.col-for-tab {
+  padding-bottom: 0;
+}
+
+.col-for-button {
+  padding: 5px;
+}
+
+.margin-for-button {
+  margin: 0px 5px;
+}
+
+table p {
+  font-size: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+.font-bold {
+  font-weight: bold;
+}
+
+.font-small {
+  font-size: small;
+}
+
+.ellipsis {
+  max-width: 200px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.review-ellipsis {
+  max-width: 200px;
+  max-height: 10px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: pre;
+}
+
+.filter-button {
+  height: 34px;
+  width: 70px;
+}
+
+div[class="modal-body"] textarea {
+  resize: vertical;
+}
+
+.table-home-page > tbody > tr > td, .table-home-page > tbody > tr > th, .table-home-page > tfoot > tr > td, .table-home-page > tfoot > tr > th, .table-home-page > thead > tr > td, .table-home-page > thead > tr > th {
+  height: 60px;
+  vertical-align: middle;
+  font-weight: bold;
+}
+
+.tab-font {
+  font-size: medium;
+}
+
+.example-chip-list {
+  width: 100%;
+}
+
+
+
+/* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
+
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.example-full-width {
+  width: 100%;
+}
+
+/* Start Material Overrides */
+.cdk-overlay-container {
+  z-index: 3000;
+}
+
+// .mat-form-field-appearance-legacy .mat-form-field-label {
+//   position: relative;
+//   top: -10px;
+// }
+
+.mat-checkbox-checked.mat-accent .mat-checkbox-background {
+  background-color: #fff;
+  border: 2px solid #000;
+}
+
+.mat-checkbox:not(.mat-checkbox-disabled).mat-accent
+.mat-checkbox-ripple
+.mat-ripple-element {
+  background-color: transparent;
+}
+
+.mat-checkbox-checkmark-path {
+  stroke: #000 !important;
+}
+
+.mat-form-field.mat-focused .mat-form-field-label {
+  color: rgba(0, 0, 0, 0.54);
+}
+/* End Material Overrides */

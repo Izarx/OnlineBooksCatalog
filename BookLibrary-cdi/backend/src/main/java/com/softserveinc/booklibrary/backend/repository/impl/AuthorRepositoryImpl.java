@@ -25,11 +25,8 @@ public class AuthorRepositoryImpl extends AbstractEntityRepository<Author, Autho
 	@Override
 	public boolean isEntityValid(Author author) {
 		String firstName = author.getFirstName();
-		if (firstName == null || firstName.length() > Author.FIRST_NAME_LENGTH) {
-			return false;
-		}
-		String lastName = author.getLastName();
-		return lastName != null && lastName.length() <= Author.LAST_NAME_LENGTH;  // todo: use StringUtils.length
+		// todo: use StringUtils.length
+		return firstName != null && firstName.length() <= Author.FIRST_NAME_LENGTH;
 	}
 
 	@Override
@@ -43,8 +40,8 @@ public class AuthorRepositoryImpl extends AbstractEntityRepository<Author, Autho
 
 	@Override
 	protected void setOrdersByColumnsByDefault(List<Order> orderList,
-	                                                  CriteriaBuilder builder,
-	                                                  Root<Author> rootEntity) {
+	                                           CriteriaBuilder builder,
+	                                           Root<Author> rootEntity) {
 		orderList.add(builder.desc(rootEntity.get("authorRating")));
 		orderList.add(builder.desc(rootEntity.get("createDate")));
 	}
@@ -66,9 +63,9 @@ public class AuthorRepositoryImpl extends AbstractEntityRepository<Author, Autho
 			authorRatingTo = authorFilter.getAuthorRatingTo();
 		}
 		if (StringUtils.isNotEmpty(name)) {
-			Predicate predicateFirstName =  builder.like(rootEntity.get("firstName"),
+			Predicate predicateFirstName = builder.like(rootEntity.get("firstName"),
 					'%' + name + '%');
-			Predicate predicateLastName =  builder.like(rootEntity.get("lastName"),
+			Predicate predicateLastName = builder.like(rootEntity.get("lastName"),
 					'%' + name + '%');
 			predicates.add(builder.or(predicateFirstName, predicateLastName));
 		}
@@ -76,12 +73,10 @@ public class AuthorRepositoryImpl extends AbstractEntityRepository<Author, Autho
 		// todo: could be simplified (remove between ;) )
 		if (ObjectUtils.isNotEmpty(authorRatingFrom) && ObjectUtils.isNotEmpty(authorRatingTo)) {
 			predicates.add(builder.between(rootEntity.get("authorRating"), authorRatingFrom, authorRatingTo));
-		}
-		else if (ObjectUtils.isNotEmpty(authorRatingFrom) && ObjectUtils.isEmpty(authorRatingTo)){
-			predicates.add(builder.greaterThanOrEqualTo(rootEntity.get("authorRating"),authorRatingFrom));
-		}
-		else if (ObjectUtils.isEmpty(authorRatingFrom) && ObjectUtils.isNotEmpty(authorRatingTo)) {
-			predicates.add(builder.lessThanOrEqualTo(rootEntity.get("authorRating"),authorRatingTo));
+		} else if (ObjectUtils.isNotEmpty(authorRatingFrom) && ObjectUtils.isEmpty(authorRatingTo)) {
+			predicates.add(builder.greaterThanOrEqualTo(rootEntity.get("authorRating"), authorRatingFrom));
+		} else if (ObjectUtils.isEmpty(authorRatingFrom) && ObjectUtils.isNotEmpty(authorRatingTo)) {
+			predicates.add(builder.lessThanOrEqualTo(rootEntity.get("authorRating"), authorRatingTo));
 		}
 		return predicates;
 	}
