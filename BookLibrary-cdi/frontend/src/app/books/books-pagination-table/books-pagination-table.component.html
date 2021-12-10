@@ -149,8 +149,9 @@
      tabindex="-1">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<div class="modal-body text-center">
-				<h4>Are you sure that you want to delete "<span class="ellipsis">{{book.name}}</span>" ?</h4>
+			<div class="modal-body">
+				<p>Are you sure that you want to delete</p>
+				<ul class="ellipsis-lg">"{{book.name}}"</ul>
 			</div>
 			<div class="modal-footer">
 				<button class="btn btn-default"
@@ -175,14 +176,15 @@
      tabindex="-1">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<div class="modal-body text-center">
-				<h4>Are you sure that you want to delete next books?</h4>
+			<div class="modal-body">
+				<p>Are you sure that you want to delete next books?</p>
 				<div *ngFor="let delBook of page.content">
-					<p class="ellipsis" *ngIf="delBook.isChecked">"{{delBook.name}}"</p>
+					<ul class="ellipsis-lg" *ngIf="delBook.isChecked">"{{delBook.name}}"</ul>
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button class="btn btn-default"
+				<button (click)="getData()"
+						class="btn btn-default"
 				        data-dismiss="modal"
 				        type="button">Cancel
 				</button>

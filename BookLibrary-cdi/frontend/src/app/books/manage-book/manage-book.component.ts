@@ -93,7 +93,7 @@ export class ManageBookComponent implements OnInit {
     })
   }
 
-  getBookByIdWithAuthors(bookId: number) {
+  getBookForUpdateWithAuthors(bookId: number) {
     this.bookService.getBookByIdWithAuthors(bookId).subscribe(
         book => this.bookForUpdate = book
     )

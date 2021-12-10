@@ -19,13 +19,7 @@ import {ManageBookComponent} from './books/manage-book/manage-book.component';
 import {AuthorsFilteringComponent} from './authors/authors-filtering/authors-filtering.component';
 import {BooksFilteringComponent} from './books/books-filtering/books-filtering.component';
 import {ManageAuthorComponent} from './authors/manage-author/manage-author.component';
-import {ChipsAutocompleteComponent} from './chips-autocomplete/chips-autocomplete.component';
-import {MatFormFieldModule} from "@angular/material/form-field";
-import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {MatCheckboxModule} from "@angular/material/checkbox";
-import {MatInputModule} from "@angular/material/input";
-import {MatListModule} from "@angular/material/list";
 
 @NgModule({
     declarations: [
@@ -43,8 +37,7 @@ import {MatListModule} from "@angular/material/list";
         ManageBookComponent,
         AuthorsFilteringComponent,
         BooksFilteringComponent,
-        ManageAuthorComponent,
-        ChipsAutocompleteComponent
+        ManageAuthorComponent
     ],
     imports: [
         BrowserModule,
@@ -53,11 +46,6 @@ import {MatListModule} from "@angular/material/list";
         HttpClientModule,
         ReactiveFormsModule,
         NgbModule,
-        MatAutocompleteModule,
-        MatCheckboxModule,
-        MatListModule,
-        MatFormFieldModule,
-        MatInputModule,
         BrowserAnimationsModule
     ],
     providers: [],
