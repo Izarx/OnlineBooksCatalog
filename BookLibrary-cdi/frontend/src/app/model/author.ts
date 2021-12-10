@@ -5,8 +5,9 @@ export class Author {
     firstName: string
     lastName: string
     authorRating: number
-    books? : Book[]
+    books?: Book[]
     isChecked?: boolean
+    fullName?: string
 
     constructor(authorId: number, firstName: string, lastName: string, authorRating: number) {
         this.authorId = authorId;
@@ -14,6 +15,6 @@ export class Author {
         this.lastName = lastName;
         this.authorRating = authorRating;
         this.books = [];
-        this.isChecked = false
+        this.isChecked = false;
     }
 }

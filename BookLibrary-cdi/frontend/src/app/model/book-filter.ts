@@ -13,8 +13,7 @@ export class BookFilter {
                 bookRatingFrom: number,
                 bookRatingTo: number,
                 year: number,
-                isbn: string)
-    {
+                isbn: string) {
         this.name = name;
         this.authorFilter = authorFilter;
         this.bookRatingFrom = bookRatingFrom;

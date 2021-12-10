@@ -16,8 +16,6 @@ import {AuthorFilter} from "../../model/author-filter";
 })
 export class BooksPaginationTableComponent implements OnInit {
 
-    static readonly title: string = 'Books';
-
     sortableColumns: Array<SortableColumn> = [
         new SortableColumn('name', 'Book Name', null),
         new SortableColumn('bookRating', 'Rating', null),
@@ -26,69 +24,74 @@ export class BooksPaginationTableComponent implements OnInit {
         new SortableColumn('publisher', 'Publisher', null),
     ];
 
-    page: ResponseData<Book> = new ResponseData()
-    book: Book = new Book(null, '', 0, '', '', 0.00, [])
+    page: ResponseData<Book>;
+    book: Book = new Book(null, '', 0, '', '', 0.00, []);
     requestOptions: RequestOptions<BookFilter> = new RequestOptions();
-    deniedToDeleteBooks: Book[] = []
+    deniedToDeleteBooks: Book[] = [];
     isAllChecked: boolean;
 
-    constructor(
-        private bookService: BookService,
-        private paginationService: PaginationService<BookFilter>,
-        private sortingService: SortingService,
-    ) {
+    constructor(private bookService: BookService,
+                private paginationService: PaginationService<BookFilter>,
+                private sortingService: SortingService) {
         this.requestOptions.filteredEntity = new BookFilter(null, new AuthorFilter(null, null, null), null, null, null, null);
-        this.isAllChecked  = false;
+        this.isAllChecked = false;
     }
 
     ngOnInit(): void {
-        this.getData()
+        this.getData();
     }
 
     getData(): void {
-        this.bookService.getPage(this.requestOptions)
-            .subscribe(page => {
-                    this.paginationService.initPageable(this.requestOptions, page.totalElements);
-                    this.page = page;
-                    this.isAllChecked  = false;
-                },
-                error => {
-                    console.log(error)
-                });
+        this.bookService.getPage(this.requestOptions).subscribe(
+            page => {
+                this.paginationService.initPageable(this.requestOptions, page.totalElements);
+                this.page = page;
+                this.isAllChecked = false;
+            },
+            error => {
+                console.log(error);
+            });
     }
 
-    getBookById(bookId: number) {
+    getBookById(bookId: number): void {
         this.bookService.getBookById(bookId).subscribe(
-            book => this.book = book
-        )
+            book => {
+                this.book = book;
+            },
+            error => {
+                console.log(error);
+            });
     }
 
-    getBookByIdWithAuthors(bookId: number) {
+    setBookByIdWithAuthors(bookId: number): void {
         this.bookService.getBookByIdWithAuthors(bookId).subscribe(
-            book => this.book = book
-        )
+            book => {
+                this.book = book;
+            },
+            error => {
+                console.log(error);
+            });
     }
 
     deleteBook(bookId: number): void {
         this.bookService.deleteBook(bookId).subscribe(
             () => {
-                this.getData()
+                this.getData();
             },
             error => {
-                console.log(error)
-            })
+                console.log(error);
+            });
     }
 
-    bulkDeleteBooks() {
+    bulkDeleteBooks(): void {
         this.bookService.bulkDeleteBooks(this.setBooksForDelete().map(a => a.bookId)).subscribe(
             books => {
                 this.deniedToDeleteBooks = books;
                 this.getData();
             },
             error => {
-                console.log(error)
-            }
-        )
+                console.log(error);
+            });
     }
 
     public sort(sortableColumn: SortableColumn): void {
@@ -116,12 +119,12 @@ export class BooksPaginationTableComponent implements OnInit {
         this.getData();
     }
 
-    public getFilteredData(filteredBook: BookFilter) {
+    public getFilteredData(filteredBook: BookFilter): void {
         this.requestOptions.filteredEntity = filteredBook;
         this.getData();
     }
 
-    setCheckForAll() {
+    setCheckForAll(): void {
         this.page.content.forEach(a => a.isChecked = this.isAllChecked);
     }
 
@@ -129,11 +132,11 @@ export class BooksPaginationTableComponent implements OnInit {
         return this.page.content.filter(a => a.isChecked);
     }
 
-    setBook(book: Book) {
+    setBook(book: Book): void {
         this.book = book;
     }
 
-    isbnOutput(isbn: string) : string {
-        return isbn.substr(0, 3) + '-' + isbn.substr(3, 9) + '-' + isbn.substr(12, 1)
+    isbnOutput(isbn: string): string {
+        return isbn.substr(0, 3) + '-' + isbn.substr(3, 9) + '-' + isbn.substr(12, 1);
     }
 }

@@ -12,8 +12,8 @@
 							<button
 									[disabled]="setAuthorsForDelete().length === 0"
 									class="btn btn-danger btn-header"
-							        data-target="#bulkDeleteAuthorsConfirmation"
-							        data-toggle="modal"> Bulk Delete
+									data-target="#bulkDeleteAuthorsConfirmation"
+									data-toggle="modal"> Bulk Delete
 							</button>
 							<button class="btn btn-primary collapsed"
 							        data-parent="#accordion"
@@ -28,8 +28,8 @@
 					</div>
 					<div class="panel-collapse collapse" id="collapseOne">
 						<app-authors-filtering
+								(initFilteredAuthor)="setFilteredData($event)"
 								[authorFilter]="requestOptions.filteredEntity"
-								(initFilteredAuthor)="getFilteredData($event)"
 						>
 						</app-authors-filtering>
 					</div>
@@ -52,10 +52,10 @@
 								<tr>
 									<th class="text-center column-width-checkbox" scope="col">
 										<div class="custom-control checkbox-check">
-											<input class="custom-control-input"
-											       type="checkbox"
-											       (change)="setCheckForAll()"
-											       [(ngModel)]="isAllChecked">
+											<input (change)="setCheckForAll()"
+											       [(ngModel)]="isAllChecked"
+											       class="custom-control-input"
+											       type="checkbox">
 										</div>
 									</th>
 									<th class="text-center"
@@ -86,13 +86,14 @@
 								<tr>
 									<th class="text-center" scope="row">
 										<div class="custom-control checkbox-check">
-											<input class="custom-control-input"
+											<input [(ngModel)]="author.isChecked"
+											       class="custom-control-input"
 											       type="checkbox"
-											       [(ngModel)]="author.isChecked"
 											>
 										</div>
 									</th>
-									<td class="column-entity-padding ellipsis"><a [routerLink]="['/authors', author.authorId]">{{ author.firstName}}</a></td>
+									<td class="column-entity-padding ellipsis"><a
+											[routerLink]="['/authors', author.authorId]">{{ author.firstName}}</a></td>
 									<td class="column-entity-padding ellipsis">{{ author.lastName}}</td>
 									<td class="text-center">{{author.authorRating.toFixed(2)}}</td>
 									<td class="text-center">
@@ -158,12 +159,13 @@
 			<div class="modal-body">
 				<p>Are you sure that you want to delete next authors?</p>
 				<div *ngFor="let delAuthor of page.content">
-					<ul class="ellipsis" *ngIf="delAuthor.isChecked">{{delAuthor.firstName + ' ' + delAuthor.lastName}}</ul>
+					<ul *ngIf="delAuthor.isChecked"
+					    class="ellipsis">{{delAuthor.firstName + ' ' + delAuthor.lastName}}</ul>
 				</div>
 			</div>
 			<div class="modal-footer">
 				<button (click)="getData()"
-						class="btn btn-default"
+				        class="btn btn-default"
 				        data-dismiss="modal"
 				        type="button">Cancel
 				</button>
@@ -183,6 +185,6 @@
 ></app-create-author>
 
 <app-update-author
-		[author]="author"
 		(initParentPage)="getData()"
+		[author]="author"
 ></app-update-author>

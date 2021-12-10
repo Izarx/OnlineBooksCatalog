@@ -18,23 +18,23 @@
 				<div class="panel-body">
 					<div class="table-responsive">
 						<table class="table table-striped">
-<!--							<tbody *ngFor="let review of reviews.content">-->
-<!--							<tr>-->
-<!--								<td>-->
-<!--									<span class="font-bold">{{review.commenterName}}</span>-->
-<!--									<span class="pull-right">-->
-<!--												<span *ngFor="let r of initStarsRating(review.rating)">-->
-<!--												<span *ngIf="r >= 0.5" class="fa fa-star checked"></span>-->
-<!--												<span *ngIf="r < 0.5 " class="fa fa-star"></span>-->
-<!--											</span>-->
-<!--											</span>-->
-<!--								</td>-->
-<!--							</tr>-->
-<!--							<tr >-->
-<!--								<td class="font-small review-ellipsis"-->
-<!--								>{{review.comment}}</td>-->
-<!--							</tr>-->
-<!--							</tbody>-->
+							<!--							<tbody *ngFor="let review of reviews.content">-->
+							<!--							<tr>-->
+							<!--								<td>-->
+							<!--									<span class="font-bold">{{review.commenterName}}</span>-->
+							<!--									<span class="pull-right">-->
+							<!--												<span *ngFor="let r of initStarsRating(review.rating)">-->
+							<!--												<span *ngIf="r >= 0.5" class="fa fa-star checked"></span>-->
+							<!--												<span *ngIf="r < 0.5 " class="fa fa-star"></span>-->
+							<!--											</span>-->
+							<!--											</span>-->
+							<!--								</td>-->
+							<!--							</tr>-->
+							<!--							<tr >-->
+							<!--								<td class="font-small review-ellipsis"-->
+							<!--								>{{review.comment}}</td>-->
+							<!--							</tr>-->
+							<!--							</tbody>-->
 						</table>
 					</div>
 				</div>
@@ -46,8 +46,8 @@
 </div>
 
 <app-update-author
-		[author]="authorForUpdate"
 		(initParentPage)="getData()"
+		[author]="authorForUpdate"
 ></app-update-author>
 
 

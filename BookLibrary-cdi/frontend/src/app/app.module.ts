@@ -15,11 +15,12 @@ import {BooksPaginationTableComponent} from './books/books-pagination-table/book
 import {CreateBookComponent} from './books/create-book/create-book.component';
 import {UpdateBookComponent} from './books/update-book/update-book.component';
 import {SortableColumnHeaderComponent} from './sorting/sortable-column-header/sortable-column-header.component';
-import {ManageBookComponent} from './books/manage-book/manage-book.component';
+import {DetailBookComponent} from './books/detail-book/detail-book.component';
 import {AuthorsFilteringComponent} from './authors/authors-filtering/authors-filtering.component';
 import {BooksFilteringComponent} from './books/books-filtering/books-filtering.component';
-import {ManageAuthorComponent} from './authors/manage-author/manage-author.component';
+import {DetailAuthorComponent} from './authors/detail-author/detail-author.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {NgMultiSelectDropDownModule} from 'ng-multiselect-dropdown';
 
 @NgModule({
     declarations: [
@@ -34,10 +35,10 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
         CreateBookComponent,
         UpdateBookComponent,
         SortableColumnHeaderComponent,
-        ManageBookComponent,
+        DetailBookComponent,
         AuthorsFilteringComponent,
         BooksFilteringComponent,
-        ManageAuthorComponent
+        DetailAuthorComponent
     ],
     imports: [
         BrowserModule,
@@ -46,7 +47,8 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
         HttpClientModule,
         ReactiveFormsModule,
         NgbModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        NgMultiSelectDropDownModule.forRoot()
     ],
     providers: [],
     bootstrap: [AppComponent]

@@ -14,10 +14,10 @@
 		<div class="col-md-5 col-for-tab">
 			<ul class="nav nav-tabs">
 				<li class="active">
-					<a href="#bookInfo" data-toggle="tab" (click)="tabBookInfoButtonVisible()">Book Info</a>
+					<a (click)="tabBookInfoButtonVisible()" data-toggle="tab" href="#bookInfo">Book Info</a>
 				</li>
 				<li class="">
-					<a href="#reviews" data-toggle="tab" (click)="tabReviewButtonVisible()">Reviews</a>
+					<a (click)="tabReviewButtonVisible()" data-toggle="tab" href="#reviews">Reviews</a>
 				</li>
 			</ul>
 		</div>
@@ -28,16 +28,18 @@
 				<div class="panel-heading panel-heading-for-tab">
 					<div id="bookInfoButton">
 						<button (click)="getBookForUpdateWithAuthors(book.bookId)"
-								class="btn btn-primary"
+						        class="btn btn-primary"
 						        data-target="#updateBook"
 						        data-toggle="modal"
-						>Change Info</button>
+						>Edit
+						</button>
 					</div>
 					<div id="addReviewButton">
 						<button class="btn btn-primary"
 						        data-target="#createReview"
 						        data-toggle="modal"
-						>Add Review</button>
+						>Add Review
+						</button>
 					</div>
 				</div>
 				<div class="panel-body">
@@ -86,7 +88,7 @@
 											</span>
 										</td>
 									</tr>
-									<tr >
+									<tr>
 										<td class="font-small review-ellipsis"
 										>{{review.comment}}</td>
 									</tr>
@@ -95,10 +97,11 @@
 							</div>
 							<div class="panel-footer">
 								<div id="viewMoreReviews">
-									<button [disabled]="requestOptions.pageSize >= reviews.totalElements"
-									        (click)="setPageSize()"
+									<button (click)="setPageSize()"
+									        [disabled]="requestOptions.pageSize >= reviews.totalElements"
 									        class="btn btn-primary"
-									>More Reviews</button>
+									>More Reviews
+									</button>
 								</div>
 							</div>
 						</div>
@@ -110,13 +113,13 @@
 </div>
 
 <app-update-book
-		[book]="bookForUpdate"
 		(initParentPage)="getData()"
+		[book]="bookForUpdate"
 ></app-update-book>
 
 <app-create-review
-		[book]="book"
 		(initParentPage)="getData()"
+		[book]="book"
 ></app-create-review>
 
 

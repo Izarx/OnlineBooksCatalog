@@ -10,44 +10,42 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 })
 export class CreateAuthorComponent implements OnInit {
 
-    form: FormGroup = new FormGroup({})
+    form: FormGroup = new FormGroup({});
     author: Author = new Author(null, '', '', 0.0);
-    @Output() initParentPage: EventEmitter<any> = new EventEmitter<any>()
+    @Output() initParentPage: EventEmitter<any> = new EventEmitter<any>();
 
-    constructor(
-        private authorService: AuthorService,
-    ) {}
+    constructor(private authorService: AuthorService) {
+    }
 
     ngOnInit(): void {
         this.form = new FormGroup({
             firstName: new FormControl('', [
-                Validators.required
-            ]),
+                Validators.required]),
             lastName: new FormControl('', [])
-        })
+        });
     }
 
     createAuthor(): void {
         this.authorService.createAuthor(this.author).subscribe(
             author => {
-                this.initParentPage.emit(null)
+                this.initParentPage.emit(null);
             },
             error => {
-                console.log(error)
-            })
+                console.log(error);
+            });
     }
 
-    submit() {
+    submit(): void {
         if (this.form.valid) {
-            const formData = {...this.form.value}
+            const formData = {...this.form.value};
             this.author.firstName = formData.firstName.trim();
             this.author.lastName = formData.lastName.trim();
             this.createAuthor();
-            document.getElementById('createAuthorModalCloseButton').click()
+            document.getElementById('createAuthorModalCloseButton').click();
         }
     }
 
-    cancel() {
+    cancel(): void {
         if (this.form.valid) {
             this.form.reset();
         }

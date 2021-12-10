@@ -12,8 +12,8 @@
 							<button
 									[disabled]="setBooksForDelete().length===0"
 									class="btn btn-danger btn-header"
-							        data-target="#bulkDeleteBooksConfirmation"
-							        data-toggle="modal"> Bulk Delete
+									data-target="#bulkDeleteBooksConfirmation"
+									data-toggle="modal"> Bulk Delete
 							</button>
 							<button class="btn btn-primary collapsed"
 							        data-parent="#accordionBook"
@@ -28,8 +28,8 @@
 					</div>
 					<div class="panel-collapse collapse" id="collapseBookFilter">
 						<app-books-filtering
-								[bookFilter]="requestOptions.filteredEntity"
 								(initFilteredBook)="getFilteredData($event)"
+								[bookFilter]="requestOptions.filteredEntity"
 						></app-books-filtering>
 					</div>
 				</div>
@@ -51,10 +51,10 @@
 								<tr>
 									<th class="text-center column-width-checkbox" scope="col">
 										<div class="custom-control checkbox-check">
-											<input class="custom-control-input"
-											       type="checkbox"
-											       (change)="setCheckForAll()"
-											       [(ngModel)]="isAllChecked">
+											<input (change)="setCheckForAll()"
+											       [(ngModel)]="isAllChecked"
+											       class="custom-control-input"
+											       type="checkbox">
 										</div>
 									</th>
 									<th class="text-center column-width-book"
@@ -100,15 +100,16 @@
 								<tr>
 									<th class="text-center" scope="row">
 										<div class="custom-control checkbox-check">
-											<input class="custom-control-input"
+											<input [(ngModel)]="book.isChecked"
+											       class="custom-control-input"
 											       type="checkbox"
-											       [(ngModel)]="book.isChecked"
 											>
 										</div>
 									</th>
-									<td class="column-entity-padding ellipsis"><a [routerLink]="['/books', book.bookId]">{{book.name}}</a></td>
+									<td class="column-entity-padding ellipsis"><a
+											[routerLink]="['/books', book.bookId]">{{book.name}}</a></td>
 									<td class="column-entity-padding ellipsis">
-										<p *ngFor="let author of book.authors" >
+										<p *ngFor="let author of book.authors">
 											{{author.firstName + ' ' + author.lastName}}
 										</p>
 									</td>
@@ -117,7 +118,7 @@
 									<td class="text-center">{{isbnOutput(book.isbn)}}</td>
 									<td class="text-center">{{book.publisher}}</td>
 									<td class="text-center">
-										<button (click)="getBookByIdWithAuthors(book.bookId)"
+										<button (click)="setBookByIdWithAuthors(book.bookId)"
 										        class="btn btn-primary btn-sm"
 										        data-target="#updateBook"
 										        data-toggle="modal"
@@ -179,12 +180,12 @@
 			<div class="modal-body">
 				<p>Are you sure that you want to delete next books?</p>
 				<div *ngFor="let delBook of page.content">
-					<ul class="ellipsis-lg" *ngIf="delBook.isChecked">"{{delBook.name}}"</ul>
+					<ul *ngIf="delBook.isChecked" class="ellipsis-lg">"{{delBook.name}}"</ul>
 				</div>
 			</div>
 			<div class="modal-footer">
 				<button (click)="getData()"
-						class="btn btn-default"
+				        class="btn btn-default"
 				        data-dismiss="modal"
 				        type="button">Cancel
 				</button>
@@ -203,6 +204,6 @@
 		(initParentPage)="getData()"
 ></app-create-book>
 <app-update-book
-		[book]="book"
 		(initParentPage)="getData()"
+		[book]="book"
 ></app-update-book>

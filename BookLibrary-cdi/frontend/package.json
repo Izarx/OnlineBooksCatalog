@@ -23,6 +23,7 @@
     "@angular/router": "~12.2.0",
     "@ng-bootstrap/ng-bootstrap": "^10.0.0",
     "daemonite-material": "^4.1.1",
+    "ng-multiselect-dropdown": "^0.3.7",
     "rxjs": "~6.6.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"

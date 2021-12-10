@@ -53,6 +53,19 @@
 						       type="text"
 						>
 					</div>
+					<div>
+						<div class="sub-title">Authors</div>
+					</div>
+					<div>
+						<ng-multiselect-dropdown
+								(onSelect)="onItemSelect($event)"
+								(onSelectAll)="onSelectAll($event)"
+								[(ngModel)]="selectedItems"
+								[data]="dropdownList"
+								[settings]="dropdownSettings"
+						>
+						</ng-multiselect-dropdown>
+					</div>
 				</div>
 				<div class="modal-footer">
 					<button (click)="cancel()"

@@ -10,13 +10,11 @@ import {BookService} from "../book.service";
 })
 export class UpdateBookComponent implements OnInit {
 
-    form: FormGroup = new FormGroup({})
-    @Input() book: Book
-    @Output() initParentPage: EventEmitter<any> = new EventEmitter<any>()
+    form: FormGroup;
+    @Input() book: Book;
+    @Output() initParentPage: EventEmitter<any> = new EventEmitter<any>();
 
-    constructor(
-        private bookService: BookService
-    ) {
+    constructor(private bookService: BookService) {
     }
 
     ngOnInit(): void {
@@ -25,22 +23,21 @@ export class UpdateBookComponent implements OnInit {
             yearPublished: new FormControl(),
             isbn: new FormControl(),
             authors: new FormControl()
-        })
+        });
     }
 
-    updateBook(book: Book) {
+    updateBook(book: Book): void {
         this.bookService.updateBook(book).subscribe(
             book => {
                 this.book = book;
                 this.initParentPage.emit(null);
             },
             error => {
-                console.log(error)
-            }
-        );
+                console.log(error);
+            });
     }
 
-    submit() {
+    submit(): void {
         if (this.form.valid) {
             const formData = {...this.form.value};
             this.book.name = formData.name;
@@ -49,11 +46,11 @@ export class UpdateBookComponent implements OnInit {
             this.book.authors = formData.authors;
             this.updateBook(this.book);
             this.form.reset();
-            document.getElementById('updateBookModalCloseButton').click()
+            document.getElementById('updateBookModalCloseButton').click();
         }
     }
 
-    cancel() {
+    cancel(): void {
         this.form.reset();
     }
 
