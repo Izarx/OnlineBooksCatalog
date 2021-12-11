@@ -15,16 +15,14 @@
 				<div class="modal-body">
 					<div class="sub-title">Name</div>
 					<div>
-						<input [(ngModel)]="book.name"
-						       class="form-control"
+						<input class="form-control"
 						       formControlName="name"
 						       type="text"
 						>
 					</div>
 					<div class="sub-title">Year Published</div>
 					<div>
-						<input [(ngModel)]="book.yearPublished"
-						       class="form-control"
+						<input class="form-control"
 						       formControlName="yearPublished"
 						       type="number"
 						>
@@ -37,8 +35,7 @@
 					</div>
 					<div class="sub-title">ISBN</div>
 					<div>
-						<input [(ngModel)]="book.isbn"
-						       class="form-control"
+						<input class="form-control"
 						       formControlName="isbn"
 						       type="number"
 						>
@@ -47,8 +44,7 @@
 						<div class="sub-title">Publisher</div>
 					</div>
 					<div>
-						<input [(ngModel)]="book.publisher"
-						       class="form-control"
+						<input class="form-control"
 						       formControlName="publisher"
 						       type="text"
 						>
@@ -60,9 +56,11 @@
 						<ng-multiselect-dropdown
 								(onSelect)="onItemSelect($event)"
 								(onSelectAll)="onSelectAll($event)"
-								[(ngModel)]="selectedItems"
+								(onDeSelect)="onItemDeselect($event)"
+								(onDeSelectAll)="onDeselectAll($event)"
 								[data]="dropdownList"
 								[settings]="dropdownSettings"
+								(onFilterChange)="onFilterChange($event)"
 						>
 						</ng-multiselect-dropdown>
 					</div>

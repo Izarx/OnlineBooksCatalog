@@ -46,36 +46,47 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
 	public T create(T entity) {
+		LOGGER.info("Start creating entity {} in repository", type);
+		LOGGER.info("Entity before persist equals {}", entity);
 		if (!isEntityValid(entity)) {
-			throw new NotValidEntityException();
+			throw new NotValidEntityException(entity);
 		}
 		Serializable id = entity.getEntityId();
+		LOGGER.info("The ID of creating entity equals {}", id);
 		if (id != null) {
 			throw new NotValidIdException(id);
 		}
 		entityManager.persist(entity);
+		LOGGER.info("Entity {} were persisted and equals {}", type, entity);
 		return entity;
 	}
 
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
 	public T update(T entity) {
+		LOGGER.info("Start updating entity {} in repository", type);
+		LOGGER.info("Entity {} before merge equals {}", type, entity);
 		if (!isEntityValid(entity)) {
-			throw new NotValidEntityException();
+			throw new NotValidEntityException(entity);
 		}
 		Serializable id = entity.getEntityId();
+		LOGGER.info("The ID of updating updating {} equals {}", type, id);
 		if (id == null || entityManager.find(type, id) == null) {
 			throw new NotValidIdException(id);
 		}
+		LOGGER.info("Entity {} were merged and equals {}", type, entity);
 		return entityManager.merge(entity);
 	}
 
 	@Override
 	public T getById(Serializable id) {
+		LOGGER.info("The ID of getting entity {} equals {}", type, id);
 		if (id == null) {
 			throw new NotValidIdException(null);
 		}
-		return entityManager.find(type, id);
+		T entity = entityManager.find(type, id);
+		LOGGER.info("Entity {} which was found is {}", type, entity);
+		return entity;
 	}
 
 	@Override
@@ -124,7 +135,7 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 
 		criteriaQuery.where(predicates.toArray(new Predicate[]{}));     // todo move inside 'if'
 
-		responseData.setTotalElements(getTotalElementsFromDb(requestOptions, builder));
+		responseData.setTotalElements(getCountEntities(requestOptions, builder));
 
 		criteriaQuery.orderBy(setOrdersByColumns(requestOptions.getSorting(), builder, rootEntity));
 		List<T> getAll = entityManager
@@ -167,10 +178,8 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 		return Collections.emptyList();
 	}
 
-	// todo: this method must have default implementation
-	protected abstract void setOrdersByColumnsByDefault(List<Order> orderList,
-	                                                    CriteriaBuilder builder,
-	                                                    Root<T> rootEntity);
+	protected void setOrdersByColumnsByDefault(List<Order> orderList, CriteriaBuilder builder,
+	                                                    Root<T> rootEntity) {}
 
 	/**
 	 * Create List of Orders from sortable columns to order db entities by it
@@ -181,8 +190,7 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 	 * @return list of sorting orders for each sortable column which was activated
 	 */
 
-	private List<Order> setOrdersByColumns(List<SortableColumn> sortableColumns,
-	                                       CriteriaBuilder builder,
+	private List<Order> setOrdersByColumns(List<SortableColumn> sortableColumns, CriteriaBuilder builder,
 	                                       Root<T> rootEntity) {
 		List<Order> orderList = new ArrayList<>();
 		if (CollectionUtils.isNotEmpty(sortableColumns)) {
@@ -190,7 +198,7 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 				if ("asc".equals(column.getDirection())) {  // todo: why still is using string for "asc" and "desc"? Enum!
 					orderList.add(builder.asc(rootEntity.get(column.getName())));
 				}
-				if ("desc".equals(column.getDirection())) { // todo: why not 'else if' ?
+				else if ("desc".equals(column.getDirection())) {
 					orderList.add(builder.desc(rootEntity.get(column.getName())));
 				}
 			}
@@ -210,15 +218,14 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 	 * @param rootEntity root
 	 * @return list of predicates according to request options
 	 */
-	// todo: this method must have default implementation
 	protected List<Predicate> getFilteringParams(RequestOptions<V> options,
 	                                             CriteriaBuilder builder,
 	                                             Root<T> rootEntity) {
 		return Collections.emptyList();
 	}
 
-	protected Integer getTotalElementsFromDb (RequestOptions<V> options,    // todo: please rename this method to more understandable name
-	                                          CriteriaBuilder builder) {
+	protected Integer getCountEntities(RequestOptions<V> options,    // todo: please rename this method to more understandable name
+	                                   CriteriaBuilder builder) {
 		CriteriaQuery<Long> countCriteriaQuery = builder.createQuery(Long.class);   // todo: not use Long here
 		Root<T> rootEntity = countCriteriaQuery.from(type);
 		countCriteriaQuery.select(builder.count(rootEntity));

@@ -17,6 +17,7 @@ export class BookService {
     }
 
     public createBook(book: Book): Observable<Book> {
+        console.log(book);
         return this.httpClient.post<Book>(baseUrl + `/create`, book);
     }
 

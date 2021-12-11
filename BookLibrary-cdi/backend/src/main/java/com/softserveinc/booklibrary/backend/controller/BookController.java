@@ -66,8 +66,10 @@ public class BookController {
 	@PostMapping("/create")
 	public ResponseEntity<BookDto> createBook(@RequestBody BookDto bookDto) {
 		if (bookDto == null) {
+			LOGGER.warn("Transfer object which received from UI with creating book information is empty!");
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
+		LOGGER.info("Transfer object which received from UI with creating book information is {}", bookDto);
 		return ResponseEntity.ok(appMapper
 				.bookToBookDto(bookService
 						.create(appMapper.bookDtoToBook(bookDto))));

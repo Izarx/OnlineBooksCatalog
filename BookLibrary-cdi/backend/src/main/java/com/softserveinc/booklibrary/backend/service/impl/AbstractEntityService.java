@@ -23,8 +23,9 @@ public abstract class AbstractEntityService<T extends AbstractEntity<? extends S
 	@Override
 	@Transactional
 	public T create(T entity) {
+		LOGGER.info("Entity after mapping from DTO is {}", entity);
 		if (!repository.isEntityValid(entity)) {
-			throw new NotValidEntityException();
+			throw new NotValidEntityException(entity);
 		}
 		Serializable id = entity.getEntityId();
 		if (id != null) {
@@ -37,7 +38,7 @@ public abstract class AbstractEntityService<T extends AbstractEntity<? extends S
 	@Transactional
 	public T update(T entity) {
 		if (!repository.isEntityValid(entity)) {
-			throw new NotValidEntityException();
+			throw new NotValidEntityException(entity);
 		}
 		Serializable id = entity.getEntityId();
 		if (id == null || repository.getById(id) == null) {

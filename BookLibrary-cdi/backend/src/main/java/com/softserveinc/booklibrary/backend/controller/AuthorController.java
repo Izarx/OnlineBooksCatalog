@@ -11,6 +11,7 @@ import com.softserveinc.booklibrary.backend.entity.Author;
 import com.softserveinc.booklibrary.backend.pagination.RequestOptions;
 import com.softserveinc.booklibrary.backend.pagination.ResponseData;
 import com.softserveinc.booklibrary.backend.service.AuthorService;
+import org.apache.commons.lang3.ObjectUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -41,9 +42,16 @@ public class AuthorController {
 
 	@GetMapping("/{id}")
 	public ResponseEntity<AuthorDto> getAuthor(@PathVariable Integer id) {
+		LOGGER.info(String.format("You're looking for Author with ID = %d", id));
 		Author author = authorService.getById(id);
-		return author != null ? ResponseEntity.ok(appMapper.authorToAuthorDto(author))
-				: ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		if (author == null) {
+			LOGGER.warn(String.format("Author with ID = %d not found", id));
+			ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		}
+		else {
+			LOGGER.info(String.format("Author with ID = %d is %s", id, author));
+		}
+		return ResponseEntity.ok(appMapper.authorToAuthorDto(author));
 	}
 
 	@PostMapping("/bulk-delete")
@@ -65,8 +73,10 @@ public class AuthorController {
 	@PostMapping("/create")
 	public ResponseEntity<AuthorDto> createAuthor(@RequestBody AuthorDto authorDto) {
 		if (authorDto == null) {
+			LOGGER.warn("Transfer object which received from UI with creating author information is empty!");
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
+		LOGGER.info("Transfer object which received from UI with creating author information is {}", authorDto);
 		return ResponseEntity
 				.ok(appMapper.authorToAuthorDto(authorService
 						.create(appMapper
@@ -101,8 +111,10 @@ public class AuthorController {
 	private ResponseData<AuthorDto> convertAuthorResponseToAuthorDtoResponse(
 			ResponseData<Author> responseData) {
 		ResponseData<AuthorDto> authorDtoResponseData = new ResponseData<>();
-		authorDtoResponseData.setTotalElements(responseData.getTotalElements());
-		authorDtoResponseData.setContent(appMapper.listAuthorsToListAuthorsDto(responseData.getContent()));
+		if (ObjectUtils.isNotEmpty(responseData)){
+			authorDtoResponseData.setTotalElements(responseData.getTotalElements());
+			authorDtoResponseData.setContent(appMapper.listAuthorsToListAuthorsDto(responseData.getContent()));
+		}
 		return authorDtoResponseData;
 	}
 

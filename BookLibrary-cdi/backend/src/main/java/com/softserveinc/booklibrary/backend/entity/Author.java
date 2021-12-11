@@ -16,9 +16,12 @@ import javax.persistence.Table;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
+import lombok.ToString.Exclude;
 
 @Getter
 @Setter
+@ToString
 @Entity
 @Table(name = "authors")
 public class Author implements AbstractEntity<Integer> {
@@ -44,6 +47,7 @@ public class Author implements AbstractEntity<Integer> {
 	@Column(name = "author_rating")
 	private BigDecimal authorRating;
 
+	@Exclude
 	@ManyToMany
 	@JoinTable(
 			name = "authors_books",

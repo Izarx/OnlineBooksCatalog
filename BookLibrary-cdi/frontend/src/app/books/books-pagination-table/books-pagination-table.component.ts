@@ -38,6 +38,7 @@ export class BooksPaginationTableComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.page = new ResponseData<Book>();
         this.getData();
     }
 
