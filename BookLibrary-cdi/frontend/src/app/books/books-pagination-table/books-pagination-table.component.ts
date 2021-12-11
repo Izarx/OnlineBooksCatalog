@@ -120,8 +120,8 @@ export class BooksPaginationTableComponent implements OnInit {
         this.getData();
     }
 
-    public getFilteredData(filteredBook: BookFilter): void {
-        this.requestOptions.filteredEntity = filteredBook;
+    public getFilteredData(requestOptions: RequestOptions<BookFilter>): void {
+        this.requestOptions = requestOptions;
         this.getData();
     }
 

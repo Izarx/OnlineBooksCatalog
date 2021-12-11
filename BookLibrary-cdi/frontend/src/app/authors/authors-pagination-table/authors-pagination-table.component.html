@@ -29,7 +29,7 @@
 					<div class="panel-collapse collapse" id="collapseOne">
 						<app-authors-filtering
 								(initFilteredAuthor)="setFilteredData($event)"
-								[authorFilter]="requestOptions.filteredEntity"
+								[requestOptions]="requestOptions"
 						>
 						</app-authors-filtering>
 					</div>

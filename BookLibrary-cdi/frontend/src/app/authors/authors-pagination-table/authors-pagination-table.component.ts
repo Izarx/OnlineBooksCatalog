@@ -106,8 +106,8 @@ export class AuthorsPaginationTableComponent implements OnInit {
         this.getData();
     }
 
-    public setFilteredData(filteredAuthor: AuthorFilter): void {
-        this.requestOptions.filteredEntity = filteredAuthor;
+    public setFilteredData(requestOptions: RequestOptions<AuthorFilter>): void {
+        this.requestOptions = requestOptions;
         this.getData();
     }
 

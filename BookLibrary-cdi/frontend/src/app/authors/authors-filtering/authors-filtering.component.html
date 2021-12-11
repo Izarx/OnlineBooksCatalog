@@ -1,24 +1,24 @@
 <div class="panel-body panel-body-without-lr-padding">
-	<form (ngSubmit)="searchFilteredAuthors(authorFilter)" [formGroup]="authorFilteringForm" class="form-inline row">
+	<form (ngSubmit)="searchFilteredAuthors(requestOptions)" [formGroup]="authorFilteringForm" class="form-inline row">
 		<div class="col-md-8 pull-left">
 			<span class="form-group add-top-bottom-padding">
 				<label>Name</label>
-				<input [(ngModel)]="authorFilter.name"
+				<input [(ngModel)]="requestOptions.filteredEntity.name"
 				       class="form-control"
 				       formControlName="name"
 				       type="text">
 			</span>
 			<span class="form-group add-top-bottom-padding">
 				<label>Rating from</label>
-				<input [(ngModel)]="authorFilter.authorRatingFrom"
+				<input [(ngModel)]="requestOptions.filteredEntity.authorRatingFrom"
 				       class="form-control form-control-for-numbers"
 				       formControlName="authorRatingFrom"
 				       max="5.00"
 				       min="0.00" step="0.01" type="number"
 				>
 				<label>to</label>
-				<input [(ngModel)]="authorFilter.authorRatingTo"
-				       [min]="authorFilter.authorRatingTo"
+				<input [(ngModel)]="requestOptions.filteredEntity.authorRatingTo"
+				       [min]="requestOptions.filteredEntity.authorRatingTo"
 				       class="form-control form-control-for-numbers"
 				       formControlName="authorRatingTo"
 				       max="5.00" step="0.01" type="number"

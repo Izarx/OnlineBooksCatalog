@@ -1,16 +1,16 @@
 <div class="panel-body panel-body-without-lr-padding">
-	<form (ngSubmit)="searchFilteredBooks(bookFilter)" [formGroup]="bookFilteringForm" class="form-inline row p-2">
+	<form (ngSubmit)="searchFilteredBooks(requestOptions)" [formGroup]="bookFilteringForm" class="form-inline row p-2">
 		<div class="col-md-9">
 			<span class="form-group add-top-bottom-padding">
 				<label>Name</label>
-				<input [(ngModel)]="bookFilter.name"
+				<input [(ngModel)]="requestOptions.filteredEntity.name"
 				       class="form-control"
 				       formControlName="name"
 				       type="text">
 			</span>
 			<span class="form-group add-top-bottom-padding">
 				<label>Authors</label>
-				<input [(ngModel)]="bookFilter.authorFilter.name"
+				<input [(ngModel)]="requestOptions.filteredEntity.authorFilter.name"
 				       class="form-control"
 				       formControlName="authors"
 				       type="text"
@@ -18,14 +18,14 @@
 			</span>
 			<span class="form-group add-top-bottom-padding">
 				<label>Rating from</label>
-				<input [(ngModel)]="bookFilter.bookRatingFrom"
+				<input [(ngModel)]="requestOptions.filteredEntity.bookRatingFrom"
 				       class="form-control form-control-for-numbers"
 				       formControlName="bookRating"
 				       step="0.01"
 				       type="number"
 				>
 				<label>to</label>
-				<input [(ngModel)]="bookFilter.bookRatingTo"
+				<input [(ngModel)]="requestOptions.filteredEntity.bookRatingTo"
 				       class="form-control form-control-for-numbers"
 				       formControlName="bookRatingRange"
 				       step="0.01"
@@ -34,7 +34,7 @@
 			</span>
 			<span class="form-group add-top-bottom-padding">
 				<label>Year</label>
-				<input [(ngModel)]="bookFilter.year"
+				<input [(ngModel)]="requestOptions.filteredEntity.year"
 				       [max]="getCurrentYear()"
 				       class="form-control form-control-for-numbers"
 				       formControlName="yearPublished"
@@ -43,7 +43,7 @@
 			</span>
 			<div class="form-group add-top-bottom-padding">
 				<label>ISBN</label>
-				<input [(ngModel)]="bookFilter.isbn"
+				<input [(ngModel)]="requestOptions.filteredEntity.isbn"
 				       class="form-control"
 				       formControlName="isbn"
 				       type="text">

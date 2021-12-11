@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormControl, FormGroup} from "@angular/forms";
 import {AuthorFilter} from "../../model/author-filter";
+import {RequestOptions} from "../../model/request-options";
 
 
 @Component({
@@ -9,8 +10,8 @@ import {AuthorFilter} from "../../model/author-filter";
     styleUrls: ['./authors-filtering.component.scss']
 })
 export class AuthorsFilteringComponent implements OnInit {
-    @Input() authorFilter: AuthorFilter;
-    @Output() initFilteredAuthor: EventEmitter<AuthorFilter> = new EventEmitter<AuthorFilter>()
+    @Input() requestOptions: RequestOptions<AuthorFilter>;
+    @Output() initFilteredAuthor: EventEmitter<RequestOptions<AuthorFilter>> = new EventEmitter<RequestOptions<AuthorFilter>>()
     authorFilteringForm: FormGroup = new FormGroup({});
 
     constructor() {
@@ -24,13 +25,12 @@ export class AuthorsFilteringComponent implements OnInit {
         });
     }
 
-    searchFilteredAuthors(authorFilter: AuthorFilter): void {
-        this.initFilteredAuthor.emit(authorFilter);
+    searchFilteredAuthors(requestOptions: RequestOptions<AuthorFilter>): void {
+        this.requestOptions.pageNumber = 0;
+        this.initFilteredAuthor.emit(requestOptions);
     }
 
     reset(): void {
-        this.authorFilter.name = null;
-        this.authorFilter.authorRatingFrom = null;
-        this.authorFilter.authorRatingTo = null;
+        this.requestOptions.filteredEntity = new AuthorFilter(null, null, null);
     }
 }

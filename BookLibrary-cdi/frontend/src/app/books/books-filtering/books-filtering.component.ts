@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormControl, FormGroup} from "@angular/forms";
 import {BookFilter} from "../../model/book-filter";
 import {AuthorFilter} from "../../model/author-filter";
+import {RequestOptions} from "../../model/request-options";
 
 @Component({
     selector: 'app-books-filtering',
@@ -10,8 +11,8 @@ import {AuthorFilter} from "../../model/author-filter";
 })
 export class BooksFilteringComponent implements OnInit {
 
-    @Input() bookFilter: BookFilter;
-    @Output() initFilteredBook: EventEmitter<BookFilter> = new EventEmitter<BookFilter>();
+    @Input() requestOptions: RequestOptions<BookFilter>;
+    @Output() initFilteredBook: EventEmitter<RequestOptions<BookFilter>> = new EventEmitter<RequestOptions<BookFilter>>();
     bookFilteringForm: FormGroup = new FormGroup({});
 
     constructor() {
@@ -29,18 +30,13 @@ export class BooksFilteringComponent implements OnInit {
         });
     }
 
-    searchFilteredBooks(bookFilter: BookFilter): void {
-        console.log(bookFilter);
-        this.initFilteredBook.emit(bookFilter);
+    searchFilteredBooks(requestOptions: RequestOptions<BookFilter>): void {
+        this.requestOptions.pageNumber = 0;
+        this.initFilteredBook.emit(requestOptions);
     }
 
     reset(): void {
-        this.bookFilter.name = null;
-        this.bookFilter.authorFilter = new AuthorFilter(null, null, null);
-        this.bookFilter.bookRatingFrom = null;
-        this.bookFilter.bookRatingTo = null;
-        this.bookFilter.year = null;
-        this.bookFilter.isbn = null;
+        this.requestOptions.filteredEntity = new BookFilter(null, new AuthorFilter(null, null, null), null, null, null, null);
     }
 
     getCurrentYear(): number {
