@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormControl, FormGroup} from "@angular/forms";
 import {Review} from "../model/review";
 import {Book} from "../model/book";
-import {ReviewService} from "./review.service";
+import {ReviewService} from "../services/review.service";
 
 @Component({
     selector: 'app-create-review',

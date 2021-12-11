@@ -30,7 +30,7 @@
 					<div *ngIf="form.get('yearPublished').invalid && form.get('yearPublished').touched"
 					     class="invalid-feedback">
 						<small *ngIf="form.get('yearPublished').errors.max">
-							Please, enter valid value!
+							Please, enter year less than current!
 						</small>
 					</div>
 					<div class="sub-title">ISBN</div>

@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Author} from "../../model/author";
-import {AuthorService} from "../author.service";
+import {AuthorService} from "../../services/author.service";
 
 @Component({
     selector: 'app-update-author',

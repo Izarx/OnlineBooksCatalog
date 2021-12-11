@@ -3,7 +3,7 @@ import {Author} from "../../model/author";
 import {RequestOptions} from "../../model/request-options";
 import {Book} from "../../model/book";
 import {ActivatedRoute, Params} from "@angular/router";
-import {AuthorService} from "../author.service";
+import {AuthorService} from "../../services/author.service";
 
 @Component({
     selector: 'app-detail-author',

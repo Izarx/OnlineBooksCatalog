@@ -61,6 +61,9 @@ export class PaginationService<V> {
             requestPage.numberOfFirstPageElement = requestPage.pageNumber * requestPage.pageSize + 1;
             requestPage.numberOfElements = (requestPage.pageNumber + 1) * requestPage.pageSize;
         }
+        if (totalElements === 0) {
+            requestPage.numberOfFirstPageElement = 0;
+        }
         return requestPage;
     }
 }

@@ -1,11 +1,11 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Book} from "../../model/book";
-import {BookService} from "../book.service";
+import {BookService} from "../../services/book.service";
 import {Author} from "../../model/author";
 import {RequestOptions} from "../../model/request-options";
 import {AuthorFilter} from "../../model/author-filter";
-import {AuthorService} from "../../authors/author.service";
+import {AuthorService} from "../../services/author.service";
 import {IDropdownSettings} from "ng-multiselect-dropdown";
 
 @Component({
@@ -88,9 +88,7 @@ export class CreateBookComponent implements OnInit {
     }
 
     cancel(): void {
-        if (this.form.valid) {
-            this.form.reset();
-        }
+        this.form.reset();
         this.selectedItems = [];
         this.dropdownList = [];
     }

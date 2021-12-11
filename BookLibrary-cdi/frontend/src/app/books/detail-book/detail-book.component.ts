@@ -1,13 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Params} from "@angular/router";
-import {BookService} from "../book.service";
+import {BookService} from "../../services/book.service";
 import {Book} from "../../model/book";
-import {ReviewService} from "../../reviews/review.service";
+import {ReviewService} from "../../services/review.service";
 import {RequestOptions} from "../../model/request-options";
 import {ReviewFilter} from "../../model/review-filter";
 import {ResponseData} from "../../model/response-data";
 import {Review} from "../../model/review";
-import {PaginationService} from "../../pagination/pagination.service";
+import {PaginationService} from "../../services/pagination.service";
 
 @Component({
     selector: 'app-detail-book',

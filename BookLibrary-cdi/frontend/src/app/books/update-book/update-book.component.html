@@ -29,6 +29,12 @@
 						       type="number"
 						>
 					</div>
+					<div *ngIf="form.get('yearPublished').invalid && form.get('yearPublished').touched"
+					     class="invalid-feedback">
+						<small *ngIf="form.get('yearPublished').errors.max">
+							Please, enter year less than current!
+						</small>
+					</div>
 					<div class="sub-title">ISBN</div>
 					<div>
 						<input [(ngModel)]="book.isbn"
@@ -36,6 +42,31 @@
 						       formControlName="isbn"
 						       type="number"
 						>
+					</div>
+					<div>
+						<div class="sub-title">Publisher</div>
+					</div>
+					<div>
+						<input [(ngModel)]="book.publisher"
+						       class="form-control"
+						       formControlName="publisher"
+						       type="text"
+						>
+					</div>
+					<div>
+						<div class="sub-title">Authors</div>
+					</div>
+					<div>
+						<ng-multiselect-dropdown
+								(onSelect)="onItemSelect($event)"
+								(onSelectAll)="onSelectAll($event)"
+								(onDeSelect)="onItemDeselect($event)"
+								(onDeSelectAll)="onDeselectAll($event)"
+								[data]="dropdownList"
+								[settings]="dropdownSettings"
+								(onFilterChange)="onFilterChange($event)"
+						>
+						</ng-multiselect-dropdown>
 					</div>
 				</div>
 				<div class="modal-footer">

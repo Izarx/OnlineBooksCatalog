@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {Author} from "../../model/author";
 import {ResponseData} from "../../model/response-data";
-import {AuthorService} from "../author.service";
-import {PaginationService} from "../../pagination/pagination.service";
+import {AuthorService} from "../../services/author.service";
+import {PaginationService} from "../../services/pagination.service";
 import {SortableColumn} from "../../model/sortable-column";
-import {SortingService} from "../../sorting/sorting.service";
+import {SortingService} from "../../services/sorting.service";
 import {RequestOptions} from "../../model/request-options";
 import {AuthorFilter} from '../../model/author-filter';
 
