@@ -50,7 +50,7 @@ public class BookController {
 			LOGGER.warn("Getting Book, BookController, Book with ID = {} not found", id);
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		} else {
-			LOGGER.info("Getting Book, BookController, Book with ID = {} is {}", id, book);
+			LOGGER.debug("Getting Book, BookController, Book with ID = {} is {}", id, book);
 		}
 		return ResponseEntity.ok(appMapper.bookToBookDto(book));
 	}
@@ -63,7 +63,7 @@ public class BookController {
 			LOGGER.warn("Getting Book, BookController, Book with ID = {} not found", id);
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		} else {
-			LOGGER.info("Getting Book, BookController, Book with ID = {} is {}", id, book);
+			LOGGER.debug("Getting Book, BookController, Book with ID = {} is {}", id, book);
 		}
 		return ResponseEntity.ok(appMapper.bookToBookDto(book));
 	}
@@ -79,7 +79,7 @@ public class BookController {
 
 	@PostMapping
 	public ResponseEntity<ResponseData<BookDto>> listBooks(@RequestBody RequestOptions<BookFilter> requestOptions) {
-		LOGGER.info("Getting Filtered Sorted Page of Books, BookController, Request options to fetch page of Books is is {}", requestOptions);
+		LOGGER.debug("Getting Filtered Sorted Page of Books, BookController, Request options to fetch page of Books is {}", requestOptions);
 		return ResponseEntity.status(HttpStatus.OK)
 				.body(convertBookPageToBookDtoPage(
 						bookService.listEntities(requestOptions)));
@@ -91,7 +91,7 @@ public class BookController {
 			LOGGER.warn("Creating Book, BookController, Transfer object which received from UI is empty!");
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
-		LOGGER.info("Creating Book, BookController, Transfer object which received from UI is {}", bookDto);
+		LOGGER.debug("Creating Book, BookController, Transfer object which received from UI is {}", bookDto);
 		return ResponseEntity.ok(appMapper
 				.bookToBookDto(bookService
 						.create(appMapper.bookDtoToBook(bookDto))));
@@ -103,7 +103,7 @@ public class BookController {
 			LOGGER.warn("Updating Book, BookController, Transfer object which received from UI with updating book information is empty!");
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
-		LOGGER.info("Updating Book, BookController, Transfer object which received from UI with updating books information is {}", bookDto);
+		LOGGER.debug("Updating Book, BookController, Transfer object which received from UI with updating books information is {}", bookDto);
 		return ResponseEntity.ok(appMapper
 				.bookToBookDto(bookService
 						.update(appMapper.bookDtoToBook(bookDto))));
@@ -121,7 +121,7 @@ public class BookController {
 			ResponseData<Book> responseData) {
 		ResponseData<BookDto> bookDtoResponseData = new ResponseData<>();
 		if (responseData != null) {
-			LOGGER.info("Converting Response Data with Books to Response Data with Books DTOs, BookController, " +
+			LOGGER.debug("Converting Response Data with Books to Response Data with Books DTOs, BookController, " +
 							"response data BEFORE converting: total number of books = {} ; list with books = {}",
 					responseData.getTotalElements(), responseData.getContent());
 			bookDtoResponseData.setTotalElements(responseData.getTotalElements());
@@ -130,12 +130,12 @@ public class BookController {
 			bookDtoResponseData.getContent().forEach(b -> b.setAuthors(b.getAuthors().stream().sorted(Comparator.comparingInt(AuthorDto::getAuthorId)).collect(Collectors.toList())));
 		}
 		else {
-			LOGGER.info("Converting Response Data with Books to Response Data with Books DTOs, BookController, " +
+			LOGGER.warn("Converting Response Data with Books to Response Data with Books DTOs, BookController, " +
 					"response data is empty!");
 		}
-		LOGGER.info("Converting Response Data with Books to Response Data with Books DTOs, BookController, " +
-						"response data BEFORE converting: total number of books = {} ; list with books = {}",
-				bookDtoResponseData.getTotalElements(), bookDtoResponseData.getContent());
+		LOGGER.debug("Converting Response Data with Books to Response Data with Books DTOs, BookController, " +
+						"response data AFTER converting: total number of books = {} ; size list of books = {}",
+				bookDtoResponseData.getTotalElements(), bookDtoResponseData.getContent().size());
 		return bookDtoResponseData;
 	}
 

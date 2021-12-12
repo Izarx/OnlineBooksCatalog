@@ -46,60 +46,65 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
 	public T create(T entity) {
-		LOGGER.info("Start creating object of entity {} in repository", type);
-		LOGGER.info("Object of entity {} before persist equals {}", type, entity);
+		LOGGER.info("Create {}, {}, Creating object ...............", type.getSimpleName(), getClass().getSimpleName());
+		LOGGER.debug("Create {}, {}, BEFORE persist object = {}", type.getSimpleName(), getClass().getSimpleName(), entity);
 		if (!isEntityValid(entity)) {
 			throw new NotValidEntityException(entity);
 		}
 		Serializable id = entity.getEntityId();
-		LOGGER.info("The ID of creating object of entity {} equals {}", type, id);
+		LOGGER.debug("Create {}, {}, The ID of creating object = {}", type.getSimpleName(), getClass().getSimpleName(), id);
 		if (id != null) {
 			throw new NotValidIdException(id);
 		}
 		entityManager.persist(entity);
-		LOGGER.info("Object of entity {} were persisted and equals {}", type, entity);
+		LOGGER.info("Create {}, {}, Object of entity were persisted and ID = {}", type.getSimpleName(), getClass().getSimpleName(), entity.getEntityId());
 		return entity;
 	}
 
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
 	public T update(T entity) {
-		LOGGER.info("Start updating object of entity {} in repository", type);
-		LOGGER.info("Object of entity {} before merge equals {}", type, entity);
+		LOGGER.info("Update {}, {}, Updating object ...............", type.getSimpleName(), getClass().getSimpleName());
+		LOGGER.debug("Update {}, {}, BEFORE merge object = {}", type.getSimpleName(), getClass().getSimpleName(), entity);
 		if (!isEntityValid(entity)) {
 			throw new NotValidEntityException(entity);
 		}
 		Serializable id = entity.getEntityId();
-		LOGGER.info("The ID of updating object of entity {} equals {}", type, id);
+		LOGGER.debug("Update {}, {}, The ID of updating object = {}", type.getSimpleName(), getClass().getSimpleName(), id);
 		if (id == null || entityManager.find(type, id) == null) {
 			throw new NotValidIdException(id);
 		}
-		LOGGER.info("Object of entity {} were merged and equals {}", type, entity);
-		return entityManager.merge(entity);
+		T mergedEntity = entityManager.merge(entity);
+		LOGGER.info("Update {}, {}, Object of entity were merged and = {}", type.getSimpleName(), getClass().getSimpleName(), mergedEntity);
+		return mergedEntity;
 	}
 
 	@Override
 	public T getById(Serializable id) {
-		LOGGER.info("The ID of getting object of entity {} equals {}", type, id);
+		LOGGER.info("Getting {}, {}, The ID of getting object = {}", type.getSimpleName(), getClass().getSimpleName(), id);
 		if (id == null) {
 			throw new NotValidIdException(null);
 		}
 		T entity = entityManager.find(type, id);
-		LOGGER.info("Object of entity {} which was found is {}", type, entity);
+		LOGGER.info("Getting {}, {}, Object of getting entity = {}", type.getSimpleName(), getClass().getSimpleName(), entity);
 		return entity;
 	}
 
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
 	public boolean delete(Serializable id) {
+		LOGGER.info("Deleting {}, {}, The ID of deleting object = {}", type.getSimpleName(), getClass().getSimpleName(), id);
 		if (id == null) {
+			LOGGER.warn("Deleting {}, {}, The ID of deleting object is null", type.getSimpleName(), getClass().getSimpleName());
 			return false;
 		}
 		T entity = entityManager.find(type, id);
 		if (entity != null) {
 			entityManager.remove(entity);
+			LOGGER.info("Deleting {}, {}, Entity object with ID = {} was deleted", type.getSimpleName(), getClass().getSimpleName(), id);
 			return true;
 		}
+		LOGGER.info("Deleting {}, {}, Entity object with ID = {} wasn't found", type.getSimpleName(), getClass().getSimpleName(), id);
 		return true;
 	}
 
@@ -117,6 +122,7 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS)
 	public ResponseData<T> listEntities(RequestOptions<V> requestOptions) {
+		LOGGER.info("Getting Filtered Sorted Page of {}, {}", type.getSimpleName(), getClass().getSimpleName());
 		ResponseData<T> responseData = new ResponseData<>();
 		int pageSize = requestOptions.getPageSize();
 		// todo: redundant variable pageNumber
@@ -137,7 +143,7 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 
 		criteriaQuery.where(getFilteringParams(requestOptions, builder, rootEntity).toArray(new Predicate[]{}));     // todo move inside 'if'
 		responseData.setTotalElements(getCountEntities(requestOptions, builder));
-
+		LOGGER.info("Getting Filtered Sorted Page of {}, {}, {} objects were found in DB according to request options", type.getSimpleName(), getClass().getSimpleName(), responseData.getTotalElements());
 		criteriaQuery.orderBy(setOrdersByColumns(requestOptions.getSorting(), builder, rootEntity));
 		List<T> getAll = entityManager
 				.createQuery(criteriaQuery)
@@ -145,17 +151,23 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 				.setMaxResults(pageSize)
 				.getResultList();
 		responseData.setContent(getAll);
+		LOGGER.debug("Getting Filtered Sorted Page of {}, {}, Content to response data is {}", type.getSimpleName(), getClass().getSimpleName(), responseData.getContent());
 		return responseData;
 	}
 
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
 	public List<T> bulkDeleteEntities(List<Serializable> entitiesIdsForDelete) {
+		LOGGER.info("Bulk Delete of {}, {}", type.getSimpleName(), getClass().getSimpleName());
+		if (CollectionUtils.isNotEmpty(entitiesIdsForDelete)) {
+			LOGGER.info("Bulk Delete of {}, {}, {} object(s) for deleting", type.getSimpleName(), getClass().getSimpleName(), entitiesIdsForDelete.size());
+		}
 		String columnName = Stream.of(type.getDeclaredFields())
 				.filter(f -> f.isAnnotationPresent(Id.class))
 				.findFirst()
 				.orElseThrow()
 				.getName();
+		LOGGER.info("Bulk Delete of {}, {}, Name of column which will be used in criteria is \"{}\"", type.getSimpleName(), getClass().getSimpleName(), columnName);
 		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
 
 		CriteriaQuery<T> criteriaQuery = builder.createQuery(type);
@@ -165,12 +177,14 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 		List<T> unavailableToDeleteEntities =
 				getUnavailableToDeleteEntities(entitiesIdsForDelete, criteriaQuery);
 		if (CollectionUtils.isNotEmpty(unavailableToDeleteEntities)) {
+			LOGGER.warn("Bulk Delete of {}, {}, Can't delete {} object(s)", type.getSimpleName(), getClass().getSimpleName(), unavailableToDeleteEntities.size());
+			LOGGER.debug("Bulk Delete of {}, {}, Can't delete {}", type.getSimpleName(), getClass().getSimpleName(), unavailableToDeleteEntities);
 			unavailableToDeleteEntities
 					.forEach(entity -> entitiesIdsForDelete.remove(entity.getEntityId()));
 		}
 		criteriaDelete.where(rootDelete.get(columnName).in(entitiesIdsForDelete));
 		entityManager.createQuery(criteriaDelete).executeUpdate();
-
+		LOGGER.info("Bulk Delete of {}, {}, IDs object(s) which was deleted {}", type.getSimpleName(), getClass().getSimpleName(), unavailableToDeleteEntities.size());
 		return unavailableToDeleteEntities;
 	}
 

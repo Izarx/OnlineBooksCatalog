@@ -9,7 +9,6 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@ToString
 public class RequestOptions<V> {
 
 	private int pageSize;

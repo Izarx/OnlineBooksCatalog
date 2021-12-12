@@ -11,7 +11,6 @@ import com.softserveinc.booklibrary.backend.pagination.RequestOptions;
 import com.softserveinc.booklibrary.backend.pagination.ResponseData;
 import com.softserveinc.booklibrary.backend.pagination.filtering.AuthorFilter;
 import com.softserveinc.booklibrary.backend.service.AuthorService;
-import org.apache.commons.lang3.ObjectUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -48,7 +47,7 @@ public class AuthorController {
 			LOGGER.warn("Getting Author, AuthorController, Author with ID = {} not found", id);
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		} else {
-			LOGGER.info("Getting Author, AuthorController, Author with ID = {} is {}", id, author);
+			LOGGER.debug("Getting Author, AuthorController, Author with ID = {} is {}", id, author);
 		}
 		return ResponseEntity.ok(appMapper.authorToAuthorDto(author));
 	}
@@ -65,7 +64,7 @@ public class AuthorController {
 	@PostMapping
 	public ResponseEntity<ResponseData<AuthorDto>> listAuthors(
 			@RequestBody RequestOptions<AuthorFilter> requestOptions) {
-		LOGGER.info("Getting Filtered Sorted Page of Authors, AuthorController, Request options to fetch page of Authors is is {}", requestOptions);
+		LOGGER.debug("Getting Filtered Sorted Page of Authors, AuthorController, Request options to fetch page of Authors is {}", requestOptions);
 		return ResponseEntity
 				.ok(convertAuthorResponseToAuthorDtoResponse(
 						authorService.listEntities(requestOptions)));
@@ -77,7 +76,7 @@ public class AuthorController {
 			LOGGER.warn("Creating Author, AuthorController, Transfer object which received from UI is empty!");
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
-		LOGGER.info("Creating Author, AuthorController, Transfer object which received from UI is {}", authorDto);
+		LOGGER.debug("Creating Author, AuthorController, Transfer object which received from UI is {}", authorDto);
 		return ResponseEntity
 				.ok(appMapper.authorToAuthorDto(authorService
 						.create(appMapper
@@ -115,19 +114,19 @@ public class AuthorController {
 			ResponseData<Author> responseData) {
 		ResponseData<AuthorDto> authorDtoResponseData = new ResponseData<>();
 		if (responseData != null) {
-			LOGGER.info("Converting Response Data with Authors to Response Data with Authors DTOs, AuthorController, " +
+			LOGGER.debug("Converting Response Data with Authors to Response Data with Authors DTOs, AuthorController, " +
 					"response data BEFORE converting: total number of authors = {} ; list with authors = {}",
 					responseData.getTotalElements(), responseData.getContent());
 			authorDtoResponseData.setTotalElements(responseData.getTotalElements());
 			authorDtoResponseData.setContent(appMapper.listAuthorsToListAuthorsDto(responseData.getContent()));
 		}
 		else {
-			LOGGER.info("Converting Response Data with Authors to Response Data with Authors DTOs, AuthorController, " +
+			LOGGER.warn("Converting Response Data with Authors to Response Data with Authors DTOs, AuthorController, " +
 					"response data is empty!");
 		}
-		LOGGER.info("Converting Response Data with Authors to Response Data with Authors DTOs, AuthorController, " +
-						"response data AFTER converting: total number of authors = {} ; list with authors = {}",
-				authorDtoResponseData.getTotalElements(), authorDtoResponseData.getContent());
+		LOGGER.debug("Converting Response Data with Authors to Response Data with Authors DTOs, AuthorController, " +
+						"response data AFTER converting: total number of authors = {} ; size list of authors = {}",
+				authorDtoResponseData.getTotalElements(), authorDtoResponseData.getContent().size());
 		return authorDtoResponseData;
 	}
 

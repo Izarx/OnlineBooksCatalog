@@ -77,6 +77,7 @@ export class CreateBookComponent implements OnInit {
     submit(): void {
         if (this.form.valid) {
             const formData = {...this.form.value};
+            this.book.bookId = null;
             this.book.name = formData.name.trim();
             this.book.yearPublished = formData.yearPublished;
             this.book.isbn = formData.isbn;
@@ -89,6 +90,7 @@ export class CreateBookComponent implements OnInit {
 
     cancel(): void {
         this.form.reset();
+        this.book.bookId = null;
         this.selectedItems = [];
         this.dropdownList = [];
     }

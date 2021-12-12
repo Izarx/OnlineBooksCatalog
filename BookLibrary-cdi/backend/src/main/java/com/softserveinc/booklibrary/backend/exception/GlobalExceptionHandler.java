@@ -13,12 +13,12 @@ public class GlobalExceptionHandler {
 
 	@ExceptionHandler({NotValidIdException.class})
 	public void handleNotValidIdException(Exception ex) {
-		LOGGER.warn(ex.getMessage());
+		LOGGER.error(ex.getMessage());
 	}
 
 	@ExceptionHandler({NotValidEntityException.class})
 	public void handleNotValidEntityException(Exception ex) {
-		LOGGER.warn(ex.getMessage());
+		LOGGER.error(ex.getMessage());
 	}
 
 }
