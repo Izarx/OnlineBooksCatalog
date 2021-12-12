@@ -2,21 +2,17 @@ input {
   &.ng-invalid.ng-touched {
     border: 1px solid red;
   }
-
-  &.ng-valid.ng-touched {
-    border: 1px solid green;
-  }
 }
 
 header h3 {
   margin-bottom: 10px;
 }
 
-.column-width-7{
+.column-width-7 {
   width: 7%;
 }
 
-.column-width-book{
+.column-width-book {
   width: 20%;
 }
 
@@ -95,7 +91,7 @@ header h3 {
 }
 
 #page-wrapper {
-  min-height:520px;
+  min-height: 520px;
 }
 
 .btn.active.focus, .btn.active:focus, .btn.focus, .btn:active.focus, .btn:active:focus, .btn:focus {
@@ -190,6 +186,13 @@ table p {
   white-space: nowrap;
 }
 
+.ellipsis-lg {
+  max-width: 570px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
 .review-ellipsis {
   max-width: 200px;
   max-height: 10px;
@@ -220,48 +223,3 @@ div[class="modal-body"] textarea {
 .example-chip-list {
   width: 100%;
 }
-
-
-
-/* You can add global styles to this file, and also import other style files */
-@import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
-
-.example-form {
-  min-width: 150px;
-  max-width: 500px;
-  width: 100%;
-}
-
-.example-full-width {
-  width: 100%;
-}
-
-/* Start Material Overrides */
-.cdk-overlay-container {
-  z-index: 3000;
-}
-
-// .mat-form-field-appearance-legacy .mat-form-field-label {
-//   position: relative;
-//   top: -10px;
-// }
-
-.mat-checkbox-checked.mat-accent .mat-checkbox-background {
-  background-color: #fff;
-  border: 2px solid #000;
-}
-
-.mat-checkbox:not(.mat-checkbox-disabled).mat-accent
-.mat-checkbox-ripple
-.mat-ripple-element {
-  background-color: transparent;
-}
-
-.mat-checkbox-checkmark-path {
-  stroke: #000 !important;
-}
-
-.mat-form-field.mat-focused .mat-form-field-label {
-  color: rgba(0, 0, 0, 0.54);
-}
-/* End Material Overrides */

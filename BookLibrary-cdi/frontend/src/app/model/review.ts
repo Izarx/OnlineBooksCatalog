@@ -12,7 +12,7 @@ export class Review {
                 comment: string,
                 rating: number,
                 book: Book
-                ) {
+    ) {
         this.reviewId = reviewId;
         this.commenterName = commenterName;
         this.comment = comment;

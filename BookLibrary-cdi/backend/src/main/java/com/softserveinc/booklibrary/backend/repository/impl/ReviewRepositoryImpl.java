@@ -8,10 +8,10 @@ import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import com.softserveinc.booklibrary.backend.dto.filtering.ReviewFilter;
 import com.softserveinc.booklibrary.backend.entity.Book;
 import com.softserveinc.booklibrary.backend.entity.Review;
 import com.softserveinc.booklibrary.backend.pagination.RequestOptions;
+import com.softserveinc.booklibrary.backend.pagination.filtering.ReviewFilter;
 import com.softserveinc.booklibrary.backend.repository.ReviewRepository;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.stereotype.Repository;

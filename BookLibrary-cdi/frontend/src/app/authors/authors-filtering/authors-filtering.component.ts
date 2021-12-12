@@ -1,34 +1,36 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormControl, FormGroup} from "@angular/forms";
 import {AuthorFilter} from "../../model/author-filter";
+import {RequestOptions} from "../../model/request-options";
+
 
 @Component({
-  selector: 'app-authors-filtering',
-  templateUrl: './authors-filtering.component.html',
-  styleUrls: ['./authors-filtering.component.scss']
+    selector: 'app-authors-filtering',
+    templateUrl: './authors-filtering.component.html',
+    styleUrls: ['./authors-filtering.component.scss']
 })
 export class AuthorsFilteringComponent implements OnInit {
-  @Input() authorFilter: AuthorFilter;
-  @Output() initFilteredAuthor: EventEmitter<AuthorFilter> = new EventEmitter<AuthorFilter>()
-  authorFilteringForm: FormGroup = new FormGroup({});
+    @Input() requestOptions: RequestOptions<AuthorFilter>;
+    @Output() initFilteredAuthor: EventEmitter<RequestOptions<AuthorFilter>> = new EventEmitter<RequestOptions<AuthorFilter>>()
+    authorFilteringForm: FormGroup = new FormGroup({});
 
-  constructor() { }
+    constructor() {
+    }
 
-  ngOnInit(): void {
-    this.authorFilteringForm = new FormGroup({
-      name: new FormControl(null, []),
-      authorRatingFrom: new FormControl(null, []),
-      authorRatingTo: new FormControl(null, [])
-    });
-  }
+    ngOnInit(): void {
+        this.authorFilteringForm = new FormGroup({
+            name: new FormControl(null, []),
+            authorRatingFrom: new FormControl(null, []),
+            authorRatingTo: new FormControl(null, [])
+        });
+    }
 
-  searchFilteredAuthors(authorFilter: AuthorFilter) {
-    this.initFilteredAuthor.emit(authorFilter);
-  }
+    searchFilteredAuthors(requestOptions: RequestOptions<AuthorFilter>): void {
+        this.requestOptions.pageNumber = 0;
+        this.initFilteredAuthor.emit(requestOptions);
+    }
 
-  reset() {
-    this.authorFilter.name = null;
-    this.authorFilter.authorRatingFrom = null;
-    this.authorFilter.authorRatingTo = null;
-  }
+    reset(): void {
+        this.requestOptions.filteredEntity = new AuthorFilter(null, null, null);
+    }
 }

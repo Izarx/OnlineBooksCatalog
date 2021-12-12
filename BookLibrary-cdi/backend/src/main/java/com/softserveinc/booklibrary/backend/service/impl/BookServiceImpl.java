@@ -1,11 +1,9 @@
 package com.softserveinc.booklibrary.backend.service.impl;
 
-import java.io.Serializable;
-
-import com.softserveinc.booklibrary.backend.dto.filtering.BookFilter;
 import com.softserveinc.booklibrary.backend.entity.Book;
 import com.softserveinc.booklibrary.backend.pagination.RequestOptions;
 import com.softserveinc.booklibrary.backend.pagination.ResponseData;
+import com.softserveinc.booklibrary.backend.pagination.filtering.BookFilter;
 import com.softserveinc.booklibrary.backend.repository.BookRepository;
 import com.softserveinc.booklibrary.backend.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,18 +22,19 @@ public class BookServiceImpl extends AbstractEntityService<Book, BookFilter> imp
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS)
 	public ResponseData<Book> listEntities(RequestOptions<BookFilter> requestOptions) {
-		ResponseData<Book> page = super.listEntities(requestOptions);   // todo: rename variable
+		ResponseData<Book> bookResponseData = super.listEntities(requestOptions);
 		// todo: need to add sorting authors by name
-		page.getContent().forEach(b -> b.getAuthors().size());
-		return page;
+		bookResponseData.getContent().forEach(b -> b.getAuthors().size());
+		return bookResponseData;
 	}
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS)
-	public Book getByIdWithAuthors(Serializable id) {   // todo: why Serializable ?
+	public Book getByIdWithAuthors(Integer id) {
 		Book book = repository.getById(id);
-		book.getAuthors().size();
+		if (book != null) {
+			book.getAuthors().size();
+		}
 		return book;
 	}
-
 }

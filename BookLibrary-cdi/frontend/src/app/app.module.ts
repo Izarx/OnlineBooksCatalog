@@ -15,17 +15,12 @@ import {BooksPaginationTableComponent} from './books/books-pagination-table/book
 import {CreateBookComponent} from './books/create-book/create-book.component';
 import {UpdateBookComponent} from './books/update-book/update-book.component';
 import {SortableColumnHeaderComponent} from './sorting/sortable-column-header/sortable-column-header.component';
-import {ManageBookComponent} from './books/manage-book/manage-book.component';
+import {DetailBookComponent} from './books/detail-book/detail-book.component';
 import {AuthorsFilteringComponent} from './authors/authors-filtering/authors-filtering.component';
 import {BooksFilteringComponent} from './books/books-filtering/books-filtering.component';
-import {ManageAuthorComponent} from './authors/manage-author/manage-author.component';
-import {ChipsAutocompleteComponent} from './chips-autocomplete/chips-autocomplete.component';
-import {MatFormFieldModule} from "@angular/material/form-field";
-import {MatAutocompleteModule} from "@angular/material/autocomplete";
+import {DetailAuthorComponent} from './authors/detail-author/detail-author.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {MatCheckboxModule} from "@angular/material/checkbox";
-import {MatInputModule} from "@angular/material/input";
-import {MatListModule} from "@angular/material/list";
+import {NgMultiSelectDropDownModule} from 'ng-multiselect-dropdown';
 
 @NgModule({
     declarations: [
@@ -40,11 +35,10 @@ import {MatListModule} from "@angular/material/list";
         CreateBookComponent,
         UpdateBookComponent,
         SortableColumnHeaderComponent,
-        ManageBookComponent,
+        DetailBookComponent,
         AuthorsFilteringComponent,
         BooksFilteringComponent,
-        ManageAuthorComponent,
-        ChipsAutocompleteComponent
+        DetailAuthorComponent
     ],
     imports: [
         BrowserModule,
@@ -53,12 +47,8 @@ import {MatListModule} from "@angular/material/list";
         HttpClientModule,
         ReactiveFormsModule,
         NgbModule,
-        MatAutocompleteModule,
-        MatCheckboxModule,
-        MatListModule,
-        MatFormFieldModule,
-        MatInputModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        NgMultiSelectDropDownModule.forRoot()
     ],
     providers: [],
     bootstrap: [AppComponent]

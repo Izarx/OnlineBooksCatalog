@@ -1,0 +1,55 @@
+<div id="page-inner">
+	<header class="header-padding">
+		<h3>{{author.firstName + ' ' + author.lastName}}</h3>
+		<div>[{{author.authorRating}}]</div>
+		<span *ngFor="let r of initStarsRating(author.authorRating)">
+			<span *ngIf="r >= 0.5" class="fa fa-star checked"></span>
+			<span *ngIf="r < 0.5 " class="fa fa-star"></span>
+		</span>
+
+		<div>books [{{author.books.length}}]</div>
+	</header>
+
+	<div class="row row-without-lr-margin">
+		<div class="col-md-12">
+			<div class="panel panel-default">
+				<div class="panel-heading panel-heading-for-tab">
+				</div>
+				<div class="panel-body">
+					<div class="table-responsive">
+						<table class="table table-striped">
+							<!--							<tbody *ngFor="let review of reviews.content">-->
+							<!--							<tr>-->
+							<!--								<td>-->
+							<!--									<span class="font-bold">{{review.commenterName}}</span>-->
+							<!--									<span class="pull-right">-->
+							<!--												<span *ngFor="let r of initStarsRating(review.rating)">-->
+							<!--												<span *ngIf="r >= 0.5" class="fa fa-star checked"></span>-->
+							<!--												<span *ngIf="r < 0.5 " class="fa fa-star"></span>-->
+							<!--											</span>-->
+							<!--											</span>-->
+							<!--								</td>-->
+							<!--							</tr>-->
+							<!--							<tr >-->
+							<!--								<td class="font-small review-ellipsis"-->
+							<!--								>{{review.comment}}</td>-->
+							<!--							</tr>-->
+							<!--							</tbody>-->
+						</table>
+					</div>
+				</div>
+				<div class="panel-footer">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<app-update-author
+		(initParentPage)="getData()"
+		[author]="authorForUpdate"
+></app-update-author>
+
+
+
+

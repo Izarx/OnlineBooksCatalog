@@ -1,11 +1,9 @@
 package com.softserveinc.booklibrary.backend.service;
 
-import java.io.Serializable;
-
-import com.softserveinc.booklibrary.backend.dto.filtering.BookFilter;
 import com.softserveinc.booklibrary.backend.entity.Book;
+import com.softserveinc.booklibrary.backend.pagination.filtering.BookFilter;
 
 public interface BookService extends EntityService<Book, BookFilter> {
 
-	Book getByIdWithAuthors(Serializable id);
+	Book getByIdWithAuthors(Integer id);
 }

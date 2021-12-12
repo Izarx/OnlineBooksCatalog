@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Author} from "../../model/author";
-import {AuthorService} from "../author.service";
+import {AuthorService} from "../../services/author.service";
 
 @Component({
     selector: 'app-update-author',
@@ -10,22 +10,18 @@ import {AuthorService} from "../author.service";
 })
 export class UpdateAuthorComponent implements OnInit {
 
-    form: FormGroup = new FormGroup({})
-    @Input() author: Author
-    @Output() initParentPage: EventEmitter<any> = new EventEmitter<any>()
+    form: FormGroup = new FormGroup({});
+    @Input() author: Author;
+    @Output() initParentPage: EventEmitter<any> = new EventEmitter<any>();
 
-    constructor(
-        private authorService: AuthorService
-    ) {
+    constructor(private authorService: AuthorService) {
     }
 
     ngOnInit(): void {
         this.form = new FormGroup({
             firstName: new FormControl('', [
-                Validators.required
-            ]),
-            lastName: new FormControl('', [
-            ])
+                Validators.required]),
+            lastName: new FormControl('', [])
         });
     }
 
@@ -36,23 +32,22 @@ export class UpdateAuthorComponent implements OnInit {
                 this.initParentPage.emit(null);
             },
             error => {
-                console.log(error)
-            }
-        )
+                console.log(error);
+            });
     }
 
-    submit() {
+    submit(): void {
         if (this.form.valid) {
-            const formData = {...this.form.value}
+            const formData = {...this.form.value};
             this.author.firstName = formData.firstName;
             this.author.lastName = formData.lastName;
             this.updateAuthor();
             this.form.reset();
-            document.getElementById('updateAuthorModalCloseButton').click()
+            document.getElementById('updateAuthorModalCloseButton').click();
         }
     }
 
-    cancel() {
+    cancel(): void {
         this.form.reset();
     }
 }

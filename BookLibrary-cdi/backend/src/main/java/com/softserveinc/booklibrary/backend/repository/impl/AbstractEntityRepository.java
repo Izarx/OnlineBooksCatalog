@@ -23,9 +23,9 @@ import com.softserveinc.booklibrary.backend.exception.NotValidIdException;
 import com.softserveinc.booklibrary.backend.pagination.RequestOptions;
 import com.softserveinc.booklibrary.backend.pagination.ResponseData;
 import com.softserveinc.booklibrary.backend.pagination.SortableColumn;
+import com.softserveinc.booklibrary.backend.pagination.SortingDirection;
 import com.softserveinc.booklibrary.backend.repository.EntityRepository;
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.ObjectUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Propagation;
@@ -46,50 +46,66 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
 	public T create(T entity) {
+		LOGGER.info("Create {}, {}, Creating object ...............", type.getSimpleName(), getClass().getSimpleName());
+		LOGGER.debug("Create {}, {}, BEFORE persist object = {}", type.getSimpleName(), getClass().getSimpleName(), entity);
 		if (!isEntityValid(entity)) {
-			throw new NotValidEntityException();
+			throw new NotValidEntityException(entity);
 		}
 		Serializable id = entity.getEntityId();
+		LOGGER.debug("Create {}, {}, The ID of creating object = {}", type.getSimpleName(), getClass().getSimpleName(), id);
 		if (id != null) {
 			throw new NotValidIdException(id);
 		}
 		entityManager.persist(entity);
+		LOGGER.info("Create {}, {}, Object of entity were persisted and ID = {}", type.getSimpleName(), getClass().getSimpleName(), entity.getEntityId());
 		return entity;
 	}
 
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
 	public T update(T entity) {
+		LOGGER.info("Update {}, {}, Updating object ...............", type.getSimpleName(), getClass().getSimpleName());
+		LOGGER.debug("Update {}, {}, BEFORE merge object = {}", type.getSimpleName(), getClass().getSimpleName(), entity);
 		if (!isEntityValid(entity)) {
-			throw new NotValidEntityException();
+			throw new NotValidEntityException(entity);
 		}
 		Serializable id = entity.getEntityId();
+		LOGGER.debug("Update {}, {}, The ID of updating object = {}", type.getSimpleName(), getClass().getSimpleName(), id);
 		if (id == null || entityManager.find(type, id) == null) {
 			throw new NotValidIdException(id);
 		}
-		return entityManager.merge(entity);
+		T mergedEntity = entityManager.merge(entity);
+		LOGGER.info("Update {}, {}, Object of entity were merged and = {}", type.getSimpleName(), getClass().getSimpleName(), mergedEntity);
+		return mergedEntity;
 	}
 
 	@Override
 	public T getById(Serializable id) {
+		LOGGER.info("Getting {}, {}, The ID of getting object = {}", type.getSimpleName(), getClass().getSimpleName(), id);
 		if (id == null) {
 			throw new NotValidIdException(null);
 		}
-		return entityManager.find(type, id);
+		T entity = entityManager.find(type, id);
+		LOGGER.info("Getting {}, {}, Object of getting entity = {}", type.getSimpleName(), getClass().getSimpleName(), entity);
+		return entity;
 	}
 
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
 	public boolean delete(Serializable id) {
+		LOGGER.info("Deleting {}, {}, The ID of deleting object = {}", type.getSimpleName(), getClass().getSimpleName(), id);
 		if (id == null) {
+			LOGGER.warn("Deleting {}, {}, The ID of deleting object is null", type.getSimpleName(), getClass().getSimpleName());
 			return false;
 		}
 		T entity = entityManager.find(type, id);
 		if (entity != null) {
 			entityManager.remove(entity);
+			LOGGER.info("Deleting {}, {}, Entity object with ID = {} was deleted", type.getSimpleName(), getClass().getSimpleName(), id);
 			return true;
 		}
-		return false;   // todo: why false?
+		LOGGER.info("Deleting {}, {}, Entity object with ID = {} wasn't found", type.getSimpleName(), getClass().getSimpleName(), id);
+		return true;
 	}
 
 	@Override
@@ -99,51 +115,59 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 	@Transactional(propagation = Propagation.SUPPORTS)
 	public List<T> getAll() {
 		CriteriaQuery<T> criteriaQuery = entityManager.getCriteriaBuilder().createQuery(type);
-		CriteriaQuery<T> getAll = criteriaQuery.select(criteriaQuery.from(type)); // todo: redundant variable getAll
-		return entityManager.createQuery(getAll).getResultList();
+		criteriaQuery.select(criteriaQuery.from(type)); // todo: redundant variable getAll
+		return entityManager.createQuery(criteriaQuery).getResultList();
 	}
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS)
 	public ResponseData<T> listEntities(RequestOptions<V> requestOptions) {
+		LOGGER.info("Getting Filtered Sorted Page of {}, {}", type.getSimpleName(), getClass().getSimpleName());
 		ResponseData<T> responseData = new ResponseData<>();
 		int pageSize = requestOptions.getPageSize();
-		int pageNumber = requestOptions.getPageNumber();    // todo: redundant variable pageNumber
+		// todo: redundant variable pageNumber
 		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
 
 		CriteriaQuery<T> criteriaQuery = builder.createQuery(type);
 		Root<T> rootEntity = criteriaQuery.from(type);
-		CriteriaQuery<T> selectEntities = criteriaQuery.select(rootEntity); // todo: redundant variable selectEntities
 
-		List<Predicate> predicates = new ArrayList<>(); // todo: redundant variable here - move it inside 'if'
+		// todo: redundant variable selectEntities
+
 
 		// todo: why this check here? Need to do this check inside getFilteringParams
-		if (ObjectUtils.isNotEmpty(requestOptions.getFilteredEntity())) { // todo: why is using ObjectUtils.isNotEmpty instead of simple null check?
-			predicates = getFilteringParams(requestOptions, builder, rootEntity);
-		}
+//		if (requestOptions.getFilteredEntity() != null) { // todo: why is using ObjectUtils.isNotEmpty instead of simple null check?
+//			List<Predicate> predicates = new ArrayList<>(); // todo: redundant variable here - move it inside 'if'
+//			predicates = getFilteringParams(requestOptions, builder, rootEntity);
+//		}
 
-		criteriaQuery.where(predicates.toArray(new Predicate[]{}));     // todo move inside 'if'
 
-		responseData.setTotalElements(getTotalElementsFromDb(requestOptions, builder));
-
+		criteriaQuery.where(getFilteringParams(requestOptions, builder, rootEntity).toArray(new Predicate[]{}));     // todo move inside 'if'
+		responseData.setTotalElements(getCountEntities(requestOptions, builder));
+		LOGGER.info("Getting Filtered Sorted Page of {}, {}, {} objects were found in DB according to request options", type.getSimpleName(), getClass().getSimpleName(), responseData.getTotalElements());
 		criteriaQuery.orderBy(setOrdersByColumns(requestOptions.getSorting(), builder, rootEntity));
 		List<T> getAll = entityManager
-				.createQuery(selectEntities)
-				.setFirstResult(pageNumber * pageSize)
+				.createQuery(criteriaQuery)
+				.setFirstResult(requestOptions.getPageNumber() * pageSize)
 				.setMaxResults(pageSize)
 				.getResultList();
 		responseData.setContent(getAll);
+		LOGGER.debug("Getting Filtered Sorted Page of {}, {}, Content to response data is {}", type.getSimpleName(), getClass().getSimpleName(), responseData.getContent());
 		return responseData;
 	}
 
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
 	public List<T> bulkDeleteEntities(List<Serializable> entitiesIdsForDelete) {
+		LOGGER.info("Bulk Delete of {}, {}", type.getSimpleName(), getClass().getSimpleName());
+		if (CollectionUtils.isNotEmpty(entitiesIdsForDelete)) {
+			LOGGER.info("Bulk Delete of {}, {}, {} object(s) for deleting", type.getSimpleName(), getClass().getSimpleName(), entitiesIdsForDelete.size());
+		}
 		String columnName = Stream.of(type.getDeclaredFields())
 				.filter(f -> f.isAnnotationPresent(Id.class))
 				.findFirst()
 				.orElseThrow()
 				.getName();
+		LOGGER.info("Bulk Delete of {}, {}, Name of column which will be used in criteria is \"{}\"", type.getSimpleName(), getClass().getSimpleName(), columnName);
 		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
 
 		CriteriaQuery<T> criteriaQuery = builder.createQuery(type);
@@ -153,12 +177,14 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 		List<T> unavailableToDeleteEntities =
 				getUnavailableToDeleteEntities(entitiesIdsForDelete, criteriaQuery);
 		if (CollectionUtils.isNotEmpty(unavailableToDeleteEntities)) {
+			LOGGER.warn("Bulk Delete of {}, {}, Can't delete {} object(s)", type.getSimpleName(), getClass().getSimpleName(), unavailableToDeleteEntities.size());
+			LOGGER.debug("Bulk Delete of {}, {}, Can't delete {}", type.getSimpleName(), getClass().getSimpleName(), unavailableToDeleteEntities);
 			unavailableToDeleteEntities
 					.forEach(entity -> entitiesIdsForDelete.remove(entity.getEntityId()));
 		}
 		criteriaDelete.where(rootDelete.get(columnName).in(entitiesIdsForDelete));
 		entityManager.createQuery(criteriaDelete).executeUpdate();
-
+		LOGGER.info("Bulk Delete of {}, {}, IDs object(s) which was deleted {}", type.getSimpleName(), getClass().getSimpleName(), unavailableToDeleteEntities.size());
 		return unavailableToDeleteEntities;
 	}
 
@@ -167,10 +193,9 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 		return Collections.emptyList();
 	}
 
-	// todo: this method must have default implementation
-	protected abstract void setOrdersByColumnsByDefault(List<Order> orderList,
-	                                                    CriteriaBuilder builder,
-	                                                    Root<T> rootEntity);
+	protected void setOrdersByColumnsByDefault(List<Order> orderList, CriteriaBuilder builder,
+	                                           Root<T> rootEntity) {
+	}
 
 	/**
 	 * Create List of Orders from sortable columns to order db entities by it
@@ -181,16 +206,14 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 	 * @return list of sorting orders for each sortable column which was activated
 	 */
 
-	private List<Order> setOrdersByColumns(List<SortableColumn> sortableColumns,
-	                                       CriteriaBuilder builder,
+	private List<Order> setOrdersByColumns(List<SortableColumn> sortableColumns, CriteriaBuilder builder,
 	                                       Root<T> rootEntity) {
 		List<Order> orderList = new ArrayList<>();
 		if (CollectionUtils.isNotEmpty(sortableColumns)) {
 			for (SortableColumn column : sortableColumns) {
-				if ("asc".equals(column.getDirection())) {  // todo: why still is using string for "asc" and "desc"? Enum!
+				if (SortingDirection.ASC == column.getDirection()) {  // todo: why still is using string for "asc" and "desc"? Enum!
 					orderList.add(builder.asc(rootEntity.get(column.getName())));
-				}
-				if ("desc".equals(column.getDirection())) { // todo: why not 'else if' ?
+				} else if (SortingDirection.DESC == column.getDirection()) {
 					orderList.add(builder.desc(rootEntity.get(column.getName())));
 				}
 			}
@@ -210,24 +233,23 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 	 * @param rootEntity root
 	 * @return list of predicates according to request options
 	 */
-	// todo: this method must have default implementation
 	protected List<Predicate> getFilteringParams(RequestOptions<V> options,
 	                                             CriteriaBuilder builder,
 	                                             Root<T> rootEntity) {
 		return Collections.emptyList();
 	}
 
-	protected Integer getTotalElementsFromDb (RequestOptions<V> options,    // todo: please rename this method to more understandable name
-	                                          CriteriaBuilder builder) {
+	public Integer getCountEntities(RequestOptions<V> options,    // todo: please rename this method to more understandable name
+	                                CriteriaBuilder builder) {
 		CriteriaQuery<Long> countCriteriaQuery = builder.createQuery(Long.class);   // todo: not use Long here
 		Root<T> rootEntity = countCriteriaQuery.from(type);
 		countCriteriaQuery.select(builder.count(rootEntity));
+		countCriteriaQuery.where(getFilteringParams(options, builder, rootEntity).toArray(new Predicate[]{}));
 
-		// todo: why this check here? Need to do this check inside getFilteringParams
-		if (ObjectUtils.isNotEmpty(options.getFilteredEntity())) {  // todo: why is using ObjectUtils.isNotEmpty instead of simple null check?
-			entityManager.createQuery(countCriteriaQuery);  // todo what is reason?
-			countCriteriaQuery.where(getFilteringParams(options, builder, rootEntity).toArray(new Predicate[]{}));
-		}
+//		// todo: why this check here? Need to do this check inside getFilteringParams
+//		if (options.getFilteredEntity() != null) {  // todo: why is using ObjectUtils.isNotEmpty instead of simple null check?
+//			entityManager.createQuery(countCriteriaQuery);  // todo what is reason?
+//		}
 
 		return entityManager.createQuery(countCriteriaQuery).getSingleResult().intValue();
 	}

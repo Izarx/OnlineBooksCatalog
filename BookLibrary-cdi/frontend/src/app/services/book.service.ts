@@ -17,6 +17,7 @@ export class BookService {
     }
 
     public createBook(book: Book): Observable<Book> {
+        console.log(book);
         return this.httpClient.post<Book>(baseUrl + `/create`, book);
     }
 
@@ -32,11 +33,11 @@ export class BookService {
         return this.httpClient.put(baseUrl + `/update`, book);
     }
 
-    getBookById(bookId: number) : Observable<Book> {
+    getBookById(bookId: number): Observable<Book> {
         return this.httpClient.get<Book>(baseUrl + `/${bookId}`);
     }
 
-    getBookByIdWithAuthors(bookId: number) : Observable<Book> {
+    getBookByIdWithAuthors(bookId: number): Observable<Book> {
         return this.httpClient.get<Book>(baseUrl + `/authors/${bookId}`);
     }
 

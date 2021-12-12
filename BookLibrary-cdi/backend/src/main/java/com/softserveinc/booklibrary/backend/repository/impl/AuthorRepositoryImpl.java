@@ -11,22 +11,28 @@ import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import com.softserveinc.booklibrary.backend.dto.filtering.AuthorFilter;
 import com.softserveinc.booklibrary.backend.entity.Author;
 import com.softserveinc.booklibrary.backend.pagination.RequestOptions;
+import com.softserveinc.booklibrary.backend.pagination.filtering.AuthorFilter;
 import com.softserveinc.booklibrary.backend.repository.AuthorRepository;
-import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class AuthorRepositoryImpl extends AbstractEntityRepository<Author, AuthorFilter> implements AuthorRepository {
 
+	private static final Logger LOGGER = LoggerFactory.getLogger(AuthorRepositoryImpl.class);
+
 	@Override
 	public boolean isEntityValid(Author author) {
 		String firstName = author.getFirstName();
-		// todo: use StringUtils.length
-		return firstName != null && firstName.length() <= Author.FIRST_NAME_LENGTH;
+		if (firstName != null) {
+			firstName = firstName.trim();
+			author.setFirstName(firstName);
+		}
+		return StringUtils.length(firstName) > 0 && StringUtils.length(firstName) <= Author.FIRST_NAME_LENGTH;
 	}
 
 	@Override
@@ -51,16 +57,17 @@ public class AuthorRepositoryImpl extends AbstractEntityRepository<Author, Autho
 	                                             CriteriaBuilder builder,
 	                                             Root<Author> rootEntity) {
 		List<Predicate> predicates = new ArrayList<>();
+		if (options == null) {
+			return predicates;
+		}
 		AuthorFilter authorFilter = options.getFilteredEntity();
 		String name = null;
 		BigDecimal authorRatingFrom = null;
 		BigDecimal authorRatingTo = null;
-		// todo: Why are you use ObjectUtils.isNotEmpty ? Do you look inside this method?
-		// todo: PLEASE use simple null check
-		if (ObjectUtils.isNotEmpty(authorFilter)) {
+		if (authorFilter != null) {
 			name = authorFilter.getName();
-			authorRatingFrom = authorFilter.getAuthorRatingFrom();
-			authorRatingTo = authorFilter.getAuthorRatingTo();
+			authorRatingFrom = authorFilter.getRatingFrom();
+			authorRatingTo = authorFilter.getRatingTo();
 		}
 		if (StringUtils.isNotEmpty(name)) {
 			Predicate predicateFirstName = builder.like(rootEntity.get("firstName"),
@@ -69,13 +76,10 @@ public class AuthorRepositoryImpl extends AbstractEntityRepository<Author, Autho
 					'%' + name + '%');
 			predicates.add(builder.or(predicateFirstName, predicateLastName));
 		}
-		// todo: PLEASE use simple null check
-		// todo: could be simplified (remove between ;) )
-		if (ObjectUtils.isNotEmpty(authorRatingFrom) && ObjectUtils.isNotEmpty(authorRatingTo)) {
-			predicates.add(builder.between(rootEntity.get("authorRating"), authorRatingFrom, authorRatingTo));
-		} else if (ObjectUtils.isNotEmpty(authorRatingFrom) && ObjectUtils.isEmpty(authorRatingTo)) {
+		if (authorRatingFrom != null) {
 			predicates.add(builder.greaterThanOrEqualTo(rootEntity.get("authorRating"), authorRatingFrom));
-		} else if (ObjectUtils.isEmpty(authorRatingFrom) && ObjectUtils.isNotEmpty(authorRatingTo)) {
+		}
+		if (authorRatingTo != null) {
 			predicates.add(builder.lessThanOrEqualTo(rootEntity.get("authorRating"), authorRatingTo));
 		}
 		return predicates;

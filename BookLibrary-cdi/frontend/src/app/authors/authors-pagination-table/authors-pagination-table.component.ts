@@ -1,10 +1,10 @@
-import {Component, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Author} from "../../model/author";
 import {ResponseData} from "../../model/response-data";
-import {AuthorService} from "../author.service";
-import {PaginationService} from "../../pagination/pagination.service";
+import {AuthorService} from "../../services/author.service";
+import {PaginationService} from "../../services/pagination.service";
 import {SortableColumn} from "../../model/sortable-column";
-import {SortingService} from "../../sorting/sorting.service";
+import {SortingService} from "../../services/sorting.service";
 import {RequestOptions} from "../../model/request-options";
 import {AuthorFilter} from '../../model/author-filter';
 
@@ -15,8 +15,6 @@ import {AuthorFilter} from '../../model/author-filter';
 })
 export class AuthorsPaginationTableComponent implements OnInit {
 
-    static readonly title: string = 'Authors';
-
     sortableColumns: Array<SortableColumn> = [  // todo: is this array really needed?
         new SortableColumn('firstName', 'First Name', null),
         new SortableColumn('lastName', 'Last Name', null),
@@ -26,32 +24,30 @@ export class AuthorsPaginationTableComponent implements OnInit {
     page: ResponseData<Author> = new ResponseData();
     requestOptions: RequestOptions<AuthorFilter> = new RequestOptions();
     author: Author = new Author(null, '', '', 0.00);
-    deniedToDeleteAuthors: Author[] = []
+    deniedToDeleteAuthors: Author[] = [];
     isAllChecked: boolean;
 
-    constructor(
-        private authorService: AuthorService,
-        private paginationService: PaginationService<AuthorFilter>,
-        private sortingService: SortingService
-    ) {
-        this.requestOptions.filteredEntity = new AuthorFilter(null, null, null)
-        this.isAllChecked  = false;
+    constructor(private authorService: AuthorService,
+                private paginationService: PaginationService<AuthorFilter>,
+                private sortingService: SortingService) {
+        this.requestOptions.filteredEntity = new AuthorFilter(null, null, null);
+        this.isAllChecked = false;
     }
 
     ngOnInit(): void {
-        this.getData()
+        this.getData();
     }
 
     getData(): void {
-        this.authorService.getPage(this.requestOptions)
-            .subscribe(page => {
-                    this.paginationService.initPageable(this.requestOptions, page.totalElements);
-                    this.page = page;
-                    this.isAllChecked  = false;
-                },
-                error => {
-                    console.log(error)
-                });
+        this.authorService.getPage(this.requestOptions).subscribe(
+            page => {
+                this.paginationService.initPageable(this.requestOptions, page.totalElements);
+                this.page = page;
+                this.isAllChecked = false;
+            },
+            error => {
+                console.log(error);
+            });
     }
 
     deleteAuthor(authorId: number): void {
@@ -60,26 +56,29 @@ export class AuthorsPaginationTableComponent implements OnInit {
                 this.getData()
             },
             error => {
-                console.log(error)
-            })
+                console.log(error);
+            });
     }
 
-    bulkDeleteAuthors() {
+    bulkDeleteAuthors(): void {
         this.authorService.bulkDeleteAuthors(this.setAuthorsForDelete().map(a => a.authorId)).subscribe(
             authors => {
                 this.deniedToDeleteAuthors = authors;
                 this.getData();
             },
             error => {
-                console.log(error)
-            }
-        )
+                console.log(error);
+            });
     }
 
-    getAuthorById(authorId: number) {
+    getAuthorById(authorId: number): void {
         this.authorService.getAuthorById(authorId).subscribe(
-            author => this.author = author
-        )
+            author => {
+                this.author = author;
+            },
+            error => {
+                console.log(error);
+            });
     }
 
     public sort(sortableColumn: SortableColumn): void {
@@ -107,12 +106,12 @@ export class AuthorsPaginationTableComponent implements OnInit {
         this.getData();
     }
 
-    public getFilteredData(filteredAuthor: AuthorFilter) {
-        this.requestOptions.filteredEntity = filteredAuthor;
+    public setFilteredData(requestOptions: RequestOptions<AuthorFilter>): void {
+        this.requestOptions = requestOptions;
         this.getData();
     }
 
-    setCheckForAll() {
+    setCheckForAll(): void {
         this.page.content.forEach(a => a.isChecked = this.isAllChecked);
     }
 
@@ -120,7 +119,7 @@ export class AuthorsPaginationTableComponent implements OnInit {
         return this.page.content.filter(a => a.isChecked);
     }
 
-    setAuthor(author: Author) {
+    setAuthor(author: Author): void {
         this.author = author;
     }
 

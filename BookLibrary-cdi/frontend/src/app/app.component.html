@@ -2,9 +2,9 @@
 	<!-- MENU SIDEBAR-->
 	<nav class="navbar navbar-default top-navbar" role="navigation">
 		<div class="navbar-header">
-			<a (click)="setTitle('Home')" [routerLink]="['/']" class="navbar-brand">
+			<div class="navbar-brand">
 				<strong><i class="fa fa-book" style="margin-right: 10px"></i>Library</strong>
-			</a>
+			</div>
 
 		</div>
 		<h1 class="text-center">{{title}}</h1>
@@ -14,7 +14,7 @@
 		<div class="sidebar-collapse">
 			<ul class="nav" id="main-menu">
 				<li [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active">
-					<a (click)="setTitle('Home')" [routerLink]="['/']"><i class="fa fa-home"></i>Home</a>
+					<a (click)="setTitle('Home')" [routerLink]="['']"><i class="fa fa-home"></i>Home</a>
 				</li>
 				<li routerLinkActive="active">
 					<a (click)="setTitle('Authors')" [routerLink]="['/authors']"><i class="fa fa-male"></i>Authors</a>

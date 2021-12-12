@@ -1,8 +1,8 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormControl, FormGroup} from "@angular/forms";
 import {Review} from "../model/review";
 import {Book} from "../model/book";
-import {ReviewService} from "./review.service";
+import {ReviewService} from "../services/review.service";
 
 @Component({
     selector: 'app-create-review',
@@ -11,9 +11,9 @@ import {ReviewService} from "./review.service";
 })
 export class CreateReviewComponent implements OnInit {
 
-    @Input() book: Book
-    @Output() initParentPage: EventEmitter<any> = new EventEmitter<any>()
-    form: FormGroup = new FormGroup({})
+    @Input() book: Book;
+    @Output() initParentPage: EventEmitter<any> = new EventEmitter<any>();
+    form: FormGroup = new FormGroup({});
     review: Review = new Review(null, null, null, 0, null);
 
     constructor(private reviewService: ReviewService) {
@@ -30,14 +30,14 @@ export class CreateReviewComponent implements OnInit {
     createReview(): void {
         this.reviewService.createReview(this.review).subscribe(
             review => {
-                this.initParentPage.emit(null)
+                this.initParentPage.emit(null);
             },
             error => {
-                console.log(error)
+                console.log(error);
             })
     }
 
-    submit() {
+    submit(): void {
         const formData = {...this.form.value};
         this.review.book = this.book;
         this.review.commenterName = formData.commenterName.trim();
@@ -46,17 +46,17 @@ export class CreateReviewComponent implements OnInit {
         document.getElementById('createReviewModalCloseButton').click()
     }
 
-    cancel() {
+    cancel(): void {
         this.form.reset();
         this.resetRatingView();
     }
 
-    setRating(number: number) {
+    setRating(number: number): void {
         this.review.rating = number;
         let i = 1;
         let s = 'star'
         this.resetRatingView();
-        while(i < 6) {
+        while (i < 6) {
             if (number > 0) {
                 document.getElementById(i + s).classList.add('checked')
             }
@@ -65,10 +65,10 @@ export class CreateReviewComponent implements OnInit {
         }
     }
 
-    resetRatingView() {
+    resetRatingView(): void {
         let i = 1;
         let s = 'star'
-        while(i < 6) {
+        while (i < 6) {
             document.getElementById(i + s).classList.remove('checked')
             i++;
         }

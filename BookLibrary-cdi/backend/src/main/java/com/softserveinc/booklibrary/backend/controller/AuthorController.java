@@ -6,10 +6,10 @@ import java.util.List;
 import com.softserveinc.booklibrary.backend.dto.ApplicationMapper;
 import com.softserveinc.booklibrary.backend.dto.AuthorDto;
 import com.softserveinc.booklibrary.backend.dto.AuthorNameDto;
-import com.softserveinc.booklibrary.backend.dto.filtering.AuthorFilter;
 import com.softserveinc.booklibrary.backend.entity.Author;
 import com.softserveinc.booklibrary.backend.pagination.RequestOptions;
 import com.softserveinc.booklibrary.backend.pagination.ResponseData;
+import com.softserveinc.booklibrary.backend.pagination.filtering.AuthorFilter;
 import com.softserveinc.booklibrary.backend.service.AuthorService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,14 +41,21 @@ public class AuthorController {
 
 	@GetMapping("/{id}")
 	public ResponseEntity<AuthorDto> getAuthor(@PathVariable Integer id) {
+		LOGGER.info("Getting Author, AuthorController, the path variable is ID = {}", id);
 		Author author = authorService.getById(id);
-		return author != null ? ResponseEntity.ok(appMapper.authorToAuthorDto(author))
-				: ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		if (author == null) {
+			LOGGER.warn("Getting Author, AuthorController, Author with ID = {} not found", id);
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		} else {
+			LOGGER.debug("Getting Author, AuthorController, Author with ID = {} is {}", id, author);
+		}
+		return ResponseEntity.ok(appMapper.authorToAuthorDto(author));
 	}
 
 	@PostMapping("/bulk-delete")
 	public ResponseEntity<List<AuthorNameDto>> bulkDeleteAuthors(
 			@RequestBody List<Integer> authorsIdsForDelete) {
+		LOGGER.info("Bulk Delete Authors, AuthorController, deleting authors with IDs = {}", authorsIdsForDelete);
 		return ResponseEntity
 				.ok(appMapper.listAuthorsToListAuthorsNameDto(
 						authorService.bulkDeleteEntities(new ArrayList<>(authorsIdsForDelete))));
@@ -57,6 +64,7 @@ public class AuthorController {
 	@PostMapping
 	public ResponseEntity<ResponseData<AuthorDto>> listAuthors(
 			@RequestBody RequestOptions<AuthorFilter> requestOptions) {
+		LOGGER.debug("Getting Filtered Sorted Page of Authors, AuthorController, Request options to fetch page of Authors is {}", requestOptions);
 		return ResponseEntity
 				.ok(convertAuthorResponseToAuthorDtoResponse(
 						authorService.listEntities(requestOptions)));
@@ -65,8 +73,10 @@ public class AuthorController {
 	@PostMapping("/create")
 	public ResponseEntity<AuthorDto> createAuthor(@RequestBody AuthorDto authorDto) {
 		if (authorDto == null) {
+			LOGGER.warn("Creating Author, AuthorController, Transfer object which received from UI is empty!");
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
+		LOGGER.debug("Creating Author, AuthorController, Transfer object which received from UI is {}", authorDto);
 		return ResponseEntity
 				.ok(appMapper.authorToAuthorDto(authorService
 						.create(appMapper
@@ -76,8 +86,10 @@ public class AuthorController {
 	@PutMapping("/update")
 	public ResponseEntity<AuthorDto> updateAuthor(@RequestBody AuthorDto authorDto) {
 		if (authorDto == null) {
+			LOGGER.warn("Updating Author, AuthorController, Transfer object which received from UI with updating author information is empty!");
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
+		LOGGER.info("Updating Author, AuthorController, Transfer object which received from UI with updating author information is {}", authorDto);
 		return ResponseEntity
 				.ok(appMapper.authorToAuthorDto(authorService
 						.update(appMapper
@@ -86,7 +98,7 @@ public class AuthorController {
 
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<AuthorDto> deleteAuthor(@PathVariable Integer id) {
-
+		LOGGER.info("Deleting Author, AuthorController, the path variable is ID = {}.", id);
 		return authorService.delete(id) ?
 				ResponseEntity.ok().build() :
 				ResponseEntity.noContent().build(); // todo: reason?
@@ -101,8 +113,20 @@ public class AuthorController {
 	private ResponseData<AuthorDto> convertAuthorResponseToAuthorDtoResponse(
 			ResponseData<Author> responseData) {
 		ResponseData<AuthorDto> authorDtoResponseData = new ResponseData<>();
-		authorDtoResponseData.setTotalElements(responseData.getTotalElements());
-		authorDtoResponseData.setContent(appMapper.listAuthorsToListAuthorsDto(responseData.getContent()));
+		if (responseData != null) {
+			LOGGER.debug("Converting Response Data with Authors to Response Data with Authors DTOs, AuthorController, " +
+					"response data BEFORE converting: total number of authors = {} ; list with authors = {}",
+					responseData.getTotalElements(), responseData.getContent());
+			authorDtoResponseData.setTotalElements(responseData.getTotalElements());
+			authorDtoResponseData.setContent(appMapper.listAuthorsToListAuthorsDto(responseData.getContent()));
+		}
+		else {
+			LOGGER.warn("Converting Response Data with Authors to Response Data with Authors DTOs, AuthorController, " +
+					"response data is empty!");
+		}
+		LOGGER.debug("Converting Response Data with Authors to Response Data with Authors DTOs, AuthorController, " +
+						"response data AFTER converting: total number of authors = {} ; size list of authors = {}",
+				authorDtoResponseData.getTotalElements(), authorDtoResponseData.getContent().size());
 		return authorDtoResponseData;
 	}
 

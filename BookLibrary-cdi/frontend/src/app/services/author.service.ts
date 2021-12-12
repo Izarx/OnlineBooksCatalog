@@ -40,7 +40,7 @@ export class AuthorService {
         return this.httpClient.get<Author>(baseUrl + `/${authorId}`);
     }
 
-    public getAuthors() : Observable<Array<Author>> {
+    public getAuthors(): Observable<Array<Author>> {
         return this.httpClient.get<Array<Author>>(baseUrl);
     }
 }
