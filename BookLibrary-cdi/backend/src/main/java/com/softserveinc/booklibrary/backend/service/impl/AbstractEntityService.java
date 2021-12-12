@@ -23,7 +23,6 @@ public abstract class AbstractEntityService<T extends AbstractEntity<? extends S
 	@Override
 	@Transactional
 	public T create(T entity) {
-		LOGGER.info("Entity after mapping from DTO is {}", entity);
 		if (!repository.isEntityValid(entity)) {
 			throw new NotValidEntityException(entity);
 		}

@@ -31,7 +31,7 @@ export class UpdateBookComponent implements OnInit {
     ngOnInit(): void {
         this.requestOptions = new RequestOptions<AuthorFilter>();
         this.requestOptions.filteredEntity = new AuthorFilter(null, null, null);
-        this.cancel();
+        this.selectedItems = this.book.authors;
         this.getData();
         this.form = new FormGroup({
             name: new FormControl(),
@@ -83,6 +83,7 @@ export class UpdateBookComponent implements OnInit {
             this.book.isbn = formData.isbn;
             this.book.publisher = formData.publisher.trim();
             this.book.authors = this.selectedItems;
+            console.log(this.book);
             this.updateBook(this.book);
             this.form.reset();
             document.getElementById('updateBookModalCloseButton').click();
@@ -93,7 +94,8 @@ export class UpdateBookComponent implements OnInit {
         this.form.reset();
         this.selectedItems = [];
         this.book.authors.forEach(a => this.selectedItems.push(a))
-        this.dropdownList = [];
+        console.log('Cancel method *********', this.selectedItems)
+        this.getData();
     }
 
     onItemSelect(author: any): void {
@@ -102,8 +104,7 @@ export class UpdateBookComponent implements OnInit {
     }
 
     onSelectAll(authors: any): void {
-        authors.forEach(i => this.onItemDeselect(i))
-            .forEach(i => this.selectedItems.push(this.dropdownList.find(a => a.authorId === i.authorId)));
+        authors.forEach(i => this.selectedItems.push(this.dropdownList.find(a => a.authorId === i.authorId)));
     }
 
     onFilterChange(filterString: any): void {

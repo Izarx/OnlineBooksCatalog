@@ -99,8 +99,7 @@ export class CreateBookComponent implements OnInit {
     }
 
     onSelectAll(authors: any): void {
-        authors.forEach(i => this.onItemDeselect(i))
-            .forEach(i => this.selectedItems.push(this.dropdownList.find(a => a.authorId === i.authorId)));
+        authors.forEach(i => this.selectedItems.push(this.dropdownList.find(a => a.authorId === i.authorId)));
     }
 
     onFilterChange(filterString: any): void {
