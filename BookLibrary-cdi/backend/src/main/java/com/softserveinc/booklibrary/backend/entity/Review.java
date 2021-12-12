@@ -29,7 +29,8 @@ public class Review implements AbstractEntity<Integer> {
 	@Column(name = "review_id", nullable = false)
 	private Integer reviewId;
 
-	@Column(name = "commenter_name", nullable = false, length = COMMENTER_NAME_LENGTH) // todo: use COMMENTER_NAME_LENGTH
+	@Column(name = "commenter_name", nullable = false, length = COMMENTER_NAME_LENGTH)
+	// todo: use COMMENTER_NAME_LENGTH
 	private String commenterName;
 
 	// no need in length, because in base there is no limit for this column

@@ -1,7 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormControl, FormGroup} from "@angular/forms";
 import {BookFilter} from "../../model/book-filter";
-import {AuthorFilter} from "../../model/author-filter";
 import {RequestOptions} from "../../model/request-options";
 
 @Component({

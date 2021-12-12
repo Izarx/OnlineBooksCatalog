@@ -180,7 +180,8 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 	}
 
 	protected void setOrdersByColumnsByDefault(List<Order> orderList, CriteriaBuilder builder,
-	                                                    Root<T> rootEntity) {}
+	                                           Root<T> rootEntity) {
+	}
 
 	/**
 	 * Create List of Orders from sortable columns to order db entities by it
@@ -198,8 +199,7 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 			for (SortableColumn column : sortableColumns) {
 				if (SortingDirection.ASC == column.getDirection()) {  // todo: why still is using string for "asc" and "desc"? Enum!
 					orderList.add(builder.asc(rootEntity.get(column.getName())));
-				}
-				else if (SortingDirection.DESC == column.getDirection()) {
+				} else if (SortingDirection.DESC == column.getDirection()) {
 					orderList.add(builder.desc(rootEntity.get(column.getName())));
 				}
 			}

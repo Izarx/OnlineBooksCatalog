@@ -6,10 +6,10 @@ import java.util.List;
 import com.softserveinc.booklibrary.backend.dto.ApplicationMapper;
 import com.softserveinc.booklibrary.backend.dto.AuthorDto;
 import com.softserveinc.booklibrary.backend.dto.AuthorNameDto;
-import com.softserveinc.booklibrary.backend.pagination.filtering.AuthorFilter;
 import com.softserveinc.booklibrary.backend.entity.Author;
 import com.softserveinc.booklibrary.backend.pagination.RequestOptions;
 import com.softserveinc.booklibrary.backend.pagination.ResponseData;
+import com.softserveinc.booklibrary.backend.pagination.filtering.AuthorFilter;
 import com.softserveinc.booklibrary.backend.service.AuthorService;
 import org.apache.commons.lang3.ObjectUtils;
 import org.slf4j.Logger;
@@ -47,8 +47,7 @@ public class AuthorController {
 		if (author == null) {
 			LOGGER.warn(String.format("Author with ID = %d not found", id));
 			ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-		}
-		else {
+		} else {
 			LOGGER.info(String.format("Author with ID = %d is %s", id, author));
 		}
 		return ResponseEntity.ok(appMapper.authorToAuthorDto(author));
@@ -111,7 +110,7 @@ public class AuthorController {
 	private ResponseData<AuthorDto> convertAuthorResponseToAuthorDtoResponse(
 			ResponseData<Author> responseData) {
 		ResponseData<AuthorDto> authorDtoResponseData = new ResponseData<>();
-		if (ObjectUtils.isNotEmpty(responseData)){
+		if (ObjectUtils.isNotEmpty(responseData)) {
 			authorDtoResponseData.setTotalElements(responseData.getTotalElements());
 			authorDtoResponseData.setContent(appMapper.listAuthorsToListAuthorsDto(responseData.getContent()));
 		}

@@ -54,13 +54,13 @@
 					</div>
 					<div>
 						<ng-multiselect-dropdown
-								(onSelect)="onItemSelect($event)"
-								(onSelectAll)="onSelectAll($event)"
 								(onDeSelect)="onItemDeselect($event)"
 								(onDeSelectAll)="onDeselectAll($event)"
+								(onFilterChange)="onFilterChange($event)"
+								(onSelect)="onItemSelect($event)"
+								(onSelectAll)="onSelectAll($event)"
 								[data]="dropdownList"
 								[settings]="dropdownSettings"
-								(onFilterChange)="onFilterChange($event)"
 						>
 						</ng-multiselect-dropdown>
 					</div>

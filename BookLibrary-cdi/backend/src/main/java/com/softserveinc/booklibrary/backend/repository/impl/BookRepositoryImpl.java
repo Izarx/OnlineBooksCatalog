@@ -11,10 +11,10 @@ import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import com.softserveinc.booklibrary.backend.pagination.filtering.BookFilter;
 import com.softserveinc.booklibrary.backend.entity.Author;
 import com.softserveinc.booklibrary.backend.entity.Book;
 import com.softserveinc.booklibrary.backend.pagination.RequestOptions;
+import com.softserveinc.booklibrary.backend.pagination.filtering.BookFilter;
 import com.softserveinc.booklibrary.backend.repository.BookRepository;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Repository;
@@ -56,7 +56,7 @@ public class BookRepositoryImpl extends AbstractEntityRepository<Book, BookFilte
 		if (options == null) {
 			return predicates;
 		}
-		BookFilter bookFilter = options.getFilteredEntity();;
+		BookFilter bookFilter = options.getFilteredEntity();
 		String name = null;
 		String authorName = null;
 		BigDecimal bookRatingFrom = null;

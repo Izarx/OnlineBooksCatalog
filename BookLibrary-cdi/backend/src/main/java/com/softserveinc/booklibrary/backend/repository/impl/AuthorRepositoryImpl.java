@@ -11,9 +11,9 @@ import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import com.softserveinc.booklibrary.backend.pagination.filtering.AuthorFilter;
 import com.softserveinc.booklibrary.backend.entity.Author;
 import com.softserveinc.booklibrary.backend.pagination.RequestOptions;
+import com.softserveinc.booklibrary.backend.pagination.filtering.AuthorFilter;
 import com.softserveinc.booklibrary.backend.repository.AuthorRepository;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -28,7 +28,7 @@ public class AuthorRepositoryImpl extends AbstractEntityRepository<Author, Autho
 	@Override
 	public boolean isEntityValid(Author author) {
 		String firstName = author.getFirstName();
-		if (firstName != null){
+		if (firstName != null) {
 			firstName = firstName.trim();
 			author.setFirstName(firstName);
 		}

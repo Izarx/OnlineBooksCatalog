@@ -1,7 +1,7 @@
 package com.softserveinc.booklibrary.backend.service.impl;
 
-import com.softserveinc.booklibrary.backend.pagination.filtering.ReviewFilter;
 import com.softserveinc.booklibrary.backend.entity.Review;
+import com.softserveinc.booklibrary.backend.pagination.filtering.ReviewFilter;
 import com.softserveinc.booklibrary.backend.repository.ReviewRepository;
 import com.softserveinc.booklibrary.backend.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
