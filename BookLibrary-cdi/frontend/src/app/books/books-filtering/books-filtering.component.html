@@ -10,7 +10,7 @@
 			</span>
 			<span class="form-group add-top-bottom-padding">
 				<label>Authors</label>
-				<input [(ngModel)]="requestOptions.filteredEntity.authorFilter.name"
+				<input [(ngModel)]="requestOptions.filteredEntity.authorName"
 				       class="form-control"
 				       formControlName="authors"
 				       type="text"
@@ -18,14 +18,14 @@
 			</span>
 			<span class="form-group add-top-bottom-padding">
 				<label>Rating from</label>
-				<input [(ngModel)]="requestOptions.filteredEntity.bookRatingFrom"
+				<input [(ngModel)]="requestOptions.filteredEntity.ratingFrom"
 				       class="form-control form-control-for-numbers"
 				       formControlName="bookRating"
 				       step="0.01"
 				       type="number"
 				>
 				<label>to</label>
-				<input [(ngModel)]="requestOptions.filteredEntity.bookRatingTo"
+				<input [(ngModel)]="requestOptions.filteredEntity.ratingTo"
 				       class="form-control form-control-for-numbers"
 				       formControlName="bookRatingRange"
 				       step="0.01"

@@ -1,11 +1,11 @@
 export class AuthorFilter {
     name: string
-    authorRatingFrom: number
-    authorRatingTo: number
+    ratingFrom: number
+    ratingTo: number
 
     constructor(name: string, authorRatingFrom: number, authorRatingTo: number) {
         this.name = name;
-        this.authorRatingFrom = authorRatingFrom;
-        this.authorRatingTo = authorRatingTo;
+        this.ratingFrom = authorRatingFrom;
+        this.ratingTo = authorRatingTo;
     }
 }

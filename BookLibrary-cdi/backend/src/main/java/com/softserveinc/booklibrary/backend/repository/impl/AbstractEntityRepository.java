@@ -23,9 +23,9 @@ import com.softserveinc.booklibrary.backend.exception.NotValidIdException;
 import com.softserveinc.booklibrary.backend.pagination.RequestOptions;
 import com.softserveinc.booklibrary.backend.pagination.ResponseData;
 import com.softserveinc.booklibrary.backend.pagination.SortableColumn;
+import com.softserveinc.booklibrary.backend.pagination.SortingDirection;
 import com.softserveinc.booklibrary.backend.repository.EntityRepository;
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.ObjectUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Propagation;
@@ -46,46 +46,46 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
 	public T create(T entity) {
-		LOGGER.info("Start creating entity {} in repository", type);
-		LOGGER.info("Entity before persist equals {}", entity);
+		LOGGER.info("Start creating object of entity {} in repository", type);
+		LOGGER.info("Object of entity {} before persist equals {}", type, entity);
 		if (!isEntityValid(entity)) {
 			throw new NotValidEntityException(entity);
 		}
 		Serializable id = entity.getEntityId();
-		LOGGER.info("The ID of creating entity equals {}", id);
+		LOGGER.info("The ID of creating object of entity {} equals {}", type, id);
 		if (id != null) {
 			throw new NotValidIdException(id);
 		}
 		entityManager.persist(entity);
-		LOGGER.info("Entity {} were persisted and equals {}", type, entity);
+		LOGGER.info("Object of entity {} were persisted and equals {}", type, entity);
 		return entity;
 	}
 
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
 	public T update(T entity) {
-		LOGGER.info("Start updating entity {} in repository", type);
-		LOGGER.info("Entity {} before merge equals {}", type, entity);
+		LOGGER.info("Start updating object of entity {} in repository", type);
+		LOGGER.info("Object of entity {} before merge equals {}", type, entity);
 		if (!isEntityValid(entity)) {
 			throw new NotValidEntityException(entity);
 		}
 		Serializable id = entity.getEntityId();
-		LOGGER.info("The ID of updating updating {} equals {}", type, id);
+		LOGGER.info("The ID of updating object of entity {} equals {}", type, id);
 		if (id == null || entityManager.find(type, id) == null) {
 			throw new NotValidIdException(id);
 		}
-		LOGGER.info("Entity {} were merged and equals {}", type, entity);
+		LOGGER.info("Object of entity {} were merged and equals {}", type, entity);
 		return entityManager.merge(entity);
 	}
 
 	@Override
 	public T getById(Serializable id) {
-		LOGGER.info("The ID of getting entity {} equals {}", type, id);
+		LOGGER.info("The ID of getting object of entity {} equals {}", type, id);
 		if (id == null) {
 			throw new NotValidIdException(null);
 		}
 		T entity = entityManager.find(type, id);
-		LOGGER.info("Entity {} which was found is {}", type, entity);
+		LOGGER.info("Object of entity {} which was found is {}", type, entity);
 		return entity;
 	}
 
@@ -100,7 +100,7 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 			entityManager.remove(entity);
 			return true;
 		}
-		return false;   // todo: why false?
+		return true;
 	}
 
 	@Override
@@ -110,8 +110,8 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 	@Transactional(propagation = Propagation.SUPPORTS)
 	public List<T> getAll() {
 		CriteriaQuery<T> criteriaQuery = entityManager.getCriteriaBuilder().createQuery(type);
-		CriteriaQuery<T> getAll = criteriaQuery.select(criteriaQuery.from(type)); // todo: redundant variable getAll
-		return entityManager.createQuery(getAll).getResultList();
+		criteriaQuery.select(criteriaQuery.from(type)); // todo: redundant variable getAll
+		return entityManager.createQuery(criteriaQuery).getResultList();
 	}
 
 	@Override
@@ -119,28 +119,29 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 	public ResponseData<T> listEntities(RequestOptions<V> requestOptions) {
 		ResponseData<T> responseData = new ResponseData<>();
 		int pageSize = requestOptions.getPageSize();
-		int pageNumber = requestOptions.getPageNumber();    // todo: redundant variable pageNumber
+		// todo: redundant variable pageNumber
 		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
 
 		CriteriaQuery<T> criteriaQuery = builder.createQuery(type);
 		Root<T> rootEntity = criteriaQuery.from(type);
-		CriteriaQuery<T> selectEntities = criteriaQuery.select(rootEntity); // todo: redundant variable selectEntities
 
-		List<Predicate> predicates = new ArrayList<>(); // todo: redundant variable here - move it inside 'if'
+		// todo: redundant variable selectEntities
+
 
 		// todo: why this check here? Need to do this check inside getFilteringParams
-		if (ObjectUtils.isNotEmpty(requestOptions.getFilteredEntity())) { // todo: why is using ObjectUtils.isNotEmpty instead of simple null check?
-			predicates = getFilteringParams(requestOptions, builder, rootEntity);
-		}
+//		if (requestOptions.getFilteredEntity() != null) { // todo: why is using ObjectUtils.isNotEmpty instead of simple null check?
+//			List<Predicate> predicates = new ArrayList<>(); // todo: redundant variable here - move it inside 'if'
+//			predicates = getFilteringParams(requestOptions, builder, rootEntity);
+//		}
 
-		criteriaQuery.where(predicates.toArray(new Predicate[]{}));     // todo move inside 'if'
 
+		criteriaQuery.where(getFilteringParams(requestOptions, builder, rootEntity).toArray(new Predicate[]{}));     // todo move inside 'if'
 		responseData.setTotalElements(getCountEntities(requestOptions, builder));
 
 		criteriaQuery.orderBy(setOrdersByColumns(requestOptions.getSorting(), builder, rootEntity));
 		List<T> getAll = entityManager
-				.createQuery(selectEntities)
-				.setFirstResult(pageNumber * pageSize)
+				.createQuery(criteriaQuery)
+				.setFirstResult(requestOptions.getPageNumber() * pageSize)
 				.setMaxResults(pageSize)
 				.getResultList();
 		responseData.setContent(getAll);
@@ -195,10 +196,10 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 		List<Order> orderList = new ArrayList<>();
 		if (CollectionUtils.isNotEmpty(sortableColumns)) {
 			for (SortableColumn column : sortableColumns) {
-				if ("asc".equals(column.getDirection())) {  // todo: why still is using string for "asc" and "desc"? Enum!
+				if (SortingDirection.ASC == column.getDirection()) {  // todo: why still is using string for "asc" and "desc"? Enum!
 					orderList.add(builder.asc(rootEntity.get(column.getName())));
 				}
-				else if ("desc".equals(column.getDirection())) {
+				else if (SortingDirection.DESC == column.getDirection()) {
 					orderList.add(builder.desc(rootEntity.get(column.getName())));
 				}
 			}
@@ -224,17 +225,17 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 		return Collections.emptyList();
 	}
 
-	protected Integer getCountEntities(RequestOptions<V> options,    // todo: please rename this method to more understandable name
-	                                   CriteriaBuilder builder) {
+	public Integer getCountEntities(RequestOptions<V> options,    // todo: please rename this method to more understandable name
+	                                CriteriaBuilder builder) {
 		CriteriaQuery<Long> countCriteriaQuery = builder.createQuery(Long.class);   // todo: not use Long here
 		Root<T> rootEntity = countCriteriaQuery.from(type);
 		countCriteriaQuery.select(builder.count(rootEntity));
+		countCriteriaQuery.where(getFilteringParams(options, builder, rootEntity).toArray(new Predicate[]{}));
 
-		// todo: why this check here? Need to do this check inside getFilteringParams
-		if (ObjectUtils.isNotEmpty(options.getFilteredEntity())) {  // todo: why is using ObjectUtils.isNotEmpty instead of simple null check?
-			entityManager.createQuery(countCriteriaQuery);  // todo what is reason?
-			countCriteriaQuery.where(getFilteringParams(options, builder, rootEntity).toArray(new Predicate[]{}));
-		}
+//		// todo: why this check here? Need to do this check inside getFilteringParams
+//		if (options.getFilteredEntity() != null) {  // todo: why is using ObjectUtils.isNotEmpty instead of simple null check?
+//			entityManager.createQuery(countCriteriaQuery);  // todo what is reason?
+//		}
 
 		return entityManager.createQuery(countCriteriaQuery).getSingleResult().intValue();
 	}

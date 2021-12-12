@@ -1,4 +1,4 @@
-package com.softserveinc.booklibrary.backend.dto.filtering;
+package com.softserveinc.booklibrary.backend.pagination.filtering;
 
 
 import lombok.Getter;

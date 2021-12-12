@@ -9,7 +9,7 @@ import com.softserveinc.booklibrary.backend.dto.ApplicationMapper;
 import com.softserveinc.booklibrary.backend.dto.AuthorDto;
 import com.softserveinc.booklibrary.backend.dto.BookDto;
 import com.softserveinc.booklibrary.backend.dto.BookNameDto;
-import com.softserveinc.booklibrary.backend.dto.filtering.BookFilter;
+import com.softserveinc.booklibrary.backend.pagination.filtering.BookFilter;
 import com.softserveinc.booklibrary.backend.entity.Book;
 import com.softserveinc.booklibrary.backend.pagination.RequestOptions;
 import com.softserveinc.booklibrary.backend.pagination.ResponseData;
@@ -89,7 +89,7 @@ public class BookController {
 	public ResponseEntity<BookDto> deleteBook(@PathVariable Integer id) {
 		return bookService.delete(id) ?
 				ResponseEntity.ok().build() :
-				ResponseEntity.notFound().build(); // todo: reason?
+				ResponseEntity.noContent().build(); // todo: reason?
 	}
 
 	@PostMapping("/bulk-delete")

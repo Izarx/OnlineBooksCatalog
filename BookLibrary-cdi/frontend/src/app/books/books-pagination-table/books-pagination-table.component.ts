@@ -33,7 +33,7 @@ export class BooksPaginationTableComponent implements OnInit {
     constructor(private bookService: BookService,
                 private paginationService: PaginationService<BookFilter>,
                 private sortingService: SortingService) {
-        this.requestOptions.filteredEntity = new BookFilter(null, new AuthorFilter(null, null, null), null, null, null, null);
+        this.requestOptions.filteredEntity = new BookFilter(null, null, null, null, null, null);
         this.isAllChecked = false;
     }
 

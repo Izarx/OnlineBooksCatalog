@@ -36,7 +36,7 @@ export class BooksFilteringComponent implements OnInit {
     }
 
     reset(): void {
-        this.requestOptions.filteredEntity = new BookFilter(null, new AuthorFilter(null, null, null), null, null, null, null);
+        this.requestOptions.filteredEntity = new BookFilter(null, null, null, null, null, null);
     }
 
     getCurrentYear(): number {

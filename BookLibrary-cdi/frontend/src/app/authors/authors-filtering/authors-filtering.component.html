@@ -10,15 +10,15 @@
 			</span>
 			<span class="form-group add-top-bottom-padding">
 				<label>Rating from</label>
-				<input [(ngModel)]="requestOptions.filteredEntity.authorRatingFrom"
+				<input [(ngModel)]="requestOptions.filteredEntity.ratingFrom"
 				       class="form-control form-control-for-numbers"
 				       formControlName="authorRatingFrom"
 				       max="5.00"
 				       min="0.00" step="0.01" type="number"
 				>
 				<label>to</label>
-				<input [(ngModel)]="requestOptions.filteredEntity.authorRatingTo"
-				       [min]="requestOptions.filteredEntity.authorRatingTo"
+				<input [(ngModel)]="requestOptions.filteredEntity.ratingTo"
+				       [min]="requestOptions.filteredEntity.ratingTo"
 				       class="form-control form-control-for-numbers"
 				       formControlName="authorRatingTo"
 				       max="5.00" step="0.01" type="number"

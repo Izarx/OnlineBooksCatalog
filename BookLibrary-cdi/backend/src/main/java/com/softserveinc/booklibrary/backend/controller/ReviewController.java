@@ -3,7 +3,7 @@ package com.softserveinc.booklibrary.backend.controller;
 import com.softserveinc.booklibrary.backend.dto.ApplicationMapper;
 import com.softserveinc.booklibrary.backend.dto.ReviewDto;
 import com.softserveinc.booklibrary.backend.dto.ReviewDtoWithoutBook;
-import com.softserveinc.booklibrary.backend.dto.filtering.ReviewFilter;
+import com.softserveinc.booklibrary.backend.pagination.filtering.ReviewFilter;
 import com.softserveinc.booklibrary.backend.entity.Review;
 import com.softserveinc.booklibrary.backend.pagination.RequestOptions;
 import com.softserveinc.booklibrary.backend.pagination.ResponseData;

@@ -4,7 +4,7 @@
 		<label>{{sortableColumn.title}}</label>
 		<button class="btn btn-default btn-sort">
 			<span *ngIf="sortableColumn.direction != null; else sortNone">
-	            <span *ngIf="sortableColumn.direction=='asc'; then sortAscending else sortDescending"></span>
+	            <span *ngIf="sortableColumn.direction=='ASC'; then sortAscending else sortDescending"></span>
 	        </span>
 		</button>
 	</div>
