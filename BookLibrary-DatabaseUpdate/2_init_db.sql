@@ -48,15 +48,27 @@ CREATE TABLE reviews
 CREATE OR REPLACE FUNCTION calculate_rating()
 	RETURNS TRIGGER AS
 $calculate_rating$
+declare
+    changed_book_id integer;
 BEGIN
-	update books b set book_rating = (
-		select avg(rating) from reviews r where r.book_id = b.book_id
+
+    if (tg_op = 'DELETE') then
+	    changed_book_id = old.book_id;
+	else
+		changed_book_id = new.book_id;
+    end if;
+
+	update books b
+	set book_rating = (
+		select coalesce(avg(rating), 0)
+		from reviews r
+		where r.book_id = b.book_id
 	)
-	WHERE b.book_id = new.book_id;
+	WHERE b.book_id = changed_book_id;
 
 	update authors a
 	set author_rating = (
-		select avg(book_rating)
+		select coalesce(avg(book_rating), 0)
 		from books
 			     join authors_books bab on bab.book_id = books.book_id
 		where bab.author_id = a.author_id
@@ -65,9 +77,10 @@ BEGIN
 		     select authors.author_id
 		     from authors
 			          join authors_books aab on aab.author_id = authors.author_id
-		     where aab.book_id = new.book_id
+		     where aab.book_id = changed_book_id
 	     ) as authos_to_update
 	where authos_to_update.author_id = a.author_id;
+
 
 	RETURN new;
 END;
@@ -75,13 +88,19 @@ $calculate_rating$
 	LANGUAGE 'plpgsql';
 
 CREATE TRIGGER authors_books_rating
-	AFTER INSERT
+	AFTER INSERT OR UPDATE OR DELETE
 	ON public.reviews
 	FOR EACH ROW
 EXECUTE FUNCTION public.calculate_rating();
 
-CREATE TRIGGER change_authors_books_rating
-	AFTER DELETE OR INSERT
+CREATE TRIGGER authors_rating_delete_book
+	BEFORE DELETE
+	ON public.authors_books
+	FOR EACH ROW
+EXECUTE FUNCTION public.calculate_rating();
+
+CREATE TRIGGER authors_rating_insert_update_book
+	AFTER INSERT OR UPDATE
 	ON public.authors_books
 	FOR EACH ROW
 EXECUTE FUNCTION public.calculate_rating();

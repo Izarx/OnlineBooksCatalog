@@ -59,6 +59,7 @@
 								(onFilterChange)="onFilterChange($event)"
 								(onSelect)="onItemSelect($event)"
 								(onSelectAll)="onSelectAll($event)"
+								[(ngModel)]="selectedItems"
 								[data]="dropdownList"
 								[settings]="dropdownSettings"
 						>
