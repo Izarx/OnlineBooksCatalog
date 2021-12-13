@@ -60,6 +60,7 @@
 								(onSelect)="onItemSelect($event)"
 								(onSelectAll)="onSelectAll($event)"
 								[(ngModel)]="selectedItems"
+								[ngModelOptions]="{standalone: true}"
 								[data]="dropdownList"
 								[settings]="dropdownSettings"
 						>

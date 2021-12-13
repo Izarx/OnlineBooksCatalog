@@ -7,6 +7,8 @@ import {SortableColumn} from "../../model/sortable-column";
 import {SortingService} from "../../services/sorting.service";
 import {RequestOptions} from "../../model/request-options";
 import {BookFilter} from "../../model/book-filter";
+import {Author} from "../../model/author";
+import {AuthorService} from "../../services/author.service";
 
 @Component({
     selector: 'app-books-pagination-table',
@@ -25,11 +27,14 @@ export class BooksPaginationTableComponent implements OnInit {
 
     page: ResponseData<Book>;
     book: Book = new Book(null, '', 0, '', '', 0.00, []);
+    selectedItems: Author[] = [];
+    dropdownList: Author[] = [];
     requestOptions: RequestOptions<BookFilter> = new RequestOptions();
     deniedToDeleteBooks: Book[] = [];
     isAllChecked: boolean;
 
     constructor(private bookService: BookService,
+                private authorService: AuthorService,
                 private paginationService: PaginationService<BookFilter>,
                 private sortingService: SortingService) {
         this.requestOptions.filteredEntity = new BookFilter(null, null, null, null, null, null);
@@ -67,6 +72,8 @@ export class BooksPaginationTableComponent implements OnInit {
         this.bookService.getBookByIdWithAuthors(bookId).subscribe(
             book => {
                 this.book = book;
+                this.book.authors.map(a => a.fullName = a.firstName + ' ' + a.lastName);
+                this.selectedItems = this.book.authors;
             },
             error => {
                 console.log(error);

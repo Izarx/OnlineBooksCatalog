@@ -2,7 +2,6 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Book} from "../../model/book";
 import {BookService} from "../../services/book.service";
-import {Author} from "../../model/author";
 import {IDropdownSettings} from "ng-multiselect-dropdown";
 import {RequestOptions} from "../../model/request-options";
 import {AuthorFilter} from "../../model/author-filter";
@@ -15,12 +14,12 @@ import {AuthorService} from "../../services/author.service";
 })
 export class UpdateBookComponent implements OnInit {
 
-    dropdownList: Author[] = [];
-    selectedItems: Author[] = [];
     dropdownSettings: IDropdownSettings = {};
-
     requestOptions: RequestOptions<AuthorFilter>;
+    dropdownList: any[] = [];
     form: FormGroup = new FormGroup({});
+
+    @Input() selectedItems: any[];
     @Input() book: Book;
     @Output() initParentPage: EventEmitter<any> = new EventEmitter<any>();
 
@@ -31,7 +30,6 @@ export class UpdateBookComponent implements OnInit {
     ngOnInit(): void {
         this.requestOptions = new RequestOptions<AuthorFilter>();
         this.requestOptions.filteredEntity = new AuthorFilter(null, null, null);
-        this.selectedItems = this.book.authors;
         this.getData();
         this.form = new FormGroup({
             name: new FormControl(),
@@ -56,8 +54,8 @@ export class UpdateBookComponent implements OnInit {
     getData(): void {
         this.authorService.getPage(this.requestOptions).subscribe(
             page => {
-                this.dropdownList = page.content;
-                this.dropdownList.map(a => a.fullName = a.firstName + ' ' + a.lastName);
+                    this.dropdownList = page.content;
+                    this.dropdownList.map(a => a.fullName = a.firstName + ' ' + a.lastName);
             },
             error => {
                 console.log(error);
@@ -78,12 +76,13 @@ export class UpdateBookComponent implements OnInit {
     submit(): void {
         if (this.form.valid) {
             const formData = {...this.form.value};
-            this.book.name = formData.name.trim();
+            this.book.name = this.book.name.trim();
             this.book.yearPublished = formData.yearPublished;
             this.book.isbn = formData.isbn;
-            this.book.publisher = formData.publisher.trim();
-            this.book.authors = this.selectedItems;
-            console.log(this.book);
+            this.book.publisher = this.book.publisher.trim();
+            this.book.authors = [];
+            this.selectedItems.forEach(a => this.book.authors.push(a));
+            console.log('Update method *************', this.book);
             this.updateBook(this.book);
             this.form.reset();
             document.getElementById('updateBookModalCloseButton').click();
@@ -93,8 +92,8 @@ export class UpdateBookComponent implements OnInit {
     cancel(): void {
         this.form.reset();
         this.selectedItems = [];
-        this.book.authors.forEach(a => this.selectedItems.push(a))
-        console.log('Cancel method *********', this.selectedItems)
+        this.book.authors.forEach(a => this.selectedItems.push(a));
+        this.book = new Book(null, null, null, null, null, 0.00, this.selectedItems);
         this.getData();
     }
 
@@ -108,7 +107,7 @@ export class UpdateBookComponent implements OnInit {
     }
 
     onFilterChange(filterString: any): void {
-        this.requestOptions.filteredEntity.name = filterString;
+        this.requestOptions.filteredEntity = new AuthorFilter(filterString, null, null);
         this.getData();
     }
 
