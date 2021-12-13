@@ -24,7 +24,7 @@ BEGIN
 		select coalesce(avg(book_rating), 0)
 		from books
 			     join authors_books bab on bab.book_id = books.book_id
-		where bab.author_id = a.author_id
+		where bab.author_id = a.author_id and (select count(review_id) from reviews where reviews.book_id = books.book_id) > 0
 	)
 	from (
 		     select authors.author_id
