@@ -9,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
@@ -50,7 +52,12 @@ public class Book implements AbstractEntity<Integer> {
 	@Column(name = "book_rating")
 	private BigDecimal bookRating;
 
-	@ManyToMany(mappedBy = "books")
+	@ManyToMany
+	@JoinTable(
+			name = "authors_books",
+			joinColumns = {@JoinColumn(name = "book_id")},
+			inverseJoinColumns = {@JoinColumn(name = "author_id")}
+	)
 	private Set<Author> authors;
 
 	@Override
