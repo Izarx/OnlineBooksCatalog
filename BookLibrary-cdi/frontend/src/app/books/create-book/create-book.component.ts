@@ -17,6 +17,7 @@ export class CreateBookComponent implements OnInit {
 
     dropdownList: any[] = [];
     selectedItems: any[] = [];
+    selectedAuthors: Author[] = [];
     dropdownSettings: IDropdownSettings = {};
     requestOptions: RequestOptions<AuthorFilter>;
     form: FormGroup = new FormGroup({});
@@ -83,7 +84,8 @@ export class CreateBookComponent implements OnInit {
             this.book.yearPublished = formData.yearPublished;
             this.book.isbn = formData.isbn;
             this.book.publisher = formData.publisher.trim();
-            this.book.authors = this.selectedItems;
+            this.selectedAuthors = this.selectedAuthors.filter(a => this.selectedItems.find(i => a.authorId === i.authorId) != null);
+            this.book.authors = this.selectedAuthors;
             this.createBook(this.book);
             this.onFilterChange(null);
             document.getElementById('createBookModalCloseButton').click();
@@ -93,16 +95,18 @@ export class CreateBookComponent implements OnInit {
     cancel(): void {
         this.form.reset();
         this.selectedItems = [];
+        this.selectedAuthors = [];
+        this.requestOptions.filteredEntity = new AuthorFilter(null, null, null);
         this.book = new Book(null, null, null, null, null, 0.00, this.selectedItems);
         this.getData();
     }
 
     onItemSelect(author: any): void {
-        this.selectedItems.push(author);
+        this.selectedAuthors.push(this.dropdownList.find(a => a.authorId === author.authorId));
     }
 
     onSelectAll(authors: any): void {
-        authors.forEach(a => this.selectedItems.push(a));
+        authors.forEach(a => this.selectedAuthors.push(this.dropdownList.find(i => a.authorId === i.authorId)));
     }
 
     onFilterChange(filterString: any): void {

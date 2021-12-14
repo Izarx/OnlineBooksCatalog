@@ -6,6 +6,7 @@ import {IDropdownSettings} from "ng-multiselect-dropdown";
 import {RequestOptions} from "../../model/request-options";
 import {AuthorFilter} from "../../model/author-filter";
 import {AuthorService} from "../../services/author.service";
+import {Author} from "../../model/author";
 
 @Component({
     selector: 'app-update-book',
@@ -17,6 +18,7 @@ export class UpdateBookComponent implements OnInit {
     dropdownSettings: IDropdownSettings = {};
     requestOptions: RequestOptions<AuthorFilter>;
     dropdownList: any[] = [];
+    selectedAuthors: Author[] = [];
     form: FormGroup = new FormGroup({});
 
     @Input() selectedItems: any[];
@@ -80,7 +82,9 @@ export class UpdateBookComponent implements OnInit {
             this.book.yearPublished = formData.yearPublished;
             this.book.isbn = formData.isbn;
             this.book.publisher = formData.publisher.trim();
-            this.book.authors = this.selectedItems;
+            this.book.authors.forEach(a => this.selectedAuthors.push(a));
+            this.selectedAuthors = this.selectedAuthors.filter(a => this.selectedItems.find(i => a.authorId === i.authorId) != null);
+            this.book.authors = this.selectedAuthors;
             this.updateBook(this.book);
             this.form.reset();
             document.getElementById('updateBookModalCloseButton').click();
@@ -90,16 +94,18 @@ export class UpdateBookComponent implements OnInit {
     cancel(): void {
         this.form.reset();
         this.selectedItems = this.book.authors;
+        this.selectedAuthors = this.book.authors;
+        this.requestOptions.filteredEntity = new AuthorFilter(null, null, null);
         this.book = new Book(null, null, null, null, null, 0.00, this.selectedItems);
         this.getData();
     }
 
     onItemSelect(author: any): void {
-        this.selectedItems.push(author);
+        this.selectedAuthors.push(this.dropdownList.find(a => a.authorId === author.authorId));
     }
 
     onSelectAll(authors: any): void {
-        authors.forEach(a => this.selectedItems.push(a));
+        authors.forEach(a => this.selectedAuthors.push(this.dropdownList.find(i => a.authorId === i.authorId)));
     }
 
     onFilterChange(filterString: any): void {

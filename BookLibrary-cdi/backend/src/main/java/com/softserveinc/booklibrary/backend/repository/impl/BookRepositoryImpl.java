@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -110,24 +109,4 @@ public class BookRepositoryImpl extends AbstractEntityRepository<Book, BookFilte
 		return predicates;
 	}
 
-
-
-	public List<Object> getCountsOfEntitiesByRating() {
-		String sql = "SELECT " +
-				"ratings.*, Count(*) AS summary " +
-				"FROM ( " +
-				"SELECT " +
-				"CASE " +
-				"WHEN books.book_rating >= 0 AND books.book_rating < 1.5 THEN 1 " +
-				"WHEN books.book_rating >= 1.5 AND books.book_rating < 2.5 THEN 2 " +
-				"WHEN books.book_rating >= 2.5 AND books.book_rating < 3.5 THEN 3 " +
-				"WHEN books.book_rating >= 3.5 AND books.book_rating < 4.5 THEN 4 " +
-				"ELSE 5 " +
-				"END AS bookrating " +
-				"FROM books " +
-				") AS ratings " +
-				"GROUP BY ratings.bookrating";
-		Query query = entityManager.createNativeQuery(sql);
-		return null;
-	}
 }
