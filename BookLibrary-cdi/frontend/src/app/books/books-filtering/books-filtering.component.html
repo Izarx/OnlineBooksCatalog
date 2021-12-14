@@ -20,16 +20,17 @@
 				<label>Rating from</label>
 				<input [(ngModel)]="requestOptions.filteredEntity.ratingFrom"
 				       class="form-control form-control-for-numbers"
-				       formControlName="bookRating"
+				       formControlName="bookRatingFrom"
 				       step="0.01"
 				       type="number"
 				>
 				<label>to</label>
 				<input [(ngModel)]="requestOptions.filteredEntity.ratingTo"
 				       class="form-control form-control-for-numbers"
-				       formControlName="bookRatingRange"
+				       formControlName="bookRatingTo"
 				       step="0.01"
 				       type="number"
+				       [min]="requestOptions.filteredEntity.ratingFrom"
 				>
 			</span>
 			<span class="form-group add-top-bottom-padding">

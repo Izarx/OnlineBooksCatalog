@@ -21,10 +21,9 @@ export class BooksFilteringComponent implements OnInit {
         this.bookFilteringForm = new FormGroup({
             name: new FormControl(null, []),
             authors: new FormControl(null, []),
-            bookRating: new FormControl(null, []),
-            bookRatingRange: new FormControl(null, []),
+            bookRatingFrom: new FormControl(null, []),
+            bookRatingTo: new FormControl(null, []),
             yearPublished: new FormControl(null, []),
-            yearPublishedRange: new FormControl(null, []),
             isbn: new FormControl(null, []),
         });
     }
