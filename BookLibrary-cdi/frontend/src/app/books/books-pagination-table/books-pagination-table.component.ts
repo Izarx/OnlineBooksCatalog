@@ -27,8 +27,6 @@ export class BooksPaginationTableComponent implements OnInit {
 
     page: ResponseData<Book>;
     book: Book = new Book(null, '', 0, '', '', 0.00, []);
-    selectedItems: Author[] = [];
-    dropdownList: Author[] = [];
     requestOptions: RequestOptions<BookFilter> = new RequestOptions();
     deniedToDeleteBooks: Book[] = [];
     isAllChecked: boolean;
@@ -73,7 +71,6 @@ export class BooksPaginationTableComponent implements OnInit {
             book => {
                 this.book = book;
                 this.book.authors.map(a => a.fullName = a.firstName + ' ' + a.lastName);
-                this.selectedItems = this.book.authors;
             },
             error => {
                 console.log(error);

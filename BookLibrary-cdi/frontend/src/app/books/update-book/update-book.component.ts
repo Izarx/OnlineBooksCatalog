@@ -76,13 +76,11 @@ export class UpdateBookComponent implements OnInit {
     submit(): void {
         if (this.form.valid) {
             const formData = {...this.form.value};
-            this.book.name = this.book.name.trim();
+            this.book.name = formData.name.trim();
             this.book.yearPublished = formData.yearPublished;
             this.book.isbn = formData.isbn;
-            this.book.publisher = this.book.publisher.trim();
-            this.book.authors = [];
-            this.selectedItems.forEach(a => this.book.authors.push(a));
-            console.log('Update method *************', this.book);
+            this.book.publisher = formData.publisher.trim();
+            this.book.authors = this.selectedItems;
             this.updateBook(this.book);
             this.form.reset();
             document.getElementById('updateBookModalCloseButton').click();
@@ -91,32 +89,22 @@ export class UpdateBookComponent implements OnInit {
 
     cancel(): void {
         this.form.reset();
-        this.selectedItems = [];
-        this.book.authors.forEach(a => this.selectedItems.push(a));
+        this.selectedItems = this.book.authors;
         this.book = new Book(null, null, null, null, null, 0.00, this.selectedItems);
         this.getData();
     }
 
     onItemSelect(author: any): void {
-        this.onItemDeselect(author);
-        this.selectedItems.push(this.dropdownList.find(a => a.authorId === author.authorId));
+        this.selectedItems.push(author);
     }
 
     onSelectAll(authors: any): void {
-        authors.forEach(i => this.selectedItems.push(this.dropdownList.find(a => a.authorId === i.authorId)));
+        authors.forEach(a => this.selectedItems.push(a));
     }
 
     onFilterChange(filterString: any): void {
         this.requestOptions.filteredEntity = new AuthorFilter(filterString, null, null);
         this.getData();
-    }
-
-    onItemDeselect(author: any): void {
-        this.selectedItems = this.selectedItems.filter(a => a.authorId !== author.authorId);
-    }
-
-    onDeselectAll(authors: any): void {
-        this.selectedItems = authors;
     }
 
 }

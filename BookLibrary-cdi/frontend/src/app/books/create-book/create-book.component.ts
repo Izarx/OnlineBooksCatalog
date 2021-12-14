@@ -15,14 +15,13 @@ import {IDropdownSettings} from "ng-multiselect-dropdown";
 })
 export class CreateBookComponent implements OnInit {
 
-    dropdownList = [];
-    selectedItems = [];
-    selectedAuthors: Author[] = [];
+    dropdownList: any[] = [];
+    selectedItems: any[] = [];
     dropdownSettings: IDropdownSettings = {};
-
     requestOptions: RequestOptions<AuthorFilter>;
     form: FormGroup = new FormGroup({});
     book: Book;
+
     @Output() initParentPage: EventEmitter<any> = new EventEmitter<any>();
 
     constructor(private bookService: BookService,
@@ -32,7 +31,7 @@ export class CreateBookComponent implements OnInit {
     ngOnInit(): void {
         this.requestOptions = new RequestOptions<AuthorFilter>();
         this.requestOptions.filteredEntity = new AuthorFilter(null, null, null);
-        this.book = new Book(null, null, null, null, null, 0.00, this.selectedAuthors);
+        this.book = new Book(null, null, null, null, null, 0.00, []);
         this.getData();
         this.form = new FormGroup({
             name: new FormControl(),
@@ -68,7 +67,7 @@ export class CreateBookComponent implements OnInit {
     createBook(book: Book): void {
         this.bookService.createBook(book).subscribe(
             book => {
-                console.log(book);
+                this.book = book;
                 this.initParentPage.emit(null);
             },
             error => {
@@ -84,8 +83,7 @@ export class CreateBookComponent implements OnInit {
             this.book.yearPublished = formData.yearPublished;
             this.book.isbn = formData.isbn;
             this.book.publisher = formData.publisher.trim();
-            this.book.authors = this.selectedAuthors;
-            this.dropdownList = [];
+            this.book.authors = this.selectedItems;
             this.createBook(this.book);
             this.onFilterChange(null);
             document.getElementById('createBookModalCloseButton').click();
@@ -95,34 +93,20 @@ export class CreateBookComponent implements OnInit {
     cancel(): void {
         this.form.reset();
         this.selectedItems = [];
-        this.selectedAuthors = [];
-        this.book = new Book(null, null, null, null, null, 0.00, []);
+        this.book = new Book(null, null, null, null, null, 0.00, this.selectedItems);
         this.getData();
     }
 
     onItemSelect(author: any): void {
-        this.onItemDeselect(author);
         this.selectedItems.push(author);
-        this.selectedAuthors.push(this.dropdownList.find(a => a.authorId === author.authorId));
     }
 
     onSelectAll(authors: any): void {
-        authors.forEach(i => this.selectedItems.push(i));
-        authors.forEach(i => this.selectedAuthors.push(this.dropdownList.find(a => a.authorId === i.authorId)));
+        authors.forEach(a => this.selectedItems.push(a));
     }
 
     onFilterChange(filterString: any): void {
         this.requestOptions.filteredEntity = new AuthorFilter(filterString, null, null);
         this.getData();
-    }
-
-    onItemDeselect(author: any): void {
-        this.selectedItems = this.selectedItems.filter(a => a.authorId !== author.authorId);
-        this.selectedAuthors = this.selectedAuthors.filter(a => a.authorId !== author.authorId);
-    }
-
-    onDeselectAll(authors: any): void {
-        this.selectedItems = authors;
-        this.selectedAuthors =[];
     }
 }
