@@ -94,6 +94,8 @@ export class BooksPaginationTableComponent implements OnInit {
         this.bookService.bulkDeleteBooks(this.setBooksForDelete().map(a => a.bookId)).subscribe(
             books => {
                 this.deniedToDeleteBooks = books;
+                this.requestOptions = new RequestOptions();
+                this.requestOptions.filteredEntity = new BookFilter(null, null, null, null, null, null);
                 this.getData();
             },
             error => {

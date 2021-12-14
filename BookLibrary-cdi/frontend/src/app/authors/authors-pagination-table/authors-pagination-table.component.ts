@@ -64,6 +64,8 @@ export class AuthorsPaginationTableComponent implements OnInit {
         this.authorService.bulkDeleteAuthors(this.setAuthorsForDelete().map(a => a.authorId)).subscribe(
             authors => {
                 this.deniedToDeleteAuthors = authors;
+                this.requestOptions = new RequestOptions();
+                this.requestOptions.filteredEntity = new AuthorFilter(null, null, null);
                 this.getData();
             },
             error => {
