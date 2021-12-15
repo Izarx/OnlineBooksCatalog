@@ -48,6 +48,7 @@ import {NgMultiSelectDropDownModule} from 'ng-multiselect-dropdown';
         ReactiveFormsModule,
         NgbModule,
         BrowserAnimationsModule,
+        NgbModule,
         NgMultiSelectDropDownModule.forRoot()
     ],
     providers: [],

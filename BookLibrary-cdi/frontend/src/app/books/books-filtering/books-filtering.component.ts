@@ -29,15 +29,31 @@ export class BooksFilteringComponent implements OnInit {
     }
 
     searchFilteredBooks(requestOptions: RequestOptions<BookFilter>): void {
-        this.requestOptions.pageNumber = 0;
-        this.initFilteredBook.emit(requestOptions);
+        if (this.bookFilteringForm.valid) {
+            const formData = {...this.bookFilteringForm.value};
+            this.requestOptions.pageNumber = 0;
+            this.requestOptions.filteredEntity.ratingFrom = formData.bookRatingFrom;
+            this.requestOptions.filteredEntity.ratingTo = formData.bookRatingTo;
+            this.initFilteredBook.emit(requestOptions);
+        }
     }
 
     reset(): void {
+        this.bookFilteringForm.reset();
         this.requestOptions.filteredEntity = new BookFilter(null, null, null, null, null, null);
     }
 
     getCurrentYear(): number {
         return new Date().getFullYear();
+    }
+
+    setRatingTo() {
+        const formData = {...this.bookFilteringForm.value};
+        this.requestOptions.filteredEntity.ratingTo = formData.bookRatingTo;
+    }
+
+    setRatingFrom() {
+        const formData = {...this.bookFilteringForm.value};
+        this.requestOptions.filteredEntity.ratingFrom = formData.bookRatingFrom;
     }
 }

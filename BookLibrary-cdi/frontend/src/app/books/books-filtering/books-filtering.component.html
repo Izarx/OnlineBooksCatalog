@@ -1,37 +1,12 @@
 <div class="panel-body panel-body-without-lr-padding">
-	<form (ngSubmit)="searchFilteredBooks(requestOptions)" [formGroup]="bookFilteringForm" class="form-inline row p-2">
-		<div class="col-md-9">
+	<form (ngSubmit)="searchFilteredBooks(requestOptions)" [formGroup]="bookFilteringForm" class="form-inline">
+		<div>
 			<span class="form-group add-top-bottom-padding">
 				<label>Name</label>
 				<input [(ngModel)]="requestOptions.filteredEntity.name"
 				       class="form-control"
 				       formControlName="name"
 				       type="text">
-			</span>
-			<span class="form-group add-top-bottom-padding">
-				<label>Authors</label>
-				<input [(ngModel)]="requestOptions.filteredEntity.authorName"
-				       class="form-control"
-				       formControlName="authors"
-				       type="text"
-				>
-			</span>
-			<span class="form-group add-top-bottom-padding">
-				<label>Rating from</label>
-				<input [(ngModel)]="requestOptions.filteredEntity.ratingFrom"
-				       class="form-control form-control-for-numbers"
-				       formControlName="bookRatingFrom"
-				       step="0.01"
-				       type="number"
-				>
-				<label>to</label>
-				<input [(ngModel)]="requestOptions.filteredEntity.ratingTo"
-				       class="form-control form-control-for-numbers"
-				       formControlName="bookRatingTo"
-				       step="0.01"
-				       type="number"
-				       [min]="requestOptions.filteredEntity.ratingFrom"
-				>
 			</span>
 			<span class="form-group add-top-bottom-padding">
 				<label>Year</label>
@@ -41,20 +16,67 @@
 				       formControlName="yearPublished"
 				       min="0" step="1" type="number"
 				>
+
 			</span>
-			<div class="form-group add-top-bottom-padding">
+		</div>
+		<div>
+			<span class="form-group add-top-bottom-padding">
+				<label>Authors</label>
+				<input [(ngModel)]="requestOptions.filteredEntity.authorName"
+				       class="form-control"
+				       formControlName="authors"
+				       type="text"
+				>
+			</span>
+			<span class="form-group add-top-bottom-padding">
 				<label>ISBN</label>
 				<input [(ngModel)]="requestOptions.filteredEntity.isbn"
 				       class="form-control"
 				       formControlName="isbn"
 				       type="text">
-			</div>
+			</span>
 		</div>
-		<div class="form-group add-top-bottom-padding col-md-2">
-			<div class="col-for-button">
-				<button class="btn btn-primary filter-button" type="submit">Search</button>
+		<div class="form-inline add-top-bottom-padding">
+			<label class="rating">Rating from</label>
+			<div class="form-group">
+				<div>
+					<ngb-rating (click)="setRatingFrom()"
+					            [max]="5" formControlName="bookRatingFrom">
+						<ng-template let-fill="fill">
+							<span class="star" [ngClass]="'color'"[class.filled]="fill === 100">&#9733;</span>
+						</ng-template>
+					</ngb-rating>
+				</div>
+				<div>
+					<input [(ngModel)]="requestOptions.filteredEntity.ratingFrom"
+					       class="form-control form-control-for-numbers"
+					       formControlName="bookRatingFrom"
+					       step="0.01"
+					       type="number"
+					       [max]="5">
+				</div>
 			</div>
-			<div class="col-for-button">
+			<label class="rating">to</label>
+			<div class="form-group">
+				<div>
+					<ngb-rating (click)="setRatingTo()"
+					            [max]="5" formControlName="bookRatingTo">
+						<ng-template let-fill="fill">
+							<span class="star" [ngClass]="'color'"[class.filled]="fill === 100">&#9733;</span>
+						</ng-template>
+					</ngb-rating>
+				</div>
+				<div>
+					<input [(ngModel)]="requestOptions.filteredEntity.ratingTo"
+					       class="form-control form-control-for-numbers"
+					       formControlName="bookRatingTo"
+					       step="0.01"
+					       type="number"
+					       [min]="requestOptions.filteredEntity.ratingFrom">
+				</div>
+			</div>
+			<div class="form-group pull-right">
+				<button class="btn btn-primary filter-button " type="submit">Search</button>
 				<button (click)="reset()" class="btn btn-default filter-button">Reset</button>
 			</div>
 		</div>

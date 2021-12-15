@@ -85,6 +85,16 @@ header h3 {
   padding-bottom: 5px;
 }
 
+.form-inline .rating {
+  top: 50%;
+  transform: translate(0, 50%)
+}
+
+.form-inline .rating-column {
+  top: 50%;
+  transform: translate(0, 30%)
+}
+
 .row-without-lr-margin {
   margin-right: 0px;
   margin-left: 0px;
@@ -202,6 +212,7 @@ table p {
 }
 
 .filter-button {
+  margin: 20px 10px 0px 10px;
   height: 34px;
   width: 70px;
 }
@@ -222,4 +233,13 @@ div[class="modal-body"] textarea {
 
 .modal-content .col-md-3, .modal-content .col-md-4, .modal-content .col-md-8 {
   padding: 0px 15px 0px;
+}
+
+.star {
+  font-size: 1.5rem;
+  color: #b0c4de;
+}
+
+.filled.color {
+  color: orange;
 }

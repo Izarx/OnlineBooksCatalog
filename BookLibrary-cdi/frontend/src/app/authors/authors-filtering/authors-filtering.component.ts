@@ -33,4 +33,14 @@ export class AuthorsFilteringComponent implements OnInit {
     reset(): void {
         this.requestOptions.filteredEntity = new AuthorFilter(null, null, null);
     }
+
+    setRatingFrom() {
+        const formData = {...this.authorFilteringForm.value};
+        this.requestOptions.filteredEntity.ratingFrom = formData.authorRatingFrom;
+    }
+
+    setRatingTo() {
+        const formData = {...this.authorFilteringForm.value};
+        this.requestOptions.filteredEntity.ratingTo = formData.authorRatingTo;
+    }
 }
