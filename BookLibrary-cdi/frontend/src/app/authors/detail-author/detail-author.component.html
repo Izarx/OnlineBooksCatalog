@@ -7,7 +7,7 @@
 			<span *ngIf="r < 0.5 " class="fa fa-star"></span>
 		</span>
 
-<!--		<div>books [{{author.books.length}}]</div>-->
+		<div>books [{{author.books.length}}]</div>
 	</header>
 
 	<div class="row row-without-lr-margin">
@@ -18,27 +18,29 @@
 				<div class="panel-body">
 					<div class="table-responsive">
 						<table class="table table-striped">
-							<!--							<tbody *ngFor="let review of reviews.content">-->
-							<!--							<tr>-->
-							<!--								<td>-->
-							<!--									<span class="font-bold">{{review.commenterName}}</span>-->
-							<!--									<span class="pull-right">-->
-							<!--												<span *ngFor="let r of initStarsRating(review.rating)">-->
-							<!--												<span *ngIf="r >= 0.5" class="fa fa-star checked"></span>-->
-							<!--												<span *ngIf="r < 0.5 " class="fa fa-star"></span>-->
-							<!--											</span>-->
-							<!--											</span>-->
-							<!--								</td>-->
-							<!--							</tr>-->
-							<!--							<tr >-->
-							<!--								<td class="font-small review-ellipsis"-->
-							<!--								>{{review.comment}}</td>-->
-							<!--							</tr>-->
-							<!--							</tbody>-->
+							<thead>
+							<tr>
+								<th scope="col">Book Name</th>
+								<th></th>
+								<th class="column-width-rating" scope="col">Book Rating</th>
+							</tr>
+							</thead>
+							<tbody *ngFor="let book of author.books">
+								<tr>
+									<td class="column-entity-padding">
+										<a [routerLink]="['/books', book.bookId]">{{book.name}}</a>
+									</td>
+									<td>
+										<span *ngFor="let r of initStarsRating(book.bookRating)">
+											<span *ngIf="r >= 0.5" class="fa fa-star checked"></span>
+											<span *ngIf="r < 0.5 " class="fa fa-star"></span>
+										</span>
+									</td>
+									<td class="text-center">{{book.bookRating.toFixed(2)}}</td>
+								</tr>
+							</tbody>
 						</table>
 					</div>
-				</div>
-				<div class="panel-footer">
 				</div>
 			</div>
 		</div>

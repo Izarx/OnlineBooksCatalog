@@ -47,7 +47,6 @@ export class DetailAuthorComponent implements OnInit {
                 this.authorService.getAuthorByIdWithBooks(authorId).subscribe(
                     author => {
                         this.author = author;
-                        console.log('Author with Books ***********', author)
                     },
                     error => {
                         console.log(error);

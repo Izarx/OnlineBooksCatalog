@@ -21,9 +21,9 @@ public class AuthorServiceImpl extends AbstractEntityService<Author, AuthorFilte
 	@Transactional(propagation = Propagation.SUPPORTS)
 	public Author getByIdWithBooks(Integer id) {
 		Author author = repository.getById(id);
-//		if (author != null) {
-//			author.getBooks().size();
-//		}
+		if (author != null) {
+			author.getBooks().size();
+		}
 		return author;
 	}
 }
