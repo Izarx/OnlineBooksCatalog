@@ -92,7 +92,13 @@ export class DetailBookComponent implements OnInit {
 
     getBookForUpdateWithAuthors(bookId: number) {
         this.bookService.getBookByIdWithAuthors(bookId).subscribe(
-            book => this.bookForUpdate = book
+            book => {
+                this.bookForUpdate = book;
+                this.bookForUpdate.authors.map(a => a.fullName = a.firstName + ' ' + a.lastName);
+            },
+            error => {
+                console.log(error);
+            }
         )
     }
 
