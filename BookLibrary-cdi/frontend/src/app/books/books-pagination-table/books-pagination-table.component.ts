@@ -7,6 +7,7 @@ import {SortableColumn} from "../../model/sortable-column";
 import {SortingService} from "../../services/sorting.service";
 import {RequestOptions} from "../../model/request-options";
 import {BookFilter} from "../../model/book-filter";
+import {AuthorService} from "../../services/author.service";
 
 @Component({
     selector: 'app-books-pagination-table',
@@ -30,6 +31,7 @@ export class BooksPaginationTableComponent implements OnInit {
     isAllChecked: boolean;
 
     constructor(private bookService: BookService,
+                private authorService: AuthorService,
                 private paginationService: PaginationService<BookFilter>,
                 private sortingService: SortingService) {
         this.requestOptions.filteredEntity = new BookFilter(null, null, null, null, null, null);
@@ -67,6 +69,7 @@ export class BooksPaginationTableComponent implements OnInit {
         this.bookService.getBookByIdWithAuthors(bookId).subscribe(
             book => {
                 this.book = book;
+                this.book.authors.map(a => a.fullName = a.firstName + ' ' + a.lastName);
             },
             error => {
                 console.log(error);
@@ -87,6 +90,8 @@ export class BooksPaginationTableComponent implements OnInit {
         this.bookService.bulkDeleteBooks(this.setBooksForDelete().map(a => a.bookId)).subscribe(
             books => {
                 this.deniedToDeleteBooks = books;
+                this.requestOptions = new RequestOptions();
+                this.requestOptions.filteredEntity = new BookFilter(null, null, null, null, null, null);
                 this.getData();
             },
             error => {

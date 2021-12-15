@@ -40,6 +40,10 @@ export class AuthorService {
         return this.httpClient.get<Author>(baseUrl + `/${authorId}`);
     }
 
+    public getAuthorByIdWithBooks(authorId: number): Observable<Author> {
+        return this.httpClient.get<Author>(baseUrl + `/books/${authorId}`);
+    }
+
     public getAuthors(): Observable<Array<Author>> {
         return this.httpClient.get<Array<Author>>(baseUrl);
     }

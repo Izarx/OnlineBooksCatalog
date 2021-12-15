@@ -5,6 +5,7 @@ import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.persistence.EntityManager;
@@ -136,7 +137,9 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 				.createQuery(criteriaQuery)
 				.setFirstResult(requestOptions.getPageNumber() * pageSize)
 				.setMaxResults(pageSize)
-				.getResultList();
+				.getResultStream()
+				.distinct()
+				.collect(Collectors.toList());
 		responseData.setContent(getAll);
 		LOGGER.debug("Getting Filtered Sorted Page of {}, {}, Content to response data is {}", type.getSimpleName(), getClass().getSimpleName(), responseData.getContent());
 		return responseData;

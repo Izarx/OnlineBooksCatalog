@@ -44,7 +44,7 @@ export class DetailAuthorComponent implements OnInit {
     getData(): void {
         this.route.params.subscribe((params: Params) => {
                 let authorId = params.authorId;
-                this.authorService.getAuthorById(authorId).subscribe(
+                this.authorService.getAuthorByIdWithBooks(authorId).subscribe(
                     author => {
                         this.author = author;
                     },

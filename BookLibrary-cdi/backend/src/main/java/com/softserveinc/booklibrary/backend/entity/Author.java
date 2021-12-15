@@ -21,7 +21,6 @@ import lombok.ToString.Exclude;
 
 @Getter
 @Setter
-@ToString
 @Entity
 @Table(name = "authors")
 public class Author implements AbstractEntity<Integer> {
@@ -47,13 +46,7 @@ public class Author implements AbstractEntity<Integer> {
 	@Column(name = "author_rating")
 	private BigDecimal authorRating;
 
-	@Exclude
-	@ManyToMany
-	@JoinTable(
-			name = "authors_books",
-			joinColumns = {@JoinColumn(name = "author_id")},
-			inverseJoinColumns = {@JoinColumn(name = "book_id")}
-	)
+	@ManyToMany(mappedBy = "authors")
 	private Set<Book> books;
 
 	@Override

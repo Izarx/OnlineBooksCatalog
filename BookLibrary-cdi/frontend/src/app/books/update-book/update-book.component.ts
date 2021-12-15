@@ -2,11 +2,11 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Book} from "../../model/book";
 import {BookService} from "../../services/book.service";
-import {Author} from "../../model/author";
 import {IDropdownSettings} from "ng-multiselect-dropdown";
 import {RequestOptions} from "../../model/request-options";
 import {AuthorFilter} from "../../model/author-filter";
 import {AuthorService} from "../../services/author.service";
+import {Author} from "../../model/author";
 
 @Component({
     selector: 'app-update-book',
@@ -15,12 +15,13 @@ import {AuthorService} from "../../services/author.service";
 })
 export class UpdateBookComponent implements OnInit {
 
-    dropdownList: Author[] = [];
-    selectedItems: Author[] = [];
     dropdownSettings: IDropdownSettings = {};
-
     requestOptions: RequestOptions<AuthorFilter>;
+    dropdownList: any[] = [];
+    selectedAuthors: Author[] = [];
     form: FormGroup = new FormGroup({});
+
+    @Input() selectedItems: any[];
     @Input() book: Book;
     @Output() initParentPage: EventEmitter<any> = new EventEmitter<any>();
 
@@ -31,7 +32,6 @@ export class UpdateBookComponent implements OnInit {
     ngOnInit(): void {
         this.requestOptions = new RequestOptions<AuthorFilter>();
         this.requestOptions.filteredEntity = new AuthorFilter(null, null, null);
-        this.selectedItems = this.book.authors;
         this.getData();
         this.form = new FormGroup({
             name: new FormControl(),
@@ -56,8 +56,8 @@ export class UpdateBookComponent implements OnInit {
     getData(): void {
         this.authorService.getPage(this.requestOptions).subscribe(
             page => {
-                this.dropdownList = page.content;
-                this.dropdownList.map(a => a.fullName = a.firstName + ' ' + a.lastName);
+                    this.dropdownList = page.content;
+                    this.dropdownList.map(a => a.fullName = a.firstName + ' ' + a.lastName);
             },
             error => {
                 console.log(error);
@@ -82,8 +82,9 @@ export class UpdateBookComponent implements OnInit {
             this.book.yearPublished = formData.yearPublished;
             this.book.isbn = formData.isbn;
             this.book.publisher = formData.publisher.trim();
-            this.book.authors = this.selectedItems;
-            console.log(this.book);
+            this.book.authors.forEach(a => this.selectedAuthors.push(a));
+            this.selectedAuthors = this.selectedAuthors.filter(a => this.selectedItems.find(i => a.authorId === i.authorId) != null);
+            this.book.authors = this.selectedAuthors;
             this.updateBook(this.book);
             this.form.reset();
             document.getElementById('updateBookModalCloseButton').click();
@@ -92,32 +93,24 @@ export class UpdateBookComponent implements OnInit {
 
     cancel(): void {
         this.form.reset();
-        this.selectedItems = [];
-        this.book.authors.forEach(a => this.selectedItems.push(a))
-        console.log('Cancel method *********', this.selectedItems)
+        this.selectedItems = this.book.authors;
+        this.selectedAuthors = this.book.authors;
+        this.requestOptions.filteredEntity = new AuthorFilter(null, null, null);
+        this.book = new Book(null, null, null, null, null, 0.00, this.selectedItems);
         this.getData();
     }
 
     onItemSelect(author: any): void {
-        this.onItemDeselect(author);
-        this.selectedItems.push(this.dropdownList.find(a => a.authorId === author.authorId));
+        this.selectedAuthors.push(this.dropdownList.find(a => a.authorId === author.authorId));
     }
 
     onSelectAll(authors: any): void {
-        authors.forEach(i => this.selectedItems.push(this.dropdownList.find(a => a.authorId === i.authorId)));
+        authors.forEach(a => this.selectedAuthors.push(this.dropdownList.find(i => a.authorId === i.authorId)));
     }
 
     onFilterChange(filterString: any): void {
-        this.requestOptions.filteredEntity.name = filterString;
+        this.requestOptions.filteredEntity = new AuthorFilter(filterString, null, null);
         this.getData();
-    }
-
-    onItemDeselect(author: any): void {
-        this.selectedItems = this.selectedItems.filter(a => a.authorId !== author.authorId);
-    }
-
-    onDeselectAll(authors: any): void {
-        this.selectedItems = authors;
     }
 
 }

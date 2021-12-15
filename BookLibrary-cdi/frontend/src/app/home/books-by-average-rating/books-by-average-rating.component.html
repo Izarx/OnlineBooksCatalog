@@ -1,0 +1,59 @@
+<div id="page-inner">
+	<div class="row row-without-lr-margin">
+		<div class="col-md-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+				</div>
+				<div class="col-sm-12">
+					<app-pagination
+							(nextPageEvent)="getNextPage()"
+							(pageNumberEvent)="getPageNewNumber($event)"
+							(pageSizeEvent)="getPageInNewSize($event)"
+							(previousPageEvent)="getPreviousPage()"
+							[requestOptions]="requestOptions"
+					>
+					</app-pagination>
+				</div>
+				<div class="panel-body">
+					<div class="row">
+						<div class="table-responsive">
+							<table class="table table-striped table-bordered">
+								<thead>
+								<tr>
+									<th class="text-center"
+									    scope="col">
+										<app-sortable-column-header
+												(sortEvent)="sort($event)"
+												[sortableColumn]="sortableColumns[0]">
+										</app-sortable-column-header>
+									</th>
+									<th class="text-center" scope="col">Authors</th>
+									<th class="text-center"
+									    scope="col">
+										<app-sortable-column-header
+												(sortEvent)="sort($event)"
+												[sortableColumn]="sortableColumns[1]">
+										</app-sortable-column-header>
+									</th>
+								</tr>
+								</thead>
+								<tbody *ngFor="let book of page.content">
+								<tr>
+									<td class="column-entity-padding"><a
+											[routerLink]="['/books', book.bookId]">{{book.name}}</a></td>
+									<td class="column-entity-padding ellipsis">
+										<p *ngFor="let author of book.authors">
+											{{author.firstName + ' ' + author.lastName}}
+										</p>
+									</td>
+									<td class="text-center">{{book.bookRating.toFixed(2)}}</td>
+								</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

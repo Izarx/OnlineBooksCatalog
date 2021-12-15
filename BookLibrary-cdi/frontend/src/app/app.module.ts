@@ -21,6 +21,8 @@ import {BooksFilteringComponent} from './books/books-filtering/books-filtering.c
 import {DetailAuthorComponent} from './authors/detail-author/detail-author.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {NgMultiSelectDropDownModule} from 'ng-multiselect-dropdown';
+import { BooksByAverageRatingComponent } from './home/books-by-average-rating/books-by-average-rating.component';
+import { AuthorsByAverageRatingComponent } from './home/authors-by-average-rating/authors-by-average-rating.component';
 
 @NgModule({
     declarations: [
@@ -38,7 +40,9 @@ import {NgMultiSelectDropDownModule} from 'ng-multiselect-dropdown';
         DetailBookComponent,
         AuthorsFilteringComponent,
         BooksFilteringComponent,
-        DetailAuthorComponent
+        DetailAuthorComponent,
+        BooksByAverageRatingComponent,
+        AuthorsByAverageRatingComponent
     ],
     imports: [
         BrowserModule,
@@ -48,6 +52,7 @@ import {NgMultiSelectDropDownModule} from 'ng-multiselect-dropdown';
         ReactiveFormsModule,
         NgbModule,
         BrowserAnimationsModule,
+        NgbModule,
         NgMultiSelectDropDownModule.forRoot()
     ],
     providers: [],

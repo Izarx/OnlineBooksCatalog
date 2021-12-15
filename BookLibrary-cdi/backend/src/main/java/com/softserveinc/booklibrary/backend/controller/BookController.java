@@ -1,12 +1,9 @@
 package com.softserveinc.booklibrary.backend.controller;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import com.softserveinc.booklibrary.backend.dto.ApplicationMapper;
-import com.softserveinc.booklibrary.backend.dto.AuthorDto;
 import com.softserveinc.booklibrary.backend.dto.BookDto;
 import com.softserveinc.booklibrary.backend.dto.BookNameDto;
 import com.softserveinc.booklibrary.backend.entity.Book;
@@ -136,6 +133,12 @@ public class BookController {
 						"response data AFTER converting: total number of books = {} ; size list of books = {}",
 				bookDtoResponseData.getTotalElements(), bookDtoResponseData.getContent().size());
 		return bookDtoResponseData;
+	}
+
+	@GetMapping
+	public ResponseEntity<List<BookNameDto>> getAllBooks() {
+		return ResponseEntity
+				.ok(appMapper.listBooksToListBooksNameDto(bookService.getAll()));
 	}
 
 }

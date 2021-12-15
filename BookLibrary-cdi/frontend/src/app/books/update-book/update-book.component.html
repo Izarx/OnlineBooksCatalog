@@ -5,68 +5,78 @@
      role="dialog"
      tabindex="-1"
 >
-	<div class="modal-dialog modal-sm">
+	<div class="modal-dialog">
 		<div class="modal-content">
 			<form (ngSubmit)="submit()" [formGroup]="form">
 				<div class="modal-header">
 					<h4 class="modal-title"
 					    id="updateBookLabel">Update Book</h4>
 				</div>
-				<div class="modal-body">
-					<div class="sub-title">Name</div>
-					<div>
-						<input [(ngModel)]="book.name"
-						       class="form-control"
-						       formControlName="name"
-						       type="text"
-						>
+				<div class="row-without-lr-margin">
+					<div class="col-md-8">
+						<div class="sub-title">Name</div>
+						<div>
+							<input [ngModel]="book.name"
+							       class="form-control"
+							       formControlName="name"
+							       type="text"
+							>
+						</div>
 					</div>
-					<div class="sub-title">Year Published</div>
-					<div>
-						<input [(ngModel)]="book.yearPublished"
-						       class="form-control"
-						       formControlName="yearPublished"
-						       type="number"
-						>
+					<div class="col-md-3">
+						<div class="sub-title">Year Published</div>
+						<div>
+							<input [ngModel]="book.yearPublished"
+							       class="form-control"
+							       formControlName="yearPublished"
+							       type="number"
+							>
+							<div *ngIf="form.get('yearPublished').invalid && form.get('yearPublished').touched"
+							     class="invalid-feedback">
+								<small *ngIf="form.get('yearPublished').errors.max">
+									Enter year < current!
+								</small>
+							</div>
+						</div>
 					</div>
-					<div *ngIf="form.get('yearPublished').invalid && form.get('yearPublished').touched"
-					     class="invalid-feedback">
-						<small *ngIf="form.get('yearPublished').errors.max">
-							Please, enter year less than current!
-						</small>
+				</div>
+				<div class="row-without-lr-margin">
+					<div class="col-md-4">
+						<div class="sub-title">ISBN</div>
+						<div>
+							<input [ngModel]="book.isbn"
+							       class="form-control"
+							       formControlName="isbn"
+							       type="number"
+							>
+						</div>
 					</div>
-					<div class="sub-title">ISBN</div>
-					<div>
-						<input [(ngModel)]="book.isbn"
-						       class="form-control"
-						       formControlName="isbn"
-						       type="number"
-						>
-					</div>
-					<div>
+					<div class="col-md-8">
 						<div class="sub-title">Publisher</div>
+						<div>
+							<input [ngModel]="book.publisher"
+							       class="form-control"
+							       formControlName="publisher"
+							       type="text"
+							>
+						</div>
 					</div>
-					<div>
-						<input [(ngModel)]="book.publisher"
-						       class="form-control"
-						       formControlName="publisher"
-						       type="text"
-						>
-					</div>
-					<div>
+				</div>
+				<div class="row-without-lr-margin">
+					<div class="col-md-12">
 						<div class="sub-title">Authors</div>
-					</div>
-					<div>
-						<ng-multiselect-dropdown
-								(onDeSelect)="onItemDeselect($event)"
-								(onDeSelectAll)="onDeselectAll($event)"
-								(onFilterChange)="onFilterChange($event)"
-								(onSelect)="onItemSelect($event)"
-								(onSelectAll)="onSelectAll($event)"
-								[data]="dropdownList"
-								[settings]="dropdownSettings"
-						>
-						</ng-multiselect-dropdown>
+						<div>
+							<ng-multiselect-dropdown
+									(onFilterChange)="onFilterChange($event)"
+									(onSelect)="onItemSelect($event)"
+									(onSelectAll)="onSelectAll($event)"
+									[(ngModel)]="selectedItems"
+									[ngModelOptions]="{standalone: true}"
+									[data]="dropdownList"
+									[settings]="dropdownSettings"
+							>
+							</ng-multiselect-dropdown>
+						</div>
 					</div>
 				</div>
 				<div class="modal-footer">
