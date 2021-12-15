@@ -1,55 +1,55 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {SortableColumn} from "../../model/sortable-column";
 import {ResponseData} from "../../model/response-data";
-import {Author} from "../../model/author";
+import {Book} from "../../model/book";
 import {RequestOptions} from "../../model/request-options";
-import {AuthorFilter} from "../../model/author-filter";
+import {BookFilter} from "../../model/book-filter";
 import {ActivatedRoute, Params} from "@angular/router";
 import {PaginationService} from "../../services/pagination.service";
+import {AuthorFilter} from "../../model/author-filter";
 import {SortingService} from "../../services/sorting.service";
-import {AuthorService} from "../../services/author.service";
+import {BookService} from "../../services/book.service";
 
 @Component({
-  selector: 'app-authors-by-average-rating',
-  templateUrl: './authors-by-average-rating.component.html',
-  styleUrls: ['./authors-by-average-rating.component.scss']
+  selector: 'app-books-by-rating',
+  templateUrl: './books-by-average-rating.component.html',
+  styleUrls: ['./books-by-average-rating.component.scss']
 })
-export class AuthorsByAverageRatingComponent implements OnInit {
+export class BooksByAverageRatingComponent implements OnInit {
 
-  page: ResponseData<Author>;
-  requestOptions: RequestOptions<AuthorFilter>;
   sortableColumns: Array<SortableColumn> = [
-    new SortableColumn('firstName', 'First Name', null),
-    new SortableColumn('lastName', 'Last Name', null),
-    new SortableColumn('authorRating', 'Rating', null),
+    new SortableColumn('name', 'Book Name', null),
+    new SortableColumn('bookRating', 'Rating', null)
   ];
+  page: ResponseData<Book>;
+  requestOptions: RequestOptions<BookFilter>;
 
   constructor(private route: ActivatedRoute,
-              private authorService: AuthorService,
-              private paginationService: PaginationService<AuthorFilter>,
+              private bookService: BookService,
+              private paginationService: PaginationService<BookFilter>,
               private sortingService: SortingService) { }
 
   ngOnInit(): void {
     this.page = new ResponseData();
     this.requestOptions = new RequestOptions();
-    this.requestOptions.filteredEntity = new AuthorFilter(null, null, null);
+    this.requestOptions.filteredEntity = new BookFilter(null, null, null, null, null, null);
     this.getData();
   }
 
   getData(): void {
     this.route.params.subscribe((params: Params) => {
-      let rating = params.rating;
-      let ratingFrom = rating - 0.5;
-      let ratingTo = rating - 0.5 + 0.99;
-      if (ratingFrom < 0) {
-        ratingFrom = 0;
-      }
-      if (ratingTo > 5) {
-        ratingTo = 5;
-      }
+          let rating = params.rating;
+          let ratingFrom = rating - 0.5;
+          let ratingTo = rating - 0.5 + 0.99;
+          if (ratingFrom < 0) {
+            ratingFrom = 0;
+          }
+          if (ratingTo > 5) {
+            ratingTo = 5;
+          }
           this.requestOptions.filteredEntity.ratingFrom = ratingFrom;
           this.requestOptions.filteredEntity.ratingTo = ratingTo;
-          this.authorService.getPage(this.requestOptions).subscribe(
+          this.bookService.getPage(this.requestOptions).subscribe(
               page => {
                 this.paginationService.initPageable(this.requestOptions, page.totalElements);
                 this.page = page;

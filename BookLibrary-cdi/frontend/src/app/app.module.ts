@@ -21,7 +21,7 @@ import {BooksFilteringComponent} from './books/books-filtering/books-filtering.c
 import {DetailAuthorComponent} from './authors/detail-author/detail-author.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {NgMultiSelectDropDownModule} from 'ng-multiselect-dropdown';
-import { BooksByRatingComponent } from './home/books-by-rating/books-by-rating.component';
+import { BooksByAverageRatingComponent } from './home/books-by-average-rating/books-by-average-rating.component';
 import { AuthorsByAverageRatingComponent } from './home/authors-by-average-rating/authors-by-average-rating.component';
 
 @NgModule({
@@ -41,7 +41,7 @@ import { AuthorsByAverageRatingComponent } from './home/authors-by-average-ratin
         AuthorsFilteringComponent,
         BooksFilteringComponent,
         DetailAuthorComponent,
-        BooksByRatingComponent,
+        BooksByAverageRatingComponent,
         AuthorsByAverageRatingComponent
     ],
     imports: [

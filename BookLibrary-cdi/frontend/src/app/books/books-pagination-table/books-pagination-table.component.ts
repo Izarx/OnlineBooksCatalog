@@ -7,7 +7,6 @@ import {SortableColumn} from "../../model/sortable-column";
 import {SortingService} from "../../services/sorting.service";
 import {RequestOptions} from "../../model/request-options";
 import {BookFilter} from "../../model/book-filter";
-import {Author} from "../../model/author";
 import {AuthorService} from "../../services/author.service";
 
 @Component({
