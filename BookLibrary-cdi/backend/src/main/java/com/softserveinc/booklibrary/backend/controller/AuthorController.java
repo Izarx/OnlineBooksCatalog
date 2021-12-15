@@ -6,7 +6,10 @@ import java.util.List;
 import com.softserveinc.booklibrary.backend.dto.ApplicationMapper;
 import com.softserveinc.booklibrary.backend.dto.AuthorDto;
 import com.softserveinc.booklibrary.backend.dto.AuthorNameDto;
+import com.softserveinc.booklibrary.backend.dto.AuthorWithBooksDto;
+import com.softserveinc.booklibrary.backend.dto.BookDto;
 import com.softserveinc.booklibrary.backend.entity.Author;
+import com.softserveinc.booklibrary.backend.entity.Book;
 import com.softserveinc.booklibrary.backend.pagination.RequestOptions;
 import com.softserveinc.booklibrary.backend.pagination.ResponseData;
 import com.softserveinc.booklibrary.backend.pagination.filtering.AuthorFilter;
@@ -108,6 +111,19 @@ public class AuthorController {
 	public ResponseEntity<List<AuthorDto>> getAllAuthors() {
 		return ResponseEntity
 				.ok(appMapper.listAuthorsToListAuthorsDto(authorService.getAll()));
+	}
+
+	@GetMapping("/books/{id}")
+	public ResponseEntity<AuthorWithBooksDto> getAuthorsWithBooks(@PathVariable Integer id) {
+		LOGGER.info("Getting Author, AuthorController, the path variable is ID = {}", id);
+		Author author = authorService.getByIdWithBooks(id);
+		if (author == null) {
+			LOGGER.warn("Getting Author, AuthorController, Author with ID = {} not found", id);
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		} else {
+			LOGGER.debug("Getting Author, AuthorController, Author with ID = {} is {}", id, author);
+		}
+		return ResponseEntity.ok(appMapper.authorToAuthorWithBooksDto(author));
 	}
 
 	private ResponseData<AuthorDto> convertAuthorResponseToAuthorDtoResponse(

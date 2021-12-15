@@ -19,6 +19,8 @@ public interface ApplicationMapper {
 
 	AuthorNameDto authorToAuthorNameDto(Author author);
 
+	AuthorWithBooksDto authorToAuthorWithBooksDto(Author author);
+
 	BookDto bookToBookDto(Book book);
 
 	Book bookDtoToBook(BookDto bookDto);
