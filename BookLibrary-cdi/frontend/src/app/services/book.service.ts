@@ -44,4 +44,8 @@ export class BookService {
     bulkDeleteBooks(booksIdsForDelete: number[]): Observable<Array<Book>> {
         return this.httpClient.post<Array<Book>>(baseUrl + `/bulk-delete`, booksIdsForDelete);
     }
+
+    public getBooks(): Observable<Array<Book>> {
+        return this.httpClient.get<Array<Book>>(baseUrl);
+    }
 }

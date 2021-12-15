@@ -105,9 +105,9 @@ public class AuthorController {
 	}
 
 	@GetMapping
-	public ResponseEntity<List<AuthorNameDto>> getAllAuthors() {
+	public ResponseEntity<List<AuthorDto>> getAllAuthors() {
 		return ResponseEntity
-				.ok(appMapper.listAuthorsToListAuthorsNameDto(authorService.getAll()));
+				.ok(appMapper.listAuthorsToListAuthorsDto(authorService.getAll()));
 	}
 
 	private ResponseData<AuthorDto> convertAuthorResponseToAuthorDtoResponse(

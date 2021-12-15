@@ -29,13 +29,11 @@
 						></textarea>
 					</div>
 					<div class="sub-title">Set Rating</div>
-					<div>
-						<a (click)="setRating(1)" class="fa fa-star" id="1star"></a>
-						<a (click)="setRating(2)" class="fa fa-star" id="2star"></a>
-						<a (click)="setRating(3)" class="fa fa-star" id="3star"></a>
-						<a (click)="setRating(4)" class="fa fa-star" id="4star"></a>
-						<a (click)="setRating(5)" class="fa fa-star" id="5star"></a>
-					</div>
+					<ngb-rating [max]="5" formControlName="rating">
+						<ng-template let-fill="fill">
+							<span class="star" [ngClass]="'color'"[class.filled]="fill === 100">&#9733;</span>
+						</ng-template>
+					</ngb-rating>
 				</div>
 				<div class="modal-footer">
 					<button (click)="cancel()"

@@ -23,7 +23,8 @@ export class CreateReviewComponent implements OnInit {
         this.review.rating = 0;
         this.form = new FormGroup({
             commenterName: new FormControl('', []),
-            comment: new FormControl('', [])
+            comment: new FormControl('', []),
+            rating: new FormControl('', [])
         })
     }
 
@@ -42,35 +43,12 @@ export class CreateReviewComponent implements OnInit {
         this.review.book = this.book;
         this.review.commenterName = formData.commenterName.trim();
         this.review.comment = formData.comment.trim();
+        this.review.rating = formData.rating;
         this.createReview();
         document.getElementById('createReviewModalCloseButton').click()
     }
 
     cancel(): void {
         this.form.reset();
-        this.resetRatingView();
-    }
-
-    setRating(number: number): void {
-        this.review.rating = number;
-        let i = 1;
-        let s = 'star'
-        this.resetRatingView();
-        while (i < 6) {
-            if (number > 0) {
-                document.getElementById(i + s).classList.add('checked')
-            }
-            number--;
-            i++;
-        }
-    }
-
-    resetRatingView(): void {
-        let i = 1;
-        let s = 'star'
-        while (i < 6) {
-            document.getElementById(i + s).classList.remove('checked')
-            i++;
-        }
     }
 }
