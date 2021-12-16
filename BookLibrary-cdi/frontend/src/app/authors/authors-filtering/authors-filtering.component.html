@@ -5,22 +5,14 @@
 		</div>
 		<div class="form-inline add-top-bottom-padding">
 			<span class="form-group">
-				<label class="rating">Name</label>
+				<label>Name</label>
 				<input [(ngModel)]="requestOptions.filteredEntity.name"
-				       class="form-control rating-column"
+				       class="form-control"
 				       formControlName="name"
 				       type="text">
 			</span>
-			<label class="rating">Rating from</label>
+			<label>Rating from</label>
 			<div class="form-group">
-				<div>
-					<ngb-rating (click)="setRatingFrom()"
-					            [max]="5" formControlName="authorRatingFrom">
-						<ng-template let-fill="fill">
-							<span class="star" [ngClass]="'color'"[class.filled]="fill === 100">&#9733;</span>
-						</ng-template>
-					</ngb-rating>
-				</div>
 				<div>
 					<input [(ngModel)]="requestOptions.filteredEntity.ratingFrom"
 					       class="form-control form-control-for-numbers"
@@ -30,16 +22,8 @@
 					       [max]="5">
 				</div>
 			</div>
-			<label class="rating">to</label>
+			<label>to</label>
 			<div class="form-group">
-				<div>
-					<ngb-rating (click)="setRatingTo()"
-					            [max]="5" formControlName="authorRatingTo">
-						<ng-template let-fill="fill">
-							<span class="star" [ngClass]="'color'"[class.filled]="fill === 100">&#9733;</span>
-						</ng-template>
-					</ngb-rating>
-				</div>
 				<div>
 					<input [(ngModel)]="requestOptions.filteredEntity.ratingTo"
 					       class="form-control form-control-for-numbers"

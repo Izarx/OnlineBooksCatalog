@@ -3,7 +3,7 @@
 	<nav class="navbar navbar-default top-navbar" role="navigation">
 		<div class="navbar-header">
 			<div class="navbar-brand">
-				<strong><i class="fa fa-book" style="margin-right: 10px"></i>Library</strong>
+				<strong><i class="fa fa-book title-brand"></i>Library</strong>
 			</div>
 
 		</div>
@@ -13,14 +13,14 @@
 	<nav class="navbar-default navbar-side" role="navigation">
 		<div class="sidebar-collapse">
 			<ul class="nav" id="main-menu">
-				<li [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active">
-					<a (click)="setTitle('Home')" [routerLink]="['']"><i class="fa fa-home"></i>Home</a>
+				<li>
+					<a [routerLink]="['']"><i class="fa fa-home"></i>Home</a>
 				</li>
-				<li routerLinkActive="active">
-					<a (click)="setTitle('Authors')" [routerLink]="['/authors']"><i class="fa fa-male"></i>Authors</a>
+				<li>
+					<a [routerLink]="['authors']"><i class="fa fa-male"></i>Authors</a>
 				</li>
-				<li routerLinkActive="active">
-					<a (click)="setTitle('Books')" [routerLink]="['/books']"><i class="fa fa-book"></i>Books</a>
+				<li>
+					<a [routerLink]="['books']"><i class="fa fa-book"></i>Books</a>
 				</li>
 			</ul>
 		</div>
@@ -31,7 +31,9 @@
 	<div id="page-wrapper">
 		<div class="header page-header">
 		</div>
-		<router-outlet></router-outlet>
+		<router-outlet
+				(activate)="setTitle($event)"
+		></router-outlet>
 	</div>
 	<!-- END PAGE CONTAINER-->
 </div>

@@ -212,7 +212,7 @@ table p {
 }
 
 .filter-button {
-  margin: 20px 10px 0px 10px;
+  margin: 0px 10px 0px 10px;
   height: 34px;
   width: 70px;
 }
@@ -242,4 +242,8 @@ div[class="modal-body"] textarea {
 
 .filled.color {
   color: orange;
+}
+
+.title-brand {
+  margin-right: 10px
 }

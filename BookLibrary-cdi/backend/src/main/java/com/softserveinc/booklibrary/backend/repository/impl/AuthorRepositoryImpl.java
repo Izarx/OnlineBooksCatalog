@@ -86,22 +86,4 @@ public class AuthorRepositoryImpl extends AbstractEntityRepository<Author, Autho
 		return predicates;
 	}
 
-	public List<Object> getCountsOfEntitiesByRating() {
-		String sql = "SELECT " +
-				"ratings.*, Count(*) AS summary " +
-				"FROM ( " +
-				"SELECT " +
-				"CASE " +
-				"WHEN authors.author_rating >= 0 AND authors.author_rating < 1.5 THEN 1 " +
-				"WHEN authors.author_rating >= 1.5 AND authors.author_rating < 2.5 THEN 2 " +
-				"WHEN authors.author_rating >= 2.5 AND authors.author_rating < 3.5 THEN 3 " +
-				"WHEN authors.author_rating >= 3.5 AND authors.author_rating < 4.5 THEN 4 " +
-				"ELSE 5 " +
-				"END AS authorrating " +
-				"FROM authors " +
-				") AS ratings " +
-				"GROUP BY ratings.authorrating";
-		Query query = entityManager.createNativeQuery(sql);
-		return null;
-	}
 }

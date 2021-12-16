@@ -15,6 +15,7 @@ import {AuthorFilter} from '../../model/author-filter';
 })
 export class AuthorsPaginationTableComponent implements OnInit {
 
+    readonly title: string = 'Authors';
     sortableColumns: Array<SortableColumn> = [  // todo: is this array really needed?
         new SortableColumn('firstName', 'First Name', null),
         new SortableColumn('lastName', 'Last Name', null),
