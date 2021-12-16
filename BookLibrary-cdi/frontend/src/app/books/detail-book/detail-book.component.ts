@@ -90,7 +90,7 @@ export class DetailBookComponent implements OnInit {
         })
     }
 
-    getBookForUpdateWithAuthors(bookId: number) {
+    setBookByIdWithAuthors(bookId: number): void {
         this.bookService.getBookByIdWithAuthors(bookId).subscribe(
             book => {
                 this.bookForUpdate = book;

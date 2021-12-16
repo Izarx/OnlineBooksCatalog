@@ -14,6 +14,7 @@ import com.softserveinc.booklibrary.backend.pagination.RequestOptions;
 import com.softserveinc.booklibrary.backend.pagination.filtering.ReviewFilter;
 import com.softserveinc.booklibrary.backend.repository.ReviewRepository;
 import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -24,7 +25,7 @@ public class ReviewRepositoryImpl extends AbstractEntityRepository<Review, Revie
 		String commenterName = review.getCommenterName();
 		Integer rating = review.getRating();
 		Book book = review.getBook();
-		if (commenterName == null || commenterName.length() > Review.COMMENTER_NAME_LENGTH) {
+		if (StringUtils.isEmpty(commenterName) || commenterName.length() > Review.COMMENTER_NAME_LENGTH) {
 			return false;
 		}
 		if (rating == null || rating < 1 || rating > 5) {
