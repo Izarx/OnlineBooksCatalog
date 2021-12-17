@@ -8,6 +8,7 @@ import {SortingService} from "../../services/sorting.service";
 import {RequestOptions} from "../../model/request-options";
 import {BookFilter} from "../../model/book-filter";
 import {AuthorService} from "../../services/author.service";
+import {ActivatedRoute, Params} from "@angular/router";
 
 @Component({
     selector: 'app-books-pagination-table',
@@ -31,7 +32,8 @@ export class BooksPaginationTableComponent implements OnInit {
     deniedToDeleteBooks: Book[] = [];
     isAllChecked: boolean;
 
-    constructor(private bookService: BookService,
+    constructor(private route: ActivatedRoute,
+                private bookService: BookService,
                 private authorService: AuthorService,
                 private paginationService: PaginationService<BookFilter>,
                 private sortingService: SortingService) {
@@ -45,6 +47,27 @@ export class BooksPaginationTableComponent implements OnInit {
     }
 
     getData(): void {
+        this.route.params.subscribe((params: Params) => {
+            let rating = params.rating;
+            let ratingFrom = null;
+            let ratingTo = null;
+            if (rating !== null && rating !== undefined) {
+                ratingFrom = rating - 0.5;
+                ratingTo = rating - 0.5 + 0.99;
+            }
+            if (ratingFrom < 0) {
+                ratingFrom = 0;
+            }
+            if (ratingTo > 5) {
+                ratingTo = 5;
+            }
+            this.requestOptions.filteredEntity.ratingFrom = ratingFrom;
+            this.requestOptions.filteredEntity.ratingTo = ratingTo;
+            },
+            error => {
+                console.log(error);
+            });
+
         this.bookService.getPage(this.requestOptions).subscribe(
             page => {
                 this.paginationService.initPageable(this.requestOptions, page.totalElements);

@@ -21,8 +21,6 @@ import {BooksFilteringComponent} from './books/books-filtering/books-filtering.c
 import {DetailAuthorComponent} from './authors/detail-author/detail-author.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {NgMultiSelectDropDownModule} from 'ng-multiselect-dropdown';
-import {BooksByAverageRatingComponent} from './home/books-by-average-rating/books-by-average-rating.component';
-import {AuthorsByAverageRatingComponent} from './home/authors-by-average-rating/authors-by-average-rating.component';
 import {IConfig, NgxMaskModule} from "ngx-mask";
 
 export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
@@ -43,9 +41,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
         DetailBookComponent,
         AuthorsFilteringComponent,
         BooksFilteringComponent,
-        DetailAuthorComponent,
-        BooksByAverageRatingComponent,
-        AuthorsByAverageRatingComponent
+        DetailAuthorComponent
     ],
     imports: [
         BrowserModule,

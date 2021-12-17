@@ -32,6 +32,9 @@ class AuthorServiceImplTest {
 	@Mock
 	private Author persistedAuthor;
 
+	@Mock
+	private Author upToDateAuthor;
+
 	@InjectMocks
 	private AuthorServiceImpl authorService;
 
@@ -60,6 +63,7 @@ class AuthorServiceImplTest {
 		doReturn(persistedAuthor).when(repository).create(author);
 		var result = authorService.create(author);
 		assertThat(result).isEqualTo(persistedAuthor);
+		verify(repository).create(author);
 	}
 
 	@Test
@@ -77,6 +81,67 @@ class AuthorServiceImplTest {
 		assertThatThrownBy(() -> authorService.create(author))
 				.isInstanceOf(NotValidIdException.class)
 				.hasMessage(String.format("ID object %s is not valid in this case!", ID));
+	}
+
+	@Test
+	void updateAuthorTest_WhenAuthorIdIsNotNull() {
+		doReturn(true).when(repository).isEntityValid(author);
+		doReturn(ID).when(author).getEntityId();
+		doReturn(author).when(repository).getById(ID);
+		doReturn(upToDateAuthor).when(repository).update(author);
+		var result = authorService.update(author);
+		assertThat(result).isEqualTo(upToDateAuthor);
+		verify(repository).update(author);
+	}
+
+	@Test
+	void updateAuthorTest_WhenAuthorIsNotValid_ThenThrowsNotValidEntityException() {
+		doReturn(false).when(repository).isEntityValid(author);
+		assertThatThrownBy(() -> authorService.update(author))
+				.isInstanceOf(NotValidEntityException.class)
+				.hasMessage(String.format("Entity %s is not valid!", author));
+	}
+
+	@Test
+	void updateAuthorTest_WhenAuthorIdIsNull_ThenThrowsNotValidIdException() {
+		doReturn(true).when(repository).isEntityValid(author);
+		doReturn(null).when(author).getEntityId();
+		assertThatThrownBy(() -> authorService.update(author))
+				.isInstanceOf(NotValidIdException.class)
+				.hasMessage(String.format("ID object %s is not valid in this case!", null));
+	}
+
+	@Test
+	void updateAuthorTest_WhenAuthorIsNull_ThenThrowsNotValidIdException() {
+		doReturn(true).when(repository).isEntityValid(author);
+		doReturn(ID).when(author).getEntityId();
+		doReturn(null).when(repository).getById(ID);
+		assertThatThrownBy(() -> authorService.update(author))
+				.isInstanceOf(NotValidIdException.class)
+				.hasMessage(String.format("ID object %s is not valid in this case!", ID));
+	}
+
+	@Test
+	void getByIdAuthorTest_WhenAuthorIdNotNull() {
+		doReturn(author).when(repository).getById(ID);
+		var result = authorService.getById(ID);
+		assertThat(result).isEqualTo(author);
+		verify(repository).getById(ID);
+	}
+
+	@Test
+	void getByIDAuthorTest_WhenAuthorIdNull_ThenThrowsNotValidIdException(){
+		assertThatThrownBy(() -> authorService.getById(null))
+				.isInstanceOf(NotValidIdException.class)
+				.hasMessage(String.format("ID object %s is not valid in this case!", null));
+	}
+
+	@Test
+	void deleteAuthor_WhenAuthorIdNotNull() {
+		doReturn(true).when(repository).delete(ID);
+		var result = authorService.delete(author);
+		assertThat(result).isTrue();
+		verify(repository).delete(ID);
 	}
 
 }
