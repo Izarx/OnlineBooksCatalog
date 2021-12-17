@@ -1,8 +1,8 @@
 CREATE TRIGGER authors_rating_delete_book
-	BEFORE DELETE
+	AFTER DELETE
 	ON public.authors_books
 	FOR EACH ROW
-EXECUTE FUNCTION public.calculate_rating();
+EXECUTE FUNCTION public.calculate_rating_after_delete();
 
 CREATE TRIGGER authors_rating_insert_update_book
 	AFTER INSERT OR UPDATE
