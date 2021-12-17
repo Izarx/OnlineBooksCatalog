@@ -41,7 +41,7 @@ public class BookRepositoryImpl extends AbstractEntityRepository<Book, BookFilte
 			LOGGER.warn("BookRepositoryImpl, Book \"{}\" is not valid by ISBN parameter {}", name, book.getIsbn());
 			return false;
 		}
-		if (name == null || name.length() > Book.NAME_LENGTH) {
+		if (StringUtils.isEmpty(name) || name.length() > Book.NAME_LENGTH) {
 			LOGGER.warn("BookRepositoryImpl, Book is not valid by NAME parameter");
 			return false;
 		}

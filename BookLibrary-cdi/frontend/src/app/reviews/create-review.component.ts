@@ -41,8 +41,14 @@ export class CreateReviewComponent implements OnInit {
     submit(): void {
         const formData = {...this.form.value};
         this.review.book = this.book;
-        this.review.commenterName = formData.commenterName.trim();
-        this.review.comment = formData.comment.trim();
+        let commenterName = formData.commenterName;
+        if (commenterName !== null && commenterName !== undefined) {
+            this.review.commenterName = commenterName.trim();
+        }
+        let comment = formData.comment;
+        if (comment !== null && comment !== undefined) {
+            this.review.comment = comment.trim();
+        }
         this.review.rating = formData.rating;
         this.createReview();
         document.getElementById('createReviewModalCloseButton').click()

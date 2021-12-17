@@ -1,3 +1,6 @@
+GRANT ALL PRIVILEGES ON DATABASE booklibrary TO booklibrary;
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO booklibrary;
+
 CREATE TABLE authors
 (
 	author_id   SERIAL PRIMARY KEY,

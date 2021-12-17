@@ -78,10 +78,16 @@ export class UpdateBookComponent implements OnInit {
     submit(): void {
         if (this.form.valid) {
             const formData = {...this.form.value};
-            this.book.name = formData.name.trim();
+            let bookName = formData.name;
+            if (bookName !== null && bookName !== undefined) {
+                this.book.name = bookName.trim();
+            }
             this.book.yearPublished = formData.yearPublished;
             this.book.isbn = formData.isbn;
-            this.book.publisher = formData.publisher.trim();
+            let publisher = formData.publisher;
+            if (publisher !== null && publisher !== undefined) {
+                this.book.publisher = publisher.trim();
+            }
             this.book.authors.forEach(a => this.selectedAuthors.push(a));
             this.selectedAuthors = this.selectedAuthors.filter(a => this.selectedItems.find(i => a.authorId === i.authorId) != null);
             this.book.authors = this.selectedAuthors;

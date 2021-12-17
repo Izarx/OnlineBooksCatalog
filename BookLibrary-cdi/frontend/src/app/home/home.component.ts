@@ -11,8 +11,7 @@ import {Book} from "../model/book";
 })
 export class HomeComponent implements OnInit {
 
-    static readonly title: string = 'Home';
-
+    readonly title: string = 'Home';
     authors: Author[] = [];
     books: Book[] = [];
 

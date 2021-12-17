@@ -7,6 +7,7 @@ import {SortableColumn} from "../../model/sortable-column";
 import {SortingService} from "../../services/sorting.service";
 import {RequestOptions} from "../../model/request-options";
 import {AuthorFilter} from '../../model/author-filter';
+import {ActivatedRoute, Params} from "@angular/router";
 
 @Component({
     selector: 'app-authors-pagination-table',
@@ -15,6 +16,7 @@ import {AuthorFilter} from '../../model/author-filter';
 })
 export class AuthorsPaginationTableComponent implements OnInit {
 
+    readonly title: string = 'Authors';
     sortableColumns: Array<SortableColumn> = [  // todo: is this array really needed?
         new SortableColumn('firstName', 'First Name', null),
         new SortableColumn('lastName', 'Last Name', null),
@@ -27,7 +29,8 @@ export class AuthorsPaginationTableComponent implements OnInit {
     deniedToDeleteAuthors: Author[] = [];
     isAllChecked: boolean;
 
-    constructor(private authorService: AuthorService,
+    constructor(private route: ActivatedRoute,
+                private authorService: AuthorService,
                 private paginationService: PaginationService<AuthorFilter>,
                 private sortingService: SortingService) {
         this.requestOptions.filteredEntity = new AuthorFilter(null, null, null);
@@ -39,6 +42,26 @@ export class AuthorsPaginationTableComponent implements OnInit {
     }
 
     getData(): void {
+        this.route.params.subscribe((params: Params) => {
+                let rating = params.rating;
+                let ratingFrom = null;
+                let ratingTo = null;
+                if (rating !== null && rating !== undefined) {
+                    ratingFrom = rating - 0.5;
+                    ratingTo = rating - 0.5 + 0.99;
+                }
+                if (ratingFrom < 0) {
+                    ratingFrom = 0;
+                }
+                if (ratingTo > 5) {
+                    ratingTo = 5;
+                }
+                this.requestOptions.filteredEntity.ratingFrom = ratingFrom;
+                this.requestOptions.filteredEntity.ratingTo = ratingTo;
+            },
+            error => {
+                console.log(error);
+            });
         this.authorService.getPage(this.requestOptions).subscribe(
             page => {
                 this.paginationService.initPageable(this.requestOptions, page.totalElements);

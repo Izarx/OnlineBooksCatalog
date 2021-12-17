@@ -7,12 +7,12 @@ import {Component} from '@angular/core';
 })
 export class AppComponent {
 
-    title: string = ''
+    title: string;
 
     constructor() {
     }
 
-    setTitle(title: string) {
-        this.title = title
+    setTitle(event: any) {
+        this.title = event.title;
     }
 }

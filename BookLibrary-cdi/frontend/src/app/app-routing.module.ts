@@ -5,8 +5,6 @@ import {AuthorsPaginationTableComponent} from "./authors/authors-pagination-tabl
 import {BooksPaginationTableComponent} from "./books/books-pagination-table/books-pagination-table.component";
 import {DetailBookComponent} from "./books/detail-book/detail-book.component";
 import {DetailAuthorComponent} from "./authors/detail-author/detail-author.component";
-import {BooksByAverageRatingComponent} from "./home/books-by-average-rating/books-by-average-rating.component";
-import {AuthorsByAverageRatingComponent} from "./home/authors-by-average-rating/authors-by-average-rating.component";
 
 const routes: Routes = [
     {path: '', component: HomeComponent},
@@ -14,8 +12,8 @@ const routes: Routes = [
     {path: 'books', component: BooksPaginationTableComponent},
     {path: 'books/:bookId', component: DetailBookComponent},
     {path: 'authors/:authorId', component: DetailAuthorComponent},
-    {path: 'books/rating/:rating', component: BooksByAverageRatingComponent},
-    {path: 'authors/rating/:rating', component: AuthorsByAverageRatingComponent}
+    {path: 'books/rating/:rating', component: BooksPaginationTableComponent},
+    {path: 'authors/rating/:rating', component: AuthorsPaginationTableComponent}
 ]
 
 @NgModule({

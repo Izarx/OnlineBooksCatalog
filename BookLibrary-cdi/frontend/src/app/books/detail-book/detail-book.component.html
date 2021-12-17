@@ -27,7 +27,7 @@
 			<div class="panel panel-default">
 				<div class="panel-heading panel-heading-for-tab">
 					<div id="bookInfoButton">
-						<button (click)="getBookForUpdateWithAuthors(book.bookId)"
+						<button (click)="setBookByIdWithAuthors(book.bookId)"
 						        class="btn btn-primary"
 						        data-target="#updateBook"
 						        data-toggle="modal"
@@ -49,24 +49,24 @@
 								<table class="table table-striped">
 									<tbody>
 									<tr>
-										<td class="font-bold">Year Published</td>
-										<td>{{book.yearPublished}}</td>
-									</tr>
-									<tr>
-										<td class="font-bold">ISBN</td>
-										<td>{{book.isbn}}</td>
-									</tr>
-									<tr>
-										<td class="font-bold">Publisher</td>
-										<td>{{book.publisher}}</td>
-									</tr>
-									<tr>
 										<td class="font-bold">Authors</td>
 										<td>
 											<div *ngFor="let author of book.authors">
 												<p>{{author.firstName + ' ' + author.lastName}}</p>
 											</div>
 										</td>
+									</tr>
+									<tr>
+										<td class="font-bold">Year Published</td>
+										<td>{{book.yearPublished}}</td>
+									</tr>
+									<tr>
+										<td class="font-bold">ISBN</td>
+										<td>{{book.isbn | mask: '000-000000000-0'}}</td>
+									</tr>
+									<tr>
+										<td class="font-bold">Publisher</td>
+										<td>{{book.publisher}}</td>
 									</tr>
 									</tbody>
 								</table>
@@ -115,6 +115,7 @@
 <app-update-book
 		(initParentPage)="getData()"
 		[book]="bookForUpdate"
+		[selectedItems]="bookForUpdate.authors"
 ></app-update-book>
 
 <app-create-review

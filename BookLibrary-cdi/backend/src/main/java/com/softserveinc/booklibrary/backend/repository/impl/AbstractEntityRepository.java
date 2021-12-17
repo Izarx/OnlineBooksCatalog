@@ -46,7 +46,7 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
 	public T create(T entity) {
-		LOGGER.info("Create {}, {}, Creating object ...............", type.getSimpleName(), getClass().getSimpleName());
+		LOGGER.info("Create {}, {}, Creating object ", type.getSimpleName(), getClass().getSimpleName());
 		LOGGER.debug("Create {}, {}, BEFORE persist object = {}", type.getSimpleName(), getClass().getSimpleName(), entity);
 		if (!isEntityValid(entity)) {
 			throw new NotValidEntityException(entity);
@@ -64,7 +64,7 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
 	public T update(T entity) {
-		LOGGER.info("Update {}, {}, Updating object ...............", type.getSimpleName(), getClass().getSimpleName());
+		LOGGER.info("Update {}, {}, Updating object", type.getSimpleName(), getClass().getSimpleName());
 		LOGGER.debug("Update {}, {}, BEFORE merge object = {}", type.getSimpleName(), getClass().getSimpleName(), entity);
 		if (!isEntityValid(entity)) {
 			throw new NotValidEntityException(entity);
@@ -168,7 +168,6 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 				getUnavailableToDeleteEntities(entitiesIdsForDelete, criteriaQuery);
 		if (CollectionUtils.isNotEmpty(unavailableToDeleteEntities)) {
 			LOGGER.warn("Bulk Delete of {}, {}, Can't delete {} object(s)", type.getSimpleName(), getClass().getSimpleName(), unavailableToDeleteEntities.size());
-			LOGGER.debug("Bulk Delete of {}, {}, Can't delete {}", type.getSimpleName(), getClass().getSimpleName(), unavailableToDeleteEntities);
 			unavailableToDeleteEntities
 					.forEach(entity -> entitiesIdsForDelete.remove(entity.getEntityId()));
 		}

@@ -39,8 +39,14 @@ export class UpdateAuthorComponent implements OnInit {
     submit(): void {
         if (this.form.valid) {
             const formData = {...this.form.value};
-            this.author.firstName = formData.firstName;
-            this.author.lastName = formData.lastName;
+            let firstName = formData.firstName;
+            if (firstName !== null && firstName !== undefined) {
+                this.author.firstName = firstName.trim();
+            }
+            let lastName = formData.lastName;
+            if (lastName !== null && lastName !== undefined) {
+                this.author.lastName = lastName.trim();
+            }
             this.updateAuthor();
             this.form.reset();
             document.getElementById('updateAuthorModalCloseButton').click();
