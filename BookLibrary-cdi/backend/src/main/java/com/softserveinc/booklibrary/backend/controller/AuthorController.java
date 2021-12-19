@@ -7,9 +7,7 @@ import com.softserveinc.booklibrary.backend.dto.ApplicationMapper;
 import com.softserveinc.booklibrary.backend.dto.AuthorDto;
 import com.softserveinc.booklibrary.backend.dto.AuthorNameDto;
 import com.softserveinc.booklibrary.backend.dto.AuthorWithBooksDto;
-import com.softserveinc.booklibrary.backend.dto.BookDto;
 import com.softserveinc.booklibrary.backend.entity.Author;
-import com.softserveinc.booklibrary.backend.entity.Book;
 import com.softserveinc.booklibrary.backend.pagination.RequestOptions;
 import com.softserveinc.booklibrary.backend.pagination.ResponseData;
 import com.softserveinc.booklibrary.backend.pagination.filtering.AuthorFilter;
@@ -131,12 +129,11 @@ public class AuthorController {
 		ResponseData<AuthorDto> authorDtoResponseData = new ResponseData<>();
 		if (responseData != null) {
 			LOGGER.debug("Converting Response Data with Authors to Response Data with Authors DTOs, AuthorController, " +
-					"response data BEFORE converting: total number of authors = {} ; list with authors = {}",
+							"response data BEFORE converting: total number of authors = {} ; list with authors = {}",
 					responseData.getTotalElements(), responseData.getContent());
 			authorDtoResponseData.setTotalElements(responseData.getTotalElements());
 			authorDtoResponseData.setContent(appMapper.listAuthorsToListAuthorsDto(responseData.getContent()));
-		}
-		else {
+		} else {
 			LOGGER.warn("Converting Response Data with Authors to Response Data with Authors DTOs, AuthorController, " +
 					"response data is empty!");
 		}

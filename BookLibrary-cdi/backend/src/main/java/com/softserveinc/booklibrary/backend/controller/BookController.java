@@ -124,8 +124,7 @@ public class BookController {
 			bookDtoResponseData.setTotalElements(responseData.getTotalElements());
 			List<Book> content = responseData.getContent();
 			bookDtoResponseData.setContent(appMapper.listBooksToListBooksDto(content));
-		}
-		else {
+		} else {
 			LOGGER.warn("Converting Response Data with Books to Response Data with Books DTOs, BookController, " +
 					"response data is empty!");
 		}

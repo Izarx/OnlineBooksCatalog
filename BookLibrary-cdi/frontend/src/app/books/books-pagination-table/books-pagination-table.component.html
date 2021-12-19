@@ -110,7 +110,7 @@
 											[routerLink]="['/books', book.bookId]">{{book.name}}</a></td>
 									<td class="column-entity-padding ellipsis">
 										<p *ngFor="let author of book.authors">
-											{{author.firstName + ' ' + author.lastName}}
+											<a [routerLink]="['/authors', author.authorId]">{{author.firstName + ' ' + author.lastName}}</a>
 										</p>
 									</td>
 									<td class="text-center">{{book.bookRating.toFixed(2)}}</td>
