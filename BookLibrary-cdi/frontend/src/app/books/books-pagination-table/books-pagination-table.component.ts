@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ResponseData} from "../../model/response-data";
 import {PaginationService} from "../../services/pagination.service";
 import {Book} from "../../model/book";

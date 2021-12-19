@@ -5,7 +5,6 @@ import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.persistence.EntityManager;
@@ -123,6 +122,11 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 	@Transactional(propagation = Propagation.SUPPORTS)
 	public ResponseData<T> listEntities(RequestOptions<V> requestOptions) {
 		LOGGER.info("Getting Filtered Sorted Page of {}, {}", type.getSimpleName(), getClass().getSimpleName());
+		String columnName = Stream.of(type.getDeclaredFields())
+				.filter(f -> f.isAnnotationPresent(Id.class))
+				.findFirst()
+				.orElseThrow()
+				.getName();
 		ResponseData<T> responseData = new ResponseData<>();
 		int pageSize = requestOptions.getPageSize();
 		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
@@ -133,13 +137,12 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 		responseData.setTotalElements(getCountOfEntities(requestOptions, builder));
 		LOGGER.info("Getting Filtered Sorted Page of {}, {}, {} objects were found in DB according to request options", type.getSimpleName(), getClass().getSimpleName(), responseData.getTotalElements());
 		criteriaQuery.orderBy(setOrdersByColumns(requestOptions.getSorting(), builder, rootEntity));
+		criteriaQuery.groupBy(rootEntity.get(columnName));
 		List<T> getAll = entityManager
 				.createQuery(criteriaQuery)
 				.setFirstResult(requestOptions.getPageNumber() * pageSize)
 				.setMaxResults(pageSize)
-				.getResultStream()
-				.distinct()
-				.collect(Collectors.toList());
+				.getResultList();
 		responseData.setContent(getAll);
 		LOGGER.debug("Getting Filtered Sorted Page of {}, {}, Content to response data is {}", type.getSimpleName(), getClass().getSimpleName(), responseData.getContent());
 		return responseData;

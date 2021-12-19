@@ -43,15 +43,10 @@ BEGIN
 			     join authors_books bab on bab.book_id = books.book_id
 		where bab.author_id = au.author_id and bab.book_id != old.book_id
 	)
-	from (
-		     select authors.author_id
-		     from authors
-			          join authors_books aab on authors.author_id = old.author_id
-		     where aab.book_id = old.book_id
-	     ) as authors_to_update
-	where au.author_id = authors_to_update.author_id;
+	from authors
+	where au.author_id = old.author_id;
 
-	RETURN new;
+	RETURN old;
 END;
 $calculate_rating_after_delete$
 	LANGUAGE 'plpgsql';

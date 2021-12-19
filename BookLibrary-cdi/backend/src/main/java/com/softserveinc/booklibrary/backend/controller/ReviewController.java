@@ -56,8 +56,7 @@ public class ReviewController {
 					responseData.getTotalElements(), responseData.getContent());
 			reviewDtoResponseData.setTotalElements(responseData.getTotalElements());
 			reviewDtoResponseData.setContent(appMapper.listReviewsToListReviewsDtoWithoutBook(responseData.getContent()));
-		}
-		else {
+		} else {
 			LOGGER.warn("Converting Response Data with Reviews to Response Data with Reviews DTOs, ReviewController, " +
 					"response data is empty!");
 		}

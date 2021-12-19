@@ -1,11 +1,16 @@
 package com.softserveinc.booklibrary.backend.service.impl;
 
+import java.io.Serializable;
 import java.util.HashSet;
+import java.util.List;
 
 import com.softserveinc.booklibrary.backend.entity.Author;
 import com.softserveinc.booklibrary.backend.entity.Book;
 import com.softserveinc.booklibrary.backend.exception.NotValidEntityException;
 import com.softserveinc.booklibrary.backend.exception.NotValidIdException;
+import com.softserveinc.booklibrary.backend.pagination.RequestOptions;
+import com.softserveinc.booklibrary.backend.pagination.ResponseData;
+import com.softserveinc.booklibrary.backend.pagination.filtering.AuthorFilter;
 import com.softserveinc.booklibrary.backend.repository.AuthorRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -35,11 +40,17 @@ class AuthorServiceImplTest {
 	@Mock
 	private Author upToDateAuthor;
 
+	@Mock
+	private ResponseData<Author> authorResponseData;
+
+	@Mock
+	private RequestOptions<AuthorFilter> authorFilterRequestOptions;
+
 	@InjectMocks
 	private AuthorServiceImpl authorService;
 
 	@Test
-	void getByIdWithBooksTest_WhenAuthorNotNull() {
+	void getByIdWithBooksTest_WhenAuthorIsNotNull() {
 		doReturn(author).when(repository).getById(ID);
 		doReturn(new HashSet<Book>()).when(author).getBooks();
 		var result = authorService.getByIdWithBooks(ID);
@@ -122,7 +133,7 @@ class AuthorServiceImplTest {
 	}
 
 	@Test
-	void getByIdAuthorTest_WhenAuthorIdNotNull() {
+	void getByIdAuthorTest_WhenAuthorIdIsNotNull() {
 		doReturn(author).when(repository).getById(ID);
 		var result = authorService.getById(ID);
 		assertThat(result).isEqualTo(author);
@@ -130,18 +141,52 @@ class AuthorServiceImplTest {
 	}
 
 	@Test
-	void getByIDAuthorTest_WhenAuthorIdNull_ThenThrowsNotValidIdException(){
+	void getByIDAuthorTest_WhenAuthorIdIsNull_ThenThrowsNotValidIdException(){
 		assertThatThrownBy(() -> authorService.getById(null))
 				.isInstanceOf(NotValidIdException.class)
 				.hasMessage(String.format("ID object %s is not valid in this case!", null));
 	}
 
 	@Test
-	void deleteAuthor_WhenAuthorIdNotNull() {
+	void deleteAuthor_WhenAuthorIdIsNotNull() {
 		doReturn(true).when(repository).delete(ID);
-		var result = authorService.delete(author);
+		var result = authorService.delete(ID);
 		assertThat(result).isTrue();
 		verify(repository).delete(ID);
 	}
+
+	@Test
+	void deleteAuthor_WhenAuthorIdIsNull_ThenThrowsNotValidIdException() {
+		var result = authorService.delete(null);
+		assertThat(result).isFalse();
+	}
+
+	@Test
+	void getAllAuthors() {
+		List<Author> authorList = List.of(author);
+		doReturn(authorList).when(repository).getAll();
+		var result = authorService.getAll();
+		assertThat(result).hasSize(1).containsExactly(author);
+		verify(repository).getAll();
+	}
+
+	@Test
+	void listEntitiesAuthors() {
+		doReturn(authorResponseData).when(repository).listEntities(authorFilterRequestOptions);
+		var result = authorService.listEntities(authorFilterRequestOptions);
+		assertThat(result).isEqualTo(authorResponseData);
+		verify(repository).listEntities(authorFilterRequestOptions);
+	}
+
+	@Test
+	void bulkDeleteAuthors() {
+		List<Serializable> listIds = List.of(ID);
+		List<Author> unavailableToDeleteEntities = List.of(author);
+		doReturn(unavailableToDeleteEntities).when(repository).bulkDeleteEntities(listIds);
+		var result = authorService.bulkDeleteEntities(listIds);
+		assertThat(result).hasSize(1).containsExactly(author);
+		verify(repository).bulkDeleteEntities(listIds);
+	}
+
 
 }
