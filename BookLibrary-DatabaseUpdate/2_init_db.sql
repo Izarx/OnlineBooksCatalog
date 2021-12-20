@@ -88,7 +88,7 @@ $calculate_rating_after_delete$
 BEGIN
 	update authors au
 	set author_rating = (
-		select avg(book_rating)
+		select coalesce(avg(book_rating), 0)
 		from books
 			     join authors_books bab on bab.book_id = books.book_id
 		where bab.author_id = au.author_id and bab.book_id != old.book_id

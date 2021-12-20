@@ -98,7 +98,7 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 			return false;
 		}
 		T entity = entityManager.find(type, id);
-		if (entity != null) {
+		if (entity != null && isEntityValidForDelete(entity)) {
 			entityManager.remove(entity);
 			LOGGER.info("Deleting {}, {}, Entity object with ID = {} was deleted", type.getSimpleName(), getClass().getSimpleName(), id);
 			return true;
@@ -106,9 +106,6 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 		LOGGER.info("Deleting {}, {}, Entity object with ID = {} wasn't found", type.getSimpleName(), getClass().getSimpleName(), id);
 		return true;
 	}
-
-	@Override
-	public abstract boolean isEntityValid(T entity); // todo: remove this method from here
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS)
@@ -190,6 +187,20 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 	}
 
 	/**
+	 * Create list of predicates to obtain objects according to filtering options
+	 *
+	 * @param options    request options which consists entity with filtering fields
+	 * @param builder    criteria builder
+	 * @param rootEntity root
+	 * @return list of predicates according to request options
+	 */
+	protected List<Predicate> getFilteringParams(RequestOptions<V> options,
+	                                             CriteriaBuilder builder,
+	                                             Root<T> rootEntity) {
+		return Collections.emptyList();
+	}
+
+	/**
 	 * Create List of Orders from sortable columns to order db entities by it
 	 *
 	 * @param sortableColumns columns, which we receive from UI, they consist from name field and direction for sorting
@@ -217,21 +228,7 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 		return orderList;
 	}
 
-	/**
-	 * Create list of predicates to obtain objects according to filtering options
-	 *
-	 * @param options    request options which consists entity with filtering fields
-	 * @param builder    criteria builder
-	 * @param rootEntity root
-	 * @return list of predicates according to request options
-	 */
-	protected List<Predicate> getFilteringParams(RequestOptions<V> options,
-	                                             CriteriaBuilder builder,
-	                                             Root<T> rootEntity) {
-		return Collections.emptyList();
-	}
-
-	public Integer getCountOfEntities(RequestOptions<V> options,
+	private Integer getCountOfEntities(RequestOptions<V> options,
 	                                  CriteriaBuilder builder) {
 		CriteriaQuery<Long> countCriteriaQuery = builder.createQuery(Long.class);   // todo: not use Long here
 		Root<T> rootEntity = countCriteriaQuery.from(type);
@@ -239,6 +236,5 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 		countCriteriaQuery.where(getFilteringParams(options, builder, rootEntity).toArray(new Predicate[]{}));
 		return entityManager.createQuery(countCriteriaQuery).getSingleResult().intValue();
 	}
-
 
 }

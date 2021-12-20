@@ -52,6 +52,11 @@ public class BookRepositoryImpl extends AbstractEntityRepository<Book, BookFilte
 	}
 
 	@Override
+	public boolean isEntityValidForDelete(Book book) {
+		return true;
+	}
+
+	@Override
 	protected void setOrdersByColumnsByDefault(List<Order> orderList,
 	                                           CriteriaBuilder builder,
 	                                           Root<Book> rootEntity) {

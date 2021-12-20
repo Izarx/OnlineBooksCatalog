@@ -36,6 +36,11 @@ public class AuthorRepositoryImpl extends AbstractEntityRepository<Author, Autho
 	}
 
 	@Override
+	public boolean isEntityValidForDelete(Author author) {
+		return author.getBooks().isEmpty();
+	}
+
+	@Override
 	protected List<Author> getUnavailableToDeleteEntities(List<Serializable> entitiesIdsForDelete,
 	                                                      CriteriaQuery<Author> criteriaQuery) {
 		Root<Author> root = criteriaQuery.from(Author.class);
