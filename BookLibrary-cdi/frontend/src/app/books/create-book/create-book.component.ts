@@ -46,6 +46,7 @@ export class CreateBookComponent implements OnInit {
         });
         this.dropdownSettings = {
             singleSelection: false,
+            enableCheckAll: false,
             idField: 'authorId',
             textField: 'fullName',
             itemsShowLimit: 5,
