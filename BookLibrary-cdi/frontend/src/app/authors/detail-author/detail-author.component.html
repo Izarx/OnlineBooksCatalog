@@ -2,10 +2,13 @@
 	<header class="header-padding">
 		<h3>{{author.firstName + ' ' + author.lastName}}</h3>
 		<div>[{{author.authorRating}}]</div>
-		<span *ngFor="let r of initStarsRating(author.authorRating)">
-			<span *ngIf="r >= 0.5" class="fa fa-star checked"></span>
-			<span *ngIf="r < 0.5 " class="fa fa-star"></span>
-		</span>
+		<star-rating [value]="author.authorRating"
+		             [totalstars]="5"
+		             checkedcolor="orange"
+		             uncheckedcolor="black"
+		             size="20px"
+		             [readonly]="false">
+		</star-rating>
 
 		<div>books [{{author.books.length}}]</div>
 	</header>
@@ -31,10 +34,13 @@
 										<a [routerLink]="['/books', book.bookId]">{{book.name}}</a>
 									</td>
 									<td>
-										<span *ngFor="let r of initStarsRating(book.bookRating)">
-											<span *ngIf="r >= 0.5" class="fa fa-star checked"></span>
-											<span *ngIf="r < 0.5 " class="fa fa-star"></span>
-										</span>
+										<star-rating [value]="book.bookRating"
+										             [totalstars]="5"
+										             checkedcolor="orange"
+										             uncheckedcolor="black"
+										             size="16px"
+										             [readonly]="true">
+										</star-rating>
 									</td>
 									<td class="text-center">{{book.bookRating.toFixed(2)}}</td>
 								</tr>

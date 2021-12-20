@@ -2,10 +2,14 @@
 	<header class="header-padding">
 		<h3>{{book.name}}</h3>
 		<div>[{{book.bookRating}}]</div>
-		<span *ngFor="let r of initStarsRating(book.bookRating)">
-			<span *ngIf="r >= 0.5" class="fa fa-star checked"></span>
-			<span *ngIf="r < 0.5 " class="fa fa-star"></span>
-		</span>
+
+		<star-rating [value]="book.bookRating"
+		             [totalstars]="5"
+		             checkedcolor="orange"
+		             uncheckedcolor="black"
+		             size="20px"
+		             [readonly]="false">
+		</star-rating>
 
 		<div>votes [{{reviews.totalElements}}]</div>
 	</header>
@@ -81,10 +85,13 @@
 										<td>
 											<span class="font-bold">{{review.commenterName}}</span>
 											<span class="pull-right">
-												<span *ngFor="let r of initStarsRating(review.rating)">
-												<span *ngIf="r >= 0.5" class="fa fa-star checked"></span>
-												<span *ngIf="r < 0.5 " class="fa fa-star"></span>
-											</span>
+												<star-rating [value]="review.rating"
+												             [totalstars]="5"
+												             checkedcolor="orange"
+												             uncheckedcolor="black"
+												             size="16px"
+												             [readonly]="true">
+												</star-rating>
 											</span>
 										</td>
 									</tr>
