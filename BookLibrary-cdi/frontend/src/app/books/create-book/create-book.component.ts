@@ -41,14 +41,13 @@ export class CreateBookComponent implements OnInit {
                 Validators.max(new Date().getFullYear())),
             isbn: new FormControl('',
                 Validators.pattern("^(?=(?:\\D*\\d){10}(?:(?:\\D*\\d){3})?$)[\\d-]+$")),
-            publisher: new FormControl('', [])
+            publisher: new FormControl('', []),
+            authors: new FormControl('', Validators.required)
         });
         this.dropdownSettings = {
             singleSelection: false,
             idField: 'authorId',
             textField: 'fullName',
-            selectAllText: 'Select All',
-            unSelectAllText: 'UnSelect All',
             itemsShowLimit: 5,
             allowSearchFilter: true,
             clearSearchFilter: true
@@ -110,10 +109,6 @@ export class CreateBookComponent implements OnInit {
 
     onItemSelect(author: any): void {
         this.selectedAuthors.push(this.dropdownList.find(a => a.authorId === author.authorId));
-    }
-
-    onSelectAll(authors: any): void {
-        authors.forEach(a => this.selectedAuthors.push(this.dropdownList.find(i => a.authorId === i.authorId)));
     }
 
     onFilterChange(filterString: any): void {

@@ -34,6 +34,11 @@ export class BooksFilteringComponent implements OnInit {
             this.requestOptions.pageNumber = 0;
             this.requestOptions.filteredEntity.ratingFrom = formData.bookRatingFrom;
             this.requestOptions.filteredEntity.ratingTo = formData.bookRatingTo;
+            let isbn: string = this.requestOptions.filteredEntity.isbn;
+            if (isbn !== null && isbn !== undefined) {
+                let re = /-/gi;
+                this.requestOptions.filteredEntity.isbn = isbn.replace(re, '').trim();
+            }
             this.initFilteredBook.emit(requestOptions);
         }
     }
