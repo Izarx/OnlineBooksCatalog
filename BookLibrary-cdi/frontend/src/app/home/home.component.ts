@@ -38,8 +38,8 @@ export class HomeComponent implements OnInit {
 
     getCountAuthorsByAverageRating(rating: number): number {
         let ratingFrom = rating - 0.5;
-        let ratingTo = rating - 0.5 + 0.99;
-        if (ratingFrom < 0) {
+        let ratingTo = rating - 0.5 + 1;
+        if (ratingFrom < 1) {
             ratingFrom = 0;
         }
         if (ratingTo > 5) {
@@ -51,8 +51,8 @@ export class HomeComponent implements OnInit {
 
     getCountBooksByAverageRating(rating: number): number {
         let ratingFrom = rating - 0.5;
-        let ratingTo = rating - 0.5 + 0.99;
-        if (ratingFrom < 0) {
+        let ratingTo = rating - 0.5 + 1;
+        if (ratingFrom < 1) {
             ratingFrom = 0;
         }
         if (ratingTo > 5) {
