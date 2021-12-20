@@ -46,18 +46,18 @@ export class AuthorsPaginationTableComponent implements OnInit {
                 let rating = params.rating;
                 let ratingFrom = null;
                 let ratingTo = null;
-                if (rating !== null && rating !== undefined) {
+                if (rating !== null && rating !== undefined && this.requestOptions.filteredEntity.ratingFrom === null && this.requestOptions.filteredEntity.ratingTo === null) {
                     ratingFrom = rating - 0.5;
                     ratingTo = rating - 0.5 + 0.99;
+                    if (ratingFrom < 0) {
+                        ratingFrom = 0;
+                    }
+                    if (ratingTo > 5) {
+                        ratingTo = 5;
+                    }
+                    this.requestOptions.filteredEntity.ratingFrom = ratingFrom;
+                    this.requestOptions.filteredEntity.ratingTo = ratingTo;
                 }
-                if (ratingFrom < 0) {
-                    ratingFrom = 0;
-                }
-                if (ratingTo > 5) {
-                    ratingTo = 5;
-                }
-                this.requestOptions.filteredEntity.ratingFrom = ratingFrom;
-                this.requestOptions.filteredEntity.ratingTo = ratingTo;
             },
             error => {
                 console.log(error);
