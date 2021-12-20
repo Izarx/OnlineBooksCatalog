@@ -20,6 +20,8 @@ public interface EntityRepository<T extends AbstractEntity<? extends Serializabl
 
 	boolean isEntityValid(T entity);
 
+	boolean isEntityValidForDelete(T entity);
+
 	List<T> getAll();
 
 	ResponseData<T> listEntities(RequestOptions<V> requestOptions);

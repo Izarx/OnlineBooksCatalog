@@ -35,6 +35,11 @@ public class ReviewRepositoryImpl extends AbstractEntityRepository<Review, Revie
 	}
 
 	@Override
+	public boolean isEntityValidForDelete(Review review) {
+		return false;
+	}
+
+	@Override
 	protected void setOrdersByColumnsByDefault(List<Order> orderList, CriteriaBuilder builder, Root<Review> rootEntity) {
 		orderList.add(builder.desc(rootEntity.get("createDate")));
 	}

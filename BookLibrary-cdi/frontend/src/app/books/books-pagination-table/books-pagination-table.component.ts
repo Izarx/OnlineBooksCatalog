@@ -53,8 +53,8 @@ export class BooksPaginationTableComponent implements OnInit {
             let ratingTo = null;
             if (rating !== null && rating !== undefined && this.requestOptions.filteredEntity.ratingFrom === null && this.requestOptions.filteredEntity.ratingTo === null) {
                 ratingFrom = rating - 0.5;
-                ratingTo = rating - 0.5 + 0.99;
-                if (ratingFrom < 0) {
+                ratingTo = rating - 0.5 + 1;
+                if (ratingFrom < 1) {
                     ratingFrom = 0;
                 }
                 if (ratingTo > 5) {
