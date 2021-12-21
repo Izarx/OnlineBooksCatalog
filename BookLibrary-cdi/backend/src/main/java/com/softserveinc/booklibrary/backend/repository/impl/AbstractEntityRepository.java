@@ -103,8 +103,8 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 			LOGGER.info("Deleting {}, {}, Entity object with ID = {} was deleted", type.getSimpleName(), getClass().getSimpleName(), id);
 			return true;
 		}
-		LOGGER.info("Deleting {}, {}, Entity object with ID = {} wasn't found", type.getSimpleName(), getClass().getSimpleName(), id);
-		return true;
+		LOGGER.info("Deleting {}, {}, Entity object with ID = {} wasn't deleted", type.getSimpleName(), getClass().getSimpleName(), id);
+		return false;
 	}
 
 	@Override

@@ -141,7 +141,8 @@
 				<button (click)="deleteAuthor(author.authorId)"
 				        class="btn btn-danger"
 				        data-dismiss="modal"
-				        type="submit"
+				        data-target="#deleteAuthorResult"
+				        data-toggle="modal"
 				>Delete
 				</button>
 			</div>
@@ -160,7 +161,7 @@
 				<p>Are you sure that you want to delete next authors?</p>
 				<div *ngFor="let delAuthor of page.content">
 					<ul *ngIf="delAuthor.isChecked"
-					    class="ellipsis">{{delAuthor.firstName + ' ' + delAuthor.lastName}}</ul>
+					    class="ellipsis-lg">{{delAuthor.firstName + ' ' + delAuthor.lastName}}</ul>
 				</div>
 			</div>
 			<div class="modal-footer text-center">
@@ -192,11 +193,39 @@
 				<div [ngClass]="{'hidden': deniedToDeleteAuthors.length === 0}">
 					<p>Unable to delete next authors, try to delete their books first: </p>
 					<div *ngFor="let author of deniedToDeleteAuthors">
-						<ul class="ellipsis">{{author.firstName + ' ' + author.lastName}}</ul>
+						<ul class="ellipsis-lg">{{author.firstName + ' ' + author.lastName}}</ul>
 					</div>
 				</div>
 				<div [ngClass]="{'hidden': deniedToDeleteAuthors.length > 0}">
 					<p>All authors were deleted successfully!</p>
+				</div>
+			</div>
+			<div class="modal-footer text-center">
+				<button (click)="getData()"
+				        class="btn btn-default"
+				        data-dismiss="modal"
+				        type="button">Ok
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div aria-hidden="true"
+     class="modal fade"
+     id="deleteAuthorResult"
+     role="dialog"
+     tabindex="-1">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-body">
+				<div [ngClass]="{'hidden': isDeleted}">
+					<p class="ellipsis-lg">Unable to delete author {{author.firstName + ' ' + author.lastName}}</p>
+					<p>Try to delete his books first!</p>
+				</div>
+				<div [ngClass]="{'hidden': !isDeleted}">
+					<p class="ellipsis-lg">Author {{author.firstName + ' ' + author.lastName}}</p>
+					<p>was deleted successfully!</p>
 				</div>
 			</div>
 			<div class="modal-footer text-center">

@@ -162,7 +162,8 @@
 				<button (click)="deleteBook(book.bookId)"
 				        class="btn btn-danger"
 				        data-dismiss="modal"
-				        type="submit"
+				        data-target="#deleteBookResult"
+				        data-toggle="modal"
 				>Delete
 				</button>
 			</div>
@@ -212,7 +213,7 @@
 				<div [ngClass]="{'hidden': deniedToDeleteBooks.length === 0}">
 					<p>Unable to delete next books: </p>
 					<div *ngFor="let book of deniedToDeleteBooks">
-						<ul class="ellipsis">"{{book.name}}"</ul>
+						<ul class="ellipsis-lg">"{{book.name}}"</ul>
 					</div>
 				</div>
 				<div [ngClass]="{'hidden': deniedToDeleteBooks.length > 0}">
@@ -220,6 +221,33 @@
 				</div>
 			</div>
 			<div class="modal-footer  text-center">
+				<button (click)="getData()"
+				        class="btn btn-default"
+				        data-dismiss="modal"
+				        type="button">Ok
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div aria-hidden="true"
+     class="modal fade"
+     id="deleteBookResult"
+     role="dialog"
+     tabindex="-1">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-body">
+				<div [ngClass]="{'hidden': isDeleted}">
+					<p class="ellipsis-lg">Unable to delete book "{{book.name}}"</p>
+				</div>
+				<div [ngClass]="{'hidden': !isDeleted}">
+					<p class="ellipsis-lg">Book "{{book.name}}"</p>
+					<p>was deleted successfully!</p>
+				</div>
+			</div>
+			<div class="modal-footer text-center">
 				<button (click)="getData()"
 				        class="btn btn-default"
 				        data-dismiss="modal"

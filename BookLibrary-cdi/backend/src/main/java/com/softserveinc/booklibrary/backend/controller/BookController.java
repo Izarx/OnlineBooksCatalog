@@ -107,11 +107,9 @@ public class BookController {
 	}
 
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<BookDto> deleteBook(@PathVariable Integer id) {
+	public ResponseEntity<Boolean> deleteBook(@PathVariable Integer id) {
 		LOGGER.info("Deleting Book, BookController, the path variable is ID = {}.", id);
-		return bookService.delete(id) ?
-				ResponseEntity.ok().build() :
-				ResponseEntity.noContent().build(); // todo: reason?
+		return ResponseEntity.ok().body(bookService.delete(id)); // todo: reason?
 	}
 
 	private ResponseData<BookDto> convertBookPageToBookDtoPage(

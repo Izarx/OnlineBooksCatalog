@@ -17,12 +17,11 @@ export class BookService {
     }
 
     public createBook(book: Book): Observable<Book> {
-        console.log(book);
         return this.httpClient.post<Book>(baseUrl + `/create`, book);
     }
 
-    public deleteBook(bookId: number): Observable<void> {
-        return this.httpClient.delete<void>(baseUrl + `/delete/${bookId}`);
+    public deleteBook(bookId: number): Observable<boolean> {
+        return this.httpClient.delete<boolean>(baseUrl + `/delete/${bookId}`);
     }
 
     public getPage(appRequestPage: RequestOptions<BookFilter>): Observable<ResponseData<Book>> {

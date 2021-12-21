@@ -30,6 +30,7 @@ export class BooksPaginationTableComponent implements OnInit {
     book: Book = new Book(null, '', 0, '', '', 0.00, []);
     requestOptions: RequestOptions<BookFilter> = new RequestOptions();
     deniedToDeleteBooks: Book[] = [];
+    isDeleted: boolean;
     isAllChecked: boolean;
 
     constructor(private route: ActivatedRoute,
@@ -102,7 +103,8 @@ export class BooksPaginationTableComponent implements OnInit {
 
     deleteBook(bookId: number): void {
         this.bookService.deleteBook(bookId).subscribe(
-            () => {
+            status => {
+                this.isDeleted = status;
                 this.getData();
             },
             error => {
