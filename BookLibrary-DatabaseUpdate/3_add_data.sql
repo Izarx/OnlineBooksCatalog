@@ -521,13 +521,29 @@ INSERT INTO reviews (commenter_name, comment, rating, book_id)
 VALUES ('Bohdan Fourko', 'Very important comment with good rating', 4, 29);
 
 INSERT INTO reviews (commenter_name, comment, rating, book_id)
-VALUES ('Petro Oneko', 'Very important comment with good rating', 5, 30);
+VALUES ('Robert Kemp', 'Memorable and hilariously original!
+I read this book while I was studying Grimm''s Fairy Tales and that may be the perfect way to experience the story.
+It was really fun to hop back and forth between the old-school fairy tales and their modern parody.
+With the world being as dark as it is, it was really refreshing to read a story poking fun at the idea of good and evil.', 5, 30);
 INSERT INTO reviews (commenter_name, comment, rating, book_id)
-VALUES ('Ivan Twoko', 'Very important comment with good rating', 4, 30);
+VALUES ('Katerina Zhecheva', 'A little slow in the beginning, but once all of the characters are introduced, the fun begins.
+I find this trilogy original and witty, it reminds me a bit of "Good Omens" by Pratchett and Gaiman.
+Still, the ending was a somewhat disappointing, as were most of the climatic moments. With all the fuzz, you would expect a more spectacular closure
+to the major conflicts. There were several moments in the book, where I didn''t feel convinced, I know it should be funny, not authentic,
+but I felt like the author was just being lazy and not really thinking about the situation or how his characters would react, he was just
+giving us easy explanations, so the story would continue.
+And I have read all ten Amber-related books and I know this is not how Zelazny does stuff, so I have decided it''s Sheckley''s fault.
+...
+Love the book though :D', 4, 30);
 INSERT INTO reviews (commenter_name, comment, rating, book_id)
-VALUES ('Taras Threeko', 'Very important comment with good rating', 3, 30);
+VALUES ('Nighteye', 'Funny at times and enjoyable, a bit macabre at times but a fast nice read
+Not particularly found of reading about demons but this worked.', 3, 30);
 INSERT INTO reviews (commenter_name, comment, rating, book_id)
-VALUES ('Bohdan Fourko', 'Very important comment with good rating', 5, 30);
+VALUES ('Alejandro Jovandro', 'I''m going to skip read-the-book-first-and-then-comment because I''ve read it 3 times already, an unbelieveably funny novel (don''t read its sequels,
+horrible!). You can imagine my genuine happiness when I stepped in my local library, not looking for anything in particular and then finding this book. Finally in English.
+Plus the fact that the book has been out of print for quite some time now.
+
+Anyway, if you by any chance happen to cross paths with this novel, be sure to give it a try.', 5, 30);
 
 INSERT INTO reviews (commenter_name, comment, rating, book_id)
 VALUES ('Petro Oneko', 'Very important comment with good rating', 5, 31);

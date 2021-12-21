@@ -27,6 +27,7 @@ export class AuthorsPaginationTableComponent implements OnInit {
     requestOptions: RequestOptions<AuthorFilter> = new RequestOptions();
     author: Author = new Author(null, '', '', 0.00);
     deniedToDeleteAuthors: Author[] = [];
+    isDeleted: boolean;
     isAllChecked: boolean;
 
     constructor(private route: ActivatedRoute,
@@ -75,8 +76,9 @@ export class AuthorsPaginationTableComponent implements OnInit {
 
     deleteAuthor(authorId: number): void {
         this.authorService.deleteAuthor(authorId).subscribe(
-            () => {
-                this.getData()
+            status => {
+                this.isDeleted = status;
+                this.getData();
             },
             error => {
                 console.log(error);

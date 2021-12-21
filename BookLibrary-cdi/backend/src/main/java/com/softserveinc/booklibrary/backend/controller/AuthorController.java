@@ -98,11 +98,9 @@ public class AuthorController {
 	}
 
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<AuthorDto> deleteAuthor(@PathVariable Integer id) {
+	public ResponseEntity<Boolean> deleteAuthor(@PathVariable Integer id) {
 		LOGGER.info("Deleting Author, AuthorController, the path variable is ID = {}.", id);
-		return authorService.delete(id) ?
-				ResponseEntity.ok().build() :
-				ResponseEntity.noContent().build(); // todo: reason?
+		return ResponseEntity.ok().body(authorService.delete(id)); // todo: reason?
 	}
 
 	@GetMapping

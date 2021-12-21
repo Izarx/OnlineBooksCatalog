@@ -154,7 +154,7 @@
 				<p>Are you sure that you want to delete</p>
 				<ul class="ellipsis-lg">"{{book.name}}"</ul>
 			</div>
-			<div class="modal-footer">
+			<div class="modal-footer text-center">
 				<button class="btn btn-default"
 				        data-dismiss="modal"
 				        type="button">Cancel
@@ -162,7 +162,8 @@
 				<button (click)="deleteBook(book.bookId)"
 				        class="btn btn-danger"
 				        data-dismiss="modal"
-				        type="submit"
+				        data-target="#deleteBookResult"
+				        data-toggle="modal"
 				>Delete
 				</button>
 			</div>
@@ -183,7 +184,7 @@
 					<ul *ngIf="delBook.isChecked" class="ellipsis-lg">"{{delBook.name}}"</ul>
 				</div>
 			</div>
-			<div class="modal-footer">
+			<div class="modal-footer text-center">
 				<button (click)="getData()"
 				        class="btn btn-default"
 				        data-dismiss="modal"
@@ -192,8 +193,65 @@
 				<button (click)="bulkDeleteBooks()"
 				        class="btn btn-danger"
 				        data-dismiss="modal"
-				        type="submit"
+				        data-target="#bulkDeleteBooksResult"
+				        data-toggle="modal"
 				>Delete
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div aria-hidden="true"
+     class="modal fade"
+     id="bulkDeleteBooksResult"
+     role="dialog"
+     tabindex="-1">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-body">
+				<div [ngClass]="{'hidden': deniedToDeleteBooks.length === 0}">
+					<p>Unable to delete next books: </p>
+					<div *ngFor="let book of deniedToDeleteBooks">
+						<ul class="ellipsis-lg">"{{book.name}}"</ul>
+					</div>
+				</div>
+				<div [ngClass]="{'hidden': deniedToDeleteBooks.length > 0}">
+					<p>All books were deleted successfully!</p>
+				</div>
+			</div>
+			<div class="modal-footer  text-center">
+				<button (click)="getData()"
+				        class="btn btn-default"
+				        data-dismiss="modal"
+				        type="button">Ok
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div aria-hidden="true"
+     class="modal fade"
+     id="deleteBookResult"
+     role="dialog"
+     tabindex="-1">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-body">
+				<div [ngClass]="{'hidden': isDeleted}">
+					<p class="ellipsis-lg">Unable to delete book "{{book.name}}"</p>
+				</div>
+				<div [ngClass]="{'hidden': !isDeleted}">
+					<p class="ellipsis-lg">Book "{{book.name}}"</p>
+					<p>was deleted successfully!</p>
+				</div>
+			</div>
+			<div class="modal-footer text-center">
+				<button (click)="getData()"
+				        class="btn btn-default"
+				        data-dismiss="modal"
+				        type="button">Ok
 				</button>
 			</div>
 		</div>

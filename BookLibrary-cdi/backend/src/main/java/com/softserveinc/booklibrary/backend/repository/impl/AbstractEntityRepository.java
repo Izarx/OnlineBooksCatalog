@@ -103,8 +103,8 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 			LOGGER.info("Deleting {}, {}, Entity object with ID = {} was deleted", type.getSimpleName(), getClass().getSimpleName(), id);
 			return true;
 		}
-		LOGGER.info("Deleting {}, {}, Entity object with ID = {} wasn't found", type.getSimpleName(), getClass().getSimpleName(), id);
-		return true;
+		LOGGER.info("Deleting {}, {}, Entity object with ID = {} wasn't deleted", type.getSimpleName(), getClass().getSimpleName(), id);
+		return false;
 	}
 
 	@Override
@@ -173,7 +173,7 @@ public abstract class AbstractEntityRepository<T extends AbstractEntity<? extend
 		}
 		criteriaDelete.where(rootDelete.get(columnName).in(entitiesIdsForDelete));
 		entityManager.createQuery(criteriaDelete).executeUpdate();
-		LOGGER.info("Bulk Delete of {}, {}, IDs object(s) which was deleted {}", type.getSimpleName(), getClass().getSimpleName(), unavailableToDeleteEntities.size());
+		LOGGER.info("Bulk Delete of {}, {}, {} object(s) were deleted", type.getSimpleName(), getClass().getSimpleName(), entitiesIdsForDelete.size());
 		return unavailableToDeleteEntities;
 	}
 
