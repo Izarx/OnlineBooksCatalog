@@ -22,6 +22,7 @@ import {DetailAuthorComponent} from './authors/detail-author/detail-author.compo
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {NgMultiSelectDropDownModule} from 'ng-multiselect-dropdown';
 import {IConfig, NgxMaskModule} from "ngx-mask";
+import {RatingModule} from "ng-starrating";
 
 export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
 
@@ -53,7 +54,8 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
         BrowserAnimationsModule,
         NgbModule,
         NgMultiSelectDropDownModule.forRoot(),
-        NgxMaskModule.forRoot()
+        NgxMaskModule.forRoot(),
+        RatingModule
     ],
     providers: [],
     bootstrap: [AppComponent]

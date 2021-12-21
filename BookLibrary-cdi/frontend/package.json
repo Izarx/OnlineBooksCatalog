@@ -25,6 +25,7 @@
     "@ngneat/input-mask": "^4.0.1",
     "daemonite-material": "^4.1.1",
     "ng-multiselect-dropdown": "^0.3.7",
+    "ng-starrating": "^1.0.20",
     "ngx-mask": "^13.0.1",
     "rxjs": "~6.6.0",
     "tslib": "^2.3.0",

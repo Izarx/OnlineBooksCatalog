@@ -18,7 +18,6 @@ export class DetailBookComponent implements OnInit {
 
     book: Book = new Book(null, '', 0, '', '', 0.00, []);
     bookForUpdate: Book = new Book(null, '', 0, '', '', 0.00, []);
-    ratingStarsArray: Array<number>;
     requestOptions: RequestOptions<ReviewFilter> = new RequestOptions();
     reviews: ResponseData<Review> = new ResponseData<Review>();
     votes: number;
@@ -48,22 +47,6 @@ export class DetailBookComponent implements OnInit {
     tabReviewButtonVisible() {
         document.getElementById("bookInfoButton").hidden = true;
         document.getElementById("addReviewButton").hidden = false;
-    }
-
-    initStarsRating(rating: number): Array<number> {
-        let r = rating;
-        this.ratingStarsArray = new Array<number>();
-        while (this.ratingStarsArray.length < 5) {
-            if (r >= 1) {
-                this.ratingStarsArray.push(1);
-            } else if (r < 1 && r >= 0) {
-                this.ratingStarsArray.push(r);
-            } else {
-                this.ratingStarsArray.push(0);
-            }
-            r--;
-        }
-        return this.ratingStarsArray;
     }
 
     getData() {
