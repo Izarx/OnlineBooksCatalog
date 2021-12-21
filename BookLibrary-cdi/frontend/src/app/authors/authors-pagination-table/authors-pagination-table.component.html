@@ -133,7 +133,7 @@
 				<p>Are you sure that you want to delete </p>
 				<ul class="ellipsis-lg">{{author.firstName + ' ' + author.lastName}}</ul>
 			</div>
-			<div class="modal-footer">
+			<div class="modal-footer text-center">
 				<button class="btn btn-default"
 				        data-dismiss="modal"
 				        type="button">Cancel
@@ -163,7 +163,7 @@
 					    class="ellipsis">{{delAuthor.firstName + ' ' + delAuthor.lastName}}</ul>
 				</div>
 			</div>
-			<div class="modal-footer">
+			<div class="modal-footer text-center">
 				<button (click)="getData()"
 				        class="btn btn-default"
 				        data-dismiss="modal"
@@ -172,8 +172,38 @@
 				<button (click)="bulkDeleteAuthors()"
 				        class="btn btn-danger"
 				        data-dismiss="modal"
-				        type="submit"
+				        data-target="#bulkDeleteAuthorsResult"
+				        data-toggle="modal"
 				>Delete
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div aria-hidden="true"
+     class="modal fade"
+     id="bulkDeleteAuthorsResult"
+     role="dialog"
+     tabindex="-1">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-body">
+				<div [ngClass]="{'hidden': deniedToDeleteAuthors.length === 0}">
+					<p>Unable to delete next authors, try to delete their books first: </p>
+					<div *ngFor="let author of deniedToDeleteAuthors">
+						<ul class="ellipsis">{{author.firstName + ' ' + author.lastName}}</ul>
+					</div>
+				</div>
+				<div [ngClass]="{'hidden': deniedToDeleteAuthors.length > 0}">
+					<p>All authors were deleted successfully!</p>
+				</div>
+			</div>
+			<div class="modal-footer text-center">
+				<button (click)="getData()"
+				        class="btn btn-default"
+				        data-dismiss="modal"
+				        type="button">Ok
 				</button>
 			</div>
 		</div>

@@ -46,6 +46,7 @@ public class AuthorRepositoryImpl extends AbstractEntityRepository<Author, Autho
 		Root<Author> root = criteriaQuery.from(Author.class);
 		root.join("books");
 		criteriaQuery.select(root).where(root.get("authorId").in(entitiesIdsForDelete));
+		criteriaQuery.groupBy(root.get("authorId"));
 		return entityManager.createQuery(criteriaQuery).getResultList();
 	}
 
