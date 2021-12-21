@@ -14,6 +14,23 @@ export class HomeComponent implements OnInit {
     readonly title: string = 'Home';
     authors: Author[] = [];
     books: Book[] = [];
+    rowNumberArray: number[] = [5, 4, 3, 2, 1, 0];
+    readonly authorsClassificationTitle: string[] = [
+        'Be the first one',
+        'Don\'t spend your time',
+        'Only for fans',
+        'Not bad',
+        'Pay attention',
+        'Guru of words'
+    ];
+    readonly booksClassificationTitle: string[] = [
+        'Be the first one',
+        'Don\'t spend your time',
+        'Only for fans',
+        'Not bad',
+        'Must read',
+        'Blow your imagination'
+    ];
 
     constructor(private authorService: AuthorService,
                 private bookService: BookService) {
@@ -39,7 +56,14 @@ export class HomeComponent implements OnInit {
     getCountAuthorsByAverageRating(rating: number): number {
         let ratingFrom = rating - 0.5;
         let ratingTo = rating - 0.5 + 1;
-        if (ratingFrom < 1) {
+        if (rating === 0) {
+            ratingFrom = 0;
+            ratingTo = 0;
+        }
+        if (rating === 1) {
+            ratingFrom = 0.01;
+        }
+        if (ratingFrom <= 0) {
             ratingFrom = 0;
         }
         if (ratingTo > 5) {
@@ -52,7 +76,14 @@ export class HomeComponent implements OnInit {
     getCountBooksByAverageRating(rating: number): number {
         let ratingFrom = rating - 0.5;
         let ratingTo = rating - 0.5 + 1;
-        if (ratingFrom < 1) {
+        if (rating === 0) {
+            ratingFrom = 0;
+            ratingTo = 0;
+        }
+        if (rating === 1) {
+            ratingFrom = 0.01;
+        }
+        if (ratingFrom <= 0) {
             ratingFrom = 0;
         }
         if (ratingTo > 5) {

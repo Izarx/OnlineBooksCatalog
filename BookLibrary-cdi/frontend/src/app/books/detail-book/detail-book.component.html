@@ -56,7 +56,7 @@
 										<td class="font-bold">Authors</td>
 										<td>
 											<div *ngFor="let author of book.authors">
-												<p>{{author.firstName + ' ' + author.lastName}}</p>
+												<p><a [routerLink]="['/authors', author.authorId]">{{author.firstName + ' ' + author.lastName}}</a></p>
 											</div>
 										</td>
 									</tr>
